@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/07/21 17:32:20 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/09/25 20:54:19 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "builtins.h"
 #include "error.h"
 
-static const t_builtins	g_builtins[] =
+const t_builtins	g_builtins[] =
 {
 	{ "echo", &cmd_echo},
 	{ "exit", &cmd_exit},
@@ -27,13 +27,14 @@ static const t_builtins	g_builtins[] =
 	{ "cd", &cmd_cd},
 	{ "true", &cmd_true},
 	{ "false", &cmd_false},
+	{ "type", &cmd_type},
 	{ "\0", NULL}
 };
 
 _Bool	prior_builtin(char *str)
 {
-	struct s_prior_builtin	pbuiltin_list[] =
-	{ {"echo"}, {"exit"}, {"setenv"}, {"unsetenv"}, {"pwd"}, {"cd"}, {"\0"} };
+	const struct s_prior_builtin	pbuiltin_list[] =
+	{ {"echo"}, {"exit"}, {"setenv"}, {"unsetenv"}, {"pwd"}, {"cd"}, {"type"}, {"\0"} };
 	int	i;
 
 	i = 0;
