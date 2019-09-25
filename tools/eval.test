@@ -1,0 +1,32 @@
+foo
+/bin/ls
+/bin/ls -laF
+/bin/ls -l -a -F
+./minishell
+exit
+echo It works
+cd /bin
+/bin/pwd
+cd
+/bin/pwd
+cd -
+/bin/pwd
+env
+setenv FOO bar
+env
+/usr/bin/env
+unsetenv FOO
+env
+unsetenv FOO
+unsetenv PATH
+setenv PATH "/bin:/usr/bin"
+ls
+emacs
+unsetenv PATH
+emacs
+/usr/bin/emacs
+
+ 
+ 	 	 	 	 	 	
+		    	ls 	 	 	-G 		
+

@@ -1,0 +1,22 @@
+./minishell
+exit 4
+echo shoudlreturn4
+./minishell
+exit 5555555555555555
+echo shoudlreturn227
+./minishell
+exit -1
+echo shouldreturn255
+./minishell
+exit 255
+echo shouldreturn255
+./minishell
+exit 256
+echo shouldreturn0
+./minishell
+exit -257
+echo shouldreturn255
+./minishell
+sfasfdasdfsafsa
+exit
+echo shouldreturn127

@@ -1,0 +1,21 @@
+env
+./minishell
+echo ok too
+builtin ls
+builtin
+ls
+exit
+/bin
+/bin/ls
+/dev/urandom
+/bin/../bin///ls
+/ls
+/////ls
+../bin/l
+.
+/
+../
+..
+	echo	ok
+	env				
+exit

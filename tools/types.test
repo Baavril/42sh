@@ -1,0 +1,8 @@
+/dev/zero
+/dev/urandom
+/dev/null
+/dev/stdout
+/dev/mqueue
+/dev/vfio
+/run/initctl
+exit

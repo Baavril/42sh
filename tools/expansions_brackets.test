@@ -1,0 +1,80 @@
+echo 1/$LOGNAMEhome/${LOGNAME}/${LOGNAME}endf
+echo 2/$LOGNAMEhome/${LOGNAME}/$LOGNAME}endf
+echo 3/$LOGNAMEhome/${LOGNAME}/${LOGNAME}endf
+echo 4/$LOGNAMEhome/${LOGNAME}/{$LOGNAME} endf
+echo 5/$LOGNAMEhome/${LOGNAME}/${LOGNAME }endf
+echo 6/$LOGNAMEhome/${LOGNAME}/${LOGNAME}&endf
+echo 7/$LOGNAMEhome/${LOGNAME}/$[LOGNAME],endf
+echo 8/$LOGNAMEhome/${LOGNAME}/$LOGNAME }.endf
+echo 9/$LOGNAMEhome/${LOGNAME}/${LOGNAME{}}endf
+echo 10$LOGNAME/home/${LOGNAME}/${LOGNAMEE}endf
+echo 11$LOGNAME/home/${LOGNAME}
+echo 12$LOGNAME/home/${LOGNAME}/.${LOGNAME}
+echo 13$LOGNAME/home/${LOGNAME}//${LOGNAME}
+echo 14$LOGNAME/home/${LOGNAME}/\${LOGNAME}
+echo 15/\\${LOGNAME}
+echo 16$"{LOGNAME}"
+echo 17${"LOGNAME"}end
+echo 18${LOG_NAME}
+echo 19${LOGNAME}""
+echo 20${LOGNAME}"endif"
+echo 21${LOG""NAME}
+echo 22${''LOGNAME}
+echo 23$ {LOGNAME}
+echo 1/home/${LOGNAME}/${LOGNAMEendf
+echo 2/home/${LOGNAME}/$LOGNAME}endf
+echo 3/home/${LOGNAME}/${LOGNAME}endf
+echo 4/home/${LOGNAME}/${LOGNAME }endf
+echo 5/home/${LOGNAME}/$LOGNAME&endf
+echo 6/home/$/${LOGNAME,e}ndf
+echo 7/home/$/${LOGNAME.e}ndf
+echo 8/home/$/${LOGNAME\e}ndf
+echo 9/home/$/${LOGNAME*e}ndf
+echo 10/home/${USER}/${LOGNAME@e}ndf
+echo 11/home/${USER}/${LOGNAME#e}ndf
+echo 12/home/${USER}/${LOGNAME%}endf
+echo 13/home/${USER}/${LOGNAME^}endf
+echo 14/home/${LOGNAME}/${LOGNAME_}endf
+echo 15/home/${LOGNAME}/${LOGNAME(}endf
+echo 16/home/${MAIL}/${LOGNAME)endf
+echo 17/home/${MAIL}/${LOGNAME}{}endf
+echo 18/home/${MAIL}/${LOGNAME:}endf
+echo 19/home/${MAIL}/${LOGNAME;}endf
+echo 20/home/${MAIL}/${LOGNAMEE}endf
+echo 21/home/${LOGNAME}/${LOGNAME}
+echo 22/home/${LOGNAME}/ ${LOGNAME}
+echo 23/home/${LOGNAME}/,${LOGNAME}
+echo 24/home/${LOGNAME}/.${LOGNAME}
+echo 25/home/${LOGNAME}//${LOGNAME}
+echo 26/home/${LOGNAME}/\${LOGNAME}
+echo 27/\\${LOGNAME}
+echo 28${"LOGNAME"}
+echo 29${"LOGNAME"}end
+echo 30${LOG_NAME}
+echo 31${LOGNAME""}
+echo 32${LOGNAME"endif"}
+echo 33${LOG""NAME}
+echo 34${ LOGNAME}
+export LASTLONG2=\${LASTLONG2}
+#setenv LASTLONG2 \${LASTLONG2}
+echo 34${LASTLONG2}
+env LASTLONG2=\${LASTLONG2} ./minishell
+echo 35${LASTLONG2}
+echo 36${LASTLONG2}${LASTLONG2}
+echo 37$LASTLONG2${LASTLONG2}
+echo 38${LASTLONG2}$LASTLONG2
+echo 39${LASTLONG2}$LASTLONG2${LASTLONG2}
+echo 40$LASTLONG2$LASTLONG2${LASTLONG2}
+echo 41$LASTLONG2${LASTLONG2}${LASTLONG2}
+echo 42$LASTLONG2okok${LASTLONG2}okok$LASTLONG2
+exit
+echo 43/${LOGNAMEhome/${LOGNAME}/${LOGNAME}endf
+echo 44/${LOGNAME
+echo 45/${LOGNAME{
+echo 46Hello${LOGNAME }}
+echo 47${}
+echo 47$}
+echo {${LOGNAME}
+echo {${LOGNAME}}
+echo ${~}
+echo echo $?$?$?$?$?$?$?$?sadfsdafsadfas$?asdfsa${LOGNAME}df$LOGNAME

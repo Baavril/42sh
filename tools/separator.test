@@ -1,0 +1,15 @@
+/bin/ls ; echo ok ; /bin/pwd ; echo "HERE I QUIIIT\n\n" ; exit
+/bin/ls; echo ok ;/bin/pwd ; echo "HERE I QUIIIT\n\n";exit
+;ls;
+;;ls;
+;ls;;
+;ls; ;
+; ;ls;;
+; ;ls; ;
+; ; ls; ;
+; ; ls ; ;
+;
+;	;
+			;	 ;
+				;	;;;
+				; ls

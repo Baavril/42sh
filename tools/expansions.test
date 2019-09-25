@@ -1,0 +1,55 @@
+echo 1/home/$LOGNAME/$LOGNAMEendf
+echo 2/home/$LOGNAME/$LOGNAME}endf
+echo 3/home/$LOGNAME/${LOGNAME}endf
+echo 4/home/$LOGNAME/$LOGNAME endf
+echo 5/home/$LOGNAME/$LOGNAME&endf
+echo 6/home/$/$LOGNAME,endf
+echo 7/home/$/$LOGNAME.endf
+echo 8/home/$/$LOGNAME\endf
+echo 9/home/$/$LOGNAME*endf
+echo 10/home/$USER/$LOGNAME@endf
+echo 11/home/$USER/$LOGNAME#endf
+echo 12/home/$USER/$LOGNAME%endf
+echo 13/home/$USER/$LOGNAME^endf
+echo 14/home/$LOGNAME/$LOGNAME_endf
+echo 15/home/$LOGNAME/$LOGNAME(endf
+echo 16/home/$MAIL/$LOGNAME)endf
+echo 17/home/$MAIL/$LOGNAME{}endf
+echo 18/home/$MAIL/$LOGNAME:endf
+echo 19/home/$MAIL/$LOGNAME;endf
+echo 20/home/$MAIL/$LOGNAMEEendf
+echo 21/home/$LOGNAME/$LOGNAME
+echo 22/home/$LOGNAME/ $LOGNAME
+echo 23/home/$LOGNAME/,$LOGNAME
+echo 24/home/$LOGNAME/.$LOGNAME
+echo 25/home/$LOGNAME//$LOGNAME
+echo 26/home/$LOGNAME/\$LOGNAME
+echo 27/\\$LOGNAME
+echo 28$"LOGNAME"
+echo 29$"LOGNAME"end
+echo 30$LOG_NAME
+echo 31$LOGNAME""
+echo 32$LOGNAME"endif"
+echo 33$LOG""NAME
+echo 34$ LOGNAME
+export LAST=\$LAST
+#setenv LAST \$LAST
+echo $LAST
+env LAST=\$LAST ./minishell
+echo $LAST
+echo $LAST$LAST
+echo $~
+echo $
+echo $$
+echo $$$
+echo $?
+echo $??
+echo $$?
+echo $?$
+$
+$$
+$?
+~$
+$~
+echo $?$?$?$?$?$?$?$?sadfsdafsadfas$?asdfsadf$LOGNAME
+exit
