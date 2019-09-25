@@ -6,12 +6,13 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/07/21 19:14:19 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/09/25 15:08:12 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
+#include "history.h"
 #include "libft.h"
 #include "error.h"
 #include "jcont.h"
@@ -29,6 +30,7 @@ static int	part_sep(int argc, char **argv)
 			ft_tabdel(&argv);
 			ft_tabdel(&environ);
 			write(STDOUT_FILENO, "exit\n", 5 * sizeof(char));
+			history(DELETE, NULL, NULL);
 			exit(status);
 		}
 		return (2);
@@ -50,6 +52,7 @@ static int	numarg_exit(int argc, char **argv, int i)
 		return (1);
 	}
 	status = (unsigned char)ft_atoi(argv[i]);
+	history(DELETE, NULL, NULL);
 	ft_tabdel(&argv);
 	ft_tabdel(&environ);
 	exit(status);
@@ -63,6 +66,7 @@ static void	nomatter_exit(char **argv, int i)
 	ft_dprintf(STDERR_FILENO,
 	"%s: %s: %s: numeric argument required\n",
 			g_progname, argv[0], argv[i]);
+	history(DELETE, NULL, NULL);
 	ft_tabdel(&argv);
 	ft_tabdel(&environ);
 	exit(2);
@@ -87,5 +91,6 @@ int		cmd_exit(int argc, char **argv)
 	}
 	ft_tabdel(&argv);
 	ft_tabdel(&environ);
+	history(DELETE, NULL, NULL);
 	exit(status);
 }

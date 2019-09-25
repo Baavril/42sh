@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2019/08/21 15:09:39 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/09/25 15:47:04 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <signal.h>
 
 #include "libft.h"
+#include "history.h"
 #include "sig_handler.h"
 #include "builtins.h"
 #include "prompt.h"
@@ -72,6 +73,8 @@ int		main(int argc, char **argv)
 	(void)argc;
 	status = 0;
 	g_progname = argv[0];
+	if (history(INIT, NULL, NULL) == -1)
+		return (1);
 	if (!(environ = ft_tabcpy(environ)))
 	{
 		psherror(e_cannot_allocate_memory, argv[0], e_cmd_type);
@@ -92,6 +95,7 @@ int		main(int argc, char **argv)
 	}
 	while (prompt_display(g_retval) && get_stdin(&input) >= 0)
 	{
+		history(ADD_CMD, input, NULL);
 		args = lexer(&input);
 		ft_memdel((void**)&input);
 		if (!args)
@@ -106,6 +110,7 @@ int		main(int argc, char **argv)
 		g_retval = jcont(args, environ);
 		ft_tabdel(&args);
 	}
+	history(DELETE, NULL, NULL);
 	ft_tabdel(&environ);
 	return (0);
 }
