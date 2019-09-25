@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/08/21 14:51:24 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/09/25 16:28:02 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	parse_opt(int argc, char **argv, _Bool *p)
 
 	*p = 0;
 	g_opterr = 1;
-	g_optind = 0;
+	g_optind = RESET_OPTIND;
 	while ((opt = ft_getopt(argc, argv, "+LP")) != -1)
 	{
 		if (opt == 'P')
@@ -46,7 +46,7 @@ int	cmd_pwd(int argc, char **argv)
 
 	p = 0;
 	ret = 0;
-	g_optind = 0;
+	g_optind = RESET_OPTIND;
 	if ((ret = parse_opt(argc, argv, &p)))
 		return (ret);
 	if (p)

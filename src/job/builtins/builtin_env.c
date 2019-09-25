@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/07/21 19:13:47 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/09/25 16:42:17 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		cmd_env(int argc, char **argv)
 
 	i = 0;
 	g_opterr = 1;
-	g_optind = 0;
+	g_optind = RESET_OPTIND;
 	if (argc == 1)
 	{
 		ft_print_tables(environ);
