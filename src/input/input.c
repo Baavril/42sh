@@ -3,131 +3,93 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/27 16:48:52 by abarthel          #+#    #+#             */
-/*   Updated: 2019/08/01 09:52:00 by abarthel         ###   ########.fr       */
+/*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
+/*   Updated: 2019/09/27 13:13:05 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-
+#include "input.h"
+#include "keys.h"
 #include "libft.h"
 
-/*
-** PRINT_QUOTE
-** Displays the corresponding quote message according to the mask value.
-** ` -> bquote
-** { -> cursh
-** ( -> subsh
-** " -> dquote
-** ' -> quote
-*/
+#include <unistd.h>
+#include <term.h>
+#include <curses.h>
+#include <signal.h>
 
-static void		print_quote(char mask)
+int init_termcaps()
 {
-	if (mask == '`')
-		ft_printf("bquote> ");
-	else if (mask == '\"')
-		ft_printf("dquote> ");
-	else if (mask == ((1 << 1) | (1 << 2)))
-		ft_printf("cursh> ");
-	else if (mask == (1 << 0))
-		ft_printf("subsh> ");
-	else if (mask == '\'')
-		ft_printf("quote> ");
+	struct termios term;
+
+	tcgetattr(0, &term);
+	term.c_lflag = 0;
+	tcsetattr(0, 0, &term);
+	tgetent(NULL, getenv("TERM"));
+	return(0);
 }
 
-static char		is_quote_open(char c, char mask)
+void display_init(int sig)
 {
-	if (c == '`' && (mask == '`' || !mask))
-		mask ^= '`';
-	else if (c == '\"' && (mask == '\"' || !mask))
-		mask ^= '\"';
-	else if ((c == '{' && !mask) || (c == '}' && mask == ((1 << 1) | (1 << 2))))
-		mask ^= ((1 << 1) | (1 << 2));
-	else if ((c == '(' && !mask) || (c == ')' && mask == (1 << 0)))
-		mask ^= (1 << 0);
-	else if (c == '\'' && (mask == '\'' || !mask))
-		mask ^= '\'';
-	return (mask);
+	char buff[16];
+	int j;
+
+	j = 0;
+	ft_bzero(buff, 16);
+#if 0
+	if (sig == SIGWINCH)
+		ft_printf("%s", tgoto(tgetstr("cm", NULL), 0, g_pi.line)); 
+#else
+	(void) sig;
+#endif
+	write(1, "\x1B[6n", 4);
+	read(1, &buff, 15);
+	while (!ft_isdigit(buff[j]))
+		j++;
+	g_pi.line = ft_atoi(&buff[j]);
+	(g_pi.line)--;
+	g_pi.t_col = tgetnum("co");
+	g_pi.t_li = tgetnum("li");
 }
 
-static char		*create_new_line(char *str, int *len)
+int display(char *str, int j, int i, char *prompt, int prompt_len)
 {
-	char	*new_line;
-
-	new_line = (char*)ft_memalloc(*len);
-	if (!new_line)
-	{
-		*len = -1;
-		return (NULL);
-	}
-	else
-	{
-		if (str)
-		{
-			new_line = ft_strncpy(new_line, str, *len);
-			free(str);
-		}
-		return (new_line);
-	}
+	while (g_pi.t_li == g_pi.line + (i + prompt_len) / g_pi.t_col && g_pi.line--)
+		ft_printf("\n");
+	ft_printf("%s", tgoto(tgetstr("cm", NULL), 0, g_pi.line)); 
+	ft_printf("%s", tgetstr("cd", NULL));
+	ft_printf("%s", prompt);
+	ft_printf("%s", str ? str : "");
+	ft_printf("%s", tgoto(tgetstr("cm", NULL), (j + prompt_len) % g_pi.t_col,  g_pi.line + (j + prompt_len) / g_pi.t_col));
+	return(0);
 }
 
-int				get_block(char **line, int len, char separator)
+int read_command(char *prompt, char **buff)
 {
-	int		ret;
-	static char	mask;
-	char		c;
+	int i;
+	int j;
+	int prompt_len;
+	char c;
 
-	ret = 0;
-	while (ret < len)
-	{	
-		c = ft_getch();
-		if (c == -1)
-			return (-2);
-		mask = is_quote_open(c, mask);
-		if ((c == separator && !mask) || !c)
-		{
-			(*line)[ret] = 0;
-			return (ret);
-		}
-		else if (c == separator && mask)
-			print_quote(mask);
-		(*line)[ret] = c;
-		++ret;
-	}
-	if (ret == len)
-		return (-1);
-	else
-		return (1);
-}
-
-int				get_stdin(char **line)
-{
-	int		len;
-	int		ret;
-	char	*new_line;
-
-	len = 0;
-	ret = 0;
-	new_line = NULL;
+	i = 0;
+	j = 0;
+	*buff = ft_strdup("");
+	display_init(0);
+	prompt_len = ft_strlen(prompt);
+	display(*buff, j, i, prompt, prompt_len);
 	while (1)
 	{
-		len += 128;
-		new_line = create_new_line(new_line, &len);
-		if (len == -1)
-			return (-1);
-		*line = new_line;
-		if ((ret = get_block(line, len, '\n')) == -1)
-			continue ;
-		if (ret == -2)
-		{
-			ft_memdel((void**)line);
-			return (-1);
-		}
-		else
-			return (1);
+		read(0, &c, 1);
+		if (ft_isprint(c))
+			normal_char(buff, &j, &i, c);
+		else if (c == '\177')
+			backspace_key(buff, &j, &i);
+		else if (c == '\033')
+			escape_char(buff, &j, &i);
+		else if (c == '\n' && !display(*buff, i, i, prompt, prompt_len))
+			return(0);
+		display(*buff, j, i, prompt, prompt_len);
 	}
-	return (ret);
+	return(1);
 }

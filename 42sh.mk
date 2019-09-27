@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/09/25 18:56:24 by abarthel         ###   ########.fr        #
+#    Updated: 2019/09/27 13:08:07 by bprunevi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,10 +17,9 @@ SOURCES_PATH := ./src/
 SOURCES :=	main.c \
 			transv/error.c \
 			transv/signals.c \
-			input/path.c \
-			input/prompt.c \
 			input/input.c \
 			input/history.c \
+			input/keys.c \
 			lex/lexer.c \
 			lex/expansions/expansions.c \
 			lex/expansions/expansion_utils.c \
@@ -61,7 +60,7 @@ TESTS_SCRIPT := launch_test.sh "launch from makefile"
 
 TEST := $(SH) $(TESTS_PATH)$(TESTS_SCRIPT)
 
-LDLIBS += $(PATH_LIB)libft.a
+LDLIBS += $(PATH_LIB)libft.a -l termcap
 
 #LDFLAGS += -flto=full
 

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2019/09/25 15:47:04 by yberramd         ###   ########.fr       */
+/*   Updated: 2019/09/27 12:06:44 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int		main(int argc, char **argv)
 	(void)argc;
 	status = 0;
 	g_progname = argv[0];
+	init_termcaps();
 	if (history(INIT, NULL, NULL) == -1)
 		return (1);
 	if (!(environ = ft_tabcpy(environ)))
@@ -88,12 +89,7 @@ int		main(int argc, char **argv)
 		return (1);
 	}
 	set_signals(0);
-	if ((g_fd_prompt = initialize_prompt_fd()) == -1)
-	{
-		ft_tabdel(&environ);
-		return (2);
-	}
-	while (prompt_display(g_retval) && get_stdin(&input) >= 0)
+	while (!read_command("42sh:", &input) && ft_printf("\n"))
 	{
 		history(ADD_CMD, input, NULL);
 		args = lexer(&input);
