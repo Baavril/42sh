@@ -86,7 +86,6 @@ void normal_char(char **buff, int *j, int *i, char c)
 	++(*i);
 	if (*i > INPUT_SIZE * buff_size)
 		*buff = buff_realloc(*buff, ++buff_size);
-	//ft_printf("ft_memmove (&\"%s\", &\"%s\", %d - %d)\n)", &(*buff)[*j + 1], &(*buff)[*j], *i, *j);
 	ft_memmove(&((*buff)[*j + 1]), &((*buff)[*j]), *i - *j);
 	(*buff)[(*j)++] = c;
 }

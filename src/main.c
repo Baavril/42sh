@@ -65,8 +65,8 @@ static int	set_minimal_env(void)
 int		main(int argc, char **argv)
 {
 	extern char	**environ;
-	extern int	g_fd_prompt;
-	char		*input;
+/*	extern int	g_fd_prompt;
+*/	char		*input;
 	char		**args;
 	int		status;
 	
