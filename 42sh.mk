@@ -64,10 +64,7 @@ LDLIBS += $(PATH_LIB)libft.a -l termcap
 
 #LDFLAGS += -flto=full
 
-CFLAGS += -Wall -Wextra -Werror -D_POSIX_C_SOURCE -std=c99
-ifneq ($(shell uname -s),Darwin)
-	CFLAGS += -ansi
-endif
+CFLAGS += -Wall -Wextra -Werror -ansi -D_POSIX_C_SOURCE -std=c99
 
-#CFLAGS += -fno-builtin -O2
-CFLAGS += -g -fsanitize=address
+CFLAGS += -fno-builtin -O2
+#CFLAGS += -g -fsanitize=address

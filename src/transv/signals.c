@@ -28,7 +28,8 @@ void	kill_child(int sig)
 	{
 		kill(g_childpid, SIGKILL);
 		g_childpid = 0;
-		write(STDOUT_FILENO, "\n", sizeof(char));
+		if (write(STDOUT_FILENO, "\n", sizeof(char)) == -1)
+			return ;
 	}
 }
 
