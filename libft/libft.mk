@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/09/25 15:20:10 by yberramd         ###   ########.fr        #
+#    Updated: 2019/09/29 10:25:02 by bprunevi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -115,6 +115,7 @@ SOURCES	:=	cast.c \
 			ft_striter.c \
 			ft_striteri.c \
 			ft_strjoin.c \
+			ft_strjoinfree.c \
 			ft_strlcat.c \
 			ft_strlen.c \
 			ft_strmap.c \
@@ -126,6 +127,7 @@ SOURCES	:=	cast.c \
 			ft_strnequ.c \
 			ft_strnew.c \
 			ft_strnjoin.c \
+			ft_strnjoinfree.c \
 			ft_strnstr.c \
 			ft_strrchr.c \
 			ft_strrep.c \

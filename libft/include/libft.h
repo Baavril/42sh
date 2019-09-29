@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
-/*   Updated: 2019/09/25 15:20:58 by yberramd         ###   ########.fr       */
+/*   Updated: 2019/09/29 10:26:30 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,8 @@ char			*ft_strsub(char const *s, unsigned int start, size_t len);
 
 char			*ft_strjoin(char const *s1, char const *s2);
 
+char			*ft_strjoinfree(char *s1, char *s2);
+
 char			*ft_strtrim(char const *s);
 
 char			*ft_itoa(int n);
@@ -258,6 +260,8 @@ void			ft_sortopt(int argc, char **argv, const char *optstring);
 void			ft_swap(void **a, void **b);
 
 char			*ft_strnjoin(int nb, char *s1, char *s2, ...);
+
+char			*ft_strnjoinfree(int nb, char *s1, char *s2, ...);
 
 char			*ft_resolvepath(char *str);
 
