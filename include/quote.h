@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.h                                           :+:      :+:    :+:   */
+/*   quote.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2019/09/29 14:57:30 by bprunevi         ###   ########.fr       */
+/*   Created: 2019/09/27 15:48:33 by bprunevi          #+#    #+#             */
+/*   Updated: 2019/09/29 11:20:01 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PROMPT_H
-# define PROMPT_H
+#ifndef QUOTE_H
+# define QUOTE_H
 
-int	mkprompt(char **buff);
-int mkprompt_quote(char *input, char **buff);
+char *quote_prompt(char *command);
 
 #endif

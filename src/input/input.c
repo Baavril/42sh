@@ -6,12 +6,13 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/09/27 13:13:05 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/09/29 14:57:29 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
 #include "keys.h"
+#include "prompt.h"
 #include "libft.h"
 
 #include <unistd.h>
@@ -65,7 +66,7 @@ int display(char *str, int j, int i, char *prompt, int prompt_len)
 	return(0);
 }
 
-int read_command(char *prompt, char **buff)
+int get_stdin(char *prompt, char **buff)
 {
 	int i;
 	int j;
@@ -92,4 +93,21 @@ int read_command(char *prompt, char **buff)
 		display(*buff, j, i, prompt, prompt_len);
 	}
 	return(1);
+}
+
+int read_command(char **buff)
+{
+	char *prompt;
+	char *tmp;
+
+	mkprompt(&prompt);
+	get_stdin(prompt, buff);
+	write(1, "\n", 1);
+	while (!mkprompt_quote(*buff, &prompt) && prompt)
+	{
+		get_stdin(prompt, &tmp);
+		*buff = ft_strjoinfree(*buff, tmp);
+		write(1, "\n", 1);
+	}
+	return(0);
 }
