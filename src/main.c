@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2019/09/29 11:48:40 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/09/30 13:26:55 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int		main(int argc, char **argv)
 		return (1);
 	}
 	set_signals(0);
-	while (!read_command(&input))
+	while (!read_command(&input) || get_next_line(0, &input))
 	{
 		history(ADD_CMD, input, NULL);
 		args = lexer(&input);

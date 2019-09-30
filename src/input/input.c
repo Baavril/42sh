@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/09/29 14:57:29 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/09/30 15:23:06 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ int read_command(char **buff)
 	char *prompt;
 	char *tmp;
 
+	if (!isatty(0))
+		return(1);
 	mkprompt(&prompt);
 	get_stdin(prompt, buff);
 	write(1, "\n", 1);
