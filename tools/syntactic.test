@@ -1,4 +1,4 @@
-./minishell < bad
+./42sh < bad
 ls | echo $ENV
 & env
 ls & echo ok

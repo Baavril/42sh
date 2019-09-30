@@ -2,7 +2,7 @@ foo
 /bin/ls
 /bin/ls -laF
 /bin/ls -l -a -F
-./minishell
+./42sh
 exit
 echo It works
 cd /bin

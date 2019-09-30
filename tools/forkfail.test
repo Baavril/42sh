@@ -1,1 +1,1 @@
-./minishell < forkfail 
+./42sh < forkfail 

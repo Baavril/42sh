@@ -35,7 +35,7 @@ echo 34$ LOGNAME
 export LAST=\$LAST
 #setenv LAST \$LAST
 echo $LAST
-env LAST=\$LAST ./minishell
+env LAST=\$LAST ./42sh
 echo $LAST
 echo $LAST$LAST
 echo $~

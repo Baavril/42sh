@@ -1,5 +1,5 @@
 env
-./minishell
+./42sh
 echo ok too
 builtin ls
 builtin

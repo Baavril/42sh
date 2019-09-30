@@ -33,7 +33,7 @@ sub test_shell{
 		close($fh);
 
 		# Replace with the name of the tested shell in file content
-		$content =~ s/\.\/minishell/$shell/g;
+		$content =~ s/\.\/42sh/$shell/g;
 		
 		# Put content into a file for shell test
 		my $filename = "input.test.tmp";

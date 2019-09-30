@@ -31,20 +31,20 @@ function make_test_launch
 
 function direct_launch
 {
-	MINISHELL_PATH='../'
+	42sh_PATH='../'
 	tests_array=(*.test)
-	make -j -C $MINISHELL_PATH
+	make -j -C $42sh_PATH
 	for file in "${tests_array[@]}"
 	do
 		printf "\n\n\e[4m\e[92m"$file"\e[0m\n"
-		$MINISHELL_PATH./42sh < $file
+		$42sh_PATH./42sh < $file
 	done
 	for file in "${tests_array[@]}"
 	do
 		printf "\n\n\e[4m\e[36m"$file" (env -i)\e[0m\n"
-		env -i LAST=\${LASTLONG2} LASTLONG2=\$LAST TRICK=\~ $MINISHELL_PATH./42sh < $file
+		env -i LAST=\${LASTLONG2} LASTLONG2=\$LAST TRICK=\~ $42sh_PATH./42sh < $file
 	done
-	#make fclean -C $MINISHELL_PATH
+	#make fclean -C $42sh_PATH
 }
 
 if [ -z "$1" ]
