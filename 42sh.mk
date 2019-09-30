@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/09/29 11:28:54 by bprunevi         ###   ########.fr        #
+#    Updated: 2019/09/30 08:56:13 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,11 +62,11 @@ TESTS_SCRIPT := launch_test.sh "launch from makefile"
 
 TEST := $(SH) $(TESTS_PATH)$(TESTS_SCRIPT)
 
-LDLIBS += $(PATH_LIB)libft.a -l termcap
+LDLIBS += -ltermcap  $(PATH_LIB)libft.a
 
-#LDFLAGS += -flto=full
+LDFLAGS += $(CDEBUG)
 
-CFLAGS += -Wall -Wextra -Werror -ansi -D_POSIX_C_SOURCE -std=c99
+CFLAGS += -Wall -Wextra -Werror -ansi -D_POSIX_C_SOURCE -std=c99 $(CDEBUG)
+#CFLAGS += -fno-builtin -O2
 
-CFLAGS += -fno-builtin -O2
-#CFLAGS += -g -fsanitize=address
+#CDEBUG += -g -fsanitize=address

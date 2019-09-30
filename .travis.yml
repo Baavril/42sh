@@ -3,8 +3,7 @@ language: c
 sudo: true
 
 script:
-    - make
-    - make clean
+    - make test
 
 env:
     global:
@@ -110,16 +109,6 @@ matrix:
             - clang-4.0
       env:
         - MATRIX_EVAL="CC=clang-4.0 && CXX=clang++-4.0"
-
-    - os: linux
-      addons:
-        apt:
-          sources:
-            - llvm-toolchain-trusty-5.0
-          packages:
-            - clang-5.0
-      env:
-        - MATRIX_EVAL="CC=clang-5.0 && CXX=clang++-5.0"
 
     # GCC Linux
     - os: linux

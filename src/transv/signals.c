@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:56:23 by abarthel          #+#    #+#             */
-/*   Updated: 2019/07/21 18:56:42 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/09/30 08:52:25 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ void	kill_child(int sig)
 	{
 		kill(g_childpid, SIGKILL);
 		g_childpid = 0;
-		if (write(STDOUT_FILENO, "\n", sizeof(char)) == -1)
-			return ;
+		ft_putchar('\n');
 	}
 }
 

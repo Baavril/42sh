@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/09/25 15:08:12 by yberramd         ###   ########.fr       */
+/*   Updated: 2019/09/30 08:51:39 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	part_sep(int argc, char **argv)
 		{
 			ft_tabdel(&argv);
 			ft_tabdel(&environ);
-			write(STDOUT_FILENO, "exit\n", 5 * sizeof(char));
+			ft_dprintf(STDERR_FILENO, "exit\n");
 			history(DELETE, NULL, NULL);
 			exit(status);
 		}
@@ -44,7 +44,7 @@ static int	numarg_exit(int argc, char **argv, int i)
 	unsigned char	status;
 	
 	status = g_retval;
-	write(STDOUT_FILENO, "exit\n", 5 * sizeof(char));
+	ft_dprintf(STDERR_FILENO, "exit\n");
 	if (argc > i + 1)
 	{
 		ft_dprintf(STDERR_FILENO,
@@ -62,7 +62,7 @@ static void	nomatter_exit(char **argv, int i)
 {
 	extern char	**environ;
 	
-	write(STDOUT_FILENO, "exit\n", 5 * sizeof(char));
+	ft_dprintf(STDERR_FILENO, "exit\n");
 	ft_dprintf(STDERR_FILENO,
 	"%s: %s: %s: numeric argument required\n",
 			g_progname, argv[0], argv[i]);
