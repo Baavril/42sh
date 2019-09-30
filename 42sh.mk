@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/09/30 08:56:13 by abarthel         ###   ########.fr        #
+#    Updated: 2019/09/30 18:15:05 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,14 @@ SOURCES :=	main.c \
 			job/builtins/builtin_truefalse.c \
 			job/builtins/builtins_dispatcher.c \
 			job/builtins/ft_putenv_table.c \
+			hash_module/corps_fini_tools.c \
+			hash_module/ft_bin_table.c \
+			hash_module/ft_free_htable.c \
+			hash_module/ft_get_entry.c \
+			hash_module/ft_get_random.c \
+			hash_module/ft_hash.c \
+			hash_module/ft_insert.c \
+			hash_module/init_htable.c \
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
