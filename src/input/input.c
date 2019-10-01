@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/09/30 15:23:06 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/10/01 12:11:52 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,18 +66,23 @@ int display(char *str, int j, int i, char *prompt, int prompt_len)
 	return(0);
 }
 
-int get_stdin(char *prompt, char **buff)
+int display_lenght(char *str)
+{
+	if (str)
+		return(ft_strlen(getcwd(NULL, 0)) + 4);
+	return(0);
+}
+
+int get_stdin(char *prompt, int prompt_len, char **buff)
 {
 	int i;
 	int j;
-	int prompt_len;
 	char c;
 
 	i = 0;
 	j = 0;
 	*buff = ft_strdup("");
 	display_init(0);
-	prompt_len = ft_strlen(prompt);
 	display(*buff, j, i, prompt, prompt_len);
 	while (1)
 	{
@@ -99,15 +104,16 @@ int read_command(char **buff)
 {
 	char *prompt;
 	char *tmp;
+	int prompt_len;
 
 	if (!isatty(0))
 		return(1);
-	mkprompt(&prompt);
-	get_stdin(prompt, buff);
+	prompt_len = mkprompt(&prompt);
+	get_stdin(prompt, prompt_len, buff);
 	write(1, "\n", 1);
-	while (!mkprompt_quote(*buff, &prompt) && prompt)
+	while ((prompt_len = mkprompt_quote(*buff, &prompt)))
 	{
-		get_stdin(prompt, &tmp);
+		get_stdin(prompt, prompt_len, &tmp);
 		*buff = ft_strjoinfree(*buff, tmp);
 		write(1, "\n", 1);
 	}
