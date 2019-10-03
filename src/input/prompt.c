@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 17:12:27 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/10/01 12:25:26 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/10/03 14:55:59 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,39 +58,54 @@ int mkprompt_quote(char *input, char **buff)
 	return (ft_strlen(*buff));
 }
 
-int		mkprompt_intro(char *buff, int ret)
+char *mkprompt_intro(int ret, int *len)
 {
 	if (!ret)
-		ft_strcat(buff, COLOR" ");
+	{
+		*len += 1;
+		return(ft_strdup(COLOR" "));
+	}
 	else
-		ft_strcat(buff, ERR_COLOR" ");
-	return(1);
+	{
+		*len += 1;
+		return(ft_strdup(ERR_COLOR" "));
+	}
 }
 
-int		mkprompt_outro(char *buff, int ret)
+char *mkprompt_getcwd(int ret, int *len)
+{
+	char *rtn;
+
+	(void) ret;
+	rtn = getcwd(NULL, 0);
+	*len += ft_strlen(rtn);
+	return(rtn);
+}
+
+char *mkprompt_outro(int ret, int *len)
 {
 	if (!ret)
-		ft_strcat(buff, " "NCOLOR""RESET" ");
+	{
+		*len += 3;
+		return(ft_strdup(" "NCOLOR""RESET" "));
+	}
 	else
-		ft_strcat(buff, " "NERR_COLOR""RESET" ");
-	return(3);
+	{
+		*len += 3;
+		return(ft_strdup(" "NERR_COLOR""RESET" "));
+	}
 }
 
 int mkprompt(char **prompt)
 {
-	char *stackbuff[128];
-	char *buff;
 	int len;
+	int ret;
 
-	buff = (char *)stackbuff;
-	buff[0] = '\0';
 	len = 0;
-	len += mkprompt_intro(buff, 0);
-	while (*buff)
-		buff++;
-	getcwd(buff, 128 - sizeof(" "NCOLOR""RESET" "));
-	len += ft_strlen(buff);
-	len += mkprompt_outro(buff, 0);
-	*prompt = ft_strdup((char *)stackbuff);
+	ret = 0;
+	*prompt = ft_strnjoinfree(3,
+			mkprompt_intro(ret, &len),
+			mkprompt_getcwd(ret, &len),
+			mkprompt_outro(ret, &len));
 	return (len);
 }
