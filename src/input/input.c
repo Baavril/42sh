@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/10/01 12:11:52 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/10/11 15:05:45 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "keys.h"
 #include "prompt.h"
 #include "libft.h"
+#include "display.h"
 
 #include <unistd.h>
 #include <term.h>
@@ -31,48 +32,6 @@ int init_termcaps()
 	return(0);
 }
 
-void display_init(int sig)
-{
-	char buff[16];
-	int j;
-
-	j = 0;
-	ft_bzero(buff, 16);
-#if 0
-	if (sig == SIGWINCH)
-		ft_printf("%s", tgoto(tgetstr("cm", NULL), 0, g_pi.line)); 
-#else
-	(void) sig;
-#endif
-	write(1, "\x1B[6n", 4);
-	read(1, &buff, 15);
-	while (!ft_isdigit(buff[j]))
-		j++;
-	g_pi.line = ft_atoi(&buff[j]);
-	(g_pi.line)--;
-	g_pi.t_col = tgetnum("co");
-	g_pi.t_li = tgetnum("li");
-}
-
-int display(char *str, int j, int i, char *prompt, int prompt_len)
-{
-	while (g_pi.t_li == g_pi.line + (i + prompt_len) / g_pi.t_col && g_pi.line--)
-		ft_printf("\n");
-	ft_printf("%s", tgoto(tgetstr("cm", NULL), 0, g_pi.line)); 
-	ft_printf("%s", tgetstr("cd", NULL));
-	ft_printf("%s", prompt);
-	ft_printf("%s", str ? str : "");
-	ft_printf("%s", tgoto(tgetstr("cm", NULL), (j + prompt_len) % g_pi.t_col,  g_pi.line + (j + prompt_len) / g_pi.t_col));
-	return(0);
-}
-
-int display_lenght(char *str)
-{
-	if (str)
-		return(ft_strlen(getcwd(NULL, 0)) + 4);
-	return(0);
-}
-
 int get_stdin(char *prompt, int prompt_len, char **buff)
 {
 	int i;
@@ -82,7 +41,6 @@ int get_stdin(char *prompt, int prompt_len, char **buff)
 	i = 0;
 	j = 0;
 	*buff = ft_strdup("");
-	display_init(0);
 	display(*buff, j, i, prompt, prompt_len);
 	while (1)
 	{

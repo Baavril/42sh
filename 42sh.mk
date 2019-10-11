@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/09/30 18:15:05 by tgouedar         ###   ########.fr        #
+#    Updated: 2019/10/11 15:47:00 by bprunevi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SOURCES :=	main.c \
 			input/keys.c \
 			input/prompt.c \
 			input/quote.c \
+			input/display.c \
 			lex/lexer.c \
 			lex/expansions/expansions.c \
 			lex/expansions/expansion_utils.c \
