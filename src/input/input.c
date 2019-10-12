@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/10/11 15:05:45 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/10/12 04:56:43 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,31 @@
 #include <curses.h>
 #include <signal.h>
 
-int init_termcaps()
+int toggle_termcaps()
 {
 	struct termios term;
 
 	tcgetattr(0, &term);
-	term.c_lflag = 0;
+#if 0
+	if (term.c_lflag & ECHOE)
+		ft_printf("%d : %s\n", ECHOE, "ECHOE");
+	if (term.c_lflag & ECHO)
+		ft_printf("%d : %s\n", ECHO, "ECHO");
+	if (term.c_lflag & ECHONL)
+		ft_printf("%d : %s\n", ECHONL, "ECHONL");
+	if (term.c_lflag & ISIG)
+		ft_printf("%d : %s\n", ISIG, "ISIG");
+	if (term.c_lflag & ICANON)
+		ft_printf("%d : %s\n", ICANON, "ICANON");
+	if (term.c_lflag & IEXTEN)
+		ft_printf("%d : %s\n", IEXTEN, "IEXTEN");
+	if (term.c_lflag & TOSTOP)
+		ft_printf("%d : %s\n", TOSTOP, "TOSTOP");
+	if (term.c_lflag & NOFLSH)
+		ft_printf("%d : %s\n", NOFLSH, "NOFLSH");
+#endif
+	term.c_lflag ^= ECHO;
+	term.c_lflag ^= ICANON;
 	tcsetattr(0, 0, &term);
 	tgetent(NULL, getenv("TERM"));
 	return(0);
@@ -66,6 +85,7 @@ int read_command(char **buff)
 
 	if (!isatty(0))
 		return(1);
+	toggle_termcaps();
 	prompt_len = mkprompt(&prompt);
 	get_stdin(prompt, prompt_len, buff);
 	write(1, "\n", 1);
@@ -75,5 +95,6 @@ int read_command(char **buff)
 		*buff = ft_strjoinfree(*buff, tmp);
 		write(1, "\n", 1);
 	}
+	toggle_termcaps();
 	return(0);
 }
