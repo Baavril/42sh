@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/10/12 04:56:43 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/10/12 06:08:14 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int get_stdin(char *prompt, int prompt_len, char **buff)
 			normal_char(buff, &j, &i, c);
 		else if (c == '\177')
 			backspace_key(buff, &j, &i);
+		else if (c == '\t')
+			tab_key(buff, &j, &i);
 		else if (c == '\033')
 			escape_char(buff, &j, &i);
 		else if (c == '\n' && !display(*buff, i, i, prompt, prompt_len))

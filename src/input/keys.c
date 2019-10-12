@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 18:02:02 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/09/27 11:35:15 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/10/12 06:21:36 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,19 @@ char	*buff_realloc(char *buff, int buff_size)
 	ft_strcpy(rtn, buff);
 	free(buff);
 	return (rtn);
+}
+
+void normal_char(char **buff, int *j, int *i, char c)
+{
+	static int buff_size = 0;
+
+	if (!**buff)
+		buff_size = 0;
+	++(*i);
+	if (*i > INPUT_SIZE * buff_size)
+		*buff = buff_realloc(*buff, ++buff_size);
+	ft_memmove(&((*buff)[*j + 1]), &((*buff)[*j]), *i - *j);
+	(*buff)[(*j)++] = c;
 }
 
 void right_arrow(char **buff, int *j, int *i)
@@ -62,6 +75,13 @@ void backspace_key(char **buff, int *j, int *i)
 	}
 }
 
+void tab_key(char **buff, int *j, int *i)
+{
+	char *str = ft_strdup("tabulation");
+	while (*str)
+		normal_char(buff, j, i, *str++);
+}
+
 void escape_char(char **buff, int *j, int *i)
 {
 	char input_buffer[16];
@@ -76,17 +96,3 @@ void escape_char(char **buff, int *j, int *i)
 	else if (!ft_strcmp(&input_buffer[1], tgetstr("kD", NULL) + 2))
 		delete_key(buff, j, i);
 }
-
-void normal_char(char **buff, int *j, int *i, char c)
-{
-	static int buff_size = 0;
-
-	if (!**buff)
-		buff_size = 0;
-	++(*i);
-	if (*i > INPUT_SIZE * buff_size)
-		*buff = buff_realloc(*buff, ++buff_size);
-	ft_memmove(&((*buff)[*j + 1]), &((*buff)[*j]), *i - *j);
-	(*buff)[(*j)++] = c;
-}
-
