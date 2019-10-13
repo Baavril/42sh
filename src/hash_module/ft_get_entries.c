@@ -1,41 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_htable.c                                   :+:      :+:    :+:   */
+/*   ft_lst_entries.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/28 16:48:25 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/10/13 04:04:13 by tgouedar         ###   ########.fr       */
+/*   Created: 2019/10/12 22:02:05 by tgouedar          #+#    #+#             */
+/*   Updated: 2019/10/13 04:03:10 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "htable.h"
 
-void			ft_free_s_entry(void *to_free, size_t null)
+t_list		*ft_lstcpy(t_list *elem)
 {
-	t_entry		*entry;
+	t_hlist		*new;
 
-	entry = (t_entry*)to_free;
-	(void)null;
-	free(entry->key);
-	free(entry->value);
-	free(entry);
+	new = (t_hlist*)elem;
+	new->content->key = ft_strdup(new->content->key);
+	new->content->value = ft_strdup(new->content->value);
+	return (elem);
 }
 
-void			ft_free_htable(t_htable *htable)
+t_hlist		*ft_lst_entries(const t_htable *htable)
 {
-	uint64_t	i;
+	size_t		i;
 	t_hlist		**table;
+	t_hlist		*entries;
 
 	i = 0;
+	entries = NULL;
 	table = htable->table;
 	while (i < htable->table_size)
 	{
-		if (table[i] != NULL)
-			ft_lstdel((t_list**)&(table[i]), &ft_free_s_entry);
+		if (table[i])
+			ft_lstadd((t_list**)&entries,
+					ft_lstmap((t_list*)(table[i]), &ft_lstcpy));
 		i++;
 	}
-	free(htable->table);
+	return (entries);
 }

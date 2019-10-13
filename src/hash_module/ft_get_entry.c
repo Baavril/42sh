@@ -15,11 +15,11 @@
 const char	*ft_get_entry(const t_htable *htable, const char *key)
 {
 	size_t				index;
-	t_list				*entry;
+	t_hlist				*entry;
 	t_entry				*content;
 
 	index = ft_hash(htable, key);
-	if ((entry = (t_list*)(htable->table[index])))
+	if ((entry = (t_hlist*)(htable->table[index])))
 	{
 		while ((entry))
 		{

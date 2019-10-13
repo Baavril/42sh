@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 16:36:22 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/09/30 18:20:08 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/10/12 23:07:10 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "hash_module.h"
 #include "libft.h"
 
-static char			*ft_build_path(char *path, char *exec)
+char				*ft_build_path(char *path, char *exec)
 {
 	size_t	len;
 	size_t	slash;
@@ -35,7 +35,7 @@ static char			*ft_build_path(char *path, char *exec)
 	return (res);
 }
 
-static void			ft_push_exec(t_htable *bin_table, char *dir_name)
+static void				ft_push_exec(t_htable *bin_table, char *dir_name)
 {
 	DIR				*dir_data;
 	struct dirent	*file_data;
@@ -63,10 +63,11 @@ void				ft_hash_path(t_htable *bin_table, char *path)
 	if (!(ft_strcmp(path, hashed)))
 		return ;
 	i = 0;
-	/*ft_check_memory(*/dir = ft_strsplit(path, ':');
+	//ft_map(empty);
+	/*ft_check_memory(*/dir = ft_strsplit(path, ":");
 	while ((dir[i]))
 		ft_push_exec(bin_table, dir[i++]);
-	ft_tabdel(&dir);
+	ft_tabfree(dir);
 	ft_strdel(&hashed);
-	/*ft_check_memory(*/hashed = ft_strdup(path);
+	/*ft_check_memory(*/hashed = ft_strdup(path); //comment free ?
 }

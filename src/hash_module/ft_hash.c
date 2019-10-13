@@ -6,13 +6,13 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 16:59:47 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/09/30 18:05:10 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/09/27 16:21:03 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "htable.h"
 
-static uint64_t		ft_pre_hash(const char *entry, uint64_t table_size)
+static uint64_t	ft_pre_hash(const char *entry, uint64_t table_size)
 {
 	uint64_t		i;
 	uint64_t		key;
