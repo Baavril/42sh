@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
-/*   Updated: 2019/09/29 10:26:30 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/10/13 05:18:22 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,8 @@ typedef struct	s_list
 	struct s_list	*next;
 }				t_list;
 
+typedef int		(*t_ft_cmp)(t_list *, t_list *);
+
 void			ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
 
 void			ft_lstdel(t_list **alst, void (*del)(void *, size_t));
@@ -200,6 +202,8 @@ void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list			*ft_lstnew(void const *content, size_t content_size);
 
 t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
+
+void			ft_lst_mergesort(t_list **lst, t_ft_cmp ft_cmp);
 
 void			ft_print_tables(char **tables);
 

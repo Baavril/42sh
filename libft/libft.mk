@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/09/29 10:25:02 by bprunevi         ###   ########.fr        #
+#    Updated: 2019/10/13 05:21:06 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ SOURCES	:=	cast.c \
 			ft_lstiter.c \
 			ft_lstmap.c \
 			ft_lstnew.c \
+			ft_lst_mergesort.c \
 			ft_memalloc.c \
 			ft_memccpy.c \
 			ft_memchr.c \
