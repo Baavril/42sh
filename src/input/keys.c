@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 18:02:02 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/10/12 06:21:36 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/10/14 17:30:03 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,38 @@ void tab_key(char **buff, int *j, int *i)
 		normal_char(buff, j, i, *str++);
 }
 
+
+void home_key(char **buff, int *j, int *i)
+{
+	(void) buff;
+	(void) i;
+	*j = 0;
+}
+
+void end_key(char **buff, int *j, int *i)
+{
+	(void) buff;
+	*j = *i;
+}
+
+void next_word(char **buff, int *j, int *i)
+{
+	(void) i;
+	while(*j < *i && ft_isalnum((*buff)[*j]))
+			(*j)++;
+	while(*j < *i && !ft_isalnum((*buff)[*j]))
+			(*j)++;
+}
+
+void previous_word(char **buff, int *j, int *i)
+{
+	(void) i;
+	while(*j > 0 && ft_isalnum((*buff)[*j]))
+			(*j)--;
+	while(*j > 0 && !ft_isalnum((*buff)[*j]))
+			(*j)--;
+}
+
 void escape_char(char **buff, int *j, int *i)
 {
 	char input_buffer[16];
@@ -95,4 +127,12 @@ void escape_char(char **buff, int *j, int *i)
 		right_arrow(buff, j, i);
 	else if (!ft_strcmp(&input_buffer[1], tgetstr("kD", NULL) + 2))
 		delete_key(buff, j, i);
+	else if (!ft_strcmp(&input_buffer[1], tgetstr("kh", NULL) + 2))
+		home_key(buff, j, i);
+	else if (!ft_strcmp(&input_buffer[1], tgetstr("kN", NULL) + 2))
+		next_word(buff, j, i);
+	else if (!ft_strcmp(&input_buffer[1], tgetstr("kP", NULL) + 2))
+		previous_word(buff, j, i);
+	else if (!ft_strcmp(&input_buffer[1], "F\0")) //FAUX MAIS TEMP
+		end_key(buff, j, i);
 }
