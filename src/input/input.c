@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/10/12 06:08:14 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/10/14 15:25:14 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,6 @@ int read_command(char **buff)
 		write(1, "\n", 1);
 	}
 	toggle_termcaps();
+	ft_strdel(&prompt);
 	return(0);
 }
