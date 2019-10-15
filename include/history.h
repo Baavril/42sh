@@ -6,17 +6,25 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 18:26:13 by yberramd          #+#    #+#             */
-/*   Updated: 2019/09/11 14:46:20 by yberramd         ###   ########.fr       */
+/*   Updated: 2019/10/02 14:28:44 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HISTORY_H
 # define HISTORY_H
-# define INIT 1
-# define DELETE 2
-# define ADD_CMD 3
-# define SEARCH 4
-# define HISTORY_SEARCH 5
+enum {
+	INIT,
+	DELETE,
+	ADD_CMD,
+	SEARCH,
+	EXCLAMATION,
+	HISTORY_SEARCH,
+	FORWARD,
+	BACKWARD,
+	GET,
+	FIRST,
+	LAST,
+};
 # include <sys/types.h>
 # include <sys/uio.h>
 # include <fcntl.h>
@@ -40,5 +48,5 @@ typedef struct	s_history
 	struct s_history *previous;
 }				t_history;
 
-int		history(int flag, char *line, char **cmd);
+int		history(int flag, const char *line, char **cmd);
 #endif

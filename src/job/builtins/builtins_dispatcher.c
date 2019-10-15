@@ -28,6 +28,7 @@ const t_builtins	g_builtins[] =
 	{ "true", &cmd_true},
 	{ "false", &cmd_false},
 	{ "type", &cmd_type},
+	{ "history", &cmd_history},
 	{ "\0", NULL}
 };
 

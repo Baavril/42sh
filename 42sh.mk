@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/10/13 05:08:08 by tgouedar         ###   ########.fr        #
+#    Updated: 2019/10/15 15:53:03 by yberramd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SOURCES			:=		main.c \
 						job/builtins/builtin_cd.c \
 						job/builtins/builtin_echo.c \
 						job/builtins/builtin_type.c \
+						job/builtins/builtin_history.c \
 						job/builtins/builtin_env.c \
 						job/builtins/builtin_exit.c \
 						job/builtins/builtin_pwd.c \

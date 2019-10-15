@@ -33,6 +33,7 @@ int				cmd_false(int argc, char **argv);
 int				cmd_env(int argc, char **argv);
 int				cmd_pwd(int argc, char **argv);
 int				cmd_cd(int argc, char **argv);
+int				cmd_history(int argc, char **argv);
 
 /*
 ** Functions in builtins_dispatcher.c
