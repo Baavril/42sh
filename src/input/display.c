@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 15:25:22 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/10/11 15:05:46 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/10/15 10:58:03 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,37 @@
 #include <curses.h>
 #include <stdio.h>
 
-int display_all(char *str, int j, int i, char *prompt, int prompt_len)
+
+int display_select(char *str, int start, int end)
+{
+	int swap;
+	if (start > end)
+	{
+		swap = start;
+		start = end;
+		end = swap;
+	}
+	write(1, str, start);
+	ft_putstr(tgetstr("mr", NULL));
+	write(1, &str[start], end - start);
+	ft_putstr(tgetstr("me", NULL));
+	ft_putstr(&str[end]);
+	return(0);
+}
+
+int display_all(char *str, int j, int i, int u, char *prompt, int prompt_len)
 {
 	int col = tgetnum("co");
+	char c;
+
+	c = '\0';
 	ft_putstr(tgetstr("cr", NULL));
 	ft_putstr(tgetstr("cd", NULL));
 	ft_putstr(prompt);
-	ft_putstr(str);
+	if (u < 0 || u > i)
+		ft_putstr(str);
+	else
+		display_select(str, j, u);
 	if (!((i + prompt_len) % col))
 		write(1, "\n", 1);
 	return((j + prompt_len) / col);
@@ -45,7 +69,7 @@ int refresh_line(int prompt_len, int line, char *str)
 }
 */
 
-int display(char *str, int j, int i, char *prompt, int prompt_len)
+int display(char *str, int j, int i, int u, char *prompt, int prompt_len)
 {
 	int col = tgetnum("co");
 	int x;
@@ -62,7 +86,7 @@ int display(char *str, int j, int i, char *prompt, int prompt_len)
 		ft_putstr(tgetstr("up", NULL));
 
 	//reset lines_offset value and display text
-	lines_offset = display_all(str, j, i, prompt, prompt_len);
+	lines_offset = display_all(str, j, i, u, prompt, prompt_len);
 
 	//Reposition cursor
 	x = ((i + prompt_len) / col) - lines_offset;

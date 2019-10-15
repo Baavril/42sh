@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 12:11:17 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/09/29 11:48:08 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/10/15 14:41:52 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct 	s_posinfo
 	int t_li;
 }				t_posinfo;
 
-t_posinfo g_pi;
+char *copybuff;
 
 int	read_command(char **line);
 int init_termcaps();

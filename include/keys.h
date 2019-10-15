@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 13:40:01 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/10/12 06:20:58 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/10/15 16:46:16 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void delete_key(char **buff, int *j, int *i);
 void backspace_key(char **buff, int *j, int *i);
 void tab_key(char **buff, int *j, int *i);
 void normal_char(char **buff, int *j, int *i, char c);
-void escape_char(char **buff, int *j, int *i);
+void select_key(char **buff, int *j, int *i, int *u);
+void paste_key(char **buff, int *j, int *i);
+void escape_char(char **buff, int *j, int *i, int *u);
 
 #endif

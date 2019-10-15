@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 18:02:02 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/10/14 17:30:03 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/10/15 16:42:57 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,13 @@ void tab_key(char **buff, int *j, int *i)
 		normal_char(buff, j, i, *str++);
 }
 
+void paste_key(char **buff, int *j, int *i)
+{
+	char *str = copybuff;
+	if (str)
+		while (*str)
+			normal_char(buff, j, i, *str++);
+}
 
 void home_key(char **buff, int *j, int *i)
 {
@@ -114,12 +121,27 @@ void previous_word(char **buff, int *j, int *i)
 			(*j)--;
 }
 
-void escape_char(char **buff, int *j, int *i)
+void select_key(char **buff, int *j, int *i, int *u)
+{
+	(void) i;
+	if (*u == -1)
+		*u = *j;
+	else if (*u != *j)
+	{
+		ft_strdel(&copybuff);
+		if (*j > *u)
+			copybuff = ft_strndup(*buff + *u, *j - *u);
+		else if (*j < *u)
+			copybuff = ft_strndup(*buff + *j, *u - *j);
+		*u = -1;
+	}
+}
+void escape_char(char **buff, int *j, int *i, int *u)
 {
 	char input_buffer[16];
 
-	ft_bzero(input_buffer, 16);
-	read(0, input_buffer, 16);
+	ft_bzero(input_buffer, 8);
+	read(0, input_buffer, 8);
 
 	if (!ft_strcmp(&input_buffer[1], tgetstr("kl", NULL) + 2))
 		left_arrow(buff, j, i);
@@ -135,4 +157,8 @@ void escape_char(char **buff, int *j, int *i)
 		previous_word(buff, j, i);
 	else if (!ft_strcmp(&input_buffer[1], "F\0")) //FAUX MAIS TEMP
 		end_key(buff, j, i);
+	else if (!ft_strcmp(&input_buffer[1], "1;2A")) //FAUX MAIS TEMP
+		select_key(buff, j, i, u);
+	else if (!ft_strcmp(&input_buffer[1], "1;2B")) //FAUX MAIS TEMP
+		paste_key(buff, j, i);
 }

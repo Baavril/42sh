@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/10/15 11:24:37 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/10/15 16:42:59 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,26 +55,28 @@ int get_stdin(char *prompt, int prompt_len, char **buff)
 {
 	int i;
 	int j;
+	int u;
 	char c;
 
 	i = 0;
 	j = 0;
+	u = -1;
 	*buff = ft_strdup("");
-	display(*buff, j, i, prompt, prompt_len);
+	display(*buff, j, i, -1, prompt, prompt_len);
 	while (1)
 	{
 		read(0, &c, 1);
-		if (ft_isprint(c))
+		if (c != 'u' && c != 'p' && ft_isprint(c))
 			normal_char(buff, &j, &i, c);
 		else if (c == '\177')
 			backspace_key(buff, &j, &i);
 		else if (c == '\t')
 			tab_key(buff, &j, &i);
 		else if (c == '\033')
-			escape_char(buff, &j, &i);
-		else if (c == '\n' && !display(*buff, i, i, prompt, prompt_len))
+			escape_char(buff, &j, &i, &u);
+		else if (c == '\n' && !display(*buff, i, i, -1, prompt, prompt_len))
 			return(0);
-		display(*buff, j, i, prompt, prompt_len);
+		display(*buff, j, i, u, prompt, prompt_len);
 	}
 	return(1);
 }
