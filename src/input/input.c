@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/10/14 15:25:14 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/10/15 11:24:37 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int read_command(char **buff)
 	prompt_len = mkprompt(&prompt);
 	get_stdin(prompt, prompt_len, buff);
 	write(1, "\n", 1);
-	while ((prompt_len = mkprompt_quote(*buff, &prompt)))
+	while (**buff && (prompt_len = mkprompt_quote(*buff, &prompt)))
 	{
 		get_stdin(prompt, prompt_len, &tmp);
 		*buff = ft_strjoinfree(*buff, tmp);
