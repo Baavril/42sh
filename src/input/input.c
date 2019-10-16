@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/10/16 09:45:28 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/10/16 13:28:56 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int toggle_termcaps()
 {
 	struct termios term;
 
-	tcgetattr(0, &term);
+	if (tcgetattr(0, &term))
+		return(1);
 #if 0
 	if (term.c_lflag & ECHOE)
 		ft_printf("%d : %s\n", ECHOE, "ECHOE");
@@ -46,8 +47,10 @@ int toggle_termcaps()
 #endif
 	term.c_lflag ^= ECHO;
 	term.c_lflag ^= ICANON;
-	tcsetattr(0, 0, &term);
-	tgetent(NULL, getenv("TERM"));
+	if (tcsetattr(0, 0, &term))
+		return(1);
+	if (tgetent(NULL, getenv("TERM")) != 1)
+		return(1);
 	return(0);
 }
 
@@ -65,7 +68,8 @@ int get_stdin(char *prompt, int prompt_len, char **buff)
 	display(*buff, j, i, -1, prompt, prompt_len);
 	while (1)
 	{
-		read(0, &c, 1);
+		if (read(0, &c, 1) == -1)
+			return(-1);
 		if (ft_isprint(c))
 			normal_char(buff, &j, &i, c);
 		else if (c == '\177')
@@ -78,7 +82,7 @@ int get_stdin(char *prompt, int prompt_len, char **buff)
 			return(0);
 		display(*buff, j, i, u, prompt, prompt_len);
 	}
-	return(1);
+	return(0);
 }
 
 int read_command(char **buff)
@@ -89,7 +93,8 @@ int read_command(char **buff)
 
 	if (!isatty(0))
 		return(1);
-	toggle_termcaps();
+	if (toggle_termcaps())
+		return(2);
 	prompt_len = mkprompt(&prompt);
 	get_stdin(prompt, prompt_len, buff);
 	write(1, "\n", 1);
@@ -99,7 +104,7 @@ int read_command(char **buff)
 		*buff = ft_strjoinfree(*buff, tmp);
 		write(1, "\n", 1);
 	}
-	toggle_termcaps();
 	ft_strdel(&prompt);
+	toggle_termcaps();
 	return(0);
 }
