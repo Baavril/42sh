@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/10/15 16:42:59 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/10/16 09:45:28 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int get_stdin(char *prompt, int prompt_len, char **buff)
 	while (1)
 	{
 		read(0, &c, 1);
-		if (c != 'u' && c != 'p' && ft_isprint(c))
+		if (ft_isprint(c))
 			normal_char(buff, &j, &i, c);
 		else if (c == '\177')
 			backspace_key(buff, &j, &i);
