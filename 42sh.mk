@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/10/15 15:53:03 by yberramd         ###   ########.fr        #
+#    Updated: 2019/10/16 18:02:50 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,10 +38,10 @@ SOURCES			:=		main.c \
 						job/builtins/builtin_cd.c \
 						job/builtins/builtin_echo.c \
 						job/builtins/builtin_type.c \
-						job/builtins/builtin_history.c \
 						job/builtins/builtin_env.c \
 						job/builtins/builtin_exit.c \
 						job/builtins/builtin_pwd.c \
+						job/builtins/builtin_hash.c \
 						job/builtins/builtin_setenv.c \
 						job/builtins/builtin_unsetenv.c \
 						job/builtins/builtin_truefalse.c \
@@ -82,4 +82,4 @@ LDFLAGS += $(CDEBUG)
 CFLAGS += -Wall -Wextra -Werror -ansi -D_POSIX_C_SOURCE -std=c99 $(CDEBUG)
 #CFLAGS += -fno-builtin -O2
 
-#CDEBUG += -g -fsanitize=address
+CDEBUG += -g -fsanitize=address

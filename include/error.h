@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:51:41 by abarthel          #+#    #+#             */
-/*   Updated: 2019/07/21 18:54:34 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/10/16 14:34:25 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ enum	e_minishell_error
 	e_syntax_error,
 	e_no_builtin,
 	e_bad_substitution,
+	e_not_found,
 	e_filename_arg_required,
 	e_cannot_allocate_memory,
 	e_system_call_error,
@@ -34,7 +35,8 @@ enum	e_error_message_types
 {
 	e_invalid_type,
 	e_parsing_type,
-	e_cmd_type
+	e_cmd_type,
+	e_builtin_type
 };
 
 typedef enum e_minishell_error	t_error;

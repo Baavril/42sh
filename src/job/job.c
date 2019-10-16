@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 13:03:13 by abarthel          #+#    #+#             */
-/*   Updated: 2019/09/25 20:25:53 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/10/16 17:07:14 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 pid_t		g_childpid = 0;
 
-static int 	check_type(char **arg)
+static int	check_type(char **arg)
 {
 	struct stat	buf;
 	char		*pathname;
@@ -37,6 +37,8 @@ static int 	check_type(char **arg)
 		ft_memdel((void**)arg);
 		return (e_command_not_found);
 	}
+	if (ft_inbintable(arg))
+		return (e_success);
 	if (!ft_strcmp(*arg, "."))
 		return (e_filename_arg_required);
 	if (ft_strstr(*arg, "/"))
@@ -58,7 +60,7 @@ static int 	check_type(char **arg)
 
 static int	check_access(char *arg)
 {
-	int ret;
+	int	ret;
 
 	ret = e_success;
 	if ((ret = access(arg, X_OK)))
@@ -131,7 +133,10 @@ int	job(char **argv, char **envp)
 	if (ret == e_success)
 	{
 		if (!check_access(argv[0]))
+		{
+			ft_insert_bintable(pathname, argv[0]);
 			return (process_launch(argv, envp, pathname));
+		}
 		else
 		{
 			ft_memdel((void**)&pathname);
@@ -142,7 +147,7 @@ int	job(char **argv, char **envp)
 	{
 		argv[0] = pathname;
 		ret = builtins_dispatcher(&argv[0]);
-	   	if (ret == e_command_not_found)
+		if (ret == e_command_not_found)
 		{
 			psherror(e_command_not_found, argv[0], e_cmd_type);
 			return (g_errordesc[e_command_not_found].code);

@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd.c                                        :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/13 13:52:55 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/16 17:22:14 by tgouedar         ###   ########.fr       */
+/*   Created: 2018/11/15 13:21:10 by tgouedar          #+#    #+#             */
+/*   Updated: 2019/10/16 15:59:29 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd(t_list **alst, t_list *new)
+void	ft_lstadd_back(t_list **alst, t_list *new_back)
 {
-	t_list		*new_back;
+	t_list	*voyager;
 
-	new_back = new;
-	while (new_back->next)
-		new_back = new_back->next;
-	new_back->next = *alst;
-	*alst = new;
+	if (!alst)
+		return ;
+	if (!(*alst))
+		*alst = new_back;
+	else
+	{
+		voyager = *alst;
+		while (voyager->next)
+			voyager = voyager->next;
+		voyager->next = new_back;
+	}
 }
