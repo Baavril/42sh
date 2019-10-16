@@ -6,13 +6,14 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/09/30 08:51:39 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/10/16 21:51:54 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
 #include "history.h"
+#include "builtins.h"
 #include "libft.h"
 #include "error.h"
 #include "jcont.h"
@@ -92,5 +93,6 @@ int		cmd_exit(int argc, char **argv)
 	ft_tabdel(&argv);
 	ft_tabdel(&environ);
 	history(DELETE, NULL, NULL);
+	ft_free_bintable();
 	exit(status);
 }

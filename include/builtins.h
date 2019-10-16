@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/16 21:12:10 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/10/16 21:50:53 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int				is_a_builtin(char *cmd);
 
 int				ft_inbintable(char **bin_name);
 void			ft_insert_bintable(char *bin_name, char *bin_path);
+void			ft_free_bintable(void);
 
 /*
 ** Functions in builtins.c

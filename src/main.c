@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/15 17:35:05 by yberramd         ###   ########.fr       */
+/*   Updated: 2019/10/16 21:48:28 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,6 @@ int		main(int argc, char **argv)
 	history(DELETE, NULL, NULL);
 	ft_tabdel(&environ);
 	ft_strdel(&copybuff);
+	ft_free_bintable();
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 17:13:25 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/10/16 21:19:39 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/10/16 21:55:43 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,11 @@ void			ft_insert_bintable(char *bin_name, char *bin_path)
 
 void			ft_free_bintable(void)
 {
-	ft_free_htable(g_bintable);
-	free(g_bintable);
+	if (g_bintable)
+	{
+		ft_free_htable(g_bintable);
+		free(g_bintable);
+	}
 }
 
 static int		ft_find_and_hash(char *bin_name)
