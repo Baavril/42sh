@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 17:13:25 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/10/16 18:05:39 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/10/16 21:19:39 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,5 @@ int				cmd_hash(int ac, char **av)
 		ret += ft_find_and_hash(av[i]);
 		i++;
 	}
-	ft_print_sortentries(g_bintable);
 	return (ret > 0 ? 1 : 0);
 }
