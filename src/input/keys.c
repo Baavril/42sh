@@ -6,39 +6,56 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 18:02:02 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/10/15 16:42:57 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/10/19 15:01:49 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "input.h"
+#include "history.h"
 
 #include <unistd.h>
 #include <term.h>
 #include <curses.h>
 
-char	*buff_realloc(char *buff, int buff_size)
+char	*buff_realloc(char *old_buff, int i)
 {
-	char *rtn;
+	static int buff_size = 0;
+	char *new_buff;
 
-	if (!(rtn = malloc(1 + buff_size * INPUT_SIZE)))
-		exit(-1);
-	ft_strcpy(rtn, buff);
-	free(buff);
-	return (rtn);
+	if (!*old_buff)
+		buff_size = 0;
+	if (i > INPUT_SIZE * buff_size)
+	{
+		buff_size = i / INPUT_SIZE + 1;
+		if (!(new_buff = malloc(1 + (buff_size) * INPUT_SIZE)))
+			exit(-1);
+		ft_strcpy(new_buff, old_buff);
+		free(old_buff);
+		return (new_buff);
+	}
+	return (old_buff);
 }
 
 void normal_char(char **buff, int *j, int *i, char c)
 {
-	static int buff_size = 0;
-
-	if (!**buff)
-		buff_size = 0;
-	++(*i);
-	if (*i > INPUT_SIZE * buff_size)
-		*buff = buff_realloc(*buff, ++buff_size);
+	*buff = buff_realloc(*buff, ++(*i));
 	ft_memmove(&((*buff)[*j + 1]), &((*buff)[*j]), *i - *j);
 	(*buff)[(*j)++] = c;
+}
+
+void set_string(char **buff, int *j, int *i, char *str)
+{
+	int len;
+
+	if (!str)
+		return;
+	len = ft_strlen(str);
+	if (*i < len)
+		*buff = buff_realloc(*buff, len);
+	ft_strcpy(*buff, str);
+	*i = len;
+	*j = len;
 }
 
 void right_arrow(char **buff, int *j, int *i)
@@ -80,6 +97,30 @@ void tab_key(char **buff, int *j, int *i)
 	char *str = ft_strdup("tabulation");
 	while (*str)
 		normal_char(buff, j, i, *str++);
+}
+
+void down_arrow(char **buff, int *j, int *i)
+{
+	char *str;
+	if (!inside_history)
+		return;
+	else if (history(FORWARD, NULL, &str) == 2)
+	{
+		set_string(buff, i, j, inside_history);
+		ft_strdel(&inside_history);
+	}
+	else
+		set_string(buff, i, j, str);
+}
+
+void up_arrow(char **buff, int *j, int *i)
+{
+	char *str;
+	if (!inside_history && (inside_history = ft_strdup(*buff)))
+		history(LAST, NULL, &str);
+	else
+		history(BACKWARD, NULL, &str);
+	set_string(buff, i, j, str);
 }
 
 void paste_key(char **buff, int *j, int *i)
@@ -147,6 +188,10 @@ void escape_char(char **buff, int *j, int *i, int *u)
 		left_arrow(buff, j, i);
 	else if (!ft_strcmp(&input_buffer[1], tgetstr("kr", NULL) + 2))
 		right_arrow(buff, j, i);
+	if (!ft_strcmp(&input_buffer[1], tgetstr("ku", NULL) + 2))
+		up_arrow(buff, j, i);
+	if (!ft_strcmp(&input_buffer[1], tgetstr("kd", NULL) + 2))
+		down_arrow(buff, j, i);
 	else if (!ft_strcmp(&input_buffer[1], tgetstr("kD", NULL) + 2))
 		delete_key(buff, j, i);
 	else if (!ft_strcmp(&input_buffer[1], tgetstr("kh", NULL) + 2))
