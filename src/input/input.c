@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/10/16 13:28:56 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/10/19 14:49:11 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int get_stdin(char *prompt, int prompt_len, char **buff)
 	i = 0;
 	j = 0;
 	u = -1;
+	inside_history = NULL;
 	*buff = ft_strdup("");
 	display(*buff, j, i, -1, prompt, prompt_len);
 	while (1)
@@ -79,10 +80,13 @@ int get_stdin(char *prompt, int prompt_len, char **buff)
 		else if (c == '\033')
 			escape_char(buff, &j, &i, &u);
 		else if (c == '\n' && !display(*buff, i, i, -1, prompt, prompt_len))
+		{
+			ft_strdel(&inside_history);
 			return(0);
+		}
 		display(*buff, j, i, u, prompt, prompt_len);
 	}
-	return(0);
+	return(1);
 }
 
 int read_command(char **buff)
