@@ -6,20 +6,20 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/10/19 14:49:11 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/10/20 11:40:58 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "input.h"
 #include "keys.h"
 #include "prompt.h"
-#include "libft.h"
 #include "display.h"
 
 #include <unistd.h>
 #include <term.h>
 #include <curses.h>
-#include <signal.h>
+#include <stdint.h>
 
 int toggle_termcaps()
 {
@@ -27,24 +27,6 @@ int toggle_termcaps()
 
 	if (tcgetattr(0, &term))
 		return(1);
-#if 0
-	if (term.c_lflag & ECHOE)
-		ft_printf("%d : %s\n", ECHOE, "ECHOE");
-	if (term.c_lflag & ECHO)
-		ft_printf("%d : %s\n", ECHO, "ECHO");
-	if (term.c_lflag & ECHONL)
-		ft_printf("%d : %s\n", ECHONL, "ECHONL");
-	if (term.c_lflag & ISIG)
-		ft_printf("%d : %s\n", ISIG, "ISIG");
-	if (term.c_lflag & ICANON)
-		ft_printf("%d : %s\n", ICANON, "ICANON");
-	if (term.c_lflag & IEXTEN)
-		ft_printf("%d : %s\n", IEXTEN, "IEXTEN");
-	if (term.c_lflag & TOSTOP)
-		ft_printf("%d : %s\n", TOSTOP, "TOSTOP");
-	if (term.c_lflag & NOFLSH)
-		ft_printf("%d : %s\n", NOFLSH, "NOFLSH");
-#endif
 	term.c_lflag ^= ECHO;
 	term.c_lflag ^= ICANON;
 	if (tcsetattr(0, 0, &term))
@@ -56,17 +38,17 @@ int toggle_termcaps()
 
 int get_stdin(char *prompt, int prompt_len, char **buff)
 {
-	int i;
-	int j;
-	int u;
+	size_t i;
+	size_t j;
+	size_t u;
 	char c;
 
 	i = 0;
 	j = 0;
-	u = -1;
+	u = SIZE_MAX;
 	inside_history = NULL;
 	*buff = ft_strdup("");
-	display(*buff, j, i, -1, prompt, prompt_len);
+	display(*buff, j, i, SIZE_MAX, prompt, prompt_len);
 	while (1)
 	{
 		if (read(0, &c, 1) == -1)
@@ -79,8 +61,9 @@ int get_stdin(char *prompt, int prompt_len, char **buff)
 			tab_key(buff, &j, &i);
 		else if (c == '\033')
 			escape_char(buff, &j, &i, &u);
-		else if (c == '\n' && !display(*buff, i, i, -1, prompt, prompt_len))
+		else if (c == '\n')
 		{
+			display(*buff, i, i, SIZE_MAX, prompt, prompt_len);
 			ft_strdel(&inside_history);
 			return(0);
 		}

@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 15:25:22 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/10/15 10:58:03 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/10/20 11:41:51 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@
 #include <term.h>
 #include <curses.h>
 #include <stdio.h>
+#include <stdint.h>
 
 
-int display_select(char *str, int start, int end)
+static int display_select(char *str, size_t start, size_t end)
 {
-	int swap;
+	size_t swap;
 	if (start > end)
 	{
 		swap = start;
@@ -35,16 +36,16 @@ int display_select(char *str, int start, int end)
 	return(0);
 }
 
-int display_all(char *str, int j, int i, int u, char *prompt, int prompt_len)
+static int display_all(char *str, size_t j, size_t i, size_t u, char *prompt, size_t prompt_len)
 {
-	int col = tgetnum("co");
+	size_t col = tgetnum("co");
 	char c;
 
 	c = '\0';
 	ft_putstr(tgetstr("cr", NULL));
 	ft_putstr(tgetstr("cd", NULL));
 	ft_putstr(prompt);
-	if (u < 0 || u > i)
+	if (u == SIZE_MAX || u > i)
 		ft_putstr(str);
 	else
 		display_select(str, j, u);
@@ -53,32 +54,16 @@ int display_all(char *str, int j, int i, int u, char *prompt, int prompt_len)
 	return((j + prompt_len) / col);
 }
 
-/*
-int refresh_line(int prompt_len, int line, char *str)
+int display(char *str, size_t j, size_t i, size_t u, char *prompt, size_t prompt_len)
 {
-	(void) prompt_len;
-	int col = tgetnum("co");
-	ft_putstr(tgetstr("cr", NULL));
-	ft_putstr(tgetstr("ce", NULL));
-	if (ft_strlen(str) < (unsigned long)(line * col))
-		return(1);
-	str += line * col;
-	while (*str && col--)
-		write(1, str++, 1);
-	return(0);
-}
-*/
-
-int display(char *str, int j, int i, int u, char *prompt, int prompt_len)
-{
-	int col = tgetnum("co");
-	int x;
-	static int lines_offset = 0;
+	size_t col = tgetnum("co");
+	size_t x;
+	static size_t lines_offset = 0;
 
 	x = 0;
 
-	// set lines_offset value to normal if string is empty (ISSUE HERE : may overwrite previous lines when prompt is 1+ lines long)
-	if (i == j && i == 0)
+	// sets lines_offset value to normal if string is empty : ISSUE HERE
+	if (i == j && i == 0) // We enter this when opening a new, fresh prompt (usually after entering a command). This test is just not enough !
 		lines_offset = prompt_len / col;
 
 	//use the value of lines_offset

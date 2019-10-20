@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 17:12:27 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/10/03 14:55:59 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/10/20 11:26:10 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char *qtbuff_to_text(char *qtbuff)
 	return(final);
 }
 
-int mkprompt_quote(char *input, char **buff)
+size_t mkprompt_quote(char *input, char **buff)
 {
 	char *qtbuff;
 
@@ -58,7 +58,7 @@ int mkprompt_quote(char *input, char **buff)
 	return (ft_strlen(*buff));
 }
 
-char *mkprompt_intro(int ret, int *len)
+char *mkprompt_intro(size_t ret, size_t *len)
 {
 	if (!ret)
 	{
@@ -72,7 +72,7 @@ char *mkprompt_intro(int ret, int *len)
 	}
 }
 
-char *mkprompt_getcwd(int ret, int *len)
+char *mkprompt_getcwd(size_t ret, size_t *len)
 {
 	char *rtn;
 
@@ -82,7 +82,7 @@ char *mkprompt_getcwd(int ret, int *len)
 	return(rtn);
 }
 
-char *mkprompt_outro(int ret, int *len)
+char *mkprompt_outro(size_t ret, size_t *len)
 {
 	if (!ret)
 	{
@@ -96,10 +96,10 @@ char *mkprompt_outro(int ret, int *len)
 	}
 }
 
-int mkprompt(char **prompt)
+size_t mkprompt(char **prompt)
 {
-	int len;
-	int ret;
+	size_t len;
+	size_t ret;
 
 	len = 0;
 	ret = 0;

@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 18:02:02 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/10/19 15:01:49 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/10/20 11:14:07 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@
 #include <unistd.h>
 #include <term.h>
 #include <curses.h>
+#include <stdint.h>
 
-char	*buff_realloc(char *old_buff, int i)
+char	*buff_realloc(char *old_buff, size_t i)
 {
-	static int buff_size = 0;
+	static size_t buff_size = 0;
 	char *new_buff;
 
 	if (!*old_buff)
@@ -37,16 +38,16 @@ char	*buff_realloc(char *old_buff, int i)
 	return (old_buff);
 }
 
-void normal_char(char **buff, int *j, int *i, char c)
+void normal_char(char **buff, size_t *j, size_t *i, char c)
 {
 	*buff = buff_realloc(*buff, ++(*i));
 	ft_memmove(&((*buff)[*j + 1]), &((*buff)[*j]), *i - *j);
 	(*buff)[(*j)++] = c;
 }
 
-void set_string(char **buff, int *j, int *i, char *str)
+void set_string(char **buff, size_t *j, size_t *i, char *str)
 {
-	int len;
+	size_t len;
 
 	if (!str)
 		return;
@@ -58,14 +59,14 @@ void set_string(char **buff, int *j, int *i, char *str)
 	*j = len;
 }
 
-void right_arrow(char **buff, int *j, int *i)
+void right_arrow(char **buff, size_t *j, size_t *i)
 {
 	(void) buff;
 	if (*j < *i)
 		++(*j);
 }
 
-void left_arrow(char **buff, int *j, int *i)
+void left_arrow(char **buff, size_t *j, size_t *i)
 {
 	(void) buff;
 	(void) i;
@@ -73,7 +74,7 @@ void left_arrow(char **buff, int *j, int *i)
 		--(*j);
 }
 
-void delete_key(char **buff, int *j, int *i)
+void delete_key(char **buff, size_t *j, size_t *i)
 {
 	if (*j < *i && *i > 0)
 	{
@@ -82,7 +83,7 @@ void delete_key(char **buff, int *j, int *i)
 	}
 }
 
-void backspace_key(char **buff, int *j, int *i)
+void backspace_key(char **buff, size_t *j, size_t *i)
 {
 	if (*i > 0 && *j > 0)
 	{
@@ -92,14 +93,14 @@ void backspace_key(char **buff, int *j, int *i)
 	}
 }
 
-void tab_key(char **buff, int *j, int *i)
+void tab_key(char **buff, size_t *j, size_t *i)
 {
 	char *str = ft_strdup("tabulation");
 	while (*str)
 		normal_char(buff, j, i, *str++);
 }
 
-void down_arrow(char **buff, int *j, int *i)
+void down_arrow(char **buff, size_t *j, size_t *i)
 {
 	char *str;
 	if (!inside_history)
@@ -113,7 +114,7 @@ void down_arrow(char **buff, int *j, int *i)
 		set_string(buff, i, j, str);
 }
 
-void up_arrow(char **buff, int *j, int *i)
+void up_arrow(char **buff, size_t *j, size_t *i)
 {
 	char *str;
 	if (!inside_history && (inside_history = ft_strdup(*buff)))
@@ -123,7 +124,7 @@ void up_arrow(char **buff, int *j, int *i)
 	set_string(buff, i, j, str);
 }
 
-void paste_key(char **buff, int *j, int *i)
+void paste_key(char **buff, size_t *j, size_t *i)
 {
 	char *str = copybuff;
 	if (str)
@@ -131,20 +132,20 @@ void paste_key(char **buff, int *j, int *i)
 			normal_char(buff, j, i, *str++);
 }
 
-void home_key(char **buff, int *j, int *i)
+void home_key(char **buff, size_t *j, size_t *i)
 {
 	(void) buff;
 	(void) i;
 	*j = 0;
 }
 
-void end_key(char **buff, int *j, int *i)
+void end_key(char **buff, size_t *j, size_t *i)
 {
 	(void) buff;
 	*j = *i;
 }
 
-void next_word(char **buff, int *j, int *i)
+void next_word(char **buff, size_t *j, size_t *i)
 {
 	(void) i;
 	while(*j < *i && ft_isalnum((*buff)[*j]))
@@ -153,7 +154,7 @@ void next_word(char **buff, int *j, int *i)
 			(*j)++;
 }
 
-void previous_word(char **buff, int *j, int *i)
+void previous_word(char **buff, size_t *j, size_t *i)
 {
 	(void) i;
 	while(*j > 0 && ft_isalnum((*buff)[*j]))
@@ -162,10 +163,10 @@ void previous_word(char **buff, int *j, int *i)
 			(*j)--;
 }
 
-void select_key(char **buff, int *j, int *i, int *u)
+void select_key(char **buff, size_t *j, size_t *i, size_t *u)
 {
 	(void) i;
-	if (*u == -1)
+	if (*u == SIZE_MAX)
 		*u = *j;
 	else if (*u != *j)
 	{
@@ -174,10 +175,10 @@ void select_key(char **buff, int *j, int *i, int *u)
 			copybuff = ft_strndup(*buff + *u, *j - *u);
 		else if (*j < *u)
 			copybuff = ft_strndup(*buff + *j, *u - *j);
-		*u = -1;
+		*u = SIZE_MAX;
 	}
 }
-void escape_char(char **buff, int *j, int *i, int *u)
+void escape_char(char **buff, size_t *j, size_t *i, size_t *u)
 {
 	char input_buffer[16];
 
