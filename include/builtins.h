@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2019/09/25 20:37:42 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/10/16 21:50:53 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ int				ft_putenv_table(char ***env, const char *name,
 				const char *value, int overwrite);
 int				is_a_builtin(char *cmd);
 
+int				ft_inbintable(char **bin_name);
+void			ft_insert_bintable(char *bin_name, char *bin_path);
+void			ft_free_bintable(void);
+
 /*
 ** Functions in builtins.c
 */
@@ -32,6 +36,7 @@ int				cmd_true(int argc, char **argv);
 int				cmd_false(int argc, char **argv);
 int				cmd_env(int argc, char **argv);
 int				cmd_pwd(int argc, char **argv);
+int				cmd_hash(int argc, char **argv);
 int				cmd_cd(int argc, char **argv);
 int				cmd_history(int argc, char **argv);
 

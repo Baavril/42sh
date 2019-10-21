@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/10/18 15:22:33 by yberramd         ###   ########.fr        #
+#    Updated: 2019/10/21 18:35:54 by yberramd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ SOURCES	:=	cast.c \
 			ft_isprint.c \
 			ft_itoa.c \
 			ft_lstadd.c \
+			ft_lstadd_back.c \
 			ft_lstdel.c \
 			ft_lstdelone.c \
 			ft_lstiter.c \

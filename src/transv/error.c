@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:56:23 by abarthel          #+#    #+#             */
-/*   Updated: 2019/07/21 18:56:42 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/10/16 13:55:11 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ const struct s_error_desc	g_errordesc[] =
 	{ 1, "syntax error near unexpected token" },
 	{ 1, "no such builtin" },
 	{ 1, "bad substitution" },
+	{ 1, "not found" },
 	{ 2, "filename argument required\n.: usage: . filename [arguments]" },
 	{ 2, "cannot allocate memory" },
 	{ 2, "system call error" },
@@ -38,17 +39,22 @@ void	psherror(int e_error, char *str, int e_message_type)
 {
 	if (e_message_type == e_parsing_type)
 	{
-		ft_dprintf(STDERR_FILENO, "%s: %s \'%s\'\n", \
+		ft_dprintf(STDERR_FILENO, "%s: %s \'%s\'.\n", \
 				g_progname, g_errordesc[e_error].message, str);
 	}
 	else if (e_message_type == e_cmd_type)
 	{
-		ft_dprintf(STDERR_FILENO, "%s: %s: %s\n", \
+		ft_dprintf(STDERR_FILENO, "%s: %s: %s.\n", \
 				g_progname, str, g_errordesc[e_error].message);
 	}
 	else if (e_message_type == e_invalid_type)
 	{
-		ft_dprintf(STDERR_FILENO, "%s: %s\n", \
+		ft_dprintf(STDERR_FILENO, "%s: %s.\n", \
 				g_progname, g_errordesc[e_error].message);
+	}
+	else if (e_message_type == e_builtin_type)
+	{
+		ft_dprintf(STDERR_FILENO, "%s: %s: %s.\n", \
+				g_progname, str, g_errordesc[e_error].message);
 	}
 }
