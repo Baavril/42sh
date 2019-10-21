@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/10/13 05:21:06 by tgouedar         ###   ########.fr        #
+#    Updated: 2019/10/18 15:22:33 by yberramd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -163,6 +163,8 @@ SOURCES	:=	cast.c \
 			utf8.c \
 			wrapper.c \
 			ft_isspace.c \
+			ft_strjoin_free.c \
+			ft_strfchr.c \
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 

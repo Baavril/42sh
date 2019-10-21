@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/13 05:18:22 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/10/18 15:24:05 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,5 +272,9 @@ char			*ft_resolvepath(char *str);
 char			*ft_realpath(const char *path, char *resolved_path);
 
 int				ft_isspace(char c);
+
+char			*ft_strjoin_free(char *s1, char *s2, int opt);
+
+int				ft_strfchr(char *str1, char *str2);
 
 #endif
