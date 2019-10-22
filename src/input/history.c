@@ -215,7 +215,7 @@ static int	init_history(t_history *history, char **home)
 			return (0);
 		}
 	}
-	else if (!(*home = ft_strdup("/tmp/.42sh_history")))
+	else if (!(*home = ft_strdup("/tmp/.42sh_history")))// A MODIFIER
 	{
 		ft_dprintf(2, "cannot allocate memory\n");
 		return (0);
@@ -349,16 +349,24 @@ static int	ft_str_exclamation_chr(char *str1, char *str2)
 
 static int	exclamation_search_history(t_history *history, char *line, char **cmd)
 {
-	while (history->next)
-		history = history->next;
-	while (history->previous)
+	if (history)
 	{
+		while (history->next)
+			history = history->next;
+		while (history->previous)
+		{
+			if (history->str != NULL && line != NULL && ft_str_exclamation_chr(history->str, line) != 0)
+			{
+				*cmd = history->str;
+				return (2);
+			}
+			history = history->previous;
+		}
 		if (history->str != NULL && line != NULL && ft_str_exclamation_chr(history->str, line) != 0)
 		{
 			*cmd = history->str;
 			return (2);
 		}
-		history = history->previous;
 	}
 	return (-1);
 }
