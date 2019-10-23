@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 16:31:23 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/10/23 18:26:25 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/10/23 19:26:01 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 t_htable			ft_init_htable(size_t entry_nbr, int e_data_type);
 void				ft_insert(t_htable *htable, char *key, void *value);
-const void			*ft_get_entry(const t_htable *htable, const char *key);
+void				*ft_get_entry(const t_htable *htable, const char *key);
 void				ft_iter_htable(t_htable *htable, t_ft_list to_apply);
 void				ft_print_sortentries(const t_htable *htable);
 void				ft_free_htable(t_htable *table);

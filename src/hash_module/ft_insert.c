@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 12:52:54 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/10/23 18:42:22 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/10/23 19:33:40 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ static void			ft_resize_htable(t_htable *htable)
 	t_hlist		*entries;
 	t_hlist		*voyager;
 
-		ft_putendl("PLOP");
 	entries = ft_lst_entries(htable);
-		ft_putendl("LST_DONE");
 	ft_empty_htable(htable);
 	htable->table_size *= 2;
 	htable->big_prime = ft_get_prime(3 * htable->table_size);

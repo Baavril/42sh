@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 22:23:01 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/10/23 15:06:16 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/10/23 19:33:12 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void			ft_print_sortentries(const t_htable *htable)
 {
 	t_list		*entries;
 
-	ft_putendl("\nFT_PRINT_ENTRY\n");
 	entries = (t_list*)ft_lst_entries(htable);
 	ft_lst_mergesort(&entries, &ft_cmp_entry);
 	ft_lstiter(entries, ft_get_lstprint(htable->data_type));

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 13:03:13 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/16 17:07:14 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/10/23 19:19:15 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 
+#include "hash_module.h"
 #include "sig_handler.h"
 #include "builtins.h"
 #include "error.h"
@@ -134,7 +135,7 @@ int	job(char **argv, char **envp)
 	{
 		if (!check_access(argv[0]))
 		{
-			ft_insert_bintable(pathname, argv[0]);
+			ft_insert_bintable(pathname, argv[0], HIT);
 			return (process_launch(argv, envp, pathname));
 		}
 		else
