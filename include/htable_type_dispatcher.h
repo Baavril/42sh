@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_empty_htable.c                                  :+:      :+:    :+:   */
+/*   htable_type_dispatcher.h                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/12 21:53:29 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/10/23 15:12:21 by tgouedar         ###   ########.fr       */
+/*   Created: 2019/10/23 12:11:10 by tgouedar          #+#    #+#             */
+/*   Updated: 2019/10/23 19:01:58 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "htable.h"
+#ifndef HTABLE_TYPE_DISPATCHER_H
+# define HTABLE_TYPE_DISPATCHER_H
 
-void		ft_empty_htable(t_htable *htable)
+# include "htable.h"
+
+enum	e_table_type
 {
-	size_t		i;
-	t_hlist		**table;
+	e_string_entries,
+	e_bash_entries
+};
 
-	i = 0;
-	table = htable->table;
-	while (i < htable->table_size)
-	{
-		if (table[i] != NULL)
-			ft_lstdel((t_list**)(&(table[i])), ft_get_free(htable->data_type));
-		i++;
-	}
-	htable->entry_nbr = 0;
-}
+typedef struct		s_htable_type
+{
+	t_ft_free		ft_free;
+	t_ft_list		ft_print;
+	t_ft_lstcpy		ft_value_cpy;
+	size_t			value_size;
+}					t_htable_type;
+
+#endif

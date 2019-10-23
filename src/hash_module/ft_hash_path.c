@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bin_table.c                                     :+:      :+:    :+:   */
+/*   zsh_hash.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 16:36:22 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/10/13 05:15:19 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/10/23 19:04:54 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,13 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include "hash_module.h"
-#include "libft.h"
 
-char				*ft_build_path(char *path, char *exec)
+/*
+** Cette surcouche du module vise a reproduire le fonctionnnement de la table de
+** hash du shell zsh.
+*/
+
+static char				*ft_build_path(char *path, char *exec)
 {
 	size_t	len;
 	size_t	slash;
@@ -31,7 +35,6 @@ char				*ft_build_path(char *path, char *exec)
 	res[slash] = '/';
 	ft_memcpy(res + slash + 1, exec, len);
 	res[slash + len + 1] = '\0';
-	free(path);
 	return (res);
 }
 
@@ -44,30 +47,41 @@ static void				ft_push_exec(t_htable *bin_table, char *dir_name)
 
 	if (!(dir_data = opendir(dir_name))) //probleme d'ouverture -> gestion d'erreur
 		return ;
-	while ((file_data = readdir(dir_data)))
+	while ((file_data = readdir(dir_data))) 
 	{
-		exec_path = ft_build_path(dir_name, file_data->d_name);
-		if (stat(exec_path, &sb) >= 0 && sb.st_mode & S_IXUSR)
-			ft_insert(bin_table, file_data->d_name, exec_path);
-		free(exec_path);
+		if (ft_strcmp(file_data->d_name, ".") 
+		&& ft_strcmp(file_data->d_name, "..")
+		&& !ft_get_entry(bin_table, file_data->d_name))
+		{
+			exec_path = ft_build_path(dir_name, file_data->d_name);
+			if (stat(exec_path, &sb) >= 0 && sb.st_mode & S_IXUSR)
+				ft_insert(bin_table, file_data->d_name, ft_strdup(exec_path));
+			free(exec_path);
+		}
 	}
 	closedir(dir_data);
 }
 
-void				ft_hash_path(t_htable *bin_table, char *path)
+void					ft_hash_path(t_htable *bin_table, char *path)
 {
 	static char		*hashed = NULL;
 	char			**dir;
 	size_t			i;
 
-	if (!(ft_strcmp(path, hashed)))
+	if (!path || !bin_table)
+	{
+		ft_strdel(&hashed);
+		return ;
+	}
+	if (hashed && !(ft_strcmp(path, hashed)))
 		return ;
 	i = 0;
-	//ft_map(empty);
+	ft_empty_htable(bin_table);
 	/*ft_check_memory(*/dir = ft_strsplit(path, ':');
 	while ((dir[i]))
 		ft_push_exec(bin_table, dir[i++]);
 	ft_tabdel(&dir);
-	ft_strdel(&hashed);
+	if (hashed)
+		ft_strdel(&hashed);
 	/*ft_check_memory(*/hashed = ft_strdup(path); //comment free ?
 }

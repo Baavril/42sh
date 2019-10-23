@@ -6,13 +6,13 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 16:28:14 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/09/28 13:34:27 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/10/21 17:30:41 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "htable.h"
 
-const char	*ft_get_entry(const t_htable *htable, const char *key)
+const void		*ft_get_entry(const t_htable *htable, const char *key)
 {
 	size_t				index;
 	t_hlist				*entry;

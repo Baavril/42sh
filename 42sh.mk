@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/10/22 12:23:52 by yberramd         ###   ########.fr        #
+#    Updated: 2019/10/23 19:08:09 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,17 +48,20 @@ SOURCES			:=		main.c \
 						job/builtins/builtin_truefalse.c \
 						job/builtins/builtins_dispatcher.c \
 						job/builtins/ft_putenv_table.c \
-						hash_module/corps_fini_tools.c\
-						hash_module/ft_bin_table.c\
-						hash_module/ft_empty_htable.c\
-						hash_module/ft_free_htable.c\
-						hash_module/ft_get_entries.c\
-						hash_module/ft_get_entry.c\
-						hash_module/ft_hash.c\
-						hash_module/ft_insert.c\
-						hash_module/ft_iter_htable.c\
-						hash_module/ft_print_entries.c\
-						hash_module/init_htable.c\
+						hash_module/bash_routines.c \
+						hash_module/corps_fini_tools.c \
+						hash_module/ft_empty_htable.c \
+						hash_module/ft_free_htable.c \
+						hash_module/ft_get_entry.c \
+						hash_module/ft_hash.c \
+						hash_module/ft_hash_path.c \
+						hash_module/ft_insert.c \
+						hash_module/ft_iter_htable.c \
+						hash_module/ft_lst_entries.c \
+						hash_module/ft_print_entries.c \
+						hash_module/htable_type_dispatcher.c \
+						hash_module/init_htable.c \
+						hash_module/string_routines.c \
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 

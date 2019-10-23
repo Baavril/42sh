@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lst_entries.c                                   :+:      :+:    :+:   */
+/*   string_routines.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/12 22:02:05 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/10/13 04:03:10 by tgouedar         ###   ########.fr       */
+/*   Created: 2019/10/23 17:14:45 by tgouedar          #+#    #+#             */
+/*   Updated: 2019/10/23 18:02:58 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "htable.h"
 
-t_list		*ft_lstcpy(t_list *elem)
+t_list		*ft_string_lstcpy(t_list *elem)
 {
 	t_hlist		*new;
 
@@ -22,21 +23,21 @@ t_list		*ft_lstcpy(t_list *elem)
 	return (elem);
 }
 
-t_hlist		*ft_lst_entries(const t_htable *htable)
+void					ft_print_string(t_list *to_print)
 {
-	size_t		i;
-	t_hlist		**table;
-	t_hlist		*entries;
+	t_hlist		*entry;
 
-	i = 0;
-	entries = NULL;
-	table = htable->table;
-	while (i < htable->table_size)
-	{
-		if (table[i])
-			ft_lstadd((t_list**)&entries,
-					ft_lstmap((t_list*)(table[i]), &ft_lstcpy));
-		i++;
-	}
-	return (entries);
+	entry = (t_hlist*)to_print;
+	ft_printf("%s=%s\n", entry->content->key, entry->content->value);
+}
+
+void					ft_free_string(void *to_free, size_t null)
+{
+	t_entry		*entry;
+
+	entry = (t_entry*)to_free;
+	(void)null;
+	free(entry->key);
+	free(entry->value);
+	free(entry);
 }

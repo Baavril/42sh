@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 17:13:25 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/10/16 21:55:43 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/10/23 19:03:03 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "libft.h"
 #include "error.h"
 #include "hash_module.h"
+#include "htable_type_dispatcher.h"
 
 t_htable		*g_bintable = NULL;
 
@@ -37,7 +38,7 @@ void			ft_insert_bintable(char *bin_name, char *bin_path)
 	if (!(g_bintable))
 	{
 		g_bintable = ft_memalloc(sizeof(t_htable));
-		*g_bintable = ft_init_htable(DEF_SIZE);
+		*g_bintable = ft_init_htable(DEF_SIZE, e_bash_entries);
 	}
 	ft_insert(g_bintable, bin_name, bin_path);
 }
@@ -78,7 +79,7 @@ int				cmd_hash(int ac, char **av)
 	if (g_bintable == NULL)
 	{
 		g_bintable = ft_memalloc(sizeof(t_htable));
-		*g_bintable = ft_init_htable(DEF_SIZE);
+		*g_bintable = ft_init_htable(DEF_SIZE, e_bash_entries);
 	}
 	if (ac > 1 && !ft_strcmp(av[i], "-r"))
 	{

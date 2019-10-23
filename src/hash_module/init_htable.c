@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 15:12:19 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/10/13 04:57:44 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/10/23 14:39:16 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 //#include "un header possedant une fonction ft_check_memory qui verifie le retour de malloc"
 
-t_htable		ft_init_htable(size_t entry_nbr)
+t_htable		ft_init_htable(size_t entry_nbr, int e_table_type)
 {
 	t_htable	table;
 
@@ -23,6 +23,7 @@ t_htable		ft_init_htable(size_t entry_nbr)
 	table.ran_a = ft_get_ran(table.big_prime);
 	table.ran_b = ft_get_ran(table.big_prime);
 	table.entry_nbr = 0;
+	table.data_type = e_table_type;
 	/*ft_check_memory(*/table.table = (t_hlist **)ft_memalloc(sizeof(t_hlist *)
 														* table.table_size);
 	return (table);

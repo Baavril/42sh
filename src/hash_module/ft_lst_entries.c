@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_empty_htable.c                                  :+:      :+:    :+:   */
+/*   ft_lst_entries.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/12 21:53:29 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/10/23 15:12:21 by tgouedar         ###   ########.fr       */
+/*   Created: 2019/10/12 22:02:05 by tgouedar          #+#    #+#             */
+/*   Updated: 2019/10/23 18:09:41 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "htable.h"
 
-void		ft_empty_htable(t_htable *htable)
+t_hlist		*ft_lst_entries(const t_htable *htable)
 {
 	size_t		i;
 	t_hlist		**table;
+	t_hlist		*entries;
 
 	i = 0;
+	entries = NULL;
 	table = htable->table;
 	while (i < htable->table_size)
 	{
-		if (table[i] != NULL)
-			ft_lstdel((t_list**)(&(table[i])), ft_get_free(htable->data_type));
+		if (table[i])
+			ft_lstadd((t_list**)&entries, ft_lstmap((t_list*)(table[i]),
+											ft_get_lstcpy(htable->data_type)));
 		i++;
 	}
-	htable->entry_nbr = 0;
+	return (entries);
 }
