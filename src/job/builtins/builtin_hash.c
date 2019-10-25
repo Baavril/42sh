@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 17:13:25 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/10/23 19:32:32 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/10/25 10:25:01 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int				ft_inbintable(char **bin_name)
 	if ((g_bintable) && (value = ft_get_entry(g_bintable, *bin_name)))
 	{
 		value->hit_value++;
+		free(*bin_name);
 		*bin_name = ft_strdup(value->bin_path);
 		return (1);
 	}
