@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 15:56:53 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/10/12 23:06:51 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/10/25 20:28:10 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ unsigned int		ft_random_get(void)
 
 unsigned int		ft_random_range(unsigned int min, unsigned int max)
 {
-	return (min + (ft_random_get() % max));
+	return (min + (ft_random_get() % (max - min)));
 }
 
 uint64_t		ft_get_prime(uint64_t min)
