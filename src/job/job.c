@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 13:03:13 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/25 10:29:03 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/10/30 15:31:22 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static int	check_type(char **arg)
 			*arg = pathname;
 		if (stat(*arg, &buf))
 			return (e_command_not_found);
+		ft_insert_bintable(*arg, pathname, HIT);
 	}
 	return (e_success);
 }
@@ -104,11 +105,11 @@ static int	process_launch(char **argv, char **envp, char *pathname)
 		ft_tabdel(&argv);
 		ft_tabdel(&envp);
 		ft_memdel((void**)&pathname);
-		exit (ret);
+		exit(ret);
 	}
 	else
 	{
-		set_signals(1);
+//		set_signals(1);
 		waitpid(g_childpid, &wstatus, WUNTRACED);
 		ret = WEXITSTATUS(wstatus);
 		ft_memdel((void**)&pathname);
@@ -135,7 +136,6 @@ int	job(char **argv, char **envp)
 	{
 		if (!check_access(argv[0]))
 		{
-			ft_insert_bintable(pathname, argv[0], HIT);
 			return (process_launch(argv, envp, pathname));
 		}
 		else
