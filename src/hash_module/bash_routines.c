@@ -6,12 +6,24 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 18:00:54 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/10/23 18:44:29 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/10/30 15:07:06 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "hash_module.h"
+
+int			ft_bash_cmp(t_list *to_cmp1, t_list *to_cmp2)
+{
+	t_bash_hash		*value1;
+	t_bash_hash		*value2;
+
+	value1 = ((t_hlist*)to_cmp1)->content->value;
+	value2 = ((t_hlist*)to_cmp2)->content->value;
+	if (value1->cmp_value > value2->cmp_value)
+		return (1);
+	return (-1);
+}
 
 void	ft_free_bash(void *to_free, size_t null)
 {
@@ -59,5 +71,6 @@ void	ft_insert_bash(t_htable *htable, char *key,
 
 	new.bin_path = path;
 	new.hit_value = hit;
+	new.cmp_value = htable->entry_nbr;
 	ft_insert(htable, key, &new);
 }

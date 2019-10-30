@@ -6,7 +6,7 @@
 #    By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/11 15:59:37 by tgouedar          #+#    #+#              #
-#    Updated: 2019/10/23 18:49:30 by tgouedar         ###   ########.fr        #
+#    Updated: 2019/10/30 14:48:32 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,9 @@ want memory leaks!
 
 II.FURTHER EXPLANATION
 
+This section explains the usable functions of the module: the functions listed
+in the hash_module.h header and that are to be called outside of the module.
+
 o> ft_init_htable : Sets up the "memory hog" and stores a set of functions that
 	treats the data structure of the entries the user wishes.
 	o> entry_nbr: is a rough estimate of number of entries you think your table
@@ -53,26 +56,14 @@ o> ft_init_htable : Sets up the "memory hog" and stores a set of functions that
 		executables may use AVG_BIN_NBR as entry_nbr.
 	o> data_type : is an int that will allow the module to load the routines
 		that treat your data structures. It needs to be a value of the
-		e_htable_type that is described in htable_type_dispatcher.h !!!
-
-o> htable_type_dispatcher.c : Data structures need routines throughout this
-	module, such as the way to copy the data or the way to print it. For any use
-	of a value structure that isn't native to this module, the user must write
-	a set of functions and put their addresses in a line of the dispatcher. It
-	also needs the size of the structure it must treat, which is the last field
-	of a dispatcher line. The index in the dispatcher of the line you add and/or
-	want to use must also be the data_type argument of ft_init_htable. We
-	recommand you use the enum defined in the header matching this file.
-	Are native to this module :
-		o> A string entry where value is a string.
-		o> A bash-like data structure that reproduce bash's hash table ways.
-		(binary path and number of hits).
+		e_htable_type that is described in htable_type_dispatcher.h !!! (See
+		section III.).
 
 o> ft_insert : Needs a htable, a key to hash and the value of the entry. The key
 	is always treated as a string, whereas value is (void*) type so that users
 	may insert whatever struct one wishes. However, giving a hash table a
 	structure that isn't native to this module requires the user to write a set
-	of routines to handle the data type.
+	of routines to handle the data type (see section III.).
 	When you give the module an entry, it will allocate the elements within the
 	structure according to the copy routine you wrote.
 	The simplest data one could insert is a string.
@@ -85,8 +76,10 @@ o> ft_insert : Needs a htable, a key to hash and the value of the entry. The key
 o> ft_get_entry : If key corresponds with an entry of your table, the value of
 	this entry (see ft_insert) is returned.
 
-o> ft_print_sortentries : Will print each entry on a line the format key=value
-	and sorted in ascii values of keys.
+o> ft_print_sortentries : Will print each entry on a line in the format that is
+	defined in the table's set of behaviours of the table you have defined (see
+	section III.).
+	key=value sorted in ascii values of keys may be a default behaviour.
 
 o> ft_free_htable : pretty straight foward.
 
@@ -102,13 +95,40 @@ o> ft_hash_path : This function reproduces the zsh hash builtin way of parsing
 	dupped path in the static variable from previous calls.
 
 
-III.ERRORS
+III.USER CUSTOMISATION
+
+This section explains the htable_type_dispatcher.c file you might want to
+tinker with.
+
+As previously mentionned, users can keep any type of structure in their htables
+for specific needs (bash binary hash table needs to keep track of the number of
+times an executable binary has been called). Therefore the module needs to know
+how each data type behaves in order to manage the table.
+Sets of behaviours are thus preset in the htable_type_dispatcher.c file
+
+Users may choose between zsh hash builtin behaviour or bash hash builtin
+behaviour which both are native to this module. However, if a user wishes to
+utilize a data structure of his own, this module needs routines throughout its
+execution that comply with the structure that is used, such as the way to copy
+the data or the way to print it. For any use of a value structure that isn't
+native to this module, the user must write a set of functions and put their
+addresses in a line of the dispatcher in htable_type_dispatcher.c. It also needs
+the size of the structure it must treat, which is the last field of a dispatcher
+line.
+
+/!\ Setting behaviour is done at initialisation /!\
+The index in the dispatcher of the line you add and/or want to use must also be
+the data_type argument of ft_init_htable. We recommand you use the enum defined
+in the header matching this file.
+
+
+IV.ERRORS
 
 The only Error is due to shortage of memory when allocating.
 Functions are not protected against any segfault poor designing might cause.
 
 
-IV.NOTA BENE
+V.NOTA BENE
 
 This piece of code uses functions that can be found in my libft, which is a
 library of standard functions mandatory to any student of 42. Mine was enhanced,
