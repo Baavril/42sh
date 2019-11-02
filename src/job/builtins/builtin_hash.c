@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 17:13:25 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/10/25 10:52:19 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/10/30 16:42:11 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,16 @@
 
 t_htable		*g_bintable = NULL;
 
-int				ft_inbintable(char **bin_name)
+int				ft_inbintable(char *bin_name, char **ret_val, char flag)
 {
 	t_bash_hash		*value;
 
-	if ((g_bintable) && (value = ft_get_entry(g_bintable, *bin_name)))
+	if ((g_bintable) && (value = ft_get_entry(g_bintable, bin_name)))
 	{
-		value->hit_value++;
-		free(*bin_name);
-		*bin_name = ft_strdup(value->bin_path);
+		if (ret_val)
+			*ret_val = ft_strdup(value->bin_path);
+		if (flag == HIT)
+			value->hit_value++;
 		return (1);
 	}
 	return (0);
@@ -84,8 +85,7 @@ void			ft_insert_bintable(char *bin_name, char *bin_path,
 		g_bintable = ft_memalloc(sizeof(t_htable));
 		*g_bintable = ft_init_htable(DEF_SIZE, e_bash_entries);
 	}
-	if (!ft_get_entry(g_bintable, bin_name))
-		ft_insert_bash(g_bintable, bin_name, bin_path, hit_val);
+	ft_insert_bash(g_bintable, bin_name, bin_path, hit_val);
 }
 
 void			ft_free_bintable(void)

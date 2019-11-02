@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/16 19:57:49 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/10/30 16:56:22 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ _Bool	prior_builtin(char *str)
 {
 	const struct s_prior_builtin	pbuiltin_list[] =
 	{ {"echo"}, {"exit"}, {"hash"}, {"setenv"}, {"unsetenv"}, {"pwd"}, {"cd"}, {"type"}, {"\0"} };
-	int	i;
+	int								i;
 
 	i = 0;
 	while (*(pbuiltin_list[i].pbuiltin))

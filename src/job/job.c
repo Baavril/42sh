@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 13:03:13 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/30 15:31:22 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/10/30 16:56:20 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,11 @@ static int	check_type(char **arg)
 		ft_memdel((void**)arg);
 		return (e_command_not_found);
 	}
-	if (ft_inbintable(arg))
+	if (ft_inbintable(pathname, arg, HIT))
+	{
+		ft_strdel(&pathname);
 		return (e_success);
+	}
 	if (!ft_strcmp(*arg, "."))
 		return (e_filename_arg_required);
 	if (ft_strstr(*arg, "/"))
@@ -55,7 +58,7 @@ static int	check_type(char **arg)
 			*arg = pathname;
 		if (stat(*arg, &buf))
 			return (e_command_not_found);
-		ft_insert_bintable(*arg, pathname, HIT);
+		ft_insert_bintable(pathname, *arg, HIT);
 	}
 	return (e_success);
 }
@@ -98,7 +101,6 @@ static int	process_launch(char **argv, char **envp, char *pathname)
 	wstatus = 0;
 	ret = e_success;
 	ft_swap((void**)&argv[0], (void**)&pathname);
-
 	if ((g_childpid = fork()) == 0) /*add fork protection, check SHLVL and resources */
 	{
 		ret = execve(pathname, argv, envp);
