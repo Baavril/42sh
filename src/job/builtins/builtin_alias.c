@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 13:45:27 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/11/04 19:33:00 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/11/04 19:55:59 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 t_htable		*g_alias = NULL;
 extern int		optind;
 extern int		opterr;
+extern int		optopt;
 
 void				ft_treat_alias(char **first_arg)
 {
@@ -74,33 +75,37 @@ int			cmd_unalias(int ac, char **av)
 	int			i;
 	char		*opt;
 
+	ret = 0;
 	opt = "+a";
 	opterr = 0;
 	optind = 1;
 	while ((i = getopt(ac, av, opt)) > 0)
 	{
 		if (i == '?' && (ret = 2))
-			break ;
-		if (i == 'a')
 		{
-			ft_empty_htable(g_alias);
-			return (0);
+			ft_dprintf(STDERR_FILENO, "%s: unalias: -%c: invalid option.\n", g_progname, optopt);
+			break ;
 		}
+		if (i == 'a')
+			ret = 1;
 	}
 	if (ac < 2 || ret == 2)
 	{
-		ft_dprintf(STDERR_FILENO, "unalias: usage: unalias [-a] name ... ]\n");
+		ft_dprintf(STDERR_FILENO, "unalias: usage: unalias [-a] name [name ...].\n");
 		return (2);
 	}
-	if (!g_alias)
+	if (ret == 1)
+	{
+		if (g_alias)
+			ft_empty_htable(g_alias);
 		return (0);
+	}
 	i = optind;
-	ret = 0;
 	while (i < ac)
 	{
-		if (!ft_del_entry(g_alias, av[i]))
+		if (!g_alias || !ft_del_entry(g_alias, av[i]))
 		{
-			ft_dprintf(STDERR_FILENO, "%s: unalias: %s: not found\n", g_progname, av[i]);
+			ft_dprintf(STDERR_FILENO, "%s: unalias: %s: not found.\n", g_progname, av[i]);
 			ret |= 1;
 		}
 		i++;
@@ -167,7 +172,8 @@ int			cmd_alias(int ac, char **av)
 	{
 		if (ret == '?')
 		{
-			ft_dprintf(STDERR_FILENO, "alias: usage: alias [-p] [name[=value] ... ]\n");
+			ft_dprintf(STDERR_FILENO, "%s: unalias: -%c: invalid option.\n", g_progname, optopt);
+			ft_dprintf(STDERR_FILENO, "alias: usage: alias [-p] [name[=value] ... ].\n");
 			return (2);
 		}
 		if (ret == 'p')
@@ -187,13 +193,13 @@ int			cmd_alias(int ac, char **av)
 			if (ft_isvalid_aliasname(av[i]))
 				ft_insert_alias(av[i], str);
 			else if ((ret = 1))
-				ft_dprintf(STDERR_FILENO, "%s: alias: %c: invalid alias name\n", g_progname, av[i]);
+				ft_dprintf(STDERR_FILENO, "%s: alias: %c: invalid alias name.\n", g_progname, av[i]);
 		}
 		else if (g_alias && (str = (char*)ft_get_entry(g_alias, av[i])))
 			ft_printf(mes, av[i], str);
 		else
 		{
-			ft_dprintf(STDERR_FILENO, "%s: alias: %s: not found\n", g_progname, av[i]);
+			ft_dprintf(STDERR_FILENO, "%s: alias: %s: not found.\n", g_progname, av[i]);
 			ret |= 1;
 		}
 		i++;
