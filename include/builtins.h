@@ -6,12 +6,14 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/30 16:34:30 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/11/04 16:15:24 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
+
+# define UNVALID_ALIAS			" \n\t/$=()\'`\"|&><\\;"
 
 /*
 ** Utils for builtins
@@ -24,6 +26,8 @@ int				ft_inbintable(char *bin_name, char **ret_val, char flag);
 void			ft_insert_bintable(char *bin_name, char *bin_path,
 													unsigned int hit_val);
 void			ft_free_bintable(void);
+void			ft_treat_alias(char **first_arg);
+void			ft_free_aliastable(void);
 
 /*
 ** Functions in builtins.c
@@ -40,6 +44,8 @@ int				cmd_pwd(int argc, char **argv);
 int				cmd_hash(int argc, char **argv);
 int				cmd_cd(int argc, char **argv);
 int				cmd_history(int argc, char **argv);
+int				cmd_alias(int ac, char **av);
+int				cmd_unalias(int ac, char **av);
 
 /*
 ** Functions in builtins_dispatcher.c

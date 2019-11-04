@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/21 18:35:10 by yberramd         ###   ########.fr       */
+/*   Updated: 2019/11/04 15:41:54 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 
 void			ft_bzero(void *s, size_t n) __attribute__
 				((nonnull(1)));
+
+int				ft_isin(int c, char *charset);
 
 int				ft_isalpha(int c);
 

@@ -6,12 +6,9 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 17:13:25 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/10/30 16:42:11 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/11/04 11:16:19 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <stdio.h>
-
 
 #include "job.h"
 #include "libft.h"
@@ -138,8 +135,8 @@ int				cmd_hash(int ac, char **av)
 	}
 	while (i < ac)
 	{
-		ret += ft_find_and_hash(av[i]);
+		ret |= ft_find_and_hash(av[i]);
 		i++;
 	}
-	return (ret > 0 ? 1 : 0);
+	return (ret);
 }

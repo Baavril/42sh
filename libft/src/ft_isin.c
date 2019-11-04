@@ -1,33 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_entry.c                                     :+:      :+:    :+:   */
+/*   ft_isin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/26 16:28:14 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/11/04 15:10:42 by tgouedar         ###   ########.fr       */
+/*   Created: 2018/11/17 14:39:33 by tgouedar          #+#    #+#             */
+/*   Updated: 2018/11/17 19:11:57 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "htable.h"
-
-void		*ft_get_entry(const t_htable *htable, const char *key)
+int	ft_isin(const char c, const char *charset)
 {
-	size_t				index;
-	t_hlist				*entry;
-	t_entry				*content;
-
-	index = ft_hash(htable, key);
-	if ((entry = (t_hlist*)(htable->table[index])))
+	while (*charset)
 	{
-		while ((entry))
-		{
-			content = (t_entry*)(entry->content);
-			if (!(ft_strcmp(key, content->key)))
-				return (content->value);
-			entry = entry->next;
-		}
+		if (!(*charset - c))
+			return (1);
+		charset++;
 	}
-	return (NULL);
+	return (0);
 }

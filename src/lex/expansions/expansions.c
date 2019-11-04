@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 17:07:44 by abarthel          #+#    #+#             */
-/*   Updated: 2019/08/01 18:48:23 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/11/04 16:16:00 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include "libft.h"
 #include "error.h"
+#include "builtins.h"
 #include "expansions.h"
 
 const struct s_tags	g_tags[] =
@@ -94,9 +95,9 @@ static int		replace_expansion(char **token, char **next, int ref)
 
 int			treat_expansions(char **tokens)
 {
-	int	ref;
-	int	i;
-	int	ret;
+	int		ref;
+	int		i;
+	int		ret;
 	char	*next;
 
 	i = 0;
@@ -120,5 +121,6 @@ int			treat_expansions(char **tokens)
 		}
 		++i;
 	}
+	ft_treat_alias(tokens); // I have no actual idea to place this exactly but I believe it is somewhere around here
 	return (e_success);
 }

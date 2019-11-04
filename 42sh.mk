@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/10/23 19:08:09 by tgouedar         ###   ########.fr        #
+#    Updated: 2019/11/04 15:31:54 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SOURCES			:=		main.c \
 						jcont/jcont.c \
 						job/job.c \
 						job/path_concat.c \
+						job/builtins/builtin_alias.c \
 						job/builtins/builtin_cd.c \
 						job/builtins/builtin_echo.c \
 						job/builtins/builtin_type.c \
@@ -53,6 +54,7 @@ SOURCES			:=		main.c \
 						hash_module/ft_empty_htable.c \
 						hash_module/ft_free_htable.c \
 						hash_module/ft_get_entry.c \
+						hash_module/ft_del_entry.c \
 						hash_module/ft_hash.c \
 						hash_module/ft_hash_path.c \
 						hash_module/ft_insert.c \
