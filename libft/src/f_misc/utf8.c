@@ -32,7 +32,7 @@ static __inline__ int	m0xffff_utf8(wchar_t *wc)
 	return ((int)*wc);
 }
 
-static __inline__ int	m0x10ffff_ut8(wchar_t *wc)
+static __inline__ int	m0x10ffff_utf8(wchar_t *wc)
 {
 	*wc = ((*wc << 7) & ~0xF8FFFFFF) | ((*wc << 4) & ~0xFFC0FFFF)
 		| ((*wc << 2) & ~0xFFFFC0FF) | (*wc & ~0xFFFFFFC0);
@@ -53,7 +53,7 @@ int					utf8_encoder(wchar_t *wc)
 	else if (*wc <= 0xFFFF)
 		return (m0xffff_utf8(wc));
 	else if (*wc <= 0x10FFFF)
-		return (m0x10ffff_ut8(wc));
+		return (m0x10ffff_utf8(wc));
 	else
 		return (-1);
 }

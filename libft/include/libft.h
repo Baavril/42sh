@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
-/*   Updated: 2019/11/04 15:41:54 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/11/05 16:17:05 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,12 @@
 void			ft_bzero(void *s, size_t n) __attribute__
 				((nonnull(1)));
 
-int				ft_isin(int c, char *charset);
+int                             ft_strfchr(char *str1, char *str2);
+
+
+int                             ft_isspace(char c);
+
+int                             ft_isin(int c, char *charset);
 
 int				ft_isalpha(int c);
 
@@ -172,8 +177,6 @@ char			*ft_strsub(char const *s, unsigned int start, size_t len);
 
 char			*ft_strjoin(char const *s1, char const *s2);
 
-char			*ft_strjoinfree(char *s1, char *s2);
-
 char			*ft_strtrim(char const *s);
 
 char			*ft_itoa(int n);
@@ -191,7 +194,11 @@ typedef struct	s_list
 	struct s_list	*next;
 }				t_list;
 
-typedef int		(*t_ft_cmp)(t_list *, t_list *);
+typedef int             (*t_ft_cmp)(t_list *, t_list *);
+
+void                    ft_lst_mergesort(t_list **lst, t_ft_cmp ft_cmp);
+
+void                    ft_lstadd_back(t_list **alst, t_list *new);
 
 void			ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
 
@@ -199,15 +206,11 @@ void			ft_lstdel(t_list **alst, void (*del)(void *, size_t));
 
 void			ft_lstadd(t_list **alst, t_list *new);
 
-void			ft_lstadd_back(t_list **alst, t_list *new);
-
 void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 
 t_list			*ft_lstnew(void const *content, size_t content_size);
 
 t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
-
-void			ft_lst_mergesort(t_list **lst, t_ft_cmp ft_cmp);
 
 void			ft_print_tables(char **tables);
 
@@ -269,16 +272,16 @@ void			ft_swap(void **a, void **b);
 
 char			*ft_strnjoin(int nb, char *s1, char *s2, ...);
 
-char			*ft_strnjoinfree(int nb, char *s1, char *s2, ...);
-
 char			*ft_resolvepath(char *str);
 
 char			*ft_realpath(const char *path, char *resolved_path);
 
-int				ft_isspace(char c);
+void			ft_nmemdel(size_t n, void **ptr, ...);
 
 char			*ft_strjoin_free(char *s1, char *s2, int opt);
 
-int				ft_strfchr(char *str1, char *str2);
+char                    *ft_strjoinfree(char *s1, char *s2);
+
+char            *ft_strnjoinfree(int nb, char *s1, char *s2, ...);
 
 #endif

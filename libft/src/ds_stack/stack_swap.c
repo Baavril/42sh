@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str_is_lowercase.c                              :+:      :+:    :+:   */
+/*   stack_swap.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/12 21:14:29 by abarthel          #+#    #+#             */
-/*   Updated: 2018/11/14 13:03:10 by abarthel         ###   ########.fr       */
+/*   Created: 2019/10/22 14:27:51 by abarthel          #+#    #+#             */
+/*   Updated: 2019/10/31 09:40:39 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_str_is_lowercase(char *s)
+#include "ft_stack.h"
+
+void	stack_swap(struct s_stack **top)
 {
-	if (!*s)
-		return (1);
-	while (*s >= 97 && *s <= 122)
-	{
-		++s;
-		if (!*s)
-			return (1);
-	}
-	return (0);
+	struct s_stack	*tmp;
+
+	if (!*top)
+		return ;
+	else if (!(*top)->previous)
+		return ;
+	tmp = *top;
+	*top = (*top)->previous;
+	tmp->previous = (*top)->previous;
+	(*top)->previous = tmp;
 }

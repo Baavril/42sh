@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str_is_numeric.c                                :+:      :+:    :+:   */
+/*   queue_apply_to_each.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/12 21:08:15 by abarthel          #+#    #+#             */
-/*   Updated: 2018/11/14 13:03:44 by abarthel         ###   ########.fr       */
+/*   Created: 2019/10/24 12:40:18 by abarthel          #+#    #+#             */
+/*   Updated: 2019/10/31 08:50:50 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_str_is_numeric(char *s)
+#include "ft_queue.h"
+
+void	queue_apply_to_each(struct s_queue *queue, void (*f)())
 {
-	if (!*s)
-		return (1);
-	while (*s >= 48 && *s <= 57)
+	struct s_qnode	*node;
+
+	node = queue->front;
+	while (node)
 	{
-		++s;
-		if (!*s)
-			return (1);
+		f(node->data);
+		node = node->previous;
 	}
-	return (0);
 }

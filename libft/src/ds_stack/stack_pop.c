@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str_is_alpha.c                                  :+:      :+:    :+:   */
+/*   stack_pop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/12 20:46:23 by abarthel          #+#    #+#             */
-/*   Updated: 2018/11/14 12:38:30 by abarthel         ###   ########.fr       */
+/*   Created: 2019/10/22 14:23:37 by abarthel          #+#    #+#             */
+/*   Updated: 2019/10/31 09:36:34 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_str_is_alpha(char *s)
+#include <stdlib.h>
+
+#include "ft_stack.h"
+
+void	stack_pop(struct s_stack **top, void (*del_data)(void *))
 {
-	if (!*s)
-		return (1);
-	while ((*s >= 97 && *s <= 122) || (*s >= 65 && *s <= 90))
+	struct s_stack	*previous;
+
+	if (*top)
 	{
-		++s;
-		if (!*s)
-			return (1);
+		del_data((*top)->data);
+		previous = (*top)->previous;
+		free(*top);
+		*top = previous;
 	}
-	return (0);
 }

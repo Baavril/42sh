@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd.c                                        :+:      :+:    :+:   */
+/*   stack_pop_get_data.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/13 13:52:55 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/16 17:22:14 by tgouedar         ###   ########.fr       */
+/*   Created: 2019/10/23 15:09:11 by abarthel          #+#    #+#             */
+/*   Updated: 2019/10/31 09:37:19 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdlib.h>
 
-void	ft_lstadd(t_list **alst, t_list *new)
+#include "ft_stack.h"
+
+extern __inline__ void	*stack_pop_get_data(struct s_stack **top)
 {
-	t_list		*new_back;
+	struct s_stack	*previous;
+	void		*__restrict__ data;
 
-	new_back = new;
-	while (new_back->next)
-		new_back = new_back->next;
-	new_back->next = *alst;
-	*alst = new;
+	data = NULL;
+	if (*top)
+	{
+		previous = (*top)->previous;
+		data = (*top)->data;
+		free(*top);
+		*top = previous;
+	}
+	return (data);
 }

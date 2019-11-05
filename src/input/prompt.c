@@ -6,19 +6,20 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 17:12:27 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/10/03 14:55:59 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/11/05 16:06:05 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
+
 #include "libft.h"
 #include "quote.h"
+
 # define COLOR "\033[38;5;16;48;5;34;m"
 # define NCOLOR "\033[38;5;34;48;5;0;m"
 # define ERR_COLOR "\033[38;5;16;48;5;124;m"
 # define NERR_COLOR "\033[38;5;124;48;5;0;m"
 # define RESET "\033[0m"
-
-#include <unistd.h>
 
 static char *quoteword(char c)
 {

@@ -1,40 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putwchar.c                                      :+:      :+:    :+:   */
+/*   stack_duplicate.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/29 17:03:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/06/26 17:33:48 by abarthel         ###   ########.fr       */
+/*   Created: 2019/10/22 14:28:33 by abarthel          #+#    #+#             */
+/*   Updated: 2019/10/31 09:34:56 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <unistd.h>
-#include "utf8.h"
 
-int	ft_putwchar(wchar_t wc)
+#include "ft_stack.h"
+
+void	stack_duplicate(struct s_stack **top, void *(*copy_data)())
 {
-	char	buf[4];
+	void	*data_copy;
 
-	if (wc >= 0x00)
+	data_copy = NULL;
+	if (*top)
 	{
-		if (wc <= 0x007F)
-			return ((write(STDOUT_FILENO, &wc, sizeof(wc))) == -1
-					? -1 : (int)wc);
-		else
-		{
-			if (utf8_encoder(&wc) == -1)
-				return (-1);
-			buf[0] = wc >> 24;
-			buf[1] = wc >> 16;
-			buf[2] = wc >> 8;
-			buf[3] = wc;
-			return ((write(STDOUT_FILENO, buf, 4)) == -1
-					? -1 : (int)wc);
-		}
+		data_copy = copy_data((*top)->data);
+		if (data_copy)
+			stack_push(top, data_copy);
 	}
-	else
-		return (-1);
 }
