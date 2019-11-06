@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 18:00:54 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/11/06 12:32:54 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/11/06 12:39:26 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_list		*ft_bash_lstcpy(t_list *elem)
 	t_bash_hash		*tmp;
 
 	new = (t_hlist*)elem;
+	ft_printf("%p\n", new->content);
 	new->content->key = ft_strdup(new->content->key); /* Line that produce SegV */
 	tmp = ft_memalloc(new->content->value_size);
 	ft_memcpy(tmp, new->content->value, new->content->value_size);

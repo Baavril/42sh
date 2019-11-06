@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/11/04 15:45:27 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/11/06 14:42:56 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,14 @@ const t_builtins	g_builtins[] =
 	{ "type", &cmd_type},
 	{ "history", &cmd_history},
 	{ "test", &cmd_test},
+	{ "set", &cmd_set},
 	{ "\0", NULL}
 };
 
 _Bool	prior_builtin(char *str)
 {
 	const struct s_prior_builtin	pbuiltin_list[] =
-	{ {"alias"}, {"unalias"}, {"echo"}, {"exit"}, {"hash"}, {"setenv"}, {"unsetenv"}, {"pwd"}, {"cd"}, {"type"}, {"test"}, {"\0"} };
+	{ {"alias"}, {"unalias"}, {"echo"}, {"exit"}, {"hash"}, {"setenv"}, {"unsetenv"}, {"pwd"}, {"cd"}, {"type"}, {"test"}, {"set"}, {"\0"} };
 	int								i;
 
 	i = 0;

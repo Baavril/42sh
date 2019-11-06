@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:51:41 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/23 14:47:47 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/11/06 14:51:28 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ enum	e_minishell_error
 	e_syntax_error,
 	e_no_builtin,
 	e_bad_substitution,
+	e_cannot_assign_list_to_array_member,
 	e_not_found,
 	e_filename_arg_required,
 	e_cannot_allocate_memory,

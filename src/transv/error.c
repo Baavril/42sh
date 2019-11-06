@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:56:23 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/23 14:47:49 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/11/06 14:51:49 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ const struct s_error_desc	g_errordesc[] =
 	{ 1, "syntax error near unexpected token" },
 	{ 1, "no such builtin" },
 	{ 1, "bad substitution" },
+	{ 1, "cannot assign list to array member" },
 	{ 1, "not found" },
 	{ 2, "filename argument required\n.: usage: . filename [arguments]" },
 	{ 2, "cannot allocate memory" },

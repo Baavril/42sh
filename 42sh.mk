@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/11/06 14:01:58 by bprunevi         ###   ########.fr        #
+#    Updated: 2019/11/06 14:44:56 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SOURCES			:=		main.c \
 						job/path_concat.c \
 						job/builtins/builtin_alias.c \
 						job/builtins/builtin_cd.c \
+						job/builtins/builtin_set.c \
 						job/builtins/builtin_echo.c \
 						job/builtins/builtin_type.c \
 						job/builtins/builtin_env.c \
@@ -62,6 +63,11 @@ SOURCES			:=		main.c \
 						job/builtins/builtin_test/builtin_test_precedence_management2.c \
 						job/builtins/builtins_dispatcher.c \
 						job/builtins/ft_putenv_table.c \
+						job/builtins/shell_variables/shell_variables.c \
+						job/builtins/shell_variables/alloc_shell_variables.c \
+						job/builtins/shell_variables/free_shell_variables.c \
+						job/builtins/shell_variables/init_shell_variables.c \
+						job/builtins/shell_variables/utils_shell_variables.c \
 						hash_module/bash_routines.c \
 						hash_module/corps_fini_tools.c \
 						hash_module/ft_empty_htable.c \
