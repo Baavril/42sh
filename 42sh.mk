@@ -47,6 +47,19 @@ SOURCES			:=		main.c \
 						job/builtins/builtin_setenv.c \
 						job/builtins/builtin_unsetenv.c \
 						job/builtins/builtin_truefalse.c \
+						job/builtins/builtin_test/builtin_test_free.c \
+						job/builtins/builtin_test/builtin_test_tools.c \
+						job/builtins/builtin_test/builtin_test_dispatchers.c \
+						job/builtins/builtin_test/builtin_test_tokenisation.c \
+						job/builtins/builtin_test/builtin_test_single_options1.c \
+						job/builtins/builtin_test/builtin_test_single_options2.c \
+						job/builtins/builtin_test/builtin_test_single_options3.c \
+						job/builtins/builtin_test/builtin_test_single_options4.c \
+						job/builtins/builtin_test/builtin_test_single_options5.c \
+						job/builtins/builtin_test/builtin_test_double_options1.c \
+						job/builtins/builtin_test/builtin_test_double_options2.c \
+						job/builtins/builtin_test/builtin_test_precedence_management1.c \
+						job/builtins/builtin_test/builtin_test_precedence_management2.c \
 						job/builtins/builtins_dispatcher.c \
 						job/builtins/ft_putenv_table.c \
 						hash_module/bash_routines.c \

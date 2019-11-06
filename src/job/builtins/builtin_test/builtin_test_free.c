@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strfchr.c                                       :+:      :+:    :+:   */
+/*   builtin_test_free.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/13 15:49:43 by yberramd          #+#    #+#             */
-/*   Updated: 2019/10/21 16:38:51 by yberramd         ###   ########.fr       */
+/*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
+/*   Updated: 2019/10/18 17:29:13 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../../../include/builtin_test.h"
+#include "../../../../libft/include/libft.h"
+#include "../../../../include/builtins.h"
 
-int	ft_strfchr(char *str1, char *str2)
+void	ft_free_tabs(char **tab)
 {
 	int	i;
 
 	i = 0;
-	while (str1[i] && str2[i])
+	if (tab)
 	{
-		if (str1[i] != str2[i])
-			return (0);
-		i++;
+		while (tab[i])
+		{
+			ft_strdel(&(tab[i]));
+			i++;
+		}
+		free(tab);
 	}
-	if (str1[i] && str2)
-		return (0);
-	return (1);
 }

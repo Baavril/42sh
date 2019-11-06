@@ -37,6 +37,7 @@ int				cmd_setenv(int argc, char **argv);
 int				cmd_echo(int agrc, char **argv);
 int				cmd_type(int agrc, char **argv);
 int				cmd_exit(int argc, char **argv);
+int				cmd_test(int argc, char **argv);
 int				cmd_true(int argc, char **argv);
 int				cmd_false(int argc, char **argv);
 int				cmd_env(int argc, char **argv);
