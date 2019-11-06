@@ -38,7 +38,7 @@ void		ft_print_string(t_list *to_print)
 	t_hlist		*entry;
 
 	entry = (t_hlist*)to_print;
-	ft_printf("%s=%s\n", entry->content->key, entry->content->value);
+	ft_printf("%s=%p\n", entry->content->key, entry->content->value);
 }
 
 void		ft_free_string(void *to_free, size_t null)
