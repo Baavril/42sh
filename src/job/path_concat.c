@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 13:03:13 by abarthel          #+#    #+#             */
-/*   Updated: 2019/07/25 21:48:17 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/11/06 18:05:04 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ int	path_concat(char **bin)
 		ft_memdel((void**)&pathname);
 	}
 	ft_memdel((void**)&beg);
-	ft_memdel((void**)bin);
 	if (dir)
 	{
 		*bin = pathname;
 		return (e_success);
 	}
+	ft_memdel((void**)bin);
 	return (e_command_not_found);
 }

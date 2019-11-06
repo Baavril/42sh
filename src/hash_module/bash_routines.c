@@ -6,12 +6,9 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 18:00:54 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/11/06 16:21:14 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/11/06 18:37:50 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <stdio.h>
-
 
 #include <stdlib.h>
 #include "hash_module.h"
@@ -42,30 +39,16 @@ void	ft_free_bash(void *to_free, size_t null)
 
 t_list		*ft_bash_lstcpy(t_list *elem)
 {
-
 	t_entry			*elem_content;
-	t_entry			content_cpy;
+	t_bash_hash		*tmp;
 
 	elem_content = (t_entry*)(elem->content);
-	content_cpy.key = ft_strdup(elem_content->key);
-	printf("%s\n", content_cpy.key);
-	content_cpy.value = ft_memalloc(elem_content->value_size);
-	content_cpy.value_size = elem_content->value_size;
-	ft_memcpy(content_cpy.value, elem_content->value, elem_content->value_size);
-	((t_bash_hash*)(content_cpy.value))->bin_path = ft_strdup(((t_bash_hash*)(content_cpy.value))->bin_path);
-	ft_memcpy(elem->content, (void*)(&content_cpy), elem->content_size);
+	elem_content->key = ft_strdup(elem_content->key);
+	tmp = ft_memalloc(elem_content->value_size);
+	ft_memcpy(tmp, elem_content->value, elem_content->value_size);
+	tmp->bin_path = ft_strdup(tmp->bin_path);
+	elem_content->value = tmp;
 	return (elem);
-//	t_hlist			*new;
-//	t_bash_hash		*tmp;
-//
-//	new = (t_hlist*)elem;
-//	ft_printf("%p\n", new->content);
-//	new->content->key = ft_strdup(new->content->key); /* Line that produce SegV */
-//	tmp = ft_memalloc(new->content->value_size);
-//	ft_memcpy(tmp, new->content->value, new->content->value_size);
-//	tmp->bin_path = ft_strdup(tmp->bin_path);
-//	new->content->value = tmp;
-//	return (elem);
 }
 
 void	ft_print_bash(t_list *to_print)

@@ -6,9 +6,12 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 12:52:54 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/11/06 16:36:22 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/11/06 18:23:33 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <stdio.h>
+
 
 #include <stdlib.h>
 #include "htable_type_dispatcher.h"
@@ -49,7 +52,6 @@ void				ft_insert(t_htable *htable, char *key, void *value)
 	content.key = key;
 	content.value_size = ft_get_value_size(htable->data_type, value);
 	content.value = value;
-	ft_memcpy(content.value, value, content.value_size);
 	/*ft_check_memory(*/new_entry = (t_hlist*)ft_lstnew(&content, sizeof(content));
 	ft_cpy = ft_get_lstcpy(data_type);
 	ft_cpy((t_list*)new_entry);
