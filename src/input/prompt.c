@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 17:12:27 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/05 16:06:05 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/11/06 14:03:24 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 #include "libft.h"
 #include "quote.h"
 
-# define COLOR "\033[38;5;16;48;5;34;m"
-# define NCOLOR "\033[38;5;34;48;5;0;m"
-# define ERR_COLOR "\033[38;5;16;48;5;124;m"
-# define NERR_COLOR "\033[38;5;124;48;5;0;m"
+# define COLOR "\033[96;m"
+# define ERR_COLOR "\033[31;m"
+# define BLUE "\033[96;m"
+# define RED "\033[96;m"
 # define RESET "\033[0m"
 
 static char *quoteword(char c)
@@ -47,7 +47,7 @@ static char *qtbuff_to_text(char *qtbuff)
 	return(final);
 }
 
-int mkprompt_quote(char *input, char **buff)
+size_t mkprompt_quote(char *input, char **buff)
 {
 	char *qtbuff;
 
@@ -59,21 +59,21 @@ int mkprompt_quote(char *input, char **buff)
 	return (ft_strlen(*buff));
 }
 
-char *mkprompt_intro(int ret, int *len)
+char *mkprompt_intro(size_t ret, size_t *len)
 {
 	if (!ret)
 	{
-		*len += 1;
-		return(ft_strdup(COLOR" "));
+		*len += 0;
+		return(ft_strdup(COLOR""));
 	}
 	else
 	{
-		*len += 1;
-		return(ft_strdup(ERR_COLOR" "));
+		*len += 0;
+		return(ft_strdup(ERR_COLOR""));
 	}
 }
 
-char *mkprompt_getcwd(int ret, int *len)
+char *mkprompt_getcwd(size_t ret, size_t *len)
 {
 	char *rtn;
 
@@ -83,24 +83,24 @@ char *mkprompt_getcwd(int ret, int *len)
 	return(rtn);
 }
 
-char *mkprompt_outro(int ret, int *len)
+char *mkprompt_outro(size_t ret, size_t *len)
 {
 	if (!ret)
 	{
 		*len += 3;
-		return(ft_strdup(" "NCOLOR""RESET" "));
+		return(ft_strdup(" "BLUE"~"RESET" "));
 	}
 	else
 	{
 		*len += 3;
-		return(ft_strdup(" "NERR_COLOR""RESET" "));
+		return(ft_strdup(" "RED"~"RESET" "));
 	}
 }
 
-int mkprompt(char **prompt)
+size_t mkprompt(char **prompt)
 {
-	int len;
-	int ret;
+	size_t len;
+	size_t ret;
 
 	len = 0;
 	ret = 0;
