@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 15:25:22 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/10/15 10:58:03 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/11/06 12:14:56 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ int display_select(char *str, int start, int end)
 int display_all(char *str, int j, int i, int u, char *prompt, int prompt_len)
 {
 	int col = tgetnum("co");
-	char c;
 
-	c = '\0';
 	ft_putstr(tgetstr("cr", NULL));
 	ft_putstr(tgetstr("cd", NULL));
 	ft_putstr(prompt);
