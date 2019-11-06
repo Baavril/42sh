@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 10:28:01 by abarthel          #+#    #+#             */
-/*   Updated: 2019/01/29 12:24:20 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/11/06 16:34:42 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,13 @@ t_list	*ft_lstnew(void const *content, size_t content_size)
 {
 	t_list	*new;
 
-	new = (t_list*)malloc(sizeof(t_list));
+	new = (t_list*)ft_memalloc(sizeof(t_list));
 	if (!new)
 		return (NULL);
 	if (!content)
-	{
-		new->content = NULL;
-		new->content_size = 0;
-		new->next = NULL;
 		return (new);
-	}
-	new->content = ft_strdup(content);
+	new->content = malloc(content_size);
+	ft_memcpy(new->content, content, content_size);
 	if (!new->content)
 	{
 		free(new);

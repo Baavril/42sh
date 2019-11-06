@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 12:52:54 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/10/23 19:33:40 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/11/06 16:36:22 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ void				ft_insert(t_htable *htable, char *key, void *value)
 	t_ft_lstcpy		ft_cpy;
 
 	data_type = htable->data_type;
-	/*ft_check_memory(*/content.key = key;
+	content.key = key;
 	content.value_size = ft_get_value_size(htable->data_type, value);
 	content.value = value;
 	ft_memcpy(content.value, value, content.value_size);
 	/*ft_check_memory(*/new_entry = (t_hlist*)ft_lstnew(&content, sizeof(content));
 	ft_cpy = ft_get_lstcpy(data_type);
 	ft_cpy((t_list*)new_entry);
-	index = ft_hash(htable, key);
+	index = ft_hash(htable, new_entry->content->key);
 	ft_lstadd((t_list**)&(htable->table[index]), (t_list*)new_entry);
 	(htable->entry_nbr)++;
 	if (htable->entry_nbr * 100 / htable->table_size > 70)
