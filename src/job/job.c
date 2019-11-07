@@ -38,12 +38,12 @@ static int	check_type(char **arg)
 		ft_memdel((void**)arg);
 		return (e_command_not_found);
 	}
-	if (ft_inbintable(pathname, arg, HIT))
+/*	if (ft_inbintable(pathname, arg, HIT))
 	{
 		ft_strdel(&pathname);
 		return (e_success);
 	}
-	if (!ft_strcmp(*arg, "."))
+*/	if (!ft_strcmp(*arg, "."))
 		return (e_filename_arg_required);
 	if (ft_strstr(*arg, "/"))
 	{
@@ -60,8 +60,13 @@ static int	check_type(char **arg)
 			*arg = pathname;
 		if (stat(*arg, &buf))
 			return (e_command_not_found);
-		ft_insert_bintable(pathname, *arg, HIT);
-	}
+		if (S_ISDIR(buf.st_mode))
+		{
+			ft_memdel((void**)arg);
+			return (e_command_not_found);
+		}
+/*		ft_insert_bintable(pathname, *arg, HIT);
+*/	}
 	return (e_success);
 }
 
