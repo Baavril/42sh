@@ -238,7 +238,8 @@ int		cmd_cd(int argc, char **argv)
 	}
 	
 	/* Resolve path */
-	path = ft_resolvepath(path);
+	if (!access(path, F_OK))
+		path = ft_resolvepath(path);
 	if (!path)
 		return (1);
 
