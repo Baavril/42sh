@@ -37,11 +37,11 @@ int	path_concat(char **bin)
 		ft_memdel((void**)&pathname);
 	}
 	ft_memdel((void**)&beg);
+	ft_memdel((void**)bin);
 	if (dir)
 	{
 		*bin = pathname;
 		return (e_success);
 	}
-	ft_memdel((void**)bin);
 	return (e_command_not_found);
 }

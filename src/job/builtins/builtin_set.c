@@ -39,7 +39,7 @@ static void	display_shvar(void)
 			inside = ptr->next_content;
 			while (inside)
 			{
-				ft_printf("[%llu]=\"%s\" ", inside->index, inside->value);
+				ft_printf("[%llu]=\"%s\" ", (long long unsigned int)inside->index, inside->value);
 				inside = inside->next_content;
 			}
 			ft_printf(")\n");
