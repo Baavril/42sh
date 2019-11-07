@@ -51,6 +51,8 @@ static int	check_type(char **arg)
 			return (e_no_such_file_or_directory);
 		else if (stat(*arg, &buf))
 			return (e_system_call_error);
+		if (S_ISDIR(buf.st_mode))
+			return (e_is_a_directory);
 	}
 	else
 	{
