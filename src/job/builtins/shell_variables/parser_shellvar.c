@@ -1,25 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_variables.c                                  :+:      :+:    :+:   */
+/*   parser_shellvar.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/11 12:10:04 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/16 15:07:54 by abarthel         ###   ########.fr       */
+/*   Created: 2019/11/08 10:04:57 by abarthel          #+#    #+#             */
+/*   Updated: 2019/11/08 10:05:09 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
+#include "ft_btree.h"
 
-#include "libft.h"
-#include "error.h"
-#include "shell_variables.h"
-
-struct s_btree	*g_shellvariables;
-
-static _Bool is_format_legit(const char *input)
-{
-	return (0);
-}
+/* check validity of assignement strings */
