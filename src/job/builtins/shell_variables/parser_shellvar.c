@@ -11,5 +11,6 @@
 /* ************************************************************************** */
 
 #include "ft_btree.h"
+#include "parser_utils_shvar.h"
 
 /* check validity of assignement strings */

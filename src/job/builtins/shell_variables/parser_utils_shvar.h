@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   assignement_shellvar.c                             :+:      :+:    :+:   */
+/*   parser_utils_shvar.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/08 10:04:10 by abarthel          #+#    #+#             */
-/*   Updated: 2019/11/08 10:04:43 by abarthel         ###   ########.fr       */
+/*   Created: 2019/11/08 17:54:06 by abarthel          #+#    #+#             */
+/*   Updated: 2019/11/08 17:54:35 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell_variables.h"
+#ifndef PARSER_UTILS_SHVAR_H
+# define PARSER_UTILS_SHVAR_H
 
-/* expansion like module to get assignement in tokens or str ? */
+_Bool	is_format_legit(const char *input);
 
+#endif
