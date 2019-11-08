@@ -17,9 +17,29 @@
 #include "error.h"
 #include "shell_variables.h"
 
+#define ISLEGIT 1
+#define NOTLEGIT 0
+
 struct s_btree	*g_shellvariables;
 
 static _Bool is_format_legit(const char *input)
 {
-	return (0);
+	const char	*s;
+
+	s = input;
+	while (*s)
+	{
+		if (ft_isalnum(*s) || *s == '_')
+			++s;
+		else if (*s == '=')
+		{
+			if (s != input)
+			    return (ISLEGIT);
+			else
+				return (NOTLEGIT);
+		}
+		else
+			return (NOTLEGIT);
+	}
+	return (NOTLEGIT);
 }
