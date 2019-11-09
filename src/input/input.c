@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/10/20 11:40:58 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/11/09 17:37:59 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #include <curses.h>
 #include <stdint.h>
 
-int toggle_termcaps()
+int toggle_termcaps(void)
 {
 	struct termios term;
 
@@ -36,7 +36,7 @@ int toggle_termcaps()
 	return(0);
 }
 
-int get_stdin(char *prompt, int prompt_len, char **buff)
+int get_stdin(char **prompt, int prompt_len, char **buff)
 {
 	size_t i;
 	size_t j;
@@ -48,7 +48,7 @@ int get_stdin(char *prompt, int prompt_len, char **buff)
 	u = SIZE_MAX;
 	inside_history = NULL;
 	*buff = ft_strdup("");
-	display(*buff, j, i, SIZE_MAX, prompt, prompt_len);
+	display(*buff, j, i, u, *prompt, prompt_len);
 	while (1)
 	{
 		if (read(0, &c, 1) == -1)
@@ -63,11 +63,11 @@ int get_stdin(char *prompt, int prompt_len, char **buff)
 			escape_char(buff, &j, &i, &u);
 		else if (c == '\n')
 		{
-			display(*buff, i, i, SIZE_MAX, prompt, prompt_len);
+			display(*buff, i, i, SIZE_MAX, *prompt, prompt_len);
 			ft_strdel(&inside_history);
 			return(0);
 		}
-		display(*buff, j, i, u, prompt, prompt_len);
+		display(*buff, j, i, u, *prompt, prompt_len);
 	}
 	return(1);
 }
@@ -83,12 +83,13 @@ int read_command(char **buff)
 	if (toggle_termcaps())
 		return(2);
 	prompt_len = mkprompt(&prompt);
-	get_stdin(prompt, prompt_len, buff);
+	get_stdin(&prompt, prompt_len, buff);
 	write(1, "\n", 1);
 	while (**buff && (prompt_len = mkprompt_quote(*buff, &prompt)))
 	{
-		get_stdin(prompt, prompt_len, &tmp);
+		get_stdin(&prompt, prompt_len, &tmp);
 		*buff = ft_strjoinfree(*buff, tmp);
+		ft_strdel(&prompt);
 		write(1, "\n", 1);
 	}
 	ft_strdel(&prompt);

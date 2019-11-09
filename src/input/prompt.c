@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 17:12:27 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/06 14:03:24 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/11/09 17:42:49 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ static char *qtbuff_to_text(char *qtbuff)
 
 	final = ft_strdup("");
 	while (*qtbuff)
+	{
 		final = ft_strjoinfree(final, quoteword(*(qtbuff++)));
+	}
 	final = ft_strjoinfree(final, ft_strdup("> "));
 	return(final);
 }

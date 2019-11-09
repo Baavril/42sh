@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 11:16:45 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/09/27 15:47:33 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/11/09 17:44:31 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ char *quote_prompt(char *command)
 	char *buff;
 	int size;
 
-	size = ft_strlen(command);
-	buff = malloc(size);
+	size = ft_strlen(command) + 1;
+	if (!(buff = (char *)malloc(sizeof(char) * size)))
+		return (NULL);
 	ft_bzero(buff, size);
 	if (command[size - 1] == '\\')
 	{

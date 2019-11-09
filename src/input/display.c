@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 15:25:22 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/06 14:02:51 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/11/09 16:20:23 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,9 @@ static int display_select(char *str, size_t start, size_t end)
 
 static int display_all(char *str, size_t j, size_t i, size_t u, char *prompt, size_t prompt_len)
 {
-	size_t col = tgetnum("co");
+	size_t col;
 
+	col = tgetnum("co");
 	ft_putstr(tgetstr("cr", NULL));
 	ft_putstr(tgetstr("cd", NULL));
 	ft_putstr(prompt);
@@ -54,12 +55,14 @@ static int display_all(char *str, size_t j, size_t i, size_t u, char *prompt, si
 
 int display(char *str, size_t j, size_t i, size_t u, char *prompt, size_t prompt_len)
 {
-	size_t col = tgetnum("co");
+	size_t col;
 	size_t x;
 	static size_t lines_offset = 0;
 
 	x = 0;
-
+	if (tgetent(NULL, getenv("TERM")) != 1)
+		return(1);
+	col = tgetnum("co");
 	// sets lines_offset value to normal if string is empty : ISSUE HERE
 	if (i == j && i == 0) // We enter this when opening a new, fresh prompt (usually after entering a command). This test is just not enough !
 		lines_offset = prompt_len / col;
