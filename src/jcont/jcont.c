@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 17:59:39 by abarthel          #+#    #+#             */
-/*   Updated: 2019/11/09 18:35:02 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/11/09 19:58:02 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,68 +16,12 @@
 pid_t				g_cur_gpid = 0;
 t_list				*g_bg_jobs = NULL;
 
-static char			**position_token(char **cmd)
-{
-	int	i;
-
-	i = 0;
-	while (cmd[i] && *(cmd[i]) == ';')
-	{
-		++i;
-	}
-	while (cmd[i] && *(cmd[i]) != ';')
-	{
-		++i;
-	}
-	while (cmd[i] && *(cmd[i]) == ';')
-	{
-		++i;
-	}
-	if (!(cmd[i]))
-	{
-		return (NULL);
-	}
-	return (&(cmd[i]));
-}
-
-static char			**jump_sep(char **cmd)
-{
-	int	i;
-
-	i = 0;
-	while (cmd && cmd[i] && *(cmd[i]) == ';')
-	{
-		++i;
-	}
-	return (&cmd[i]);
-}
-
-static char			**ft_sequence(char **cmd)
-{
-	char **seq;
-	int	i;
-
-	i = 0;
-	while (cmd[i] && *(cmd[i]) != ';')
-	{
-		++i;
-	}
-	seq = (char**)ft_tabmalloc(i + 1);
-	i = 0;
-	while (cmd[i] && *(cmd[i]) != ';')
-	{
-		seq[i] = ft_strdup(cmd[i]);
-		++i;
-	}
-	return (seq);
-}
-
 static int			ft_build_job(t_job *pipeline, char **cmd, size_t *i)
 {
 	size_t		pipe_start;
 	size_t		pipe_end;
 
-	if (!ft_strcmp(cmd[*i], "&") && )
+	if ((!ft_strcmp(cmd[*i], "&") || !ft_strcmp(cmd[*i], ";")) && !(cmd[*i + 1]))
 		return (0);
 	pipe_start = (ft_ispipesepar(cmd[*i]) && (*i)) ? ++(*i) : *i;
 	pipe_end = pipe_start;
@@ -87,7 +31,7 @@ static int			ft_build_job(t_job *pipeline, char **cmd, size_t *i)
 	if (pipe_end == pipe_start)
 	{
 		//syntax error near cmd[pipe_end]
-		return (0); // cas d'un sep en debut ou de deux seps en suivant
+		return (-1); // cas d'un sep en debut ou de deux seps en suivant
 	}
 	pipeline->command = ft_tab_range_cpy(cmd, pipe_start, pipe_end - 1);
 	pipeline->process = NULL;
@@ -97,50 +41,59 @@ static int			ft_build_job(t_job *pipeline, char **cmd, size_t *i)
 	pipeline->fd_stdin = 0;
 	pipeline->fd_stdout = 1;
 	pipeline->fd_stderr = 2;
-	pipeline->ret_val = -1;
-	return (1);
+	pipeline->ret_val = -1; //?
+	return ((command[pipe_end])); //1: means there are more jobs to come ; 0: all arg in a pipeline
 }
 
+static void			ft_build_process(t_job *pipeline)
+{
 
 
+}
+
+static int			ft_exec_pipeline(t_job *pipeline)
+{
+	
+}
+
+static void			ft_exec_jobs(t_list **jobs)
+{
+	t_list		*voyager;
+
+	voyager = *jobs;
+	ret = ft_exec_pipeline((t_job*)(voyager->content));
+	if (IFSTOPPED(ret))
+	{
+		ft_lstadd(&g_bg_voyager, voyager);
+		*jobs = (*jobs)->next;
+	}
+	while (voyager->next)
+	{
+		ret = ft_exec_pipeline((t_job*)((voyager->next)->content));
+		if (IFSTOPPED(ret))
+		{
+			ft_lstadd(&g_bg_voyager, voyager->next);
+			voyager->next = (voyager->next)->next;
+		}
+		voyager = voyager->next;
+	}
+}
 
 int					jcont(char **cmd, char **envp)
 {
-	t_job	cur_job;
-	char	**argv;
-	int		ret;
-
-	ret = 0;
-
+	t_job		pipeline;
+	t_list		*jobs;
 	size_t		i;
+	int			ret;
 
 	i = 0;
-	while (i < ac && ft_build_job(&cur_job, cmd, &i))
+	while ((ret = ft_build_job(&pipeline, cmd, &i)) > 0)
 	{
-		ft_build_process(&cur_job, cmd, &i);
-		ret = exec_pipeline(cur_job);
-		if (IFCOMPLETE(ret))
-			ft_reset_pipeline(&cur_job);
-		else if (IFSTOPPED(ret))
-			ft_lstadd(&g_bg_jobs, ft_lstnew(&cur_job, sizeof(t_job)));
+		ft_build_process(&pipeline);
+		ft_lstaddback(&jobs, ft_lstnew(pipeline, sizeof(t_job)));
 	}
-
-
-
-
-
-	cmd = jump_sep(cmd);
-
-
-
-
-	while (cmd && *cmd)
-	{
-		argv = ft_sequence(cmd);
-		if (**argv)
-			ret = job(argv, envp);
-		ft_tabdel(&argv);
-		cmd = position_token(cmd);
-	}
+	if (ret == 0)
+		ft_exec_jobs(&jobs);
+	ft_lstdel(&jobs, &ft_free_job);
 	return (ret);
 }
