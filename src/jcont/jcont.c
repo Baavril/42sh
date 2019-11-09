@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 17:59:39 by abarthel          #+#    #+#             */
-/*   Updated: 2019/11/09 19:58:02 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/11/09 21:07:29 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int			ft_build_job(t_job *pipeline, char **cmd, size_t *i)
 		//syntax error near cmd[pipe_end]
 		return (-1); // cas d'un sep en debut ou de deux seps en suivant
 	}
-	pipeline->command = ft_tab_range_cpy(cmd, pipe_start, pipe_end - 1);
+	/*ft_memcheck(*/pipeline->command = ft_tab_range_cpy(cmd, pipe_start, pipe_end - 1);
 	pipeline->process = NULL;
 	// Coment set le groupe pid ?
 	pipeline->notified = !ft_strcmp(cmd[pipe_end], "&") ? 1 : 0;

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
-/*   Updated: 2019/11/05 16:17:05 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/11/09 21:07:24 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,9 +252,11 @@ int				ft_vdprintf(int fd, const char *__restrict__ format,
 
 int				ft_vasprintf(char **ret, const char *format, va_list ap);
 
-char			**ft_tabcpy(char **table);
+char			**ft_tabcpy(char **table) __attribute__((nonnull(1)));
 
-size_t			ft_tablen(char **table);
+char			**ft_tabcpy(char **table, size_t start, size_t end) __attribute__((nonnull(1)));
+
+size_t			ft_tablen(char **table) __attribute__((nonnull(1)));
 
 char			*ft_getenv(const char *name);
 

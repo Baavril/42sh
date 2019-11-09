@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/11/05 16:13:49 by abarthel         ###   ########.fr        #
+#    Updated: 2019/11/09 21:08:09 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -129,6 +129,7 @@ SOURCES	:=	ds_btree/btree_apply_infix.c \
 		f_misc/ft_strtrim.c \
 		f_misc/ft_swap.c \
 		f_misc/ft_tabcpy.c \
+		f_misc/ft_tab_rangecpy.c \
 		f_misc/ft_tabdel.c \
 		f_misc/ft_tablen.c \
 		f_misc/ft_tabmalloc.c \
