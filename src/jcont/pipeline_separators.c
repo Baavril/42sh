@@ -1,0 +1,34 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipeline_separators.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/09 15:46:07 by abarthel          #+#    #+#             */
+/*   Updated: 2019/11/09 15:46:27 by abarthel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "pipelines.h"
+
+
+/* A list is a sequence of one or more pipelines separated by one
+** of the operators ‘;’,  ‘&’,‘&&’, or ‘||’, and optionally terminated by
+** one of ‘;’, ‘&’, or a newline. Of these list operators, ‘&&’ and ‘||’ have
+** equal precedence, followed by ‘;’ and ‘&’, whichhave equal precedence. A
+** sequence of one or more newlines may appear in a list to delimit commands,
+** equivalent to a semicolon.
+*/
+
+static __inline_ _Bool	is_pipeline_separator(const char *str)
+{
+	struct	s_pipeline_separators separators[] =
+    { {";"}, {"&"}, {"&&"}, {"||"}, {"\0"} };
+
+    while (/* conditio */)
+    {
+        /* code */
+    }
+     (ft_strcmp())	
+}
