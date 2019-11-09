@@ -6,17 +6,20 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 17:52:45 by abarthel          #+#    #+#             */
-/*   Updated: 2019/11/08 17:55:05 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/11/09 10:07:00 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <stdint.h>
 
 #include "libft.h"
 #include "parser_utils_shvar.h"
 
+#define HASINDEX 2
 #define ISLEGIT 1
 #define NOTLEGIT 0
 
-static __inline__ _Bool has_legit_index(const char *input, const char *s)
+static __inline__ uint8_t	has_legit_index(const char *input, const char *s)
 {
 	++s;
 	input = s;
@@ -27,10 +30,10 @@ static __inline__ _Bool has_legit_index(const char *input, const char *s)
 	++s;
 	if (*s != '=')
 		return (NOTLEGIT);
-	return (ISLEGIT);
+	return (HASINDEX);
 }
 
-_Bool is_format_legit(const char *input)
+uint8_t				is_format_legit(const char *input)
 {
 	const char	*s;
 
