@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_test_tools.c                               :+:      :+:    :+:   */
+/*   builtin_test_single_options4.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,69 +10,48 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../include/builtin_test.h"
-#include "../../../../libft/include/libft.h"
-#include "../../../../include/builtins.h"
+#include <unistd.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
-/*int		ft_isin(char c, char *str)
+#include "libft.h"
+#include "builtins.h"
+#include "builtin_test.h"
+
+int		test_s_option_x(char **argv)
 {
-	while (*str)
-	{
-		if (*str - c == e_success)
-			return (e_success);
-		str++;
-	}
+	if (access(argv[1], X_OK) == e_success)
+		return (e_success);
 	return (e_failure);
-}*/
-
-int		ft_strnlen(char c, char *str)
-{
-	int	i;
-	int	ret;
-
-	i = 0;
-	ret = 0;
-	while (str[i])
-	{
-		if (str[i] - c == 0)
-			ret++;
-		i++;
-	}
-	return (ret);
 }
 
-int		ft_delalloc(char **argv, int ret)
+int		test_s_option_w(char **argv)
 {
-	int	j;
-	int	k;
-
-	k = ret;
-	ret *= 2;
-	j = ft_tablen(argv);
-	while (ret)
-	{
-		ft_strdel(&argv[j - ret]);
-		ret--;
-	}
-	return (k);
+	if (access(argv[1], W_OK) == e_success)
+		return (e_success);
+	return (e_failure);
 }
 
-int		ft_tabret(char *opts, int *tmp_rets)
+int		test_s_option_v(char **argv)
 {
-	int	i;
-	int	nb;
+	if (getenv(argv[1]))
+		return (e_success);
+	return (e_failure);
+}
 
-	i = 0;
-	nb = ft_strnlen('o', opts);
-	while (i <= nb)
-	{
-		if (tmp_rets[i] == e_success)
-		{
-			free(tmp_rets);
+int		test_s_option_u(char **argv)
+{
+	struct stat	sb;
+
+	if ((stat(argv[1], &sb) >= 0 && (sb.st_mode & UID)))
+		return (e_success);
+	return (e_failure);
+}
+
+int		test_s_option_t(char **argv)
+{
+	if (argv[1])
+		if (isatty(atoi(argv[1])))
 			return (e_success);
-		}
-		++i;
-	}
-	free(tmp_rets);
 	return (e_failure);
 }

@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../include/builtin_test.h"
-#include "../../../../libft/include/libft.h"
-#include "../../../../include/builtins.h"
+#include "libft.h"
+#include "builtins.h"
+#include "builtin_test.h"
 
 static int		test_integers(char **argv, int cmp1, int cmp2)
 {

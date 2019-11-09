@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_test_single_options3.c                     :+:      :+:    :+:   */
+/*   builtin_test_double_options2.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,49 +13,43 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include "../../../../include/builtin_test.h"
-#include "../../../../libft/include/libft.h"
-#include "../../../../include/builtins.h"
 
-int		test_s_option_s(char **argv)
+#include "libft.h"
+#include "builtins.h"
+#include "builtin_test.h"
+
+int	test_d_option_ef(char **argv, char *str)
 {
-	struct stat	sb;
+	struct stat	file1;
+	struct stat	file2;
 
-	if ((stat(argv[1], &sb) >= 0 && sb.st_size > 0))
+	(void)str;
+	if ((stat(argv[0], &file1) >= 0 && stat(argv[2], &file2) >= 0)
+	&& file1.st_ino == file2.st_ino)
 		return (e_success);
-	return (e_failure);
+	return (e_error);
 }
 
-int		test_s_option_S(char **argv)
+int	test_d_option_ot(char **argv, char *str)
 {
-	struct stat	sb;
+	struct stat	file1;
+	struct stat	file2;
 
-	if ((stat(argv[1], &sb) >= 0 && (sb.st_mode & SOCK)))
+	(void)str;
+	if ((stat(argv[0], &file1) >= 0 && stat(argv[2], &file2) >= 0)
+	&& file1.st_mtime < file2.st_mtime)
 		return (e_success);
-	return (e_failure);
+	return (e_error);
 }
 
-int		test_s_option_k(char **argv)
+int	test_d_option_nt(char **argv, char *str)
 {
-	struct stat	sb;
+	struct stat	file1;
+	struct stat	file2;
 
-	if ((stat(argv[1], &sb) >= 0 && (sb.st_mode & STKY)))
+	(void)str;
+	if ((stat(argv[0], &file1) >= 0 && stat(argv[2], &file2) >= 0)
+	&& file1.st_mtime > file2.st_mtime)
 		return (e_success);
-	return (e_failure);
-}
-
-int		test_s_option_r(char **argv)
-{
-	if (access(argv[1], R_OK) == e_success)
-		return (e_success);
-	return (e_failure);
-}
-
-int		test_s_option_p(char **argv)
-{
-	struct stat	sb;
-
-	if ((stat(argv[1], &sb) >= 0 && S_ISFIFO(sb.st_mode)))
-		return (e_success);
-	return (e_failure);
+	return (e_error);
 }

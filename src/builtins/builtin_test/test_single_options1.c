@@ -13,9 +13,10 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include "../../../../include/builtin_test.h"
-#include "../../../../libft/include/libft.h"
-#include "../../../../include/builtins.h"
+
+#include "libft.h"
+#include "builtins.h"
+#include "builtin_test.h"
 
 int		test_s_option_f(char **argv)
 {

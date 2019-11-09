@@ -14,9 +14,9 @@
  ** https://www.unix.com/man-page/posix/1posix/test/
  */
 
-#include "../../../../include/builtin_test.h"
-#include "../../../../libft/include/libft.h"
-#include "../../../../include/builtins.h"
+#include "libft.h"
+#include "builtins.h"
+#include "builtin_test.h"
 
 static int	ft_a_management(int ret, int argc, char **args)
 {

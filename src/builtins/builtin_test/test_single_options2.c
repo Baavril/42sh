@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_test_single_options4.c                     :+:      :+:    :+:   */
+/*   builtin_test_single_options2.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,44 +13,46 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include "../../../../include/builtin_test.h"
-#include "../../../../libft/include/libft.h"
-#include "../../../../include/builtins.h"
 
-int		test_s_option_x(char **argv)
+#include "libft.h"
+#include "builtins.h"
+#include "builtin_test.h"
+
+int		test_s_option_z(char **argv)
 {
-	if (access(argv[1], X_OK) == e_success)
+	if ((int)ft_strlen(argv[1]) == 0)
 		return (e_success);
 	return (e_failure);
 }
 
-int		test_s_option_w(char **argv)
+int		test_s_option_n(char **argv)
 {
-	if (access(argv[1], W_OK) == e_success)
+	if ((int)ft_strlen(argv[1]) > 0)
 		return (e_success);
 	return (e_failure);
 }
 
-int		test_s_option_v(char **argv)
+int		test_s_option_o(char **argv)
 {
-	if (getenv(argv[1]))
-		return (e_success);
+	(void)argv;
+	// trouver comment getenv optnames
 	return (e_failure);
 }
 
-int		test_s_option_u(char **argv)
+int		test_s_option_h(char **argv)
 {
 	struct stat	sb;
 
-	if ((stat(argv[1], &sb) >= 0 && (sb.st_mode & UID)))
+	if ((stat(argv[1], &sb) >= 0 && (sb.st_mode & LINK)))
 		return (e_success);
 	return (e_failure);
 }
 
-int		test_s_option_t(char **argv)
+int		test_s_option_g(char **argv)
 {
-	if (argv[1])
-		if (isatty(atoi(argv[1])))
-			return (e_success);
+	struct stat	sb;
+
+	if ((stat(argv[1], &sb) >= 0 && (sb.st_mode & GID)))
+		return (e_success);
 	return (e_failure);
 }

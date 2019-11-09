@@ -6,13 +6,13 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2019/10/18 17:29:13 by baavril          ###   ########.fr       */
+/*   Updated: 2019/11/09 11:47:27 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../include/builtin_test.h"
-#include "../../../../libft/include/libft.h"
-#include "../../../../include/builtins.h"
+#include "libft.h"
+#include "builtins.h"
+#include "builtin_test.h"
 
 t_test_s_opt	g_test_s_opt[] =
 {

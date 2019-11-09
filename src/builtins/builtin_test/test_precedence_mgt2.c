@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../../include/builtin_test.h"
-#include "../../../../libft/include/libft.h"
-#include "../../../../include/builtins.h"
+#include "libft.h"
+#include "builtins.h"
+#include "builtin_test.h"
 
 static int	ft_error_parenthesis(int j, int ret)
 {
