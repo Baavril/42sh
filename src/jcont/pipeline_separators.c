@@ -23,12 +23,16 @@
 
 static __inline_ _Bool	is_pipeline_separator(const char *str)
 {
+	int i;
 	struct	s_pipeline_separators separators[] =
-    { {";"}, {"&"}, {"&&"}, {"||"}, {"\0"} };
+    { {"||"}, {"&&"}, {";"}, {"&"}, {"\0"} };
 
-    while (/* conditio */)
+	i = 0;
+    while (*(separators[i].separator))
     {
-        /* code */
+        if (!ft_strcmp(str, separators[i].separator))
+		return (1);
+	++i;
     }
-     (ft_strcmp())	
+    return (0);
 }
