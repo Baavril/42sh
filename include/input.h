@@ -14,10 +14,20 @@
 # define INPUT_H
 
 # define INPUT_SIZE 256
+# define MAX_LINE 4096
 
 char *copybuff;
 char *inside_history;
 
 int	read_command(char **line);
+
+typedef struct	s_cursor
+{
+	size_t	in;
+	size_t	end;
+	size_t	start;
+	int		prompt_len;
+	char	*prompt;
+}				t_cursor;
 
 #endif

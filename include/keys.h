@@ -14,12 +14,12 @@
 #define KEYS_H
 #include "libft.h"
 
-void delete_key(char **buff, size_t *j, size_t *i);
-void backspace_key(char **buff, size_t *j, size_t *i);
-void tab_key(char **buff, size_t *j, size_t *i);
-void normal_char(char **buff, size_t *j, size_t *i, char c);
-void select_key(char **buff, size_t *j, size_t *i, size_t *u);
-void paste_key(char **buff, size_t *j, size_t *i);
-void escape_char(char **buff, size_t *j, size_t *i, size_t *u);
+void delete_key(char **buff, t_cursor *cursor);
+void backspace_key(char **buff, t_cursor *cursor);
+void tab_key(char **buff, t_cursor *cursor);
+void normal_char(char **buff, t_cursor *cursor, char c);
+void select_key(char **buff, t_cursor *cursor);
+void paste_key(char **buff, t_cursor *cursor);
+void escape_char(char **buff, t_cursor *cursor);
 
 #endif

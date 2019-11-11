@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "input.h"
 
 #include <unistd.h>
 #include <term.h>
@@ -36,24 +37,24 @@ static int display_select(char *str, size_t start, size_t end)
 	return(0);
 }
 
-static int display_all(char *str, size_t j, size_t i, size_t u, char *prompt, size_t prompt_len)
+static int display_all(char *str, size_t pos, size_t end, t_cursor cursor)
 {
 	size_t col;
 
 	col = tgetnum("co");
 	ft_putstr(tgetstr("cr", NULL));
 	ft_putstr(tgetstr("cd", NULL));
-	ft_putstr(prompt);
-	if (u == SIZE_MAX || u > i)
+	ft_putstr(cursor.prompt);
+	if (end == SIZE_MAX || end > cursor.start)
 		ft_putstr(str);
 	else
-		display_select(str, j, u);
-	if (!((i + prompt_len) % col))
+		display_select(str, pos, end);
+	if (!((cursor.start + cursor.prompt_len) % col))
 		write(1, "\n", 1);
-	return((j + prompt_len) / col);
+	return((pos + cursor.prompt_len) / col);
 }
 
-int display(char *str, size_t j, size_t i, size_t u, char *prompt, size_t prompt_len)
+int display(char *str, size_t pos, size_t end, t_cursor cursor)
 {
 	size_t col;
 	size_t x;
@@ -64,21 +65,21 @@ int display(char *str, size_t j, size_t i, size_t u, char *prompt, size_t prompt
 		return(1);
 	col = tgetnum("co");
 	// sets lines_offset value to normal if string is empty : ISSUE HERE
-	if (i == j && i == 0) // We enter this when opening a new, fresh prompt (usually after entering a command). This test is just not enough !
-		lines_offset = prompt_len / col;
+	if (cursor.start == pos && cursor.start == 0) // We enter this when opening a new, fresh prompt (usually after entering a command). This test is just not enough !
+		lines_offset = cursor.prompt_len / col;
 
 	//use the value of lines_offset
 	while (lines_offset--)
 		ft_putstr(tgetstr("up", NULL));
 
 	//reset lines_offset value and display text
-	lines_offset = display_all(str, j, i, u, prompt, prompt_len);
+	lines_offset = display_all(str, pos, end, cursor);
 
 	//Reposition cursor
-	x = ((i + prompt_len) / col) - lines_offset;
+	x = ((cursor.start + cursor.prompt_len) / col) - lines_offset;
 	while (x--)
 		ft_putstr(tgetstr("up", NULL));
-	ft_putstr(tgoto(tgetstr("ch", NULL), 0, (j + prompt_len) % col));
+	ft_putstr(tgoto(tgetstr("ch", NULL), 0, (pos + cursor.prompt_len) % col));
 
 	return(0);
 }

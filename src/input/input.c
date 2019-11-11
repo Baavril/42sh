@@ -25,74 +25,87 @@ int toggle_termcaps(void)
 {
 	struct termios term;
 
-	if (tcgetattr(0, &term))
+	term.c_cc[VMIN] = 1; /* si VTIME = 0 et ICANON desactive VMIN determine le nombre d'octets lus par read */
+	term.c_cc[VTIME] = 0;
+	if (tcgetattr(STDIN_FILENO, &term) < 0)
+	{
+		printf("Error tcgetattr");
 		return(1);
-	term.c_lflag ^= ECHO;
-	term.c_lflag ^= ICANON;
-	if (tcsetattr(0, 0, &term))
+	}
+	term.c_lflag &= ~(ECHO | ICANON | ISIG | IEXTEN);
+	if (tcsetattr(STDIN_FILENO, TCSADRAIN, &term) < 0)
+	{
+		printf("Error tcsetattr");
 		return(1);
+	}
 	if (tgetent(NULL, getenv("TERM")) != 1)
+	{
+		printf("Error tgetent");
 		return(1);
+	}
 	return(0);
 }
 
-int get_stdin(char **prompt, int prompt_len, char **buff)
+int get_stdin(t_cursor cursor, char **buff)
 {
-	size_t i;
-	size_t j;
-	size_t u;
 	char c;
 
-	i = 0;
-	j = 0;
-	u = SIZE_MAX;
 	inside_history = NULL;
 	*buff = ft_strdup("");
-	display(*buff, j, i, u, *prompt, prompt_len);
+	display(*buff, cursor.end, SIZE_MAX, cursor);
 	while (1)
 	{
 		if (read(0, &c, 1) == -1)
 			return(-1);
 		if (ft_isprint(c))
-			normal_char(buff, &j, &i, c);
+			normal_char(buff, &cursor, c);
 		else if (c == '\177')
-			backspace_key(buff, &j, &i);
+			backspace_key(buff, &cursor);
 		else if (c == '\t')
-			tab_key(buff, &j, &i);
+			tab_key(buff, &cursor);
 		else if (c == '\033')
-			escape_char(buff, &j, &i, &u);
+			escape_char(buff, &cursor);
 		else if (c == '\n')
 		{
-			display(*buff, i, i, SIZE_MAX, *prompt, prompt_len);
+			display(*buff, cursor.start, SIZE_MAX, cursor);
 			ft_strdel(&inside_history);
 			return(0);
 		}
-		display(*buff, j, i, u, *prompt, prompt_len);
+		display(*buff, cursor.end, cursor.in, cursor);
 	}
 	return(1);
 }
 
+void	ft_init_cursor(t_cursor *cursor)
+{
+	cursor->prompt = NULL;
+	cursor->in = SIZE_MAX;
+	cursor->end = 0;
+	cursor->start = 0;
+	cursor->prompt_len = 0;
+}
+
 int read_command(char **buff)
 {
-	char *prompt;
 	char *tmp;
-	int prompt_len;
+	t_cursor cursor;
 
-	if (!isatty(0))
+	ft_init_cursor(&cursor);
+	if (!isatty(STDIN_FILENO))
 		return(1);
 	if (toggle_termcaps())
 		return(2);
-	prompt_len = mkprompt(&prompt);
-	get_stdin(&prompt, prompt_len, buff);
+	cursor.prompt_len = mkprompt(&(cursor.prompt));
+	get_stdin(cursor, buff);
 	write(1, "\n", 1);
-	while (**buff && (prompt_len = mkprompt_quote(*buff, &prompt)))
+	while (**buff && (cursor.prompt_len = mkprompt_quote(*buff, &(cursor.prompt))))
 	{
-		get_stdin(&prompt, prompt_len, &tmp);
+		get_stdin(cursor, &tmp);
 		*buff = ft_strjoinfree(*buff, tmp);
-		ft_strdel(&prompt);
+		ft_strdel(&(cursor.prompt));
 		write(1, "\n", 1);
 	}
-	ft_strdel(&prompt);
+	ft_strdel(&(cursor.prompt));
 	toggle_termcaps();
 	return(0);
 }

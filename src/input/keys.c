@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   keys.c                                             :+:      :+:    :+:   */
+/*   keys->c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bprunevi <marvin@42->fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 18:02:02 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/08 18:24:02 by baavril          ###   ########.fr       */
+/*   Updated: 2019/11/08 18:24:02 by baavril          ###   ########->fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,58 +38,57 @@ char	*buff_realloc(char *old_buff, size_t i)
 	return (old_buff);
 }
 
-void normal_char(char **buff, size_t *j, size_t *i, char c)
+void normal_char(char **buff, t_cursor *cursor, char c)
 {
-	*buff = buff_realloc(*buff, ++(*i));
-	ft_memmove(&((*buff)[*j + 1]), &((*buff)[*j]), *i - *j);
-	(*buff)[(*j)++] = c;
+	*buff = buff_realloc(*buff, ++(cursor->start));
+	ft_memmove(&((*buff)[cursor->end + 1]), &((*buff)[cursor->end]), cursor->start - cursor->end);
+	(*buff)[(cursor->end)++] = c;
 }
 
-void set_string(char **buff, size_t *j, size_t *i, char *str)
+void set_string(char **buff, t_cursor *cursor, char *str)
 {
 	size_t len;
 
 	if (!str)
 		return;
 	len = ft_strlen(str);
-	if (*i < len)
+	if (cursor->start < len)
 		*buff = buff_realloc(*buff, len);
 	ft_strcpy(*buff, str);
-	*i = len;
-	*j = len;
+	cursor->start = len;
+	cursor->end = len;
 }
 
-void right_arrow(char **buff, size_t *j, size_t *i)
+void right_arrow(char **buff, t_cursor *cursor)
 {
 	(void) buff;
-	if (*j < *i)
-		++(*j);
+	if (cursor->end < cursor->start)
+		++(cursor->end);
 }
 
-void left_arrow(char **buff, size_t *j, size_t *i)
+void left_arrow(char **buff, t_cursor *cursor)
 {
 	(void) buff;
-	(void) i;
-	if (*j > 0)
-		--(*j);
+	if (cursor->end > 0)
+		--(cursor->end);
 }
 
-void delete_key(char **buff, size_t *j, size_t *i)
+void delete_key(char **buff, t_cursor *cursor)
 {
-	if (*j < *i && *i > 0)
+	if (cursor->end < cursor->start && cursor->start > 0)
 	{
-		ft_memmove(&((*buff)[*j]), &((*buff)[*j + 1]), *i - *j);
-		--(*i);
+		ft_memmove(&((*buff)[cursor->end]), &((*buff)[cursor->end + 1]), cursor->start - cursor->end);
+		--(cursor->start);
 	}
 }
 
-void backspace_key(char **buff, size_t *j, size_t *i)
+void backspace_key(char **buff, t_cursor *cursor)
 {
-	if (*i > 0 && *j > 0)
+	if (cursor->start > 0 && cursor->end > 0)
 	{
-		--(*j);
-		ft_memmove(&((*buff)[*j]), &((*buff)[*j + 1]), *i - *j);
-		--(*i);
+		--(cursor->end);
+		ft_memmove(&((*buff)[cursor->end]), &((*buff)[cursor->end + 1]), cursor->start - cursor->end);
+		--(cursor->start);
 	}
 }
 
@@ -97,7 +96,7 @@ void backspace_key(char **buff, size_t *j, size_t *i)
  * plus de leaks sur les tab keys -> fonctions a realiser pour prendre en charge autocompletion
  */
 
-void tab_key(char **buff, size_t *j, size_t *i)
+void tab_key(char **buff, t_cursor *cursor)
 {
 	char *str;
 	char *tmp; 
@@ -105,90 +104,87 @@ void tab_key(char **buff, size_t *j, size_t *i)
 	str = ft_strdup("tabulation");
 	tmp = str;
 	while (*tmp)
-		normal_char(buff, j, i, *tmp++);
+		normal_char(buff, cursor, *tmp++);
 	ft_strdel(&str);
 }
 
-void down_arrow(char **buff, size_t *j, size_t *i)
+void down_arrow(char **buff, t_cursor *cursor)
 {
 	char *str;
 	if (!inside_history)
 		return;
 	else if (history(FORWARD, NULL, &str) == 2)
 	{
-		set_string(buff, i, j, inside_history);
+		set_string(buff, cursor, inside_history);
 		ft_strdel(&inside_history);
 	}
 	else
-		set_string(buff, i, j, str);
+		set_string(buff, cursor, str);
 }
 
-void up_arrow(char **buff, size_t *j, size_t *i)
+void up_arrow(char **buff, t_cursor *cursor)
 {
 	char *str;
 	if (!inside_history && (inside_history = ft_strdup(*buff)))
 		history(LAST, NULL, &str);
 	else
 		history(BACKWARD, NULL, &str);
-	set_string(buff, i, j, str);
+	set_string(buff, cursor, str);
 }
 
-void paste_key(char **buff, size_t *j, size_t *i)
+void paste_key(char **buff, t_cursor *cursor)
 {
 	char *str = copybuff;
 	if (str)
 		while (*str)
-			normal_char(buff, j, i, *str++);
+			normal_char(buff, cursor, *str++);
 }
 
-void home_key(char **buff, size_t *j, size_t *i)
+void home_key(char **buff, t_cursor *cursor)
+{
+	(void)buff;
+	(void)cursor;
+	cursor->end = 0;
+}
+
+void end_key(char **buff, t_cursor *cursor)
 {
 	(void) buff;
-	(void) i;
-	*j = 0;
+	cursor->end = cursor->start;
 }
 
-void end_key(char **buff, size_t *j, size_t *i)
+void next_word(char **buff, t_cursor *cursor)
 {
-	(void) buff;
-	*j = *i;
+	while(cursor->end < cursor->start && ft_isalnum((*buff)[cursor->end]))
+			(cursor->end)++;
+	while(cursor->end < cursor->start && !ft_isalnum((*buff)[cursor->end]))
+			(cursor->end)++;
 }
 
-void next_word(char **buff, size_t *j, size_t *i)
+void previous_word(char **buff, t_cursor *cursor)
 {
-	(void) i;
-	while(*j < *i && ft_isalnum((*buff)[*j]))
-			(*j)++;
-	while(*j < *i && !ft_isalnum((*buff)[*j]))
-			(*j)++;
+	while(cursor->end > 0 && ft_isalnum((*buff)[cursor->end]))
+			(cursor->end)--;
+	while(cursor->end > 0 && !ft_isalnum((*buff)[cursor->end]))
+			(cursor->end)--;
 }
 
-void previous_word(char **buff, size_t *j, size_t *i)
+void select_key(char **buff, t_cursor *cursor)
 {
-	(void) i;
-	while(*j > 0 && ft_isalnum((*buff)[*j]))
-			(*j)--;
-	while(*j > 0 && !ft_isalnum((*buff)[*j]))
-			(*j)--;
-}
-
-void select_key(char **buff, size_t *j, size_t *i, size_t *u)
-{
-	(void) i;
-	if (*u == SIZE_MAX)
-		*u = *j;
-	else if (*u != *j)
+	if (cursor->in == SIZE_MAX)
+		cursor->in = cursor->end;
+	else if (cursor->in != cursor->end)
 	{
 		ft_strdel(&copybuff);
-		if (*j > *u)
-			copybuff = ft_strndup(*buff + *u, *j - *u);
-		else if (*j < *u)
-			copybuff = ft_strndup(*buff + *j, *u - *j);
-		*u = SIZE_MAX;
+		if (cursor->end > cursor->in)
+			copybuff = ft_strndup(*buff + cursor->in, cursor->end - cursor->in);
+		else if (cursor->end < cursor->in)
+			copybuff = ft_strndup(*buff + cursor->end, cursor->in - cursor->end);
+		cursor->in = SIZE_MAX;
 	}
 }
 
-void escape_char(char **buff, size_t *j, size_t *i, size_t *u)
+void escape_char(char **buff, t_cursor *cursor)
 {
 	char input_buffer[16];
 
@@ -196,25 +192,25 @@ void escape_char(char **buff, size_t *j, size_t *i, size_t *u)
 	read(0, input_buffer, 8);
 
 	if (!ft_strcmp(&input_buffer[1], tgetstr("kl", NULL) + 2)) // Cursor Left key
-		left_arrow(buff, j, i);
+		left_arrow(buff, cursor);
 	else if (!ft_strcmp(&input_buffer[1], tgetstr("kr", NULL) + 2)) // Cursor Right key
-		right_arrow(buff, j, i);
+		right_arrow(buff, cursor);
 	if (!ft_strcmp(&input_buffer[1], tgetstr("ku", NULL) + 2)) // Cursor Up key
-		up_arrow(buff, j, i);
+		up_arrow(buff, cursor);
 	if (!ft_strcmp(&input_buffer[1], tgetstr("kd", NULL) + 2)) // Cursor Down key
-		down_arrow(buff, j, i);
+		down_arrow(buff, cursor);
 	else if (!ft_strcmp(&input_buffer[1], tgetstr("kD", NULL) + 2)) // Key for delete char under cursor
-		delete_key(buff, j, i);
+		delete_key(buff, cursor);
 	else if (!ft_strcmp(&input_buffer[1], tgetstr("kh", NULL) + 2)) // Cursor home key
-		home_key(buff, j, i);
+		home_key(buff, cursor);
 	else if (!ft_strcmp(&input_buffer[1], tgetstr("kN", NULL) + 2)) // key for next page
-		next_word(buff, j, i);
+		next_word(buff, cursor);
 	else if (!ft_strcmp(&input_buffer[1], tgetstr("kP", NULL) + 2)) // key for previous page
-		previous_word(buff, j, i);
+		previous_word(buff, cursor);
 	else if (!ft_strcmp(&input_buffer[1], "F\0")) //FAUX MAIS TEMP
-		end_key(buff, j, i);
+		end_key(buff, cursor);
 	else if (!ft_strcmp(&input_buffer[1], "1;2A")) //FAUX MAIS TEMP
-		select_key(buff, j, i, u);
+		select_key(buff, cursor);
 	else if (!ft_strcmp(&input_buffer[1], "1;2B")) //FAUX MAIS TEMP
-		paste_key(buff, j, i);
+		paste_key(buff, cursor);
 }
