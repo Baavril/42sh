@@ -12,21 +12,22 @@
 
 #include "libft.h"
 #include "job.h"
+#include "pipelines.h"
 
 static char **position_token(char **cmd)
 {
 	int	i;
 
 	i = 0;
-	while (cmd[i] && *(cmd[i]) == ';')
+	while (cmd[i] && is_pipeline_separator(cmd[i]))
 	{
 		++i;
 	}
-	while (cmd[i] && *(cmd[i]) != ';')
+	while (cmd[i] && !is_pipeline_separator(cmd[i]))
 	{
 		++i;
 	}
-	while (cmd[i] && *(cmd[i]) == ';')
+	while (cmd[i] && is_pipeline_separator(cmd[i]))
 	{
 		++i;
 	}
@@ -42,7 +43,7 @@ static char **jump_sep(char **cmd)
 	int	i;
 
 	i = 0;
-	while (cmd && cmd[i] && *(cmd[i]) == ';')
+	while (cmd && cmd[i] && is_pipeline_separator(cmd[i]))
 	{
 		++i;
 	}
@@ -55,13 +56,13 @@ static char	**ft_sequence(char **cmd)
 	int	i;
 
 	i = 0;
-	while (cmd[i] && *(cmd[i]) != ';')
+	while (cmd[i] && !is_pipeline_separator(cmd[i]))
 	{
 		++i;
 	}
 	seq = (char**)ft_tabmalloc(i + 1);
 	i = 0;
-	while (cmd[i] && *(cmd[i]) != ';')
+	while (cmd[i] && !is_pipeline_separator(cmd[i]))
 	{
 		seq[i] = ft_strdup(cmd[i]);
 		++i;
