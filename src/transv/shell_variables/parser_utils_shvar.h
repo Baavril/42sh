@@ -13,6 +13,10 @@
 #ifndef PARSER_UTILS_SHVAR_H
 # define PARSER_UTILS_SHVAR_H
 
-_Bool	is_format_legit(const char *input);
+# define HASINDEX 2
+# define ISLEGIT 1
+# define NOTLEGIT 0
+
+int is_format_legit(const char *input);
 
 #endif
