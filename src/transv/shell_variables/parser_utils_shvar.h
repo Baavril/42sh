@@ -28,6 +28,14 @@ struct s_uint63
 	uint64_t	val:63;
 };
 
+struct s_assign
+{
+    char        *name;
+    char        *value;
+    uint64_t    index:63;
+    _Bool       hasindex:1;
+};
+
 uint64_t    get_index(char *str);
 
 #endif
