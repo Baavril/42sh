@@ -14,7 +14,7 @@
 
 #include "libft.h"
 
-char			**ft_tabcpy(char **table, size_t start, size_t end)
+char			**ft_tab_rangecpy(char **table, size_t start, size_t end)
 {
 	char		**tab_cpy;
 	int			nb;

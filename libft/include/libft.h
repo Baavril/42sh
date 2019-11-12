@@ -254,7 +254,8 @@ int				ft_vasprintf(char **ret, const char *format, va_list ap);
 
 char			**ft_tabcpy(char **table) __attribute__((nonnull(1)));
 
-char			**ft_tabcpy(char **table, size_t start, size_t end) __attribute__((nonnull(1)));
+char			**ft_tab_rangecpy(char **table, size_t start, size_t end)
+                                                    __attribute__((nonnull(1)));
 
 size_t			ft_tablen(char **table) __attribute__((nonnull(1)));
 
