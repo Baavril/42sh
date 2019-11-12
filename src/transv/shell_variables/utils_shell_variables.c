@@ -61,6 +61,19 @@ char	*get_value(char *str)
 	return (NULL);
 }
 
+/* this function malloc a string */
+char	*get_name(char *str)
+{
+	char	*ptr;
+
+	ptr = str;
+	while (*ptr && ft_isalnum((int)*ptr))
+		++ptr;
+	if ((size_t)(ptr - str))
+        return (ft_strndup(str, (ptr - str)));
+	return (NULL);
+}
+
 _Bool	contains_array_subscript(char *str)
 {
 	if (*str == '(')

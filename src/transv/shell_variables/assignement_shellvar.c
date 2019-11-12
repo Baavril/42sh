@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
+
 #include "libft.h"
 #include "error.h"
 #include "shell_variables.h"
@@ -22,12 +24,9 @@ static __inline__ int  simple_assignement(struct s_assign *var, char *str)
     var->value = get_value(str);
     if (var->value)
     {
-        if ((size_t)(var->value - str))
-        {
-            var->name = ft_strndup(str, (var->value - str - 1));
+            var->name = get_name(str);
             ft_setenv(var->name, var->value, 1); /* using setenv as a test */
             ft_memdel((void**)&(var->name));
-        }
     }
     return (e_success);
 }
@@ -36,6 +35,12 @@ static __inline__ int   indexed_assignement(struct s_assign *var, char *str)
 {
     var->value = get_value(str);
     var->index |= 1;
+    ft_printf("okokokokoko\n");
+    if (contains_array_subscript(var->value))
+    {
+        ft_dprintf(STDERR_FILENO, "%s: %s: cannot assign list to array member", g_progname, var->name);
+        return (e_cannot_assign_list_to_array_member);
+    }
     ft_printf("%s > %llu\n", var->value, get_index(str));
     return (e_success);
 }

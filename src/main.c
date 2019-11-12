@@ -95,7 +95,10 @@ int		main(int argc, char **argv)
 	set_signals(0);
 	assign_variable("aaaa[9223372036854775808]='this value from overflow'");
 	assign_variable("aaaa[9]=sadasd");
+	assign_variable("bbb[7]=(sdsd, ofe, wee)");
+	assign_variable("c[5]=([4]=qwqw, [8]=qwerrt)");
 	assign_variable("aaaa=sadasd");
+	assign_variable("oo=([4]=qwqw, [8]=qwerrt)");
 	assign_variable("=a");
 	assign_variable("=");
 	assign_variable("ad=");
