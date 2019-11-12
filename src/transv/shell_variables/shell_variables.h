@@ -17,7 +17,7 @@
 
 # include "ft_btree.h"
 
-extern struct s_btree	*g_shellvariables; 
+extern struct s_btree	*g_shellvariables;
 
 struct s_shvar
 {

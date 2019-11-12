@@ -21,6 +21,9 @@
 
 int         is_format_legit(const char *input);
 char        *get_value(char *str);
+_Bool       contains_array_subscript(char *str);
+uint64_t    get_index(char *str);
+char    	*get_name(char *str);
 
 
 struct s_uint63
@@ -28,6 +31,13 @@ struct s_uint63
 	uint64_t	val:63;
 };
 
-uint64_t    get_index(char *str);
+struct s_assign
+{
+    char        *name;
+    char        *value;
+    uint64_t    index:63;
+    _Bool       hasindex:1;
+};
+
 
 #endif
