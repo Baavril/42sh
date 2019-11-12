@@ -19,27 +19,29 @@
 
 int     assign_variable(char *str)
 {
-    char *ptr;
+    char *value;
+    char *name;
     int ret;
 
     if (!str)
         return (e_invalid_input);
     ret = is_format_legit(str);
-    ptr = ft_strdup(str);
-    str = ptr;
     if (ret == ISLEGIT)
     {
-        ptr = ft_strstr(ptr, "=");
-        *ptr = '\0';
-        ++ptr;
-        if (*ptr)
-            ft_setenv(str, ptr, 1); /* using setenv as a test */
-        --ptr;
-        *ptr = '=';
+        value = get_value(str);
+        if (value)
+        {
+            if ((size_t)(value - str))
+            {
+                name = ft_strndup(str, (value - str - 1));
+                ft_setenv(name, value, 1); /* using setenv as a test */
+                ft_memdel((void**)&name);
+            }
+        }
     }
     else if (ret == HASINDEX)
     {
-        ft_printf("> %llu\n", get_index(str));
+      /*  ft_printf("> %llu\n", get_index(str));*/
         return (e_success);
     }
     return (e_success);

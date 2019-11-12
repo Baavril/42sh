@@ -50,6 +50,21 @@ uint64_t	get_index(char *str)
 	}
 }
 
+char	*get_value(char *str)
+{
+	if (str)
+	{
+		while (*str && *str != '=')
+			++str;
+		if (*str == '=')
+		{
+			++str;
+			return (str);
+		}
+	}
+	return (NULL);
+}
+
 _Bool	contains_array_subscript(char *str)
 {
 	if (*str == '(')
