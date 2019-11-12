@@ -222,7 +222,7 @@ static int	init_history(t_history *history, char **home)
 	}
 	if ((fd = open(*home, O_RDONLY | O_CREAT, 0600)) != -1)
 	{
-		while (get_next_line(fd, &get_line) > 0 && len < 499)
+		while (get_next_line(fd, &get_line) > 0 && len < 500)
 		{
 			if (!(history->str = ft_strdup(get_line)))
 				return (error_clean(fd, get_line));
@@ -342,7 +342,7 @@ static int	ft_str_exclamation_chr(char *str1, char *str2)
 			return (0);
 		i++;
 	}
-	if (!str1[i] && (str2 || !ft_isseparator(&str2[i])))
+	if (str1[i] == '\0' && (str2 != '\0' || !ft_isseparator(&str2[i])))
 		return (0);
 	return (1);
 }

@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/11/09 11:41:50 by abarthel         ###   ########.fr        #
+#    Updated: 2019/11/12 15:35:24 by yberramd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,7 @@ SOURCES			:=		main.c \
 						builtins/builtin_setenv.c \
 						builtins/builtin_unsetenv.c \
 						builtins/builtin_truefalse.c \
+						builtins/builtin_fc.c \
 						builtins/builtin_test/test_free.c \
 						builtins/builtin_test/test_tools.c \
 						builtins/builtin_test/test_dispatchers.c \
