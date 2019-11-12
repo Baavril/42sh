@@ -28,6 +28,11 @@
 #include "synt.h"
 #include "path.h"
 
+
+int     assign_variable(char *str);
+
+
+
 int		g_retval;
 char	g_pwd[] = {0};
 
@@ -88,6 +93,8 @@ int		main(int argc, char **argv)
 		return (1);
 	}
 	set_signals(0);
+/*	assign_variable("aaaa[9223372036854775808]=sadasd"); */
+	assign_variable("aaaa[0x01]=sadasd");
 	while (!read_command(&input) || get_next_line(0, &input))
 	{
 		if (!((status = history(ADD_CMD, &input, NULL))))

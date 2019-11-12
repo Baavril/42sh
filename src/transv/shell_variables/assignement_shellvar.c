@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "error.h"
 #include "shell_variables.h"
 #include "parser_utils_shvar.h"
@@ -24,10 +25,12 @@ int     assign_variable(char *str)
     if (!str)
         return (e_invalid_input);
     ret = is_format_legit(str);
+    ptr = ft_strdup(str);
+    str = ptr;
     if (ret == ISLEGIT)
     {
-        ptr = ft_strstr(str, "=");
-        *ptr = '\n';
+        ptr = ft_strstr(ptr, "=");
+        *ptr = '\0';
         ++ptr;
         if (*ptr)
             ft_setenv(str, ptr, 1); /* using setenv as a test */
@@ -36,6 +39,7 @@ int     assign_variable(char *str)
     }
     else if (ret == HASINDEX)
     {
+        ft_printf("> %llu\n", get_index(str));
         return (e_success);
     }
     return (e_success);

@@ -13,10 +13,19 @@
 #ifndef PARSER_UTILS_SHVAR_H
 # define PARSER_UTILS_SHVAR_H
 
+#include <stdint.h>
+
 # define HASINDEX 2
 # define ISLEGIT 1
 # define NOTLEGIT 0
 
-int is_format_legit(const char *input);
+int         is_format_legit(const char *input);
+
+struct s_uint63
+{
+	uint64_t	val:63;
+};
+
+uint64_t    get_index(char *str);
 
 #endif

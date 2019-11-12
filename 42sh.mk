@@ -78,6 +78,9 @@ SOURCES			:=		main.c \
 						transv/hash_module/htable_type_dispatcher.c \
 						transv/hash_module/init_htable.c \
 						transv/hash_module/string_routines.c \
+						transv/shell_variables/assignement_shellvar.c \
+						transv/shell_variables/tools_parser_shell_variables.c \
+						transv/shell_variables/utils_shell_variables.c \
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
