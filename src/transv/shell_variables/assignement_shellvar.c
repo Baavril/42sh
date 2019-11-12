@@ -24,9 +24,16 @@ static __inline__ int  simple_assignement(struct s_assign *var, char *str)
     var->value = get_value(str);
     if (var->value)
     {
+        if (contains_array_subscript(var->value))
+        {
+            ft_printf("|> %s\n", str);
+        }
+        else
+        {
             var->name = get_name(str);
             ft_setenv(var->name, var->value, 1); /* using setenv as a test */
             ft_memdel((void**)&(var->name));
+        }
     }
     return (e_success);
 }
@@ -49,7 +56,11 @@ static __inline__ int   indexed_assignement(struct s_assign *var, char *str)
         ft_memdel((void**)&start_ptr);
         return (e_cannot_assign_list_to_array_member);
     }
-    ft_printf("%s > %llu\n", var->value, get_index(str));
+    else
+    {
+        /* managed index of var, should code recursive ft */
+        ft_printf("%s > %llu\n", var->value, get_index(str));
+    }
     return (e_success);
 }
 
