@@ -41,7 +41,7 @@ int     assign_variable(char *str)
     }
     else if (ret == HASINDEX)
     {
-      /*  ft_printf("> %llu\n", get_index(str));*/
+        ft_printf("> %llu\n", get_index(str));
         return (e_success);
     }
     return (e_success);

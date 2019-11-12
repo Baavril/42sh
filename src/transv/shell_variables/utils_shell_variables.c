@@ -42,12 +42,8 @@ uint64_t	get_index(char *str)
 		++str;
 	if (*str != '[')
 		  return (-1);
-	else
-	{
-		*str = '\0';
-		++str;
-		return (ft_atoi_63bits(str));
-	}
+	++str;
+	return (ft_atoi_63bits(str));
 }
 
 char	*get_value(char *str)

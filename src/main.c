@@ -94,6 +94,7 @@ int		main(int argc, char **argv)
 	}
 	set_signals(0);
 	assign_variable("aaaa[9223372036854775808]=sadasd");
+	assign_variable("aaaa[9]=sadasd");
 /*	assign_variable("aaaa=sadasd");
 	assign_variable("=a");
 	assign_variable("=");
