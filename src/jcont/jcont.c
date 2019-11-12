@@ -21,9 +21,9 @@ static int			ft_build_job(t_job *pipeline, char **cmd, size_t *i)
 	size_t		pipe_start;
 	size_t		pipe_end;
 
-	if ((!ft_strcmp(cmd[*i], "&") || !ft_strcmp(cmd[*i], ";")) && !(cmd[*i + 1]))
+	if ((!ft_strcmp(cmd[*i], "&") || !ft_strcmp(cmd[*i], ";")) && !(cmd[*i + 1])) //& and ; are pipeline separator tokens that can be at the n of the line without syntax error
 		return (0);
-	pipe_start = (ft_ispipesepar(cmd[*i]) && (*i)) ? ++(*i) : *i;
+	pipe_start = (ft_ispipesepar(cmd[*i]) && (*i)) ? ++(*i) : *i; // replace ft_ispipesepar with the right function (written by abartel)
 	pipe_end = pipe_start;
 	while (cmd[pipe_end] && !ft_ispipesepar(cmd[pipe_end]))
 		pipe_end++;
@@ -35,7 +35,7 @@ static int			ft_build_job(t_job *pipeline, char **cmd, size_t *i)
 	}
 	/*ft_memcheck(*/pipeline->command = ft_tab_range_cpy(cmd, pipe_start, pipe_end - 1);
 	pipeline->process = NULL;
-	// Coment set le groupe pid ?
+	// Comment set le groupe pid ?
 	pipeline->notified = !ft_strcmp(cmd[pipe_end], "&") ? 1 : 0;
 	// Copy de term_mode;
 	pipeline->fd_stdin = 0;
@@ -47,8 +47,33 @@ static int			ft_build_job(t_job *pipeline, char **cmd, size_t *i)
 
 static void			ft_build_process(t_job *pipeline)
 {
+    char        **pipe_av;
+    t_process   process;
+    size_t      i;
 
-
+    i = 0;
+    pipe_av = pipeline->command;
+    while (pipe_av[i])
+    {
+        if (ft_issepar(pipe_av[i])) // function testing each command separator
+        {
+            /*ft_memcheck(*/process.argv = ft_tab_range_cpy(pipe_av, 0, i);
+            process.state = 0;
+	        // Comment set le pid ?
+            /*ft_memcheck*/ft_lstaddback(&(pipeline->process), ft_lstnew(&process, sizeof(t_process)));
+            pipe_av = &(pipe_av[i + 1]);
+            i = 0;
+        }
+        else
+            i++;
+    }
+    if (i)
+    {
+        /*ft_memcheck(*/process.argv = ft_tab_range_cpy(pipe_av, 0, i);
+        process.state = 0;
+	    // Comment set le pid ?
+        /*ft_memcheck*/ft_lstaddback(&(pipeline->process), ft_lstnew(&process, sizeof(t_process)));
+    }
 }
 
 static int			ft_exec_pipeline(t_job *pipeline)
@@ -87,6 +112,7 @@ int					jcont(char **cmd, char **envp)
 	int			ret;
 
 	i = 0;
+    jobs = NULL;
 	while ((ret = ft_build_job(&pipeline, cmd, &i)) > 0)
 	{
 		ft_build_process(&pipeline);

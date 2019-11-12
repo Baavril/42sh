@@ -13,7 +13,7 @@
 #ifndef JCONT_H
 # define JCONT_H
 
-# include 
+# include "libft.h" 
 
 # define COMPLETE			0x1
 # define IFCOMPLETE(state)	(state & COMPLETE)
