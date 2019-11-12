@@ -13,8 +13,15 @@
 #include <stdint.h>
 
 #include "libft.h"
+#include "error.h"
 #include "parser_utils_shvar.h"
 
+int				recursive_assignement(struct s_assign *var, char *str)
+{
+	(void)var;
+	(void)str;
+	return (e_success);
+}
 
 static __inline__ int	has_legit_index(const char *input, const char *s)
 {

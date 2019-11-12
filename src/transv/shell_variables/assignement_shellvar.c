@@ -17,8 +17,6 @@
 #include "shell_variables.h"
 #include "parser_utils_shvar.h"
 
-/* expansion like module to get assignement in tokens or str ? */
-
 static __inline__ int  simple_assignement(struct s_assign *var, char *str)
 {
     var->value = get_value(str);
@@ -59,7 +57,10 @@ static __inline__ int   indexed_assignement(struct s_assign *var, char *str)
     else
     {
         /* managed index of var, should code recursive ft */
-        ft_printf("%s > %llu\n", var->value, get_index(str));
+        var->hasindex |= 1;
+        var->index = get_index(str);
+        var->name = get_name(str);
+        ft_printf("name: %s, %s > %llu\n", var->name, var->value, get_index(str));
     }
     return (e_success);
 }
