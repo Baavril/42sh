@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/09 17:37:59 by baavril          ###   ########.fr       */
+/*   Updated: 2019/11/12 19:22:51 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,22 @@
 #include <term.h>
 #include <curses.h>
 #include <stdint.h>
+
+t_dispatch_keys		g_dispatch_keys[] =
+{
+	{NULL, &left_arrow},
+	{NULL, &right_arrow},
+	{NULL, &up_arrow},
+	{NULL, &down_arrow},
+	{NULL, &delete_key},
+	{NULL, &home_key},
+	{NULL, &next_word},
+	{NULL, &previous_word},
+	{NULL, &end_key},
+	{NULL, &select_key},
+	{NULL, &paste_key},
+	{NULL, NULL}
+};
 
 int toggle_termcaps(void)
 {
@@ -46,26 +62,68 @@ int toggle_termcaps(void)
 	return(0);
 }
 
-int get_stdin(t_cursor cursor, char **buff)
+int	ft_init_tab(void)
 {
-	char c;
+	if (!(g_dispatch_keys[0].key_path = tgetstr("kl", NULL) + 2))
+		return (1);
+	if (!(g_dispatch_keys[1].key_path = tgetstr("kr", NULL) + 2))
+		return (1);
+	if (!(g_dispatch_keys[2].key_path = tgetstr("ku", NULL) + 2))
+		return (1);
+	if (!(g_dispatch_keys[3].key_path = tgetstr("kd", NULL) + 2))
+		return (1);
+	if (!(g_dispatch_keys[4].key_path = tgetstr("kD", NULL) + 2))
+		return (1);
+	if (!(g_dispatch_keys[5].key_path = tgetstr("kh", NULL) + 2))
+		return (1);
+	if (!(g_dispatch_keys[6].key_path = tgetstr("kN", NULL) + 2))
+		return (1);
+	if (!(g_dispatch_keys[7].key_path = tgetstr("kP", NULL) + 2))
+		return (1);
+	if (!(g_dispatch_keys[8].key_path = "F\0"))
+		return (1);
+	if (!(g_dispatch_keys[9].key_path = "1;2A"))
+		return (1);
+	if (!(g_dispatch_keys[10].key_path = "1;2B"))
+		return (1);
+	return (0);
+}
 
+int	get_stdin(t_cursor cursor, char **buff)
+{
+	int	i;
+	union	u_tc termcaps;
+
+	i = 0;
+	if (ft_init_tab() == 1)
+		return (1);
 	inside_history = NULL;
 	*buff = ft_strdup("");
 	display(*buff, cursor.end, SIZE_MAX, cursor);
 	while (1)
 	{
-		if (read(0, &c, 1) == -1)
-			return(-1);
-		if (ft_isprint(c))
-			normal_char(buff, &cursor, c);
-		else if (c == '\177')
+		ft_bzero(termcaps.buff, sizeof(termcaps.buff));
+		read(STDIN_FILENO, termcaps.buff, sizeof(termcaps.buff));
+		if (ft_isprint(termcaps.key))
+			normal_char(buff, &cursor, termcaps.key);
+		else if (termcaps.key == '\177')
 			backspace_key(buff, &cursor);
-		else if (c == '\t')
+		else if (termcaps.key == '\t')
 			tab_key(buff, &cursor);
-		else if (c == '\033')
-			escape_char(buff, &cursor);
-		else if (c == '\n')
+		else if (termcaps.key == '\033')
+		{
+			i = 0;
+			while (g_dispatch_keys[i].key_path != NULL)
+			{
+				if (ft_strcmp(g_dispatch_keys[i].key_path, &termcaps.buff[2]) == 0)
+				{
+					(g_dispatch_keys[i].function_call)(buff, &cursor);
+					break ;
+				}
+				i++;
+			}
+		}
+		else if (termcaps.key == '\n')
 		{
 			display(*buff, cursor.start, SIZE_MAX, cursor);
 			ft_strdel(&inside_history);

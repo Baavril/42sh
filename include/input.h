@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 12:11:17 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/10/20 11:26:55 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/11/12 19:01:14 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,14 @@
 char *copybuff;
 char *inside_history;
 
+
 int	read_command(char **line);
+
+union	u_tc
+{
+	char		key;
+	char		buff[sizeof(unsigned int)];
+};
 
 typedef struct	s_cursor
 {
@@ -29,5 +36,11 @@ typedef struct	s_cursor
 	int		prompt_len;
 	char	*prompt;
 }				t_cursor;
+
+typedef	struct s_dispatch_keys
+{
+	char	*key_path;
+	void	(*function_call)(char**, t_cursor*);
+}		t_dispatch_keys;
 
 #endif
