@@ -76,6 +76,7 @@ char	*get_name(char *str)
 
 _Bool	contains_array_subscript(char *str)
 {
+	ft_printf("|>    %s\n", str);
 	if (*str == '(')
 	{
 		while (*str)

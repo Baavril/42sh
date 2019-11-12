@@ -33,12 +33,20 @@ static __inline__ int  simple_assignement(struct s_assign *var, char *str)
 
 static __inline__ int   indexed_assignement(struct s_assign *var, char *str)
 {
+    char *end_ptr;
+    char *start_ptr;
+
     var->value = get_value(str);
     var->index |= 1;
-    ft_printf("okokokokoko\n");
     if (contains_array_subscript(var->value))
     {
-        ft_dprintf(STDERR_FILENO, "%s: %s: cannot assign list to array member", g_progname, var->name);
+        start_ptr = ft_strdup(str);
+        end_ptr = start_ptr;
+        while (*end_ptr && *end_ptr != '=')
+            ++end_ptr;
+        *end_ptr = '\0';
+        ft_dprintf(STDERR_FILENO, "%s: %s: cannot assign list to array member\n", g_progname, start_ptr);
+        ft_memdel((void**)&start_ptr);
         return (e_cannot_assign_list_to_array_member);
     }
     ft_printf("%s > %llu\n", var->value, get_index(str));
