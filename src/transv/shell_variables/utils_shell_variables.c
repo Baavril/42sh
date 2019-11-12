@@ -42,12 +42,23 @@ uint64_t	get_index(char *str)
 		++str;
 	if (*str != '[')
 		  return (-1);
-	else
+	++str;
+	return (ft_atoi_63bits(str));
+}
+
+char	*get_value(char *str)
+{
+	if (str)
 	{
-		*str = '\0';
-		++str;
-		return (ft_atoi_63bits(str));
+		while (*str && *str != '=')
+			++str;
+		if (*str == '=')
+		{
+			++str;
+			return (str);
+		}
 	}
+	return (NULL);
 }
 
 _Bool	contains_array_subscript(char *str)

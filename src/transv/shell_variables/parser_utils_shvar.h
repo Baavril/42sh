@@ -20,6 +20,8 @@
 # define NOTLEGIT 0
 
 int         is_format_legit(const char *input);
+char        *get_value(char *str);
+
 
 struct s_uint63
 {
