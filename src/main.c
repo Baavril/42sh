@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/16 21:48:28 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/11/09 12:23:42 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ static int	set_minimal_env(void)
 
 int		main(int argc, char **argv)
 {
-	extern char	**environ;
-/*	extern int	g_fd_prompt;
-*/	char		*input;
-	char		**args;
-	int		status;
+	extern char		**environ;
+/*	extern int		g_fd_prompt;
+*/	char			*input;
+	char			**args;
+	int				status;
 	
 	(void)argc;
 	copybuff = NULL;

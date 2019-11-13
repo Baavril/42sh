@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   job.h                                              :+:      :+:    :+:   */
+/*   pipelines.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/16 13:12:45 by abarthel          #+#    #+#             */
-/*   Updated: 2019/11/09 12:09:59 by tgouedar         ###   ########.fr       */
+/*   Created: 2019/11/13 12:05:14 by abarthel          #+#    #+#             */
+/*   Updated: 2019/11/13 12:05:19 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef JOB_H
-# define JOB_H
+#ifndef PIPELINES_H
+# define PIPELINES_H
 
-# include <sys/types.h>
+struct	s_pipeline_separators
+{
+	const char *const	sep;
+};
 
-int				job(char **argv, char **envp);
-int				path_concat(char **bin);
+extern const struct s_pipeline_separators	g_separators[];
 
-extern pid_t	g_childpid;
+_Bool	is_pipeline_separator(const char *str);
+int		unglue_sep(char **input);
+char	**get_sequence(char **cmd);
 
 #endif

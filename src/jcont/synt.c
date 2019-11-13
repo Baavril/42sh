@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 17:59:39 by abarthel          #+#    #+#             */
-/*   Updated: 2019/07/21 19:02:47 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/11/09 12:14:38 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "error.h"
 #include "synt_const.h"
 
-static int	operator_check(char *token)
+static int		operator_check(char *token)
 {
 	int	i;
 
@@ -31,7 +31,7 @@ static int	operator_check(char *token)
 	return (e_success);
 }
 
-int			synt(char **cmd_line)
+int				synt(char **cmd_line)
 {
 	int i;
 
