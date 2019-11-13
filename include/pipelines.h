@@ -18,10 +18,16 @@ struct	s_pipeline_separators
 	const char *const	sep;
 };
 
-extern const struct s_pipeline_separators	g_separators[];
+struct	s_metachr
+{
+	const char *const	c;
+};
 
+/*
+extern const struct s_pipeline_separators	g_separators[];
+*/
 _Bool	is_pipeline_separator(const char *str);
 
-int	unglue_sep(char **input);
+int	unglue_metachr(char **input);
 
 #endif

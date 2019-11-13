@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unglue_sep.c                                       :+:      :+:    :+:   */
+/*   unglue_metachr.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -16,21 +16,22 @@
 #include "error.h"
 #include "pipelines.h"
 
-static char	*get_closest_sep(char *str, int *lsep)
+static char	*get_closest_meta(char *str, int *lsep)
 {
-	extern const struct s_pipeline_separators g_separators[];
+	const struct s_metachr metachr[] =
+	{ {"||"}, {"&&"}, {"&>"}, {">&"}, {";;"}, {"|&"}, {"<<"}, {">>"}, {"<"}, {">"}, {";"}, {"&"}, {"\0"} };
 	char	*closest;
 	char	*ptr;
 	int		i;
 
 	i = 0;
 	closest = NULL;
-	while (*(g_separators[i].sep))
+	while (*(metachr[i].c))
 	{
-		ptr = ft_strstr(str, g_separators[i].sep);
+		ptr = ft_strstr(str, metachr[i].c);
 		if (ptr && (!closest || (ptr < closest && closest)))
 		{
-			*lsep = ft_strlen(g_separators[i].sep);
+			*lsep = ft_strlen(metachr[i].c);
 			closest = ptr;
 		}
 		++i;
@@ -61,7 +62,7 @@ static char	*extend(char *prefix, char *ptr, size_t lprefix, int lsep)
 	return (new);
 }
 
-int	unglue_sep(char **input)
+int	unglue_metachr(char **input)
 {
 	int	lsep;
 	size_t	lprefix;
@@ -71,7 +72,7 @@ int	unglue_sep(char **input)
 	new = *input;
 	lprefix = 0;
 	lsep = 0;
-	while ((ptr = get_closest_sep(&new[lprefix + lsep], &lsep)))
+	while ((ptr = get_closest_meta(&new[lprefix + lsep], &lsep)))
 	{
 		lprefix = (size_t)(ptr - *input);
 		if (!(new = extend(*input, ptr, lprefix, lsep)))

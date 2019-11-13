@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/11/13 16:52:02 by baavril          ###   ########.fr        #
+#    Updated: 2019/11/13 17:40:45 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ SOURCES			:=		main.c \
 						lex/expansions/parameter_expansions.c \
 						lex/expansions/tilde_expansion.c \
 						lex/separators/pipeline_separators.c \
-						lex/separators/unglue_sep.c \
+						lex/separators/unglue_metachr.c \
 						jcont/synt.c \
 						jcont/synt_const.c \
 						jcont/jcont.c \

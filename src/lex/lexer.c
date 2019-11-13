@@ -25,7 +25,7 @@ char	**lexer(char **input)
 	char	**retsplit;
 	int	ret;
 
-	if ((ret = unglue_sep(input)))
+	if ((ret = unglue_metachr(input)))
 	{
 		psherror(ret, g_progname, e_cmd_type);
 		return (NULL);

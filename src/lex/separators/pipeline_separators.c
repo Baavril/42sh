@@ -21,7 +21,7 @@
 ** equivalent to a semicolon.
 */
 
-const struct	s_pipeline_separators g_separators[] =
+static const struct s_pipeline_separators g_separators[] =
 { {"||"}, {"&&"}, {";"}, {"&"}, {"\0"} };
 
 extern __inline__ _Bool	is_pipeline_separator(const char *str)
