@@ -24,7 +24,7 @@ static __inline__ int  simple_assignement(struct s_assign *var, char *str)
     {
         if (contains_array_subscript(var->value))
         {
-            ft_printf("|> %s\n", str);
+            return (e_success); /* for tests */
         }
         else
         {
@@ -38,28 +38,19 @@ static __inline__ int  simple_assignement(struct s_assign *var, char *str)
 
 static __inline__ int   indexed_assignement(struct s_assign *var, char *str)
 {
-    char *end_ptr;
-    char *start_ptr;
-
     var->value = get_value(str);
-    var->index |= 1;
+    var->index = get_index(str);
+    var->hasindex |= 1;
     if (contains_array_subscript(var->value))
     {
-        start_ptr = ft_strdup(str);
-        end_ptr = start_ptr;
-        while (*end_ptr && *end_ptr != '=')
-            ++end_ptr;
-        *end_ptr = '\0';
-        ft_dprintf(STDERR_FILENO, "%s: %s: cannot assign list to array member\n", g_progname, start_ptr);
-        ft_memdel((void**)&start_ptr);
+        display_assignement_error(str);
         return (e_cannot_assign_list_to_array_member);
     }
     else
     {
         /* managed index of var, should code recursive ft */
-        var->hasindex |= 1;
-        var->index = get_index(str);
         var->name = get_name(str);
+        
         ft_printf("name: %s, %s > %llu\n", var->name, var->value, get_index(str));
     }
     return (e_success);

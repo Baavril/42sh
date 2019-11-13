@@ -19,11 +19,12 @@
 # define ISLEGIT 1
 # define NOTLEGIT 0
 
+void        display_assignement_error(char *str);
+_Bool       contains_array_subscript(char *str);
 int         is_format_legit(const char *input);
 char        *get_value(char *str);
-_Bool       contains_array_subscript(char *str);
-uint64_t    get_index(char *str);
 char    	*get_name(char *str);
+uint64_t    get_index(char *str);
 
 
 struct s_uint63

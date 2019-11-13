@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdint.h>
+#include <unistd.h>
 
 #include "libft.h"
 #include "error.h"
@@ -59,4 +60,18 @@ int				is_format_legit(const char *input)
 			return (NOTLEGIT);
 	}
 	return (NOTLEGIT);
+}
+
+void 			display_assignement_error(char *str)
+{
+    char *end_ptr;
+    char *start_ptr;
+
+    start_ptr = ft_strdup(str);
+    end_ptr = start_ptr;
+    while (*end_ptr && *end_ptr != '=')
+        ++end_ptr;
+    *end_ptr = '\0';
+    ft_dprintf(STDERR_FILENO, "%s: %s: cannot assign list to array member\n", g_progname, start_ptr);
+    ft_memdel((void**)&start_ptr);
 }
