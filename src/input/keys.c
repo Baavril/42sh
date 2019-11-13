@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42->fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 18:02:02 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/12 18:07:22 by baavril          ###   ########.fr       */
+/*   Updated: 2019/11/13 15:34:03 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ char	*buff_realloc(char *old_buff, size_t i)
 
 void normal_char(char **buff, t_cursor *cursor, char c)
 {
-	
 	*buff = buff_realloc(*buff, ++(cursor->start));
 	ft_memmove(&((*buff)[cursor->end + 1]), &((*buff)[cursor->end]), cursor->start - cursor->end);
 	(*buff)[(cursor->end)++] = c;
@@ -144,7 +143,6 @@ void paste_key(char **buff, t_cursor *cursor)
 void home_key(char **buff, t_cursor *cursor)
 {
 	(void)buff;
-	(void)cursor;
 	cursor->end = 0;
 }
 
@@ -183,30 +181,4 @@ void select_key(char **buff, t_cursor *cursor)
 			copybuff = ft_strndup(*buff + cursor->end, cursor->in - cursor->end);
 		cursor->in = SIZE_MAX;
 	}
-}
-
-void escape_char(char **buff, t_cursor *cursor, char *str)
-{
-	if (!ft_strcmp(&str[0], tgetstr("kl", NULL) + 2)) // Cursor Left key
-		left_arrow(buff, cursor);
-	if (!ft_strcmp(&str[0], tgetstr("kr", NULL) + 2)) // Cursor Right key
-		right_arrow(buff, cursor);
-	if (!ft_strcmp(&str[0], tgetstr("ku", NULL) + 2)) // Cursor Up key
-		up_arrow(buff, cursor);
-	if (!ft_strcmp(&str[0], tgetstr("kd", NULL) + 2)) // Cursor Down key
-		down_arrow(buff, cursor);
-	if (!ft_strcmp(&str[0], tgetstr("kD", NULL) + 2)) // Key for delete char under cursor
-		delete_key(buff, cursor);
-	if (!ft_strcmp(&str[0], tgetstr("kh", NULL) + 2)) // Cursor home key
-		home_key(buff, cursor);
-	if (!ft_strcmp(&str[0], tgetstr("kN", NULL) + 2)) // key for next page
-		next_word(buff, cursor);
-	if (!ft_strcmp(&str[0], tgetstr("kP", NULL) + 2)) // key for previous page
-		previous_word(buff, cursor);
-	if (!ft_strcmp(&str[0], "F\0")) //FAUX MAIS TEMP
-		end_key(buff, cursor);
-	if (!ft_strcmp(&str[0], "1;2A")) //FAUX MAIS TEMP
-		select_key(buff, cursor);
-	if (!ft_strcmp(&str[0], "1;2B")) //FAUX MAIS TEMP
-		paste_key(buff, cursor);
 }

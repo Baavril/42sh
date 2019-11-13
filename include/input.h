@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 12:11:17 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/12 19:01:14 by baavril          ###   ########.fr       */
+/*   Updated: 2019/11/13 15:06:18 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,12 @@
 char *copybuff;
 char *inside_history;
 
-
 int	read_command(char **line);
 
 union	u_tc
 {
 	char		key;
-	char		buff[sizeof(unsigned int)];
+	char		buff[8];
 };
 
 typedef struct	s_cursor

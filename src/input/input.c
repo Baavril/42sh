@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/12 19:22:51 by baavril          ###   ########.fr       */
+/*   Updated: 2019/11/13 15:33:15 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,20 +102,26 @@ int	get_stdin(t_cursor cursor, char **buff)
 	display(*buff, cursor.end, SIZE_MAX, cursor);
 	while (1)
 	{
-		ft_bzero(termcaps.buff, sizeof(termcaps.buff));
-		read(STDIN_FILENO, termcaps.buff, sizeof(termcaps.buff));
+		ft_bzero(termcaps.buff, 8);
+		read(STDIN_FILENO, termcaps.buff, 8);
 		if (ft_isprint(termcaps.key))
+{
 			normal_char(buff, &cursor, termcaps.key);
+}
 		else if (termcaps.key == '\177')
+{
 			backspace_key(buff, &cursor);
+}
 		else if (termcaps.key == '\t')
+{
 			tab_key(buff, &cursor);
+}
 		else if (termcaps.key == '\033')
 		{
 			i = 0;
 			while (g_dispatch_keys[i].key_path != NULL)
 			{
-				if (ft_strcmp(g_dispatch_keys[i].key_path, &termcaps.buff[2]) == 0)
+				if (ft_strncmp(g_dispatch_keys[i].key_path, &termcaps.buff[2], ft_strlen(g_dispatch_keys[i].key_path)) == 0)
 				{
 					(g_dispatch_keys[i].function_call)(buff, &cursor);
 					break ;
