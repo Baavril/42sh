@@ -52,7 +52,9 @@ char				**get_sequence(char **cmd)
 	seq = (char**)ft_tabmalloc(i + 1);
 	i = 0;
 	while (cmd[i] && !is_pipeline_separator(cmd[i]))
+	{
 		seq[i] = ft_strdup(cmd[i]);
 		++i;
+	}
 	return (seq);
 }
