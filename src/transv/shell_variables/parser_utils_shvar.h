@@ -13,19 +13,13 @@
 #ifndef PARSER_UTILS_SHVAR_H
 # define PARSER_UTILS_SHVAR_H
 
-#include <stdint.h>
+# include <stdint.h>
+
+# include "parser_utils_shvar.h"
 
 # define HASINDEX 2
 # define ISLEGIT 1
 # define NOTLEGIT 0
-
-void        display_assignement_error(char *str);
-_Bool       contains_array_subscript(char *str);
-int         is_format_legit(const char *input);
-char        *get_value(char *str);
-char    	*get_name(char *str);
-uint64_t    get_index(char *str);
-
 
 struct s_uint63
 {
@@ -40,5 +34,12 @@ struct s_assign
     _Bool       hasindex:1;
 };
 
+int         display_assignement_error(char *str);
+_Bool       contains_array_subscript(char *str);
+int         add_variable(struct s_assign *var);
+int         is_format_legit(const char *input);
+char        *get_value(char *str);
+char    	*get_name(char *str);
+uint64_t    get_index(char *str);
 
 #endif

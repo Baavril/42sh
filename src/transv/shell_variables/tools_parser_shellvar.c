@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tools_parser_shell_variables.c                     :+:      :+:    :+:   */
+/*   tools_parser_shellvar.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -62,7 +62,7 @@ int				is_format_legit(const char *input)
 	return (NOTLEGIT);
 }
 
-void 			display_assignement_error(char *str)
+int 			display_assignement_error(char *str)
 {
     char *end_ptr;
     char *start_ptr;
@@ -74,4 +74,5 @@ void 			display_assignement_error(char *str)
     *end_ptr = '\0';
     ft_dprintf(STDERR_FILENO, "%s: %s: cannot assign list to array member\n", g_progname, start_ptr);
     ft_memdel((void**)&start_ptr);
+	return (e_cannot_assign_list_to_array_member);
 }
