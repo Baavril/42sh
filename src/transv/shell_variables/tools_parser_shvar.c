@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tools_parser_shellvar.c                            :+:      :+:    :+:   */
+/*   tools_parser_shvar.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 17:52:45 by abarthel          #+#    #+#             */
-/*   Updated: 2019/11/09 10:07:00 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/11/13 13:04:31 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdint.h>
-#include <unistd.h>
 
 #include "libft.h"
 #include "error.h"
@@ -60,19 +59,4 @@ int				is_format_legit(const char *input)
 			return (NOTLEGIT);
 	}
 	return (NOTLEGIT);
-}
-
-int 			display_assignement_error(char *str)
-{
-    char *end_ptr;
-    char *start_ptr;
-
-    start_ptr = ft_strdup(str);
-    end_ptr = start_ptr;
-    while (*end_ptr && *end_ptr != '=')
-        ++end_ptr;
-    *end_ptr = '\0';
-    ft_dprintf(STDERR_FILENO, "%s: %s: cannot assign list to array member\n", g_progname, start_ptr);
-    ft_memdel((void**)&start_ptr);
-	return (e_cannot_assign_list_to_array_member);
 }

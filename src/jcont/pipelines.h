@@ -23,5 +23,7 @@ extern const struct s_pipeline_separators	g_separators[];
 _Bool	is_pipeline_separator(const char *str);
 int		unglue_sep(char **input);
 char	**get_sequence(char **cmd);
+char	**position_token(char **cmd);
+char	**jump_sep(char **cmd);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/11/12 15:35:24 by yberramd         ###   ########.fr        #
+#    Updated: 2019/11/13 13:11:45 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SOURCES			:=		main.c \
 						jcont/jcont.c \
 						jcont/job.c \
 						jcont/path_concat.c \
+						jcont/get_sequence.c \
 						builtins/builtin_alias.c \
 						builtins/builtin_cd.c \
 						builtins/builtin_echo.c \
@@ -80,8 +81,8 @@ SOURCES			:=		main.c \
 						transv/hash_module/init_htable.c \
 						transv/hash_module/string_routines.c \
 						transv/shell_variables/assignement_shellvar.c \
+						transv/shell_variables/tools_parser_shvar.c \
 						transv/shell_variables/utils_shell_variables.c \
-						transv/shell_variables/tools_parser_shellvar.c \
 						transv/shell_variables/shell_variables.c \
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
