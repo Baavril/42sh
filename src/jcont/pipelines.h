@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_variables.h                                  :+:      :+:    :+:   */
+/*   pipelines.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/08 09:48:01 by abarthel          #+#    #+#             */
-/*   Updated: 2019/11/08 17:53:54 by abarthel         ###   ########.fr       */
+/*   Created: 2019/11/13 12:05:14 by abarthel          #+#    #+#             */
+/*   Updated: 2019/11/13 12:05:19 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELL_VARIABLES_H
-# define SHELL_VARIABLES_H
+#ifndef PIPELINES_H
+# define PIPELINES_H
 
-# include <stdint.h>
-
-# include "ft_btree.h"
-
-extern struct s_btree	*g_shellvariables;
-
-struct s_shvar
+struct	s_pipeline_separators
 {
-	char		*str;
-	uint64_t	index:63;
-	_Bool		isarray:1;
-} __attribute__((aligned(16)));
+	const char *const	sep;
+};
+
+extern const struct s_pipeline_separators	g_separators[];
+
+_Bool	is_pipeline_separator(const char *str);
+int		unglue_sep(char **input);
+char	**get_sequence(char **cmd);
 
 #endif

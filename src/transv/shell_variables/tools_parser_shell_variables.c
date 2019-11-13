@@ -13,13 +13,17 @@
 #include <stdint.h>
 
 #include "libft.h"
+#include "error.h"
 #include "parser_utils_shvar.h"
 
-#define HASINDEX 2
-#define ISLEGIT 1
-#define NOTLEGIT 0
+int				recursive_assignement(struct s_assign *var, char *str)
+{
+	(void)var;
+	(void)str;
+	return (e_success);
+}
 
-static __inline__ uint8_t	has_legit_index(const char *input, const char *s)
+static __inline__ int	has_legit_index(const char *input, const char *s)
 {
 	++s;
 	input = s;
@@ -33,7 +37,7 @@ static __inline__ uint8_t	has_legit_index(const char *input, const char *s)
 	return (HASINDEX);
 }
 
-uint8_t				is_format_legit(const char *input)
+int				is_format_legit(const char *input)
 {
 	const char	*s;
 

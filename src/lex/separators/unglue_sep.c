@@ -13,20 +13,15 @@
 #include <stdlib.h>
 
 #include "libft.h"
-#include "separators.h"
 #include "error.h"
-
-const struct s_separators	g_separators[] =
-{
-	{";"},
-	{"\0"}
-};
+#include "pipelines.h"
 
 static char	*get_closest_sep(char *str, int *lsep)
 {
-	int	i;
-	char	*ptr;
+	extern const struct s_pipeline_separators g_separators[];
 	char	*closest;
+	char	*ptr;
+	int		i;
 
 	i = 0;
 	closest = NULL;

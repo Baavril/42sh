@@ -5,13 +5,79 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/15 17:59:39 by abarthel          #+#    #+#             */
-/*   Updated: 2019/11/09 21:07:29 by tgouedar         ###   ########.fr       */
+/*   Created: 2019/11/13 12:12:16 by abarthel          #+#    #+#             */
+/*   Updated: 2019/11/13 12:14:16 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "job.h"
+#include "pipelines.h"
+
+static char **position_token(char **cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd[i] && is_pipeline_separator(cmd[i]))
+		++i;
+	while (cmd[i] && !is_pipeline_separator(cmd[i]))
+		++i;
+	while (cmd[i] && is_pipeline_separator(cmd[i]))
+		++i;
+	if (!(cmd[i]))
+		return (NULL);
+	return (&(cmd[i]));
+}
+
+static char **jump_sep(char **cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd && cmd[i] && is_pipeline_separator(cmd[i]))
+		++i;
+	return (&cmd[i]);
+}
+
+static char	**ft_sequence(char **cmd)
+{
+	char **seq;
+	int	i;
+
+	i = 0;
+	while (cmd[i] && !is_pipeline_separator(cmd[i]))
+		++i;
+	seq = (char**)ft_tabmalloc(i + 1);
+	i = 0;
+	while (cmd[i] && !is_pipeline_separator(cmd[i]))
+	{
+		seq[i] = ft_strdup(cmd[i]);
+		++i;
+	}
+	return (seq);
+}
+
+int	jcont(char **cmd, char **envp)
+{
+	char	**argv;
+	int		ret;
+
+	ret = 0;
+	cmd = jump_sep(cmd);
+	while (cmd && *cmd)
+ 	{
+		argv = ft_sequence(cmd);
+		if (**argv)
+			ret = job(argv, envp);
+		ft_tabdel(&argv);
+		cmd = position_token(cmd);
+	}
+	return (ret);
+}
+
+/*
+
 
 pid_t				g_cur_gpid = 0;
 t_list				*g_bg_jobs = NULL;
@@ -33,7 +99,8 @@ static int			ft_build_job(t_job *pipeline, char **cmd, size_t *i)
 		//syntax error near cmd[pipe_end]
 		return (-1); // cas d'un sep en debut ou de deux seps en suivant
 	}
-	/*ft_memcheck(*/pipeline->command = ft_tab_range_cpy(cmd, pipe_start, pipe_end - 1);
+	//ft_memcheck(
+	pipeline->command = ft_tab_range_cpy(cmd, pipe_start, pipe_end - 1);
 	pipeline->process = NULL;
 	// Comment set le groupe pid ?
 	pipeline->notified = !ft_strcmp(cmd[pipe_end], "&") ? 1 : 0;
@@ -57,10 +124,12 @@ static void			ft_build_process(t_job *pipeline)
     {
         if (ft_issepar(pipe_av[i])) // function testing each command separator
         {
-            /*ft_memcheck(*/process.argv = ft_tab_range_cpy(pipe_av, 0, i);
+            //ft_memcheck(
+		process.argv = ft_tab_range_cpy(pipe_av, 0, i);
             process.state = 0;
 	        // Comment set le pid ?
-            /*ft_memcheck*/ft_lstaddback(&(pipeline->process), ft_lstnew(&process, sizeof(t_process)));
+            //ft_memcheck
+		ft_lstaddback(&(pipeline->process), ft_lstnew(&process, sizeof(t_process)));
             pipe_av = &(pipe_av[i + 1]);
             i = 0;
         }
@@ -69,10 +138,12 @@ static void			ft_build_process(t_job *pipeline)
     }
     if (i)
     {
-        /*ft_memcheck(*/process.argv = ft_tab_range_cpy(pipe_av, 0, i);
+        //ft_memcheck(
+	process.argv = ft_tab_range_cpy(pipe_av, 0, i);
         process.state = 0;
-	    // Comment set le pid ?
-        /*ft_memcheck*/ft_lstaddback(&(pipeline->process), ft_lstnew(&process, sizeof(t_process)));
+	   // Comment set le pid ?
+        //ft_memcheck
+	ft_lstaddback(&(pipeline->process), ft_lstnew(&process, sizeof(t_process)));
     }
 }
 
@@ -123,3 +194,7 @@ int					jcont(char **cmd, char **envp)
 	ft_lstdel(&jobs, &ft_free_job);
 	return (ret);
 }
+
+
+
+*/

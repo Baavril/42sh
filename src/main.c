@@ -28,6 +28,11 @@
 #include "synt.h"
 #include "path.h"
 
+
+int     assign_variable(char *str);
+
+
+
 int		g_retval;
 char	g_pwd[] = {0};
 
@@ -88,6 +93,16 @@ int		main(int argc, char **argv)
 		return (1);
 	}
 	set_signals(0);
+	assign_variable("aaaa[9223372036854775808]='this value from overflow'");
+	assign_variable("aaaa[9]=sadasd");
+	assign_variable("bbb[7]=(sdsd, ofe, wee)");
+	assign_variable("poo=(Hello ' world' this)");
+	assign_variable("c[5]=([4]=qwqw, [8]=qwerrt)");
+	assign_variable("aaaa=sadasd");
+	assign_variable("oo=([4]=qwqw, [8]=qwerrt)");
+	assign_variable("=a");
+	assign_variable("=");
+	assign_variable("ad=");
 	while (!read_command(&input) || get_next_line(0, &input))
 	{
 		if (!((status = history(ADD_CMD, &input, NULL))))
