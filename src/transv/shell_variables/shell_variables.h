@@ -17,13 +17,13 @@
 
 # include "ft_btree.h"
 
-extern struct s_btree	*g_shellvariables; 
+extern struct s_btree	*g_shellvariables;
 
 struct s_shvar
 {
 	char		*str;
 	uint64_t	index:63;
 	_Bool		isarray:1;
-};
+} __attribute__((aligned(16)));
 
 #endif

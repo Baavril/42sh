@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tools_parser_shell_variables.c                     :+:      :+:    :+:   */
+/*   tools_parser_shvar.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 17:52:45 by abarthel          #+#    #+#             */
-/*   Updated: 2019/11/09 10:07:00 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/11/13 13:04:31 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdint.h>
+#include <unistd.h>
 
 #include "libft.h"
+#include "error.h"
 #include "parser_utils_shvar.h"
 
-#define HASINDEX 2
-#define ISLEGIT 1
-#define NOTLEGIT 0
+int				recursive_assignement(struct s_assign *var, char *str)
+{
+	(void)var;
+	(void)str;
+	return (e_success);
+}
 
-static __inline__ uint8_t	has_legit_index(const char *input, const char *s)
+static __inline__ int	has_legit_index(const char *input, const char *s)
 {
 	++s;
 	input = s;
@@ -33,7 +38,7 @@ static __inline__ uint8_t	has_legit_index(const char *input, const char *s)
 	return (HASINDEX);
 }
 
-uint8_t				is_format_legit(const char *input)
+int				is_format_legit(const char *input)
 {
 	const char	*s;
 
@@ -55,4 +60,19 @@ uint8_t				is_format_legit(const char *input)
 			return (NOTLEGIT);
 	}
 	return (NOTLEGIT);
+}
+
+int 			display_assignement_error(char *str)
+{
+    char *end_ptr;
+    char *start_ptr;
+
+    start_ptr = ft_strdup(str);
+    end_ptr = start_ptr;
+    while (*end_ptr && *end_ptr != '=')
+        ++end_ptr;
+    *end_ptr = '\0';
+    ft_dprintf(STDERR_FILENO, "%s: %s: cannot assign list to array member\n", g_progname, start_ptr);
+    ft_memdel((void**)&start_ptr);
+    return (e_cannot_assign_list_to_array_member);
 }

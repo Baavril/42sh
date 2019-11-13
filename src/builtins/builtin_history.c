@@ -78,10 +78,10 @@ static int	history_nbr(int argc, char **argv)
 int		cmd_history(int argc, char **argv)
 {
 	if (argc == 1 || (ft_isdigit(argv[1][0]) && argc == 2))
-		history_nbr(argc, argv);
+		return (history_nbr(argc, argv));
 	else if (argc >= 2 && ft_isdigit(argv[1][0]))
 		ft_dprintf(2, "42sh: history: too many arguments\n");
 	else if (argc >= 2 && argv[1][0] != '-')
 		ft_dprintf(2, "42sh: history: %s: numeric argument required\n", argv[1]);
-	return(1);
+	return (0);
 }

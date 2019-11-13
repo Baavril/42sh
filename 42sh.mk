@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/11/13 15:09:34 by baavril          ###   ########.fr        #
+#    Updated: 2019/11/13 16:52:02 by baavril          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,12 +29,14 @@ SOURCES			:=		main.c \
 						lex/expansions/get_param.c \
 						lex/expansions/parameter_expansions.c \
 						lex/expansions/tilde_expansion.c \
+						lex/separators/pipeline_separators.c \
 						lex/separators/unglue_sep.c \
 						jcont/synt.c \
 						jcont/synt_const.c \
 						jcont/jcont.c \
 						jcont/job.c \
 						jcont/path_concat.c \
+						jcont/get_sequence.c \
 						builtins/builtin_alias.c \
 						builtins/builtin_cd.c \
 						builtins/builtin_echo.c \
@@ -47,6 +49,7 @@ SOURCES			:=		main.c \
 						builtins/builtin_setenv.c \
 						builtins/builtin_unsetenv.c \
 						builtins/builtin_truefalse.c \
+						builtins/builtin_fc.c \
 						builtins/builtin_test/test_free.c \
 						builtins/builtin_test/test_tools.c \
 						builtins/builtin_test/test_dispatchers.c \
@@ -77,6 +80,10 @@ SOURCES			:=		main.c \
 						transv/hash_module/htable_type_dispatcher.c \
 						transv/hash_module/init_htable.c \
 						transv/hash_module/string_routines.c \
+						transv/shell_variables/assignement_shellvar.c \
+						transv/shell_variables/tools_parser_shvar.c \
+						transv/shell_variables/utils_shell_variables.c \
+						transv/shell_variables/shell_variables.c \
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 

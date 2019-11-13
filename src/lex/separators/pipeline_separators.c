@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "pipelines.h"
-
 
 /* A list is a sequence of one or more pipelines separated by one
 ** of the operators ‘;’,  ‘&’,‘&&’, or ‘||’, and optionally terminated by
@@ -21,14 +21,19 @@
 ** equivalent to a semicolon.
 */
 
-static __inline_ _Bool	is_pipeline_separator(const char *str)
-{
-	struct	s_pipeline_separators separators[] =
-    { {";"}, {"&"}, {"&&"}, {"||"}, {"\0"} };
+const struct	s_pipeline_separators g_separators[] =
+{ {"||"}, {"&&"}, {";"}, {"&"}, {"\0"} };
 
-    while (/* conditio */)
+extern __inline__ _Bool	is_pipeline_separator(const char *str)
+{
+	int i;
+
+	i = 0;
+    while (*(g_separators[i].sep))
     {
-        /* code */
+        if (!ft_strcmp(str, g_separators[i].sep))
+		    return (1);
+	    ++i;
     }
-     (ft_strcmp())	
+    return (0);
 }

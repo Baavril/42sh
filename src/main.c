@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/16 21:48:28 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/11/09 12:23:42 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@
 #include "jcont.h"
 #include "synt.h"
 #include "path.h"
+
+
+int     assign_variable(char *str);
+
+
 
 int		g_retval;
 char	g_pwd[] = {0};
@@ -64,11 +69,11 @@ static int	set_minimal_env(void)
 
 int		main(int argc, char **argv)
 {
-	extern char	**environ;
-/*	extern int	g_fd_prompt;
-*/	char		*input;
-	char		**args;
-	int		status;
+	extern char		**environ;
+/*	extern int		g_fd_prompt;
+*/	char			*input;
+	char			**args;
+	int				status;
 	
 	(void)argc;
 	copybuff = NULL;
@@ -88,7 +93,17 @@ int		main(int argc, char **argv)
 		return (1);
 	}
 	set_signals(0);
-	while (!read_command(&input) || get_next_line(0, &input))
+	assign_variable("aaaa[9223372036854775808]='this value from overflow'");
+	assign_variable("aaaa[9]=sadasd");
+/*	assign_variable("bbb[7]=(sdsd, ofe, wee)");
+	assign_variable("poo=(Hello ' world' this)");
+	assign_variable("c[5]=([4]=qwqw, [8]=qwerrt)");
+	assign_variable("aaaa=sadasd");
+	assign_variable("oo=([4]=qwqw, [8]=qwerrt)");
+	assign_variable("=a");
+	assign_variable("=");
+	assign_variable("ad=");
+*/	while (!read_command(&input) || get_next_line(0, &input))
 	{
 		if (!((status = history(ADD_CMD, &input, NULL))))
 		{	
