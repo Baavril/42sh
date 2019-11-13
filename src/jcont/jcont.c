@@ -14,49 +14,6 @@
 #include "job.h"
 #include "pipelines.h"
 
-static char **position_token(char **cmd)
-{
-	int	i;
-
-	i = 0;
-	while (cmd[i] && is_pipeline_separator(cmd[i]))
-		++i;
-	while (cmd[i] && !is_pipeline_separator(cmd[i]))
-		++i;
-	while (cmd[i] && is_pipeline_separator(cmd[i]))
-		++i;
-	if (!(cmd[i]))
-		return (NULL);
-	return (&(cmd[i]));
-}
-
-static char **jump_sep(char **cmd)
-{
-	int	i;
-
-	i = 0;
-	while (cmd && cmd[i] && is_pipeline_separator(cmd[i]))
-		++i;
-	return (&cmd[i]);
-}
-
-static char	**ft_sequence(char **cmd)
-{
-	char **seq;
-	int	i;
-
-	i = 0;
-	while (cmd[i] && !is_pipeline_separator(cmd[i]))
-		++i;
-	seq = (char**)ft_tabmalloc(i + 1);
-	i = 0;
-	while (cmd[i] && !is_pipeline_separator(cmd[i]))
-	{
-		seq[i] = ft_strdup(cmd[i]);
-		++i;
-	}
-	return (seq);
-}
 
 int	jcont(char **cmd, char **envp)
 {
@@ -67,9 +24,11 @@ int	jcont(char **cmd, char **envp)
 	cmd = jump_sep(cmd);
 	while (cmd && *cmd)
  	{
-		argv = ft_sequence(cmd);
+		argv = get_sequence(cmd);
 		if (**argv)
+		{
 			ret = job(argv, envp);
+		}
 		ft_tabdel(&argv);
 		cmd = position_token(cmd);
 	}

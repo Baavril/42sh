@@ -36,6 +36,7 @@ SOURCES			:=		main.c \
 						jcont/jcont.c \
 						jcont/job.c \
 						jcont/path_concat.c \
+						jcont/get_sequence.c \
 						builtins/builtin_alias.c \
 						builtins/builtin_cd.c \
 						builtins/builtin_echo.c \
@@ -80,7 +81,7 @@ SOURCES			:=		main.c \
 						transv/hash_module/init_htable.c \
 						transv/hash_module/string_routines.c \
 						transv/shell_variables/assignement_shellvar.c \
-						transv/shell_variables/tools_parser_shell_variables.c \
+						transv/shell_variables/tools_parser_shvar.c \
 						transv/shell_variables/utils_shell_variables.c \
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))

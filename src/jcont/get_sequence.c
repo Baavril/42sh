@@ -15,7 +15,7 @@
 #include "libft.h"
 #include "pipelines.h"
 
-static __inline__ char	**position_token(char **cmd)
+char	**position_token(char **cmd)
 {
 	int	i;
 
@@ -31,7 +31,7 @@ static __inline__ char	**position_token(char **cmd)
 	return (&(cmd[i]));
 }
 
-static __inline__ char **jump_sep(char **cmd)
+char **jump_sep(char **cmd)
 {
 	int	i;
 
