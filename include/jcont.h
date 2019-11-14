@@ -14,6 +14,7 @@
 # define JCONT_H
 
 # include "libft.h" 
+# include <sys/types.h>
 
 # define COMPLETE			0x1
 # define IFCOMPLETE(state)	(state & COMPLETE)

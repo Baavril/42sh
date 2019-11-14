@@ -13,6 +13,7 @@
 #ifndef INPUT_H
 # define INPUT_H
 
+# define COUNT_KEY 8
 # define INPUT_SIZE 256
 # define MAX_LINE 4096
 
@@ -24,7 +25,7 @@ int	read_command(char **line);
 union	u_tc
 {
 	char		key;
-	char		buff[8];
+	char		buff[COUNT_KEY];
 };
 
 typedef struct	s_cursor

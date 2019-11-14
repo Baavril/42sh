@@ -17,6 +17,7 @@
 #include "display.h"
 
 #include <unistd.h>
+#include <stdio.h>
 #include <term.h>
 #include <curses.h>
 #include <stdint.h>
@@ -34,6 +35,7 @@ t_dispatch_keys		g_dispatch_keys[] =
 	{NULL, &end_key},
 	{NULL, &select_key},
 	{NULL, &paste_key},
+	{NULL, &search_history},
 	{NULL, NULL}
 };
 
@@ -86,6 +88,8 @@ int	ft_init_tab(void)
 		return (1);
 	if (!(g_dispatch_keys[10].key_path = "1;2B"))
 		return (1);
+	if (!(g_dispatch_keys[11].key_path = "1;5A"))
+		return (1);
 	return (0);
 }
 
@@ -99,23 +103,22 @@ int	get_stdin(t_cursor cursor, char **buff)
 		return (1);
 	inside_history = NULL;
 	*buff = ft_strdup("");
-	display(*buff, cursor.end, SIZE_MAX, cursor);
 	while (1)
 	{
-		ft_bzero(termcaps.buff, 8);
-		read(STDIN_FILENO, termcaps.buff, 8);
+		display(*buff, cursor.start, cursor.in, cursor);
+		ft_bzero(termcaps.buff, COUNT_KEY);
+		read(STDIN_FILENO, termcaps.buff, COUNT_KEY);
 		if (ft_isprint(termcaps.key))
-{
 			normal_char(buff, &cursor, termcaps.key);
-}
-		else if (termcaps.key == '\177')
-{
+		else if (termcaps.key == BACKSPACE)
 			backspace_key(buff, &cursor);
-}
-		else if (termcaps.key == '\t')
-{
+		else if (termcaps.key == TABULATION)
 			tab_key(buff, &cursor);
-}
+		else if (termcaps.key == ENTER)
+		{
+			ft_strdel(&inside_history);
+			return(0);
+		}
 		else if (termcaps.key == '\033')
 		{
 			i = 0;
@@ -129,13 +132,6 @@ int	get_stdin(t_cursor cursor, char **buff)
 				i++;
 			}
 		}
-		else if (termcaps.key == '\n')
-		{
-			display(*buff, cursor.start, SIZE_MAX, cursor);
-			ft_strdel(&inside_history);
-			return(0);
-		}
-		display(*buff, cursor.end, cursor.in, cursor);
 	}
 	return(1);
 }
@@ -144,8 +140,8 @@ void	ft_init_cursor(t_cursor *cursor)
 {
 	cursor->prompt = NULL;
 	cursor->in = SIZE_MAX;
-	cursor->end = 0;
 	cursor->start = 0;
+	cursor->end = 0;
 	cursor->prompt_len = 0;
 }
 

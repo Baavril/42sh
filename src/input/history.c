@@ -342,7 +342,7 @@ static int	ft_str_exclamation_chr(char *str1, char *str2)
 			return (0);
 		i++;
 	}
-	if (str1[i] == '\0' && (str2 != '\0' || !ft_isseparator(&str2[i])))
+	if (!str1[i] && (str2 || !ft_isseparator(&str2[i])))
 		return (0);
 	return (1);
 }

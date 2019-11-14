@@ -11,11 +11,16 @@
 /* ************************************************************************** */
 
 #ifndef KEYS_H
-#define KEYS_H
+# define KEYS_H
+
 #include "libft.h"
 #include "input.h"
 
+# define ENTER '\n'
+# define BACKSPACE '\177'
+# define TABULATION '\t'
 
+void search_history(char **buff, t_cursor *cursor);
 void delete_key(char **buff, t_cursor *cursor);
 void backspace_key(char **buff, t_cursor *cursor);
 void tab_key(char **buff, t_cursor *cursor);

@@ -22,7 +22,7 @@ struct s_btree	*g_shellvariables;
 
 int     add_variable(struct s_assign *var)
 {
-    ft_printf("name:%s\nvalue:%s\nindex:%llu\nhasindex:%d\n\n", var->name, var->value, var->index, var->hasindex);
+    ft_printf("name:%s\nvalue:%s\nhasindex:%d\n\n", var->name, var->value, var->hasindex);
 
     return (e_success);
 }

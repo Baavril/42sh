@@ -45,11 +45,11 @@ static int display_all(char *str, size_t pos, size_t end, t_cursor cursor)
 	ft_putstr(tgetstr("cr", NULL));
 	ft_putstr(tgetstr("cd", NULL));
 	ft_putstr(cursor.prompt);
-	if (end == SIZE_MAX || end > cursor.start)
+	if (end == SIZE_MAX || end > cursor.end)
 		ft_putstr(str);
 	else
 		display_select(str, pos, end);
-	if (!((cursor.start + cursor.prompt_len) % col))
+	if (!((cursor.end + cursor.prompt_len) % col))
 		write(1, "\n", 1);
 	return((pos + cursor.prompt_len) / col);
 }
@@ -65,7 +65,7 @@ int display(char *str, size_t pos, size_t end, t_cursor cursor)
 		return(1);
 	col = tgetnum("co");
 	// sets lines_offset value to normal if string is empty : ISSUE HERE
-	if (cursor.start == pos && cursor.start == 0) // We enter this when opening a new, fresh prompt (usually after entering a command). This test is just not enough !
+	if (cursor.end == pos && cursor.end == 0) // We enter this when opening a new, fresh prompt (usually after entering a command). This test is just not enough !
 		lines_offset = cursor.prompt_len / col;
 
 	//use the value of lines_offset
@@ -76,7 +76,7 @@ int display(char *str, size_t pos, size_t end, t_cursor cursor)
 	lines_offset = display_all(str, pos, end, cursor);
 
 	//Reposition cursor
-	x = ((cursor.start + cursor.prompt_len) / col) - lines_offset;
+	x = ((cursor.end + cursor.prompt_len) / col) - lines_offset;
 	while (x--)
 		ft_putstr(tgetstr("up", NULL));
 	ft_putstr(tgoto(tgetstr("ch", NULL), 0, (pos + cursor.prompt_len) % col));

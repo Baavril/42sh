@@ -40,9 +40,9 @@ char	*buff_realloc(char *old_buff, size_t i)
 
 void normal_char(char **buff, t_cursor *cursor, char c)
 {
-	*buff = buff_realloc(*buff, ++(cursor->start));
-	ft_memmove(&((*buff)[cursor->end + 1]), &((*buff)[cursor->end]), cursor->start - cursor->end);
-	(*buff)[(cursor->end)++] = c;
+	*buff = buff_realloc(*buff, ++(cursor->end));
+	ft_memmove(&((*buff)[cursor->start + 1]), &((*buff)[cursor->start]), cursor->end - cursor->start);
+	(*buff)[(cursor->start)++] = c;
 }
 
 void set_string(char **buff, t_cursor *cursor, char *str)
@@ -52,44 +52,52 @@ void set_string(char **buff, t_cursor *cursor, char *str)
 	if (!str)
 		return;
 	len = ft_strlen(str);
-	if (cursor->start < len)
+	if (cursor->end < len)
 		*buff = buff_realloc(*buff, len);
 	ft_strcpy(*buff, str);
-	cursor->start = len;
 	cursor->end = len;
+	cursor->start = len;
 }
 
 void right_arrow(char **buff, t_cursor *cursor)
 {
 	(void) buff;
-	if (cursor->end < cursor->start)
-		++(cursor->end);
+	if (cursor->start < cursor->end)
+		++(cursor->start);
 }
 
 void left_arrow(char **buff, t_cursor *cursor)
 {
 	(void) buff;
-	if (cursor->end > 0)
-		--(cursor->end);
+	if (cursor->start > 0)
+		--(cursor->start);
 }
 
 void delete_key(char **buff, t_cursor *cursor)
 {
-	if (cursor->end < cursor->start && cursor->start > 0)
+	if (cursor->start < cursor->end && cursor->end > 0)
 	{
-		ft_memmove(&((*buff)[cursor->end]), &((*buff)[cursor->end + 1]), cursor->start - cursor->end);
-		--(cursor->start);
+		ft_memmove(&((*buff)[cursor->start]), &((*buff)[cursor->start + 1]), cursor->end - cursor->start);
+		--(cursor->end);
 	}
 }
 
 void backspace_key(char **buff, t_cursor *cursor)
 {
-	if (cursor->start > 0 && cursor->end > 0)
+	if (cursor->end > 0 && cursor->start > 0)
 	{
-		--(cursor->end);
-		ft_memmove(&((*buff)[cursor->end]), &((*buff)[cursor->end + 1]), cursor->start - cursor->end);
 		--(cursor->start);
+		ft_memmove(&((*buff)[cursor->start]), &((*buff)[cursor->start + 1]), cursor->end - cursor->start);
+		--(cursor->end);
 	}
+}
+
+void	search_history(char **buff, t_cursor *cursor)
+{
+	(void)buff;
+	(void)cursor;
+	while (1)
+		ft_putendl("Search History");
 }
 
 /*
@@ -143,42 +151,42 @@ void paste_key(char **buff, t_cursor *cursor)
 void home_key(char **buff, t_cursor *cursor)
 {
 	(void)buff;
-	cursor->end = 0;
+	cursor->start = 0;
 }
 
 void end_key(char **buff, t_cursor *cursor)
 {
 	(void) buff;
-	cursor->end = cursor->start;
+	cursor->start = cursor->end;
 }
 
 void next_word(char **buff, t_cursor *cursor)
 {
-	while(cursor->end < cursor->start && ft_isalnum((*buff)[cursor->end]))
-			(cursor->end)++;
-	while(cursor->end < cursor->start && !ft_isalnum((*buff)[cursor->end]))
-			(cursor->end)++;
+	while(cursor->start < cursor->end && ft_isalnum((*buff)[cursor->start]))
+			(cursor->start)++;
+	while(cursor->start < cursor->end && !ft_isalnum((*buff)[cursor->start]))
+			(cursor->start)++;
 }
 
 void previous_word(char **buff, t_cursor *cursor)
 {
-	while(cursor->end > 0 && ft_isalnum((*buff)[cursor->end]))
-			(cursor->end)--;
-	while(cursor->end > 0 && !ft_isalnum((*buff)[cursor->end]))
-			(cursor->end)--;
+	while(cursor->start > 0 && ft_isalnum((*buff)[cursor->start]))
+			(cursor->start)--;
+	while(cursor->start > 0 && !ft_isalnum((*buff)[cursor->start]))
+			(cursor->start)--;
 }
 
 void select_key(char **buff, t_cursor *cursor)
 {
 	if (cursor->in == SIZE_MAX)
-		cursor->in = cursor->end;
-	else if (cursor->in != cursor->end)
+		cursor->in = cursor->start;
+	else if (cursor->in != cursor->start)
 	{
 		ft_strdel(&copybuff);
-		if (cursor->end > cursor->in)
-			copybuff = ft_strndup(*buff + cursor->in, cursor->end - cursor->in);
-		else if (cursor->end < cursor->in)
-			copybuff = ft_strndup(*buff + cursor->end, cursor->in - cursor->end);
+		if (cursor->start > cursor->in)
+			copybuff = ft_strndup(*buff + cursor->in, cursor->start - cursor->in);
+		else if (cursor->start < cursor->in)
+			copybuff = ft_strndup(*buff + cursor->start, cursor->in - cursor->start);
 		cursor->in = SIZE_MAX;
 	}
 }
