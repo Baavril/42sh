@@ -112,3 +112,19 @@ size_t mkprompt(char **prompt)
 			mkprompt_outro(ret, &len));
 	return (len);
 }
+
+size_t	search_prompt(char **prompt, char *buff)
+{
+	char *intro;
+	char *outro;
+	char *tmp;
+	int len;
+
+	len = 0;
+	tmp = (!*buff) ? ft_strdup("") : ft_strdup(buff);
+	intro = ft_strdup("(reverse-i-search)`");
+	outro = ft_strdup("': ");
+	*prompt = ft_strnjoinfree(3, intro, tmp, outro);
+	len = ft_strlen(*prompt);
+	return (len);
+}

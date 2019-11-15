@@ -13,6 +13,9 @@
 #include "libft.h"
 #include "input.h"
 #include "history.h"
+#include "keys.h"
+#include "display.h"
+#include "prompt.h"
 
 #include <unistd.h>
 #include <term.h>
@@ -38,51 +41,80 @@ char	*buff_realloc(char *old_buff, size_t i)
 	return (old_buff);
 }
 
-void normal_char(char **buff, t_cursor *cursor, char c)
+int normal_char(char **buff, t_cursor *cursor, char c)
 {
 	*buff = buff_realloc(*buff, ++(cursor->end));
 	ft_memmove(&((*buff)[cursor->start + 1]), &((*buff)[cursor->start]), cursor->end - cursor->start);
 	(*buff)[(cursor->start)++] = c;
+	return (1);
 }
 
-void set_string(char **buff, t_cursor *cursor, char *str)
+char *normal_char_history(char **buff, t_cursor *cursor, char c)
+{
+	char *tmp;
+	static char *match = NULL;
+
+	tmp = NULL;
+	*buff = buff_realloc(*buff, ++(cursor->end));
+	cursor->start = ft_strlen(*buff);
+	ft_memmove(&((*buff)[cursor->start + 1]), &((*buff)[cursor->start]), cursor->end - cursor->start);
+	(*buff)[(cursor->start)++] = c;
+	if (history(SEARCH, buff, &tmp) == 1)
+	{
+		if (ft_strlen(match) > 0)
+			ft_strdel(&match);
+		if (!(match = ft_strdup(tmp)))
+			return (NULL);
+		cursor->start = 0;
+		return (match);
+	}
+//	set_string(buff, cursor, inside_history);
+	cursor->start = 0;
+	return (match);
+}
+
+int set_string(char **buff, t_cursor *cursor, char *str)
 {
 	size_t len;
 
 	if (!str)
-		return;
+		return (1);
 	len = ft_strlen(str);
 	if (cursor->end < len)
 		*buff = buff_realloc(*buff, len);
 	ft_strcpy(*buff, str);
 	cursor->end = len;
 	cursor->start = len;
+	return (1);
 }
 
-void right_arrow(char **buff, t_cursor *cursor)
+int right_arrow(char **buff, t_cursor *cursor)
 {
-	(void) buff;
+	(void)buff;
 	if (cursor->start < cursor->end)
 		++(cursor->start);
+	return (1);
 }
 
-void left_arrow(char **buff, t_cursor *cursor)
+int left_arrow(char **buff, t_cursor *cursor)
 {
-	(void) buff;
+	(void)buff;
 	if (cursor->start > 0)
 		--(cursor->start);
+	return (1);
 }
 
-void delete_key(char **buff, t_cursor *cursor)
+int delete_key(char **buff, t_cursor *cursor)
 {
 	if (cursor->start < cursor->end && cursor->end > 0)
 	{
 		ft_memmove(&((*buff)[cursor->start]), &((*buff)[cursor->start + 1]), cursor->end - cursor->start);
 		--(cursor->end);
 	}
+	return (1);
 }
 
-void backspace_key(char **buff, t_cursor *cursor)
+int backspace_key(char **buff, t_cursor *cursor)
 {
 	if (cursor->end > 0 && cursor->start > 0)
 	{
@@ -90,21 +122,14 @@ void backspace_key(char **buff, t_cursor *cursor)
 		ft_memmove(&((*buff)[cursor->start]), &((*buff)[cursor->start + 1]), cursor->end - cursor->start);
 		--(cursor->end);
 	}
-}
-
-void	search_history(char **buff, t_cursor *cursor)
-{
-	(void)buff;
-	(void)cursor;
-	while (1)
-		ft_putendl("Search History");
+	return (1);
 }
 
 /*
  * plus de leaks sur les tab keys -> fonctions a realiser pour prendre en charge autocompletion
  */
 
-void tab_key(char **buff, t_cursor *cursor)
+int tab_key(char **buff, t_cursor *cursor)
 {
 	char *str;
 	char *tmp;
@@ -114,13 +139,16 @@ void tab_key(char **buff, t_cursor *cursor)
 	while (*tmp)
 		normal_char(buff, cursor, *tmp++);
 	ft_strdel(&str);
+	return (1);
 }
 
-void down_arrow(char **buff, t_cursor *cursor)
+int down_arrow(char **buff, t_cursor *cursor)
 {
 	char *str;
+
+	str = NULL;
 	if (!inside_history)
-		return;
+		return (1);
 	else if (history(FORWARD, NULL, &str) == 2)
 	{
 		set_string(buff, cursor, inside_history);
@@ -128,55 +156,64 @@ void down_arrow(char **buff, t_cursor *cursor)
 	}
 	else
 		set_string(buff, cursor, str);
+	return (1);
 }
 
-void up_arrow(char **buff, t_cursor *cursor)
+int up_arrow(char **buff, t_cursor *cursor)
 {
 	char *str;
+
+	str = NULL;
 	if (!inside_history && (inside_history = ft_strdup(*buff)))
 		history(LAST, NULL, &str);
 	else
 		history(BACKWARD, NULL, &str);
 	set_string(buff, cursor, str);
+	return (1);
 }
 
-void paste_key(char **buff, t_cursor *cursor)
+int paste_key(char **buff, t_cursor *cursor)
 {
 	char *str = copybuff;
 	if (str)
 		while (*str)
 			normal_char(buff, cursor, *str++);
+	return (1);
 }
 
-void home_key(char **buff, t_cursor *cursor)
+int home_key(char **buff, t_cursor *cursor)
 {
 	(void)buff;
 	cursor->start = 0;
+	return (1);
 }
 
-void end_key(char **buff, t_cursor *cursor)
+int end_key(char **buff, t_cursor *cursor)
 {
-	(void) buff;
+	(void)buff;
 	cursor->start = cursor->end;
+	return (1);
 }
 
-void next_word(char **buff, t_cursor *cursor)
+int next_word(char **buff, t_cursor *cursor)
 {
 	while(cursor->start < cursor->end && ft_isalnum((*buff)[cursor->start]))
 			(cursor->start)++;
 	while(cursor->start < cursor->end && !ft_isalnum((*buff)[cursor->start]))
 			(cursor->start)++;
+	return (1);
 }
 
-void previous_word(char **buff, t_cursor *cursor)
+int previous_word(char **buff, t_cursor *cursor)
 {
 	while(cursor->start > 0 && ft_isalnum((*buff)[cursor->start]))
 			(cursor->start)--;
 	while(cursor->start > 0 && !ft_isalnum((*buff)[cursor->start]))
 			(cursor->start)--;
+	return (1);
 }
 
-void select_key(char **buff, t_cursor *cursor)
+int select_key(char **buff, t_cursor *cursor)
 {
 	if (cursor->in == SIZE_MAX)
 		cursor->in = cursor->start;
@@ -189,4 +226,5 @@ void select_key(char **buff, t_cursor *cursor)
 			copybuff = ft_strndup(*buff + cursor->start, cursor->in - cursor->start);
 		cursor->in = SIZE_MAX;
 	}
+	return (1);
 }

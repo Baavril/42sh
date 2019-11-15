@@ -20,25 +20,26 @@
 # define BACKSPACE '\177'
 # define TABULATION '\t'
 
-void search_history(char **buff, t_cursor *cursor);
-void delete_key(char **buff, t_cursor *cursor);
-void backspace_key(char **buff, t_cursor *cursor);
-void tab_key(char **buff, t_cursor *cursor);
-void normal_char(char **buff, t_cursor *cursor, char c);
-void select_key(char **buff, t_cursor *cursor);
-void paste_key(char **buff, t_cursor *cursor);
-void escape_char(char **buff, t_cursor *cursor, char *str);
-void previous_word(char **buff, t_cursor *cursor);
-void next_word(char **buff, t_cursor *cursor);
-void end_key(char **buff, t_cursor *cursor);
-void home_key(char **buff, t_cursor *cursor);
-void paste_key(char **buff, t_cursor *cursor);
-void up_arrow(char **buff, t_cursor *cursor);
-void down_arrow(char **buff, t_cursor *cursor);
-void delete_key(char **buff, t_cursor *cursor);
-void left_arrow(char **buff, t_cursor *cursor);
-void right_arrow(char **buff, t_cursor *cursor);
-void set_string(char **buff, t_cursor *cursor, char *str);
-char	*buff_realloc(char *old_buff, size_t i);
+int search_history(char **buff, t_cursor *cursor);
+int delete_key(char **buff, t_cursor *cursor);
+int backspace_key(char **buff, t_cursor *cursor);
+int tab_key(char **buff, t_cursor *cursor);
+int normal_char(char **buff, t_cursor *cursor, char c);
+char *normal_char_history(char **buff, t_cursor *cursor, char c);
+int select_key(char **buff, t_cursor *cursor);
+int paste_key(char **buff, t_cursor *cursor);
+int escape_char(char **buff, t_cursor *cursor, char *str);
+int previous_word(char **buff, t_cursor *cursor);
+int next_word(char **buff, t_cursor *cursor);
+int end_key(char **buff, t_cursor *cursor);
+int home_key(char **buff, t_cursor *cursor);
+int paste_key(char **buff, t_cursor *cursor);
+int up_arrow(char **buff, t_cursor *cursor);
+int down_arrow(char **buff, t_cursor *cursor);
+int delete_key(char **buff, t_cursor *cursor);
+int left_arrow(char **buff, t_cursor *cursor);
+int right_arrow(char **buff, t_cursor *cursor);
+int set_string(char **buff, t_cursor *cursor, char *str);
+char *buff_realloc(char *old_buff, size_t i);
 
 #endif

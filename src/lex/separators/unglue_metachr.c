@@ -29,7 +29,7 @@ static char	*get_closest_meta(char *str, int *lsep)
 	while (*(metachr[i].c))
 	{
 		ptr = ft_strstr(str, metachr[i].c);
-		ft_printf("_%s\n", ptr);
+		//ft_printf("_%s\n", ptr);
 		if (ptr && (!closest || (ptr < closest && closest)))
 		{
 			*lsep = ft_strlen(metachr[i].c);

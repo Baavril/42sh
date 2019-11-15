@@ -14,6 +14,8 @@
 # define PROMPT_H
 #include "libft.h"
 
+size_t	search_prompt(char **prompt, char *buff);
+
 size_t	mkprompt(char **buff);
 size_t  mkprompt_quote(char *input, char **buff);
 

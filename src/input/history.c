@@ -99,7 +99,6 @@ static int	add_history(const char *line, t_history *history)
 	return (1);
 }
 
-
 static int	add_history_max_length(const char *line, t_history *history)
 {
 	while (history->previous)
@@ -157,6 +156,7 @@ static int	ft_search(t_history *history, const char *line, char **cmd)
 		history = history->next;
 	while (history->previous)
 	{
+	//	ft_printf("previous = %s\n", history->str);
 		if (history->str != NULL && line != NULL && ft_strstr(history->str, line) != NULL)
 		{
 			*cmd = history->str;
@@ -173,6 +173,7 @@ static int	search_history(t_history *history, char *line, char **cmd)
 		history = history->next;
 	while (history->previous)
 	{
+		ft_putendl(line);
 		if (history->str != NULL && line != NULL && ft_strfchr(history->str, line) != 0)
 		{
 			*cmd = history->str;

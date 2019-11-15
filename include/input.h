@@ -14,6 +14,8 @@
 # define INPUT_H
 
 # define COUNT_KEY 8
+# define CTRL_L 12
+# define CLEAR "clear"
 # define INPUT_SIZE 256
 # define MAX_LINE 4096
 
@@ -24,6 +26,7 @@ int	read_command(char **line);
 
 union	u_tc
 {
+	unsigned int key_c;
 	char		key;
 	char		buff[COUNT_KEY];
 };
@@ -33,14 +36,20 @@ typedef struct	s_cursor
 	size_t	in;
 	size_t	end;
 	size_t	start;
-	int		prompt_len;
+	size_t	prompt_len;
+	size_t	search_prompt_len;
 	char	*prompt;
+	char	*search_prompt;
 }				t_cursor;
 
 typedef	struct s_dispatch_keys
 {
 	char	*key_path;
-	void	(*function_call)(char**, t_cursor*);
+	int		(*function_call)(char**, t_cursor*);
 }		t_dispatch_keys;
+
+int	get_stdin(t_cursor cursor, char **buff);
+void	ft_init_cursor(t_cursor *cursor);
+void	ft_reader(union u_tc *termcaps, t_cursor *cursor, char ***buff);
 
 #endif
