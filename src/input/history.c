@@ -48,10 +48,19 @@ static int	w_history(const char *line, int fd)
 
 static int 	write_history(t_history *history, char *home)
 {
+	int len;
 	int fd;
 
+	len = 0;
 	if ((fd = open(home, O_WRONLY | O_CREAT | O_TRUNC, 0600)) == -1)
 		return (-1);
+	while (history && history->next)
+		history = history->next;
+	while (history && history->previous && len < 499)
+	{
+		len++;
+		history = history->previous;
+	}
 	while (history && history->next)
 	{
 		if (w_history(history->str, fd) == -1)
@@ -61,7 +70,7 @@ static int 	write_history(t_history *history, char *home)
 		}
 		history = history->next;
 	}
-	if (w_history(history->str, fd) == -1)
+	if (history && w_history(history->str, fd) == -1)
 	{
 		close(fd);
 		return (-1);
@@ -99,21 +108,6 @@ static int	add_history(const char *line, t_history *history)
 	return (1);
 }
 
-static int	add_history_max_length(const char *line, t_history *history)
-{
-	while (history->previous)
-		history = history->previous;
-	ft_strdel(&history->str);
-	while (history->next)
-	{
-		history->str = history->next->str;
-		history = history->next;
-	}
-	if (!(history->str = ft_strdup(line)))
-		return (-1);
-	return (1);
-}
-
 static int	add_cmd(const char *line, t_history *history)
 {
 	int len;
@@ -129,22 +123,12 @@ static int	add_cmd(const char *line, t_history *history)
 		if ((history->str == NULL || ft_strcmp(line, history->str) != 0)
 			 && ft_isspace(line[0]) != 1 && line[0] != '\0')
 		{
-			if (len < 499)
-			{
-				if (add_history(line, history) == -1)
-				{
-					ft_dprintf(2, "cannot allocate memory\n");
-					return (0);
-				}
-			}
-			else if (add_history_max_length(line, history) == -1)
+			if (add_history(line, history) == -1)
 			{
 				ft_dprintf(2, "cannot allocate memory\n");
 				return (0);
 			}
 		}
-		while (history->previous)
-			history = history->previous;
 		return (1);
 	}
 	return (0);
@@ -156,7 +140,6 @@ static int	ft_search(t_history *history, const char *line, char **cmd)
 		history = history->next;
 	while (history->previous)
 	{
-	//	ft_printf("previous = %s\n", history->str);
 		if (history->str != NULL && line != NULL && ft_strstr(history->str, line) != NULL)
 		{
 			*cmd = history->str;
@@ -173,7 +156,6 @@ static int	search_history(t_history *history, char *line, char **cmd)
 		history = history->next;
 	while (history->previous)
 	{
-		ft_putendl(line);
 		if (history->str != NULL && line != NULL && ft_strfchr(history->str, line) != 0)
 		{
 			*cmd = history->str;
@@ -343,7 +325,7 @@ static int	ft_str_exclamation_chr(char *str1, char *str2)
 			return (0);
 		i++;
 	}
-	if (!str1[i] && (str2 || !ft_isseparator(&str2[i])))
+	if (str1[i] == '\0' && (str2 != '\0' || !ft_isseparator(&str2[i])))
 		return (0);
 	return (1);
 }
