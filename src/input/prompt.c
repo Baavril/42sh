@@ -6,13 +6,14 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 17:12:27 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/09 17:42:49 by baavril          ###   ########.fr       */
+/*   Updated: 2019/11/16 16:30:11 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
 #include "libft.h"
+#include "prompt.h"
 #include "quote.h"
 
 # define COLOR "\033[96;m"
@@ -113,7 +114,21 @@ size_t mkprompt(char **prompt)
 	return (len);
 }
 
-size_t	search_prompt(char **prompt, char *buff)
+char	*search_prompt_intro(t_cursor *cursor)
+{
+	char *tmp;
+
+	tmp = NULL;
+	if (!cursor->match_ret)
+	{
+		tmp = ft_strdup("(reverse-i-search)`");
+		return (tmp);
+	}
+	tmp = ft_strdup("(failed reverse-i-search)`");
+	return (tmp);
+}
+
+size_t	search_prompt(t_cursor *cursor, char *buff)
 {
 	char *intro;
 	char *outro;
@@ -122,9 +137,9 @@ size_t	search_prompt(char **prompt, char *buff)
 
 	len = 0;
 	tmp = (!*buff) ? ft_strdup("") : ft_strdup(buff);
-	intro = ft_strdup("(reverse-i-search)`");
+	intro = search_prompt_intro(cursor);
 	outro = ft_strdup("': ");
-	*prompt = ft_strnjoinfree(3, intro, tmp, outro);
-	len = ft_strlen(*prompt);
+	cursor->prompt = ft_strnjoinfree(3, intro, tmp, outro);
+	len = ft_strlen(cursor->prompt);
 	return (len);
 }

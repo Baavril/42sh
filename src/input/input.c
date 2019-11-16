@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/13 15:33:15 by baavril          ###   ########.fr       */
+/*   Updated: 2019/11/16 18:36:06 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,25 +43,33 @@ int	search_history(char **buff, t_cursor *cursor)
 {
 	int i;
 	char *match;
-//	char *tmp;
 	union	u_tc termcaps;
 
 	i = 0;
-	ft_init_cursor(cursor);
-	inside_history = NULL;
 	match = NULL;
+	inside_history = NULL;
+	ft_init_cursor(cursor);
 	ft_bzero(*buff, ft_strlen(*buff));
 	while (1)
 	{
 		ft_strdel(&(cursor->prompt));
-		cursor->prompt_len = search_prompt(&(cursor->prompt), *buff);
+		cursor->prompt_len = search_prompt(cursor, *buff);
 		display(match, cursor->start, cursor->in, *cursor);
 		ft_bzero(termcaps.buff, COUNT_KEY);
 		read(STDIN_FILENO, termcaps.buff, COUNT_KEY);
 		if (ft_isprint(termcaps.key))
-			match = normal_char_history(buff, cursor, termcaps.key);
+		{
+			cursor->start = ft_strlen(*buff);
+			normal_char(buff, cursor, termcaps.key);
+			match = get_history(buff, cursor);
+		}
 		else if (termcaps.key == BACKSPACE)
+		{
+			cursor->start = ft_strlen(*buff);
 			backspace_key(buff, cursor);
+			match = get_history(buff, cursor);
+			cursor->start = 0;
+		}
 		else if (termcaps.key == TABULATION)
 		{
 			tab_key(buff, cursor);
@@ -82,6 +90,8 @@ int	search_history(char **buff, t_cursor *cursor)
 			{
 				if (ft_strncmp(g_dispatch_keys[i].key_path, &termcaps.buff[2], ft_strlen(g_dispatch_keys[i].key_path)) == 0)
 				{
+					free(*buff);
+					*buff = ft_strdup(match);
 					g_dispatch_keys[i].function_call(buff, cursor);
 					ft_strdel(&(cursor->prompt));
 					cursor->prompt_len = mkprompt(&(cursor->prompt));
@@ -91,7 +101,6 @@ int	search_history(char **buff, t_cursor *cursor)
 			}
 		}
 	}
-	ft_printf("sdafs");
 	return (1);
 }
 
@@ -107,7 +116,7 @@ int toggle_termcaps(void)
 		printf("Error tcgetattr");
 		return(1);
 	}
-	term.c_lflag &= ~(ECHO | ICANON | ISIG | IEXTEN);
+	term.c_lflag ^= (ECHO | ICANON | ISIG | IEXTEN);
 	if (tcsetattr(STDIN_FILENO, TCSADRAIN, &term) < 0)
 	{
 		printf("Error tcsetattr");
@@ -173,12 +182,7 @@ int	get_stdin(t_cursor cursor, char **buff)
 		if (ft_isprint(termcaps.key))
 			normal_char(buff, &cursor, termcaps.key);
 		else if (termcaps.key_c == CTRL_L)
-		{
-			free(*buff);
-			ft_strdel(&inside_history);
-			*buff = ft_strdup(CLEAR);
-			return (0);
-		}
+			ft_putstr(tgetstr("ho", NULL));
 		else if (termcaps.key == BACKSPACE)
 			backspace_key(buff, &cursor);
 		else if (termcaps.key == TABULATION)
@@ -212,6 +216,7 @@ void	ft_init_cursor(t_cursor *cursor)
 	cursor->in = SIZE_MAX;
 	cursor->start = 0;
 	cursor->end = 0;
+	cursor->match_ret = 0;
 	cursor->prompt_len = 0;
 }
 

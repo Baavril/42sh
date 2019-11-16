@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42->fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 18:02:02 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/13 15:34:03 by baavril          ###   ########.fr       */
+/*   Updated: 2019/11/16 18:42:25 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,12 @@ int normal_char(char **buff, t_cursor *cursor, char c)
 	return (1);
 }
 
-char *normal_char_history(char **buff, t_cursor *cursor, char c)
+char *get_history(char **buff, t_cursor *cursor)
 {
 	char *tmp;
 	static char *match = NULL;
 
 	tmp = NULL;
-	*buff = buff_realloc(*buff, ++(cursor->end));
-	cursor->start = ft_strlen(*buff);
-	ft_memmove(&((*buff)[cursor->start + 1]), &((*buff)[cursor->start]), cursor->end - cursor->start);
-	(*buff)[(cursor->start)++] = c;
 	if (history(SEARCH, buff, &tmp) == 1)
 	{
 		if (ft_strlen(match) > 0)
@@ -66,10 +62,11 @@ char *normal_char_history(char **buff, t_cursor *cursor, char c)
 		if (!(match = ft_strdup(tmp)))
 			return (NULL);
 		cursor->start = 0;
+		cursor->match_ret = 0;
 		return (match);
 	}
-//	set_string(buff, cursor, inside_history);
 	cursor->start = 0;
+	cursor->match_ret = 1;
 	return (match);
 }
 
@@ -198,18 +195,18 @@ int end_key(char **buff, t_cursor *cursor)
 int next_word(char **buff, t_cursor *cursor)
 {
 	while(cursor->start < cursor->end && ft_isalnum((*buff)[cursor->start]))
-			(cursor->start)++;
+		(cursor->start)++;
 	while(cursor->start < cursor->end && !ft_isalnum((*buff)[cursor->start]))
-			(cursor->start)++;
+		(cursor->start)++;
 	return (1);
 }
 
 int previous_word(char **buff, t_cursor *cursor)
 {
 	while(cursor->start > 0 && ft_isalnum((*buff)[cursor->start]))
-			(cursor->start)--;
+		(cursor->start)--;
 	while(cursor->start > 0 && !ft_isalnum((*buff)[cursor->start]))
-			(cursor->start)--;
+		(cursor->start)--;
 	return (1);
 }
 

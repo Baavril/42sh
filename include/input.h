@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 12:11:17 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/13 15:06:18 by baavril          ###   ########.fr       */
+/*   Updated: 2019/11/16 18:25:19 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ int	read_command(char **line);
 
 union	u_tc
 {
-	unsigned int key_c;
 	char		key;
 	char		buff[COUNT_KEY];
+	unsigned int 	key_c;
 };
 
 typedef struct	s_cursor
@@ -37,15 +37,14 @@ typedef struct	s_cursor
 	size_t	end;
 	size_t	start;
 	size_t	prompt_len;
-	size_t	search_prompt_len;
+	size_t	match_ret;
 	char	*prompt;
-	char	*search_prompt;
-}				t_cursor;
+}		t_cursor;
 
 typedef	struct s_dispatch_keys
 {
 	char	*key_path;
-	int		(*function_call)(char**, t_cursor*);
+	int	(*function_call)(char**, t_cursor*);
 }		t_dispatch_keys;
 
 int	get_stdin(t_cursor cursor, char **buff);
