@@ -134,18 +134,35 @@ static int	add_cmd(const char *line, t_history *history)
 	return (0);
 }
 
-static int	ft_search(t_history *history, const char *line, char **cmd)
+static int	ft_search(t_history *history_2, const char *line, char **cmd, int flag)
 {
-	while (history->next)
-		history = history->next;
-	while (history->previous)
+	static t_history *history = NULL;
+
+	if (!history)
 	{
-		if (history->str != NULL && line != NULL && ft_strstr(history->str, line) != NULL)
+		history = history_2;
+		while (history->next)
+			history = history->next;
+	}
+	if (flag == RESET)
+	{
+		while (history->next)
+			history = history->next;
+		return (1);
+	}
+	else
+	{
+		history_2 = history;
+		while (history_2->previous)
 		{
-			*cmd = history->str;
-			return (1);
+			if (history_2->str != NULL && line != NULL && ft_strstr(history_2->str, line) != NULL)
+			{
+				history = history_2;
+				*cmd = history->str;
+				return (1);
+			}
+			history_2 = history_2->previous;
 		}
-		history = history->previous;
 	}
 	return (0);
 }
@@ -525,8 +542,8 @@ int		history(int flag, char **line, char **cmd)
 		return (delete(&history, home));
 	if (flag == ADD_CMD)
 		return (history_cmd(line, &history));
-	if (flag == SEARCH)
-		return (ft_search(&history, *line, cmd));//from anywhere [CMD+R]
+	if (flag == SEARCH || flag == RESET)
+		return (ft_search(&history, *line, cmd, flag));//from anywhere [CMD+R]
 	if (flag == HISTORY_SEARCH)
 		return (search_history(&history, *line, cmd));//debut fin [TAB]
 	return (0);

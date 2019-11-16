@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42->fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 18:02:02 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/16 18:42:25 by baavril          ###   ########.fr       */
+/*   Updated: 2019/11/16 21:53:45 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ char *get_history(char **buff, t_cursor *cursor)
 	tmp = NULL;
 	if (history(SEARCH, buff, &tmp) == 1)
 	{
-		if (ft_strlen(match) > 0)
-			ft_strdel(&match);
+//		if (ft_strlen(match) > 0)
+//			ft_strdel(&match);
 		if (!(match = ft_strdup(tmp)))
 			return (NULL);
 		cursor->start = 0;

@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/16 18:36:06 by baavril          ###   ########.fr       */
+/*   Updated: 2019/11/16 21:56:06 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "keys.h"
 #include "prompt.h"
 #include "display.h"
+#include "history.h"
 
 #include <unistd.h>
 #include <stdio.h>
@@ -72,6 +73,7 @@ int	search_history(char **buff, t_cursor *cursor)
 		}
 		else if (termcaps.key == TABULATION)
 		{
+			history(RESET, NULL, NULL);
 			tab_key(buff, cursor);
 			ft_strdel(&(cursor->prompt));
 			cursor->prompt_len = mkprompt(&(cursor->prompt));
@@ -79,6 +81,7 @@ int	search_history(char **buff, t_cursor *cursor)
 		}
 		else if (termcaps.key == ENTER)
 		{
+			history(RESET, NULL, NULL);
 			free(*buff);
 			*buff = ft_strdup(match);
 			return (0);
@@ -95,6 +98,7 @@ int	search_history(char **buff, t_cursor *cursor)
 					g_dispatch_keys[i].function_call(buff, cursor);
 					ft_strdel(&(cursor->prompt));
 					cursor->prompt_len = mkprompt(&(cursor->prompt));
+					history(RESET, NULL, NULL);
 					return (1);
 				}
 				i++;

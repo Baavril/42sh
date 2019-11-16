@@ -39,6 +39,7 @@ enum {
 	GET,
 	FIRST,
 	LAST,
+	RESET,
 };
 
 enum {
