@@ -134,6 +134,20 @@ static int	add_cmd(const char *line, t_history *history)
 	return (0);
 }
 
+static int	ft_retinchr(char *str, char c)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] - c == 0)
+			return (i);
+		i++;
+	}
+	return (1);
+}
+
 static int	ft_search(t_history *history_2, const char *line, char **cmd, int flag)
 {
 	static t_history *history = NULL;
@@ -159,7 +173,7 @@ static int	ft_search(t_history *history_2, const char *line, char **cmd, int fla
 			{
 				history = history_2;
 				*cmd = history->str;
-				return (1);
+				return (ft_retinchr(*cmd, line[0]));
 			}
 			history_2 = history_2->previous;
 		}
@@ -543,10 +557,7 @@ int		history(int flag, char **line, char **cmd)
 	if (flag == ADD_CMD)
 		return (history_cmd(line, &history));
 	if (flag == SEARCH || flag == RESET)
-	{
-		ft_search(&history, *line, cmd, flag);//from anywhere [CMD+R]
-		return (1);
-	}
+		return (ft_search(&history, *line, cmd, flag));//from anywhere [CMD+R]
 	if (flag == HISTORY_SEARCH)
 		return (search_history(&history, *line, cmd));//debut fin [TAB]
 	return (0);

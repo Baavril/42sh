@@ -52,20 +52,21 @@ int normal_char(char **buff, t_cursor *cursor, char c)
 char *get_history(char **buff, t_cursor *cursor)
 {
 	char *tmp;
+	int idx_tmp;
+	static int idx_buff = 0;
 	static char *match = NULL;
 
 	tmp = NULL;
-	if (history(SEARCH, buff, &tmp) == 1)
+	if ((idx_tmp = history(SEARCH, buff, &tmp)) >= 1)
 	{
-//		if (ft_strlen(match) > 0)
-//			ft_strdel(&match);
 		if (!(match = ft_strdup(tmp)))
 			return (NULL);
-		cursor->start = 0;
+		idx_buff = idx_tmp;
 		cursor->match_ret = 0;
+		cursor->start = idx_buff;
 		return (match);
 	}
-	cursor->start = 0;
+	cursor->start = idx_buff;
 	cursor->match_ret = 1;
 	return (match);
 }

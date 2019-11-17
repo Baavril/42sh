@@ -78,7 +78,6 @@ int	search_history(char **buff, t_cursor *cursor)
 			cursor->start = ft_strlen(*buff);
 			backspace_key(buff, cursor);
 			match = get_history(buff, cursor);
-			cursor->start = 0;
 		}
 		else if (termcaps.key == TABULATION)
 		{
