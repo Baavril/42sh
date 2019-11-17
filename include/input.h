@@ -47,7 +47,7 @@ typedef	struct s_dispatch_keys
 	int	(*function_call)(char**, t_cursor*);
 }		t_dispatch_keys;
 
-int	get_stdin(t_cursor cursor, char **buff);
+int	get_stdin(t_cursor *cursor, char **buff);
 void	ft_init_cursor(t_cursor *cursor);
 void	ft_reader(union u_tc *termcaps, t_cursor *cursor, char ***buff);
 

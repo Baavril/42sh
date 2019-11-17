@@ -342,7 +342,7 @@ static int	ft_str_exclamation_chr(char *str1, char *str2)
 			return (0);
 		i++;
 	}
-	if (str1[i] == '\0' && (str2 != '\0' || !ft_isseparator(&str2[i])))
+	if (str1[i] == '\0' && (str2[i] != '\0' || !ft_isseparator(&str2[i])))
 		return (0);
 	return (1);
 }
@@ -543,7 +543,10 @@ int		history(int flag, char **line, char **cmd)
 	if (flag == ADD_CMD)
 		return (history_cmd(line, &history));
 	if (flag == SEARCH || flag == RESET)
-		return (ft_search(&history, *line, cmd, flag));//from anywhere [CMD+R]
+	{
+		ft_search(&history, *line, cmd, flag);//from anywhere [CMD+R]
+		return (1);
+	}
 	if (flag == HISTORY_SEARCH)
 		return (search_history(&history, *line, cmd));//debut fin [TAB]
 	return (0);

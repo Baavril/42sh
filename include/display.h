@@ -15,6 +15,6 @@
 #include "libft.h"
 
 void display_init(int sig);
-int display(char *str, size_t pos, size_t end, t_cursor cursor);
+int display(char *str, t_cursor *cursor);
 
 #endif
