@@ -58,6 +58,7 @@ int	search_history(char **buff, t_cursor *cursor)
 	i = 0;
 	match = NULL;
 	inside_history = NULL;
+	ft_strdel(&(cursor->prompt));
 	ft_init_cursor(cursor);
 	ft_bzero(*buff, ft_strlen(*buff));
 	while (1)
@@ -206,7 +207,10 @@ int	get_stdin(t_cursor *cursor, char **buff)
 				if (ft_strncmp(g_dispatch_keys[i].key_path, &termcaps.buff[2], ft_strlen(g_dispatch_keys[i].key_path)) == 0)
 				{
 					if (((g_dispatch_keys[i].function_call)(buff, cursor)) == 0)
+					{
+						ft_strdel(&cursor->prompt);
 						return (0);
+					}
 					break ;
 				}
 				i++;

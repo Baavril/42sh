@@ -169,7 +169,7 @@ static int	ft_search(t_history *history_2, const char *line, char **cmd, int fla
 		history_2 = history;
 		while (history_2->previous)
 		{
-			if (history_2->str != NULL && line != NULL && ft_strstr(history_2->str, line) != NULL)
+			if (history_2->str != NULL && line != NULL && *line && ft_strstr(history_2->str, line) != NULL)
 			{
 				history = history_2;
 				*cmd = history->str;

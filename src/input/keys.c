@@ -59,6 +59,8 @@ char *get_history(char **buff, t_cursor *cursor)
 	tmp = NULL;
 	if ((idx_tmp = history(SEARCH, buff, &tmp)) >= 1)
 	{
+		if (match)
+			ft_strdel(&match);
 		if (!(match = ft_strdup(tmp)))
 			return (NULL);
 		idx_buff = idx_tmp;
@@ -66,8 +68,8 @@ char *get_history(char **buff, t_cursor *cursor)
 		cursor->start = idx_buff;
 		return (match);
 	}
-	cursor->start = idx_buff;
 	cursor->match_ret = 1;
+	cursor->start = idx_buff;
 	return (match);
 }
 
