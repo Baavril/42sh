@@ -40,13 +40,20 @@ t_dispatch_keys		g_dispatch_keys[] =
 	{NULL, NULL}
 };
 
-void	update_buff(char **match, char **buff)
+void	update_buff(char *match, char **buff, t_cursor *cursor)
 {
-	if (*match)
+	size_t len;
+
+	len = 0;
+	ft_bzero(*buff, ft_strlen(*buff));
+	if (match)
 	{
-		free(*buff);
-		*buff = ft_strdup(*match);
+		len = ft_strlen(match);
+		if (cursor->end < len)
+			*buff = buff_realloc(*buff, len);
+		ft_strcpy(*buff, match);
 	}
+	cursor->end = len;
 }
 
 int	search_history(char **buff, t_cursor *cursor)
@@ -82,27 +89,27 @@ int	search_history(char **buff, t_cursor *cursor)
 		}
 		else if (termcaps.key == TABULATION)
 		{
-			history(RESET, buff, NULL);
 			tab_key(buff, cursor);
 			ft_strdel(&(cursor->prompt));
 			cursor->prompt_len = mkprompt(&(cursor->prompt));
+			history(RESET, buff, NULL);
 			return (1);
 		}
 		else if (termcaps.key == ENTER)
 		{
+			update_buff(match, buff, cursor);
 			history(RESET, buff, NULL);
-			update_buff(&match, buff);
 			return (0);
 		}
 		else if (termcaps.key == '\033')
 		{
 			i = 0;
-			while (g_dispatch_keys[i].key_path != NULL)
+			while (g_dispatch_keys[i].key_path != NULL && ft_strcmp(g_dispatch_keys[i].key_path, "1;5A"))
 			{
 				if (ft_strncmp(g_dispatch_keys[i].key_path, &termcaps.buff[2], ft_strlen(g_dispatch_keys[i].key_path)) == 0)
 				{
-					update_buff(&match, buff);
-					g_dispatch_keys[i].function_call(buff, cursor);
+					g_dispatch_keys[i].function_call(&match, cursor);
+					update_buff(match, buff, cursor);
 					ft_strdel(&(cursor->prompt));
 					cursor->prompt_len = mkprompt(&(cursor->prompt));
 					history(RESET, buff, NULL);
@@ -114,7 +121,6 @@ int	search_history(char **buff, t_cursor *cursor)
 	}
 	return (1);
 }
-
 
 int toggle_termcaps(void)
 {

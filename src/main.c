@@ -77,6 +77,7 @@ int		main(int argc, char **argv)
 	
 	(void)argc;
 	copybuff = NULL;
+	input = NULL;
 	g_progname = argv[0];
 	if (!(history(INIT, NULL, NULL)))
 		return (1);
