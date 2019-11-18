@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/11/09 21:08:09 by tgouedar         ###   ########.fr        #
+#    Updated: 2019/11/18 17:15:24 by yberramd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -168,6 +168,7 @@ SOURCES	:=	ds_btree/btree_apply_infix.c \
 		f_stdio/printf/str_format.c \
 		f_stdio/printf/wrapper.c \
 		f_stdlib/ft_atoi.c \
+		f_stdlib/ft_atou.c \
 		f_stdlib/ft_getenv.c \
 		f_stdlib/ft_realpath.c \
 		f_stdlib/ft_setenv.c \

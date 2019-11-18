@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
-/*   Updated: 2019/11/13 12:17:05 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/11/18 17:14:40 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int				ft_toupper(int c);
 int				ft_tolower(int c);
 
 int				ft_atoi(const char *str) __attribute__((nonnull(1)));
+
+unsigned int	ft_atou(const char *str) __attribute__((nonnull(1)));
 
 int				ft_strcmp(const char *s1, const char *s2) __attribute__
 				((nonnull(1,2)));
