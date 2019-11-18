@@ -15,7 +15,8 @@
 
 # define COUNT_KEY 8
 # define CTRL_L 12
-# define CLEAR "clear"
+# define CTRL_R 0
+# define NO_CTRL_R 1
 # define INPUT_SIZE 256
 # define MAX_LINE 4096
 
@@ -50,5 +51,8 @@ typedef	struct s_dispatch_keys
 int	get_stdin(t_cursor *cursor, char **buff);
 void	ft_init_cursor(t_cursor *cursor);
 void	ft_reader(union u_tc *termcaps, t_cursor *cursor, char ***buff);
+
+int	ft_dispatcher(union u_tc termcaps, char **buff, t_cursor *cursor, int flag);
+int	ft_init_tab(void);
 
 #endif

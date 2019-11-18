@@ -23,6 +23,7 @@ SOURCES			:=		main.c \
 						input/prompt.c \
 						input/quote.c \
 						input/display.c \
+						input/keyboard.c \
 						lex/lexer.c \
 						lex/expansions/expansions.c \
 						lex/expansions/expansion_utils.c \

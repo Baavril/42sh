@@ -23,23 +23,6 @@
 #include <curses.h>
 #include <stdint.h>
 
-t_dispatch_keys		g_dispatch_keys[] =
-{
-	{NULL, &left_arrow},
-	{NULL, &right_arrow},
-	{NULL, &up_arrow},
-	{NULL, &down_arrow},
-	{NULL, &delete_key},
-	{NULL, &home_key},
-	{NULL, &next_word},
-	{NULL, &previous_word},
-	{NULL, &end_key},
-	{NULL, &select_key},
-	{NULL, &paste_key},
-	{NULL, &search_history},
-	{NULL, NULL}
-};
-
 void	update_buff(char *match, char **buff, t_cursor *cursor)
 {
 	size_t len;
@@ -58,11 +41,11 @@ void	update_buff(char *match, char **buff, t_cursor *cursor)
 
 int	search_history(char **buff, t_cursor *cursor)
 {
-	int i;
+//	int i;
 	char *match;
 	union	u_tc termcaps;
 
-	i = 0;
+//	i = 0;
 	match = NULL;
 	inside_history = NULL;
 	ft_strdel(&(cursor->prompt));
@@ -103,22 +86,13 @@ int	search_history(char **buff, t_cursor *cursor)
 			history(RESET, buff, NULL);
 			return (0);
 		}
-		else if (termcaps.key == '\033')
+		else if (ft_dispatcher(termcaps, buff, cursor, NO_CTRL_R) >= 0)
 		{
-			i = 0;
-			while (g_dispatch_keys[i].key_path != NULL && ft_strcmp(g_dispatch_keys[i].key_path, "1;5A"))
-			{
-				if (ft_strncmp(g_dispatch_keys[i].key_path, &termcaps.buff[2], ft_strlen(g_dispatch_keys[i].key_path)) == 0)
-				{
-					g_dispatch_keys[i].function_call(&match, cursor);
-					update_buff(match, buff, cursor);
-					ft_strdel(&(cursor->prompt));
-					cursor->prompt_len = mkprompt(&(cursor->prompt));
-					history(RESET, buff, NULL);
-					return (1);
-				}
-				i++;
-			}
+			update_buff(match, buff, cursor);
+			ft_strdel(&(cursor->prompt));
+			cursor->prompt_len = mkprompt(&(cursor->prompt));
+			history(RESET, buff, NULL);
+			return (1);
 		}
 	}
 	return (1);
@@ -149,42 +123,12 @@ int toggle_termcaps(void)
 	return(0);
 }
 
-int	ft_init_tab(void)
-{
-	if (!(g_dispatch_keys[0].key_path = tgetstr("kl", NULL) + 2))
-		return (1);
-	if (!(g_dispatch_keys[1].key_path = tgetstr("kr", NULL) + 2))
-		return (1);
-	if (!(g_dispatch_keys[2].key_path = tgetstr("ku", NULL) + 2))
-		return (1);
-	if (!(g_dispatch_keys[3].key_path = tgetstr("kd", NULL) + 2))
-		return (1);
-	if (!(g_dispatch_keys[4].key_path = tgetstr("kD", NULL) + 2))
-		return (1);
-	if (!(g_dispatch_keys[5].key_path = tgetstr("kh", NULL) + 2))
-		return (1);
-	if (!(g_dispatch_keys[6].key_path = tgetstr("kN", NULL) + 2))
-		return (1);
-	if (!(g_dispatch_keys[7].key_path = tgetstr("kP", NULL) + 2))
-		return (1);
-	if (!(g_dispatch_keys[8].key_path = "F\0"))
-		return (1);
-	if (!(g_dispatch_keys[9].key_path = "1;2A"))
-		return (1);
-	if (!(g_dispatch_keys[10].key_path = "1;2B"))
-		return (1);
-	if (!(g_dispatch_keys[11].key_path = "1;5A"))
-		return (1);
-	return (0);
-}
-
-
 int	get_stdin(t_cursor *cursor, char **buff)
 {
-	int	i;
+//	int	i;
 	union	u_tc termcaps;
 
-	i = 0;
+//	i = 0;
 	if (ft_init_tab() == 1)
 		return (1);
 	inside_history = NULL;
@@ -205,24 +149,13 @@ int	get_stdin(t_cursor *cursor, char **buff)
 		else if (termcaps.key == ENTER)
 		{
 			ft_strdel(&inside_history);
+			ft_strdel(&cursor->prompt);
 			return(0);
 		}
-		else if (termcaps.key == '\033')
+		else if (ft_dispatcher(termcaps, buff, cursor, CTRL_R) == 0)
 		{
-			i = 0;
-			while (g_dispatch_keys[i].key_path != NULL)
-			{
-				if (ft_strncmp(g_dispatch_keys[i].key_path, &termcaps.buff[2], ft_strlen(g_dispatch_keys[i].key_path)) == 0)
-				{
-					if (((g_dispatch_keys[i].function_call)(buff, cursor)) == 0)
-					{
-						ft_strdel(&cursor->prompt);
-						return (0);
-					}
-					break ;
-				}
-				i++;
-			}
+			ft_strdel(&cursor->prompt);
+			return (0);
 		}
 	}
 	return(1);
