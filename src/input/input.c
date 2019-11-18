@@ -72,7 +72,9 @@ int	search_history(char **buff, t_cursor *cursor)
 	{
 		ft_strdel(&(cursor->prompt));
 		cursor->prompt_len = search_prompt(cursor, *buff);
+		cursor->end = ft_strlen(match);
 		display(match, cursor);
+		cursor->end = ft_strlen(*buff);
 		ft_bzero(termcaps.buff, COUNT_KEY);
 		read(STDIN_FILENO, termcaps.buff, COUNT_KEY);
 		if (ft_isprint(termcaps.key))
