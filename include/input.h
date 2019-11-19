@@ -15,8 +15,7 @@
 
 # define COUNT_KEY 8
 # define CTRL_L 12
-# define CTRL_R 0
-# define NO_CTRL_R 1
+# define CTRL_R "1;5A"
 # define INPUT_SIZE 256
 # define MAX_LINE 4096
 
@@ -39,7 +38,10 @@ typedef struct	s_cursor
 	size_t	start;
 	size_t	prompt_len;
 	size_t	match_ret;
+	size_t	on;
+	size_t	ctrl_r;
 	char	*prompt;
+	char	*match;
 }		t_cursor;
 
 typedef	struct s_dispatch_keys
@@ -52,7 +54,16 @@ int	get_stdin(t_cursor *cursor, char **buff);
 void	ft_init_cursor(t_cursor *cursor);
 void	ft_reader(union u_tc *termcaps, t_cursor *cursor, char ***buff);
 
-int	ft_dispatcher(union u_tc termcaps, char **buff, t_cursor *cursor, int flag);
+int	keyboard_dispatcher(union u_tc term, char **buff, t_cursor *cursor);
+int keyboard_ctrl_l(union u_tc term);
+int keyboard_normal_char(union u_tc term, char **buff, t_cursor *cursor);
+int keyboard_backspace(union u_tc term, char **buff, t_cursor *cursor);
+int keyboard_tabulation(union u_tc term, char **buff, t_cursor *cursor);
+
+int	set_reader(union u_tc term, char **buff, t_cursor *cursor);
+
+int  keyboard_enter(union u_tc term,char **buff, t_cursor *cursor);
+void update_buff(char **buff, t_cursor *cursor);
 int	ft_init_tab(void);
 
 #endif

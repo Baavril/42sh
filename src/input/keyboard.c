@@ -36,7 +36,6 @@ t_dispatch_keys		g_dispatch_keys[] =
 	{NULL, &end_key},
 	{NULL, &select_key},
 	{NULL, &paste_key},
-	{NULL, &search_history},
 	{NULL, NULL}
 };
 
@@ -64,25 +63,106 @@ int	ft_init_tab(void)
 		return (1);
 	if (!(g_dispatch_keys[10].key_path = "1;2B"))
 		return (1);
-	if (!(g_dispatch_keys[11].key_path = "1;5A"))
-		return (1);
 	return (0);
 }
 
-int	ft_dispatcher(union u_tc termcaps, char **buff, t_cursor *cursor, int flag)
+int keyboard_normal_char(union u_tc term, char **buff, t_cursor *cursor)
+{
+	if (ft_isprint(term.key))
+	{
+		if (cursor->ctrl_r)
+		{
+			cursor->start = ft_strlen(*buff);
+			normal_char(buff, cursor, term.key);
+			cursor->match = get_history(buff, cursor);
+			return (0);
+		}
+		normal_char(buff, cursor, term.key);
+		return (0);
+	}
+	return (1);
+}
+
+int keyboard_tabulation(union u_tc term, char **buff, t_cursor *cursor)
+{
+	if (term.key == TABULATION)
+	{
+		if (cursor->ctrl_r)
+		{
+			tab_key(buff, cursor);
+			ft_strdel(&(cursor->prompt));
+			cursor->prompt_len = mkprompt(&(cursor->prompt));
+			history(RESET, buff, NULL);
+			return (0);
+		}
+		tab_key(buff, cursor);
+		return (0);
+	}
+	return (1);
+}
+
+int keyboard_enter(union u_tc term, char **buff, t_cursor *cursor)
+{
+	if (term.key == ENTER)
+	{
+		if (cursor->ctrl_r)
+		{
+			update_buff(buff, cursor);
+			history(RESET, buff, NULL);
+			return (0);
+		}
+		return (0);
+	}
+	return (1);
+}
+
+int keyboard_backspace(union u_tc term, char **buff, t_cursor *cursor)
+{
+	if (term.key == BACKSPACE)
+	{
+		if (cursor->ctrl_r)
+		{
+			cursor->start = ft_strlen(*buff);
+			backspace_key(buff, cursor);
+			cursor->match = get_history(buff, cursor);
+			return (0);
+		}
+		backspace_key(buff, cursor);
+		return (0);
+	}
+	return (1);
+}
+
+int keyboard_ctrl_l(union u_tc term)
+{
+	if (term.key_c == CTRL_L)
+	{
+		ft_putstr(tgetstr("ho", NULL));
+		return (0);
+	}
+	return (1);
+}
+
+int	keyboard_dispatcher(union u_tc term, char **buff, t_cursor *cursor)
 {
 	int i;
 
 	i = 0;
-	if (termcaps.key == '\033')
+	if (term.key == '\033')
 	{
 		i = 0;
-		while ((g_dispatch_keys[i].key_path != NULL && flag == 0)
-		|| ft_strcmp(g_dispatch_keys[i].key_path, "1;5A"))
+		while (g_dispatch_keys[i].key_path != NULL)
 		{
 			if (ft_strncmp(g_dispatch_keys[i].key_path
-			, &termcaps.buff[2], ft_strlen(g_dispatch_keys[i].key_path)) == 0)
+			, &term.buff[2], ft_strlen(g_dispatch_keys[i].key_path)) == 0)
 			{
+				if (cursor->ctrl_r)
+				{
+					update_buff(buff, cursor);
+					ft_strdel(&(cursor->prompt));
+					cursor->prompt_len = mkprompt(&(cursor->prompt));
+					history(RESET, buff, NULL);
+				}
 				if (((g_dispatch_keys[i].function_call)(buff, cursor)) == 0)
 					return (0);
 				return (1);
@@ -90,5 +170,5 @@ int	ft_dispatcher(union u_tc termcaps, char **buff, t_cursor *cursor, int flag)
 			i++;
 		}
 	}
-	return (1);
+	return (-1);
 }

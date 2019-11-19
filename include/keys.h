@@ -20,7 +20,7 @@
 # define BACKSPACE '\177'
 # define TABULATION '\t'
 
-int search_history(char **buff, t_cursor *cursor);
+int search_history(union u_tc termcaps, char **buff, t_cursor *cursor);
 int delete_key(char **buff, t_cursor *cursor);
 int backspace_key(char **buff, t_cursor *cursor);
 int tab_key(char **buff, t_cursor *cursor);
