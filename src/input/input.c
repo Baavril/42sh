@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/18 12:39:43 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/11/19 10:07:30 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,8 @@ int toggle_termcaps(void)
 	return(0);
 }
 
-int	set_reader(union u_tc term, char **buff, t_cursor *cursor)
+int	set_reader(char **buff, t_cursor *cursor)
 {
-	(void)term;
 	if (cursor->ctrl_r)
 	{
 		ft_strdel(&(cursor->prompt));
@@ -89,7 +88,7 @@ int		standard_analyzer(union u_tc term, char **buff, t_cursor *cursor)
 	if (keyboard_dispatcher(term, buff, cursor) == 0
 	|| !keyboard_enter(term, buff, cursor))
 		return(0);
-	set_reader(term, buff, cursor);
+	set_reader(buff, cursor);
 	return (1);
 }
 
@@ -116,7 +115,7 @@ int	search_history(union u_tc term, char **buff, t_cursor *cursor)
 		return (1);
 	}
 	cursor->on = 1;
-	set_reader(term, buff, cursor);
+	set_reader(buff, cursor);
 	return (-1);
 }
 
@@ -130,7 +129,7 @@ int	get_stdin(t_cursor *cursor, char **buff)
 		return (1);
 	inside_history = NULL;
 	*buff = ft_strdup("");
-	set_reader(termcaps, buff, cursor);
+	set_reader(buff, cursor);
 	while (read(STDIN_FILENO, termcaps.buff, COUNT_KEY))
 	{
 		if (!(ft_strcmp(&termcaps.buff[2], CTRL_R)) || cursor->on == 1)
@@ -141,7 +140,7 @@ int	get_stdin(t_cursor *cursor, char **buff)
 				return (0);
 			}
 		}
-		if (!cursor->on) 
+		if (!cursor->on)
 		{
 			if (!(standard_analyzer(termcaps, buff, cursor)))
 			{

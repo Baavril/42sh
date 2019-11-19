@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 12:11:17 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/16 18:25:19 by baavril          ###   ########.fr       */
+/*   Updated: 2019/11/19 10:07:43 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int keyboard_normal_char(union u_tc term, char **buff, t_cursor *cursor);
 int keyboard_backspace(union u_tc term, char **buff, t_cursor *cursor);
 int keyboard_tabulation(union u_tc term, char **buff, t_cursor *cursor);
 
-int	set_reader(union u_tc term, char **buff, t_cursor *cursor);
+int	set_reader(char **buff, t_cursor *cursor);
 
 int  keyboard_enter(union u_tc term,char **buff, t_cursor *cursor);
 void update_buff(char **buff, t_cursor *cursor);
