@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 15:25:22 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/13 13:32:01 by baavril          ###   ########.fr       */
+/*   Updated: 2019/11/20 15:46:10 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int display_all(char *str, t_cursor *cursor)
 	ft_putstr(tgetstr("cd", NULL));
 	ft_putstr(cursor->prompt);
 	if (cursor->in == SIZE_MAX || cursor->in > cursor->end)
-		ft_putstr(str);
+		ft_putnstr(str, cursor->end);
 	else
 		display_select(str, cursor);
 	if (!((cursor->end + cursor->prompt_len) % col))
@@ -60,9 +60,13 @@ int display(char *str, t_cursor *cursor)
 	size_t col;
 	size_t x;
 	static size_t lines_offset = 0;
+	size_t backup;
 
 	x = 0;
 	col = tgetnum("co");
+	backup = cursor->end;
+	if (cursor->end > cursor->start - (cursor->start % tgetnum("co")) + tgetnum("co") * tgetnum("li") - cursor->prompt_len - 1)
+		cursor->end = cursor->start - (cursor->start % tgetnum("co")) + tgetnum("co") * tgetnum("li") - cursor->prompt_len - 1;
 	if (tgetent(NULL, getenv("TERM")) != 1)
 		return(1);
 	// sets lines_offset value to normal if string is empty : ISSUE HERE
@@ -82,5 +86,6 @@ int display(char *str, t_cursor *cursor)
 		ft_putstr(tgetstr("up", NULL));
 	ft_putstr(tgoto(tgetstr("ch", NULL), 0, (cursor->start + cursor->prompt_len) % col));
 
+	cursor->end = backup;
 	return(0);
 }

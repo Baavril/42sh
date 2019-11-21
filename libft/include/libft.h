@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
-/*   Updated: 2019/11/18 17:14:40 by yberramd         ###   ########.fr       */
+/*   Updated: 2019/11/21 14:56:58 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,8 @@ void			ft_striteri(char *s, void (*f)(unsigned int, char *));
 void			ft_putchar(char c);
 
 void			ft_putstr(char const *s);
+
+void			ft_putnstr(char const *s, size_t n);
 
 void			ft_putendl(char const *s);
 

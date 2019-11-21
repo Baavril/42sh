@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/11/18 17:15:24 by yberramd         ###   ########.fr        #
+#    Updated: 2019/11/21 14:57:32 by yberramd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,6 +95,7 @@ SOURCES	:=	ds_btree/btree_apply_infix.c \
 		f_misc/ft_putnbr_octal.c \
 		f_misc/ft_putnbr_upphexa.c \
 		f_misc/ft_putstr.c \
+		f_misc/ft_putnstr.c \
 		f_misc/ft_putstr_fd.c \
 		f_misc/ft_putuint.c \
 		f_misc/ft_putuint_octal.c \
