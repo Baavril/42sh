@@ -444,7 +444,7 @@ static int		history_cmd(char **line, t_history *history)
 	cmd = NULL; 
 	while ((*line)[i] != '\0')
 	{
-		if ((*line)[i] == '!')
+		if ((*line)[i] == '!' && (*line)[i + 1] != '\0' && !ft_isseparator(&(*line)[i + 1]))
 		{
 			if ((ret = exclamation_point(&line[0][i], history, &cmd)) != -1)//seg quand la commande est exit
 			{
@@ -453,6 +453,7 @@ static int		history_cmd(char **line, t_history *history)
 				(*line)[i] = '\0';
 				if (!(*line = ft_strjoinfree(*line, cmd)))
 				{
+					ft_printf("str [%s]\n", *line);
 					ft_strdel(&cmd);
 					return (0);
 				}
