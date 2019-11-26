@@ -165,43 +165,28 @@ char	*ft_str_quotes(char **str)
 ** ------------------------------------------------------
 */
 
-static	void			ft_assign_token(char tab[16][4])
+static int	get_token_type(char *str)
 {
-	ft_strcpy(tab[0], "&&");
-	ft_strcpy(tab[1], "||");
-	ft_strcpy(tab[2], "<");
-	ft_strcpy(tab[3], "<<");
-	ft_strcpy(tab[4], ">");
-	ft_strcpy(tab[5], ">>");
-	ft_strcpy(tab[6], "<&");
-	ft_strcpy(tab[7], ">&");
-	ft_strcpy(tab[8], "<>");
-	ft_strcpy(tab[9], "<<-");
-	ft_strcpy(tab[10], ">|");
-	ft_strcpy(tab[11], "|");
-	ft_strcpy(tab[12], ";");
-	ft_strcpy(tab[13], "!");
-	ft_strcpy(tab[14], "\n");
-	ft_strcpy(tab[15], "");
+	int	i;
+
+	i = 0;
+	while (g_grammar_symbols[i].type != -1)
+	{
+		if (!ft_strncmp(g_grammar_symbols[i].symbol, str, ft_strlen(g_grammar_symbols[i].symbol)))
+			return (g_grammar_symbols[i].type);
+		++i;
+	}
+	return (-1);
 }
 
 int	ft_istoken(char *str)
 {
-	char	tab[16][4];
-	int		place;
-	int		i;
+	int	tok_type;
 
-	i = 0;
-	place = NONE;
-	ft_assign_token(tab);
-	while (tab[i][0] != '\0')
-	{
-		if (!(ft_strncmp(tab[i], str, ft_strlen(tab[i]))))
-			if (ft_strlen(tab[place]) < ft_strlen(tab[i]))
-				place = i;
-		i++;
-	}
-	return ((place == NONE) ? NONE : place);
+	tok_type = get_token_type(str);
+	if (tok_type == -1)
+		return (NONE);
+	return (tok_type);
 }
 
 static int		ft_assignment_word(char *str)
@@ -230,6 +215,7 @@ static char	*get_token_symbol(int token)
 	}
 	return (NULL);
 }
+
 
 static t_token	tokenization(char type, char *value)
 {
