@@ -15,8 +15,8 @@ NAME			= 42sh
 SOURCES_PATH	:= ./src/
 
 SOURCES			:=		main.c \
-						transv/error.c \
-						transv/signals.c \
+						transversal/error.c \
+						transversal/signals.c \
 						input/input.c \
 						input/history.c \
 						input/keys.c \
@@ -26,20 +26,21 @@ SOURCES			:=		main.c \
 						input/analyzer.c \
 						input/keyboard_commands.c \
 						input/keyboard_dispatcher.c \
-						lex/lexer.c \
-						lex/expansions/expansions.c \
-						lex/expansions/expansion_utils.c \
-						lex/expansions/get_param.c \
-						lex/expansions/parameter_expansions.c \
-						lex/expansions/tilde_expansion.c \
-						lex/separators/pipeline_separators.c \
-						lex/separators/unglue_metachr.c \
-						jcont/synt.c \
-						jcont/synt_const.c \
-						jcont/jcont.c \
-						jcont/job.c \
-						jcont/path_concat.c \
-						jcont/get_sequence.c \
+						lexer/lexer.c \
+						lexer/grammar_symbols.c \
+						lexer/expansions/expansions.c \
+						lexer/expansions/expansion_utils.c \
+						lexer/expansions/get_param.c \
+						lexer/expansions/parameter_expansions.c \
+						lexer/expansions/tilde_expansion.c \
+						lexer/separators/pipeline_separators.c \
+						lexer/separators/unglue_metachr.c \
+						job_control/synt.c \
+						job_control/synt_const.c \
+						job_control/jcont.c \
+						job_control/job.c \
+						job_control/path_concat.c \
+						job_control/get_sequence.c \
 						builtins/builtin_alias.c \
 						builtins/builtin_cd.c \
 						builtins/builtin_echo.c \
@@ -68,25 +69,25 @@ SOURCES			:=		main.c \
 						builtins/builtin_test/test_precedence_mgt2.c \
 						builtins/builtins_dispatcher.c \
 						builtins/ft_putenv_table.c \
-						transv/hash_module/bash_routines.c \
-						transv/hash_module/corps_fini_tools.c \
-						transv/hash_module/ft_empty_htable.c \
-						transv/hash_module/ft_free_htable.c \
-						transv/hash_module/ft_get_entry.c \
-						transv/hash_module/ft_del_entry.c \
-						transv/hash_module/ft_hash.c \
-						transv/hash_module/ft_hash_path.c \
-						transv/hash_module/ft_insert.c \
-						transv/hash_module/ft_iter_htable.c \
-						transv/hash_module/ft_lst_entries.c \
-						transv/hash_module/ft_print_entries.c \
-						transv/hash_module/htable_type_dispatcher.c \
-						transv/hash_module/init_htable.c \
-						transv/hash_module/string_routines.c \
-						transv/shell_variables/assignement_shellvar.c \
-						transv/shell_variables/tools_parser_shvar.c \
-						transv/shell_variables/utils_shell_variables.c \
-						transv/shell_variables/shell_variables.c \
+						transversal/hash/bash_routines.c \
+						transversal/hash/corps_fini_tools.c \
+						transversal/hash/ft_empty_htable.c \
+						transversal/hash/ft_free_htable.c \
+						transversal/hash/ft_get_entry.c \
+						transversal/hash/ft_del_entry.c \
+						transversal/hash/ft_hash.c \
+						transversal/hash/ft_hash_path.c \
+						transversal/hash/ft_insert.c \
+						transversal/hash/ft_iter_htable.c \
+						transversal/hash/ft_lst_entries.c \
+						transversal/hash/ft_print_entries.c \
+						transversal/hash/htable_type_dispatcher.c \
+						transversal/hash/init_htable.c \
+						transversal/hash/string_routines.c \
+						transversal/shell_variables/assignement_shellvar.c \
+						transversal/shell_variables/tools_parser_shvar.c \
+						transversal/shell_variables/utils_shell_variables.c \
+						transversal/shell_variables/shell_variables.c \
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
