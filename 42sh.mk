@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/11/19 13:07:37 by baavril          ###   ########.fr        #
+#    Updated: 2019/11/27 11:04:49 by bprunevi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,6 +88,15 @@ SOURCES			:=		main.c \
 						transversal/shell_variables/tools_parser_shvar.c \
 						transversal/shell_variables/utils_shell_variables.c \
 						transversal/shell_variables/shell_variables.c \
+      					LL_parser/debug_gnt.c \
+      					LL_parser/debug_interpreter.c \
+      					LL_parser/io_redirect.c \
+      					LL_parser/is_potential.c \
+      					LL_parser/parser.c \
+      					LL_parser/pipe_sequence.c \
+      					LL_parser/simple_command.c \
+      					LL_parser/terminals.c \
+      					LL_parser/wordtypes.c
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 

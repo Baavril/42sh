@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/15 17:59:53 by abarthel          #+#    #+#             */
-/*   Updated: 2019/11/26 17:33:36 by bprunevi         ###   ########.fr       */
+/*   Created: 2019/09/06 14:29:21 by yberramd          #+#    #+#             */
+/*   Updated: 2019/11/26 16:33:19 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#include "parser.h"
 
-char	**lexer(char **input);
-struct s_token get_next_token(char *str);
+void	parser_21sh(char *input)
+{
+	debug_parser(input);
+}
 
-#endif

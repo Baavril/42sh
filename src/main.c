@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2019/11/09 12:23:42 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/11/27 15:03:09 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #include "input.h"
 #include "error.h"
 #include "lexer.h"
+#include "parser.h"
 #include "jcont.h"
 #include "synt.h"
 #include "path.h"
@@ -97,6 +98,9 @@ int		main(int argc, char **argv)
 		}
 		if (status != -1)
 		{
+			lexer(&input);
+			debug_parser(input);
+			exit(0); 
 			args = lexer(&input);
 			ft_memdel((void**)&input);
 			if (!args)

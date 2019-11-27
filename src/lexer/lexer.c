@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 17:59:39 by abarthel          #+#    #+#             */
-/*   Updated: 2019/08/01 17:14:33 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/11/27 14:50:12 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,6 +302,5 @@ char	**lexer(char **input)
 
 /*	gnt(NULL);
 this should be a link between parser and lexer calling back and forth*/
-	exit(0); /*debug*/
 	return (input);
 }
