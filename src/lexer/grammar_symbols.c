@@ -16,7 +16,9 @@ struct s_token	g_grammar_symbols[] =
 	{ GREATAND, ">&" },
 	{ LESSGREAT, "<>" },
 	{ DLESSDASH, "<<-" },
-	{ PIPE, "|" }, /* naaaaaaaaaaaann, code rampage XD */
+	{ PIPE, "|" }, /* not shell grammar native */
+	{ GREAT, ">" }, /* not shell grammar native */
+	{ LESS, "<" }, /* not shell grammar native */
 	{ If, "if" },
 	{ Then, "then" },
 	{ Else, "else" },

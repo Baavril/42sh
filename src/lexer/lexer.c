@@ -276,13 +276,13 @@ char	**lexer(char **input)
 	token = get_next_token(*input);
 	ft_printf("_______________________________________________\n");
 	ft_printf("token.symbol : %s\n", token.symbol);
-	ft_printf("token.type : %d\n", token.type);
+	ft_printf("token.type : %d = %s\n", token.type, get_token_symbol(token.type));
 	while (token.type != E_EOF && token.type != E_ERROR)
 	{
 		token = get_next_token(NULL);
 		ft_printf("_______________________________________________\n");
 		ft_printf("token.symbol : %s\n", token.symbol);
-		ft_printf("token.type : %d\n", token.type);
+		ft_printf("token.type : %d = %s\n", token.type, get_token_symbol(token.type));
 	}
 	ft_printf("_______________________________________________\n");
 

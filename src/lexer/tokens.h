@@ -4,10 +4,12 @@
 
 enum e_tokens
 {
-	NONE, /* hop hop hop */
-	E_ERROR, /* Naaaaaan ;-( */
-	E_EOF, /* Naaaaaaan */
-	PIPE, /* Naaaaaaan */
+	NONE, /* not shell grammar native */
+	E_ERROR, /* not shell grammar native */
+	E_EOF, /* not shell grammar native */
+	PIPE, /* not shell grammar native */
+	GREAT, /* not shell grammar native */
+	LESS, /* not shell grammar native */
 
 	WORD,
 	ASSIGNMENT_WORD,
