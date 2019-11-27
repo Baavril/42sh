@@ -41,6 +41,41 @@ char		*advance(char *tmp, char **index)
 	return (tmp);
 }
 
+char	*ft_quoted_word(char **str)
+{
+	int		i;
+	int		a;
+	int		b_slash;
+	char	*tmp;
+
+	i = 0;
+	a = 0;
+	b_slash = 0;
+	while ((*str)[i])
+	{
+		if ((*str)[i] == '\\')
+		{
+			++b_slash;
+			i += 2;
+		}
+		if ((*str)[i])
+			++i;
+	}
+	i = i - b_slash;
+	if (!(tmp = (char*)malloc(sizeof(char) * (i + 1))))
+		return (NULL);
+	while ((**str))
+	{
+		if ((**str) == '\\')
+			(*str)++;
+		tmp[a] = (**str);
+		++a;
+		(*str)++;
+	}
+	tmp[a] = '\0';
+	return (tmp);
+}
+
 char	*ft_str_word(char **str)
 {
 	int		i;
@@ -88,76 +123,6 @@ char	*ft_check_nbr(char **nbr)
 	tmp[1] = '\0';
 	(*nbr)++;
 	return (tmp);
-}
-
-static char	*ft_str_simple_quote(char **str)
-{
-	int		i;
-	char	*tmp;
-
-	i = 0;
-	(*str)++;
-	while ((*str)[i] != '\0' && (*str)[i] != '\'')
-		i++;
-	if (!(tmp = (char*)malloc(sizeof(char) * (i + 1))))
-		return (NULL);
-	i = 0;
-	while ((**str) != '\0' && (**str) != '\'')
-	{
-		tmp[i] = (**str);
-		(*str)++;
-		i++;
-	}
-	if ((**str) == '\'')
-		(*str)++;
-	tmp[i] = '\0';
-	return (tmp);
-}
-
-static char	*ft_str_double_quote(char **str)
-{
-	int		i;
-	int		b_slash;
-	char	*tmp;
-
-	i = 0;
-	b_slash = 0;
-	(*str)++;
-	while ((*str)[i] != '\0' && (*str)[i] != '\"')
-	{
-		if ((*str)[i] == '\\' && ((*str)[i + 1] == '\\' || (*str)[i + 1] == '\"'))
-		{
-			b_slash++;
-			i += 2;
-		}
-		if ((*str)[i] != '\0')
-			i++;
-	}
-	i = i - b_slash;
-	if (!(tmp = (char*)malloc(sizeof(char) * (i + 1))))
-		return (NULL);
-	i = 0;
-	while ((**str) != '\0' && (**str) != '\"')
-	{
-		if ((**str) == '\\' && ((*(*str + 1)) == '\\' || (*(*str + 1)) == '\"'))
-			(*str)++;
-		tmp[i] = (**str);
-		(*str)++;
-		i++;
-	}
-	if ((**str) == '\"')
-		(*str)++;
-	tmp[i] = '\0';
-	return (tmp);
-}
-
-char	*ft_str_quotes(char **str)
-{
-	if ((**str) == '\'')
-		return (ft_str_simple_quote(str));
-	if ((**str) == '\"')
-		return (ft_str_double_quote(str));
-	return (NULL);
 }
 
 /* ------------------------------------------------------
@@ -239,13 +204,13 @@ t_token	get_next_token(char *str)
 	char		*tmp;
 
 	if (str)
-		index = &str[0];
+		index = str;
 	while (ft_isspace(*index))
-		index++;
+		++index;
 	while (*index)
 	{
 		if (ft_is_quote(*index))
-			return (tokenization(WORD, ft_str_quotes(&index)));
+			return (tokenization(WORD, ft_quoted_word(&index)));
 		if (ft_isdigit(*index))
 		{
 			if (*(index + 1) == '<' || *(index + 1) == '>')
