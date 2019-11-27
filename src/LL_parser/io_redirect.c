@@ -18,13 +18,13 @@ t_node	*io_file(t_token tok)
 {
 	t_node	*node;
 
-	if (  tok.type == LESS
-		| tok.type == LESSAND
-		| tok.type == GREAT
-		| tok.type == GREATAND
-		| tok.type == DGREAT
-		| tok.type == LESSGREAT
-		| tok.type == CLOBBER)
+	if (  (tok.type == LESS)
+		| (tok.type == LESSAND)
+		| (tok.type == GREAT)
+		| (tok.type == GREATAND)
+		| (tok.type == DGREAT)
+		| (tok.type == LESSGREAT)
+		| (tok.type == CLOBBER))
 	{
 		ft_printf("tok_type %d detected ! \n", tok.type); //
 		node = malloc(sizeof(t_node));
@@ -48,8 +48,8 @@ t_node	*io_here(t_token tok)
 {
 	t_node	*node;
 
-	if (  tok.type == DLESS
-		| tok.type == DLESSDASH)
+	if (  (tok.type == DLESS)
+		| (tok.type == DLESSDASH))
 	{
 		ft_printf("tok_type %d detected ! \n", tok.type);
 		node = malloc(sizeof(t_node));
