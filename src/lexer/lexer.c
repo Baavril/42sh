@@ -74,7 +74,7 @@ char	*ft_get_word(char **str)
 	}
 	if (!(tmp = (char*)ft_memalloc(sizeof(char) * (i + 1))))
 		return (NULL);
-	tmp = (char*)ft_memcpy((void*)tmp, (void*)str, i);
+	tmp = (char*)ft_memcpy((void*)tmp, (void*)(*str), i);
 	*str += i;
 	return (tmp);
 }
