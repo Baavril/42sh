@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 17:59:39 by abarthel          #+#    #+#             */
-/*   Updated: 2019/11/27 14:50:12 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/11/27 15:53:59 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,40 +41,41 @@ char		*advance(char *tmp, char **index)
 	return (tmp);
 }
 
-char	*ft_str_word(char **str)
+char	*ft_get_word(char **str)
 {
-	int		i;
-	int		a;
-	int		b_slash;
 	char	*tmp;
+	int	i;
+	char	quote_type;
+	_Bool	open_quotes;
 
 	i = 0;
-	a = 0;
-	b_slash = 0;
-	while ((*str)[i] != '\0' && ft_istoken(&(*str)[i]) == NONE && !ft_isspace((*str)[i])
-			&& !ft_is_quote((*str)[i]))
+	open_quotes = 0;
+	while ((*str)[i])
 	{
-		if ((*str)[i] == '\\')
-		{
-			b_slash++;
-			i += 2;
-		}
-		if ((*str)[i] != '\0')
-			i++;
+			if (!open_quotes && ft_is_quote((*str)[i]))
+			{
+				open_quotes ^= 1;
+				quote_type = (*str)[i];
+				++i;
+				continue;
+			}
+			if (!open_quotes && (ft_istoken(&(*str)[i]) || ft_isspace((*str)[i])))
+				break;
+			if ((*str)[i] == quote_type)
+			{
+				++i;
+				open_quotes ^= 1;
+				continue;
+			}
+			if ((*str)[i] == '\\' &&
+				((open_quotes && quote_type != '\'') || !open_quotes))
+				++i;
+			++i;
 	}
-	i = i - b_slash;
-	if (!(tmp = (char*)malloc(sizeof(char) * (i + 1))))
+	if (!(tmp = (char*)ft_memalloc(sizeof(char) * (i + 1))))
 		return (NULL);
-	while ((**str) != '\0' && ft_istoken((*str)) == NONE && !ft_isspace((**str))
-			&& !ft_is_quote((**str)))
-	{
-		if ((**str) == '\\')
-			(*str)++;
-		tmp[a] = (**str);
-		a++;
-		(*str)++;
-	}
-	tmp[a] = '\0';
+	tmp = (char*)ft_memcpy((void*)tmp, (void*)str, i);
+	*str += i;
 	return (tmp);
 }
 
@@ -90,118 +91,33 @@ char	*ft_check_nbr(char **nbr)
 	return (tmp);
 }
 
-static char	*ft_str_simple_quote(char **str)
-{
-	int		i;
-	char	*tmp;
-
-	i = 0;
-	(*str)++;
-	while ((*str)[i] != '\0' && (*str)[i] != '\'')
-		i++;
-	if (!(tmp = (char*)malloc(sizeof(char) * (i + 1))))
-		return (NULL);
-	i = 0;
-	while ((**str) != '\0' && (**str) != '\'')
-	{
-		tmp[i] = (**str);
-		(*str)++;
-		i++;
-	}
-	if ((**str) == '\'')
-		(*str)++;
-	tmp[i] = '\0';
-	return (tmp);
-}
-
-static char	*ft_str_double_quote(char **str)
-{
-	int		i;
-	int		b_slash;
-	char	*tmp;
-
-	i = 0;
-	b_slash = 0;
-	(*str)++;
-	while ((*str)[i] != '\0' && (*str)[i] != '\"')
-	{
-		if ((*str)[i] == '\\' && ((*str)[i + 1] == '\\' || (*str)[i + 1] == '\"'))
-		{
-			b_slash++;
-			i += 2;
-		}
-		if ((*str)[i] != '\0')
-			i++;
-	}
-	i = i - b_slash;
-	if (!(tmp = (char*)malloc(sizeof(char) * (i + 1))))
-		return (NULL);
-	i = 0;
-	while ((**str) != '\0' && (**str) != '\"')
-	{
-		if ((**str) == '\\' && ((*(*str + 1)) == '\\' || (*(*str + 1)) == '\"'))
-			(*str)++;
-		tmp[i] = (**str);
-		(*str)++;
-		i++;
-	}
-	if ((**str) == '\"')
-		(*str)++;
-	tmp[i] = '\0';
-	return (tmp);
-}
-
-char	*ft_str_quotes(char **str)
-{
-	if ((**str) == '\'')
-		return (ft_str_simple_quote(str));
-	if ((**str) == '\"')
-		return (ft_str_double_quote(str));
-	return (NULL);
-}
-
 /* ------------------------------------------------------
 **               FILE: get_next_token.c
 ** ------------------------------------------------------
 */
 
-static	void			ft_assign_token(char tab[16][4])
+static int	get_token_type(char *str)
 {
-	ft_strcpy(tab[0], "&&");
-	ft_strcpy(tab[1], "||");
-	ft_strcpy(tab[2], "<");
-	ft_strcpy(tab[3], "<<");
-	ft_strcpy(tab[4], ">");
-	ft_strcpy(tab[5], ">>");
-	ft_strcpy(tab[6], "<&");
-	ft_strcpy(tab[7], ">&");
-	ft_strcpy(tab[8], "<>");
-	ft_strcpy(tab[9], "<<-");
-	ft_strcpy(tab[10], ">|");
-	ft_strcpy(tab[11], "|");
-	ft_strcpy(tab[12], ";");
-	ft_strcpy(tab[13], "!");
-	ft_strcpy(tab[14], "\n");
-	ft_strcpy(tab[15], "");
+	int	i;
+
+	i = 0;
+	while (g_grammar_symbols[i].type != -1)
+	{
+		if (!ft_strncmp(g_grammar_symbols[i].symbol, str, ft_strlen(g_grammar_symbols[i].symbol)))
+			return (g_grammar_symbols[i].type);
+		++i;
+	}
+	return (-1);
 }
 
 int	ft_istoken(char *str)
 {
-	char	tab[16][4];
-	int		place;
-	int		i;
+	int	tok_type;
 
-	i = 0;
-	place = NONE;
-	ft_assign_token(tab);
-	while (tab[i][0] != '\0')
-	{
-		if (!(ft_strncmp(tab[i], str, ft_strlen(tab[i]))))
-			if (ft_strlen(tab[place]) < ft_strlen(tab[i]))
-				place = i;
-		i++;
-	}
-	return ((place == NONE) ? NONE : place);
+	tok_type = get_token_type(str);
+	if (tok_type == -1)
+		return (NONE);
+	return (tok_type);
 }
 
 static int		ft_assignment_word(char *str)
@@ -231,6 +147,7 @@ static char	*get_token_symbol(int token)
 	return (NULL);
 }
 
+
 static t_token	tokenization(char type, char *value)
 {
 	t_token	token;
@@ -253,13 +170,13 @@ t_token	get_next_token(char *str)
 	char		*tmp;
 
 	if (str)
-		index = &str[0];
+		index = str;
 	while (ft_isspace(*index))
-		index++;
+		++index;
 	while (*index)
 	{
 		if (ft_is_quote(*index))
-			return (tokenization(WORD, ft_str_quotes(&index)));
+			return (tokenization(WORD, ft_get_word(&index)));
 		if (ft_isdigit(*index))
 		{
 			if (*(index + 1) == '<' || *(index + 1) == '>')
@@ -267,7 +184,7 @@ t_token	get_next_token(char *str)
 		}
 		if (ft_istoken(index) == NONE)
 			if ((token = ft_assignment_word(index)))
-				return (tokenization(token, ft_str_word(&index)));
+				return (tokenization(token, ft_get_word(&index)));
 		if ((token = ft_istoken(index)) != NONE)
 		{
 			tmp = get_token_symbol(token);
@@ -290,13 +207,13 @@ char	**lexer(char **input)
 	token = get_next_token(*input);
 	ft_printf("_______________________________________________\n");
 	ft_printf("token.symbol : %s\n", token.symbol);
-	ft_printf("token.type : %d\n", token.type);
+	ft_printf("token.type : %d = %s\n", token.type, get_token_symbol(token.type));
 	while (token.type != E_EOF && token.type != E_ERROR)
 	{
 		token = get_next_token(NULL);
 		ft_printf("_______________________________________________\n");
 		ft_printf("token.symbol : %s\n", token.symbol);
-		ft_printf("token.type : %d\n", token.type);
+		ft_printf("token.type : %d = %s\n", token.type, get_token_symbol(token.type));
 	}
 	ft_printf("_______________________________________________\n");
 
