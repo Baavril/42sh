@@ -41,75 +41,41 @@ char		*advance(char *tmp, char **index)
 	return (tmp);
 }
 
-char	*ft_quoted_word(char **str)
+char	*ft_get_word(char **str)
 {
-	int		i;
-	int		a;
-	int		b_slash;
 	char	*tmp;
+	int	i;
+	char	quote_type;
+	_Bool	open_quotes;
 
 	i = 0;
-	a = 0;
-	b_slash = 0;
+	open_quotes = 0;
 	while ((*str)[i])
 	{
-		if ((*str)[i] == '\\')
-		{
-			++b_slash;
-			i += 2;
-		}
-		if ((*str)[i])
+			if (!open_quotes && ft_is_quote((*str)[i]))
+			{
+				open_quotes ^= 1;
+				quote_type = (*str)[i];
+				++i;
+				continue;
+			}
+			if (!open_quotes && (ft_istoken(&(*str)[i]) || ft_isspace((*str)[i])))
+				break;
+			if ((*str)[i] == quote_type)
+			{
+				++i;
+				open_quotes ^= 1;
+				continue;
+			}
+			if ((*str)[i] == '\\' &&
+				((open_quotes && quote_type != '\'') || !open_quotes))
+				++i;
 			++i;
 	}
-	i = i - b_slash;
-	if (!(tmp = (char*)malloc(sizeof(char) * (i + 1))))
+	if (!(tmp = (char*)ft_memalloc(sizeof(char) * (i + 1))))
 		return (NULL);
-	while ((**str))
-	{
-		if ((**str) == '\\')
-			(*str)++;
-		tmp[a] = (**str);
-		++a;
-		(*str)++;
-	}
-	tmp[a] = '\0';
-	return (tmp);
-}
-
-char	*ft_str_word(char **str)
-{
-	int		i;
-	int		a;
-	int		b_slash;
-	char	*tmp;
-
-	i = 0;
-	a = 0;
-	b_slash = 0;
-	while ((*str)[i] != '\0' && ft_istoken(&(*str)[i]) == NONE && !ft_isspace((*str)[i])
-			&& !ft_is_quote((*str)[i]))
-	{
-		if ((*str)[i] == '\\')
-		{
-			b_slash++;
-			i += 2;
-		}
-		if ((*str)[i] != '\0')
-			i++;
-	}
-	i = i - b_slash;
-	if (!(tmp = (char*)malloc(sizeof(char) * (i + 1))))
-		return (NULL);
-	while ((**str) != '\0' && ft_istoken((*str)) == NONE && !ft_isspace((**str))
-			&& !ft_is_quote((**str)))
-	{
-		if ((**str) == '\\')
-			(*str)++;
-		tmp[a] = (**str);
-		a++;
-		(*str)++;
-	}
-	tmp[a] = '\0';
+	tmp = (char*)ft_memcpy((void*)tmp, (void*)str, i);
+	*str += i;
 	return (tmp);
 }
 
@@ -210,7 +176,7 @@ t_token	get_next_token(char *str)
 	while (*index)
 	{
 		if (ft_is_quote(*index))
-			return (tokenization(WORD, ft_quoted_word(&index)));
+			return (tokenization(WORD, ft_get_word(&index)));
 		if (ft_isdigit(*index))
 		{
 			if (*(index + 1) == '<' || *(index + 1) == '>')
@@ -218,7 +184,7 @@ t_token	get_next_token(char *str)
 		}
 		if (ft_istoken(index) == NONE)
 			if ((token = ft_assignment_word(index)))
-				return (tokenization(token, ft_str_word(&index)));
+				return (tokenization(token, ft_get_word(&index)));
 		if ((token = ft_istoken(index)) != NONE)
 		{
 			tmp = get_token_symbol(token);
