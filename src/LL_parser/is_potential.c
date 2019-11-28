@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:38:29 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/27 15:31:21 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/11/28 10:10:39 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int		is_potential(t_token tok, int i)
 		return(is_potential(tok, N_WORD));
 	if (i == N_CMD_WORD)
 		return(is_potential(tok, N_WORD));
-	if (i == N_WORD)
 	if (i == N_PIPE)
 		return(tok.type == PIPE);
 	if (i == N_SEMI)

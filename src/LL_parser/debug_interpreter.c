@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:44:12 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/27 15:31:49 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/11/28 10:17:04 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_node	*comp_list(t_token tok)
 			gnt(NULL);
 			if ((tmp2 = comp_list(gnt(NULL))))
 			{
-				node = malloc(sizeof(node));
+				node = malloc(sizeof(t_node));
 				node->left.v = tmp1;
 				node->right.v = tmp2;
 				node->f = NULL; //should be i_comp_list();

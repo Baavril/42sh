@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:33:42 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/27 15:32:52 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/11/28 10:12:19 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ t_node	*io_file(t_token tok)
 {
 	t_node	*node;
 
-	if (  (tok.type == LESS)
-		| (tok.type == LESSAND)
-		| (tok.type == GREAT)
-		| (tok.type == GREATAND)
-		| (tok.type == DGREAT)
-		| (tok.type == LESSGREAT)
-		| (tok.type == CLOBBER))
+	if (   tok.type == LESS
+		|| tok.type == LESSAND
+		|| tok.type == GREAT
+		|| tok.type == GREATAND
+		|| tok.type == DGREAT
+		|| tok.type == LESSGREAT
+		|| tok.type == CLOBBER)
 	{
 		ft_printf("tok_type %d detected ! \n", tok.type); //
 		node = malloc(sizeof(t_node));
