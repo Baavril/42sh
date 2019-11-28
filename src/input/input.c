@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/19 13:10:19 by baavril          ###   ########.fr       */
+/*   Updated: 2019/11/28 10:26:37 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int read_command(char **buff)
 	cursor.prompt_len = mkprompt(&(cursor.prompt));
 	get_stdin(&cursor, buff);
 	write(1, "\n", 1);
+	ft_init_cursor(&cursor);
 	while (**buff && (cursor.prompt_len = mkprompt_quote(*buff, &(cursor.prompt))))
 	{
 		get_stdin(&cursor, &tmp);

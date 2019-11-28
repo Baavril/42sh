@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 11:16:45 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/18 16:49:00 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/11/28 12:02:49 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,17 @@
 
 static char	next_valid_entry(char current_char, char previous_valid_entry)
 {
-	if (previous_valid_entry == '\\'
-	|| ((  previous_valid_entry == '`' 
-		|| previous_valid_entry == '\"'
-		|| previous_valid_entry == '\'')
-		&& current_char == previous_valid_entry)
-	|| (previous_valid_entry == '{' && current_char == '}')
-	|| (previous_valid_entry == '(' && current_char == ')'))
+	if (previous_valid_entry == '\\')
+		return(-1);
+	else if (  previous_valid_entry == '`' 
+			|| previous_valid_entry == '\"'
+			|| previous_valid_entry == '\'')
+	{
+		if (current_char == previous_valid_entry)
+			return(-1);
+	}
+	else if ((previous_valid_entry == '{' && current_char == '}')
+		  || (previous_valid_entry == '(' && current_char == ')'))
 		return(-1);
 	else if (ft_strchr("{(\'\"`\\\\", current_char))
 			return (current_char);
