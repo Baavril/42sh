@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:33:42 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/28 10:12:19 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/11/29 11:08:51 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,15 @@
 #include "parser.h"
 #include "libft.h"
 
+/*
+ * io_file         : LESS      filename
+ *                 | LESSAND   filename
+ *                 | GREAT     filename
+ *                 | GREATAND  filename
+ *                 | DGREAT    filename
+ *                 | LESSGREAT filename
+ *                 | CLOBBER   filename
+ */
 t_node	*io_file(t_token tok)
 {
 	t_node	*node;
@@ -26,9 +35,9 @@ t_node	*io_file(t_token tok)
 		|| tok.type == LESSGREAT
 		|| tok.type == CLOBBER)
 	{
-		ft_printf("tok_type %d detected ! \n", tok.type); //
+		ft_printf("tok_type %d detected ! \n", tok.type);
 		node = malloc(sizeof(t_node));
-		node->left.v = NULL; // should be tok.type -------------------------------------------
+		node->left.v = NULL; // should be tok.type
 		tok = gnt(NULL);
 		if ((node->right.c = filename(tok)))
 		{
@@ -37,13 +46,14 @@ t_node	*io_file(t_token tok)
 		}
 		else
 			exit(ft_printf("parsing error in io_file")); 
-			//WARNING : 
-			//exit() calls like these are a temporary solution only
-			//since they do not free any malloc() or quit properly.
 	}
 	return(NULL);
 }
 
+/*
+ * io_file         : DLESS     here_end
+ *                 | DLESSDASH here_end
+ */
 t_node	*io_here(t_token tok)
 {
 	t_node	*node;
@@ -53,19 +63,25 @@ t_node	*io_here(t_token tok)
 	{
 		ft_printf("tok_type %d detected ! \n", tok.type);
 		node = malloc(sizeof(t_node));
-		node->left.v = NULL; // should be tok.type -------------------------------------------------------------------
+		node->left.v = NULL; // should be tok.type
 		tok = gnt(NULL);
 		if ((node->right.c = here_end(tok)))
 		{
-			node->f = NULL; // SHOULD BE one in an array of i_f() 
+			node->f = NULL; // should be one in an array of i_f() 
 			return(node);
 		}
 		else
-			exit(ft_printf("parsing error in io_here")); //
+			exit(ft_printf("parsing error in io_here"));
 	}
 	return(NULL);
 }
 
+/*
+ * io_redirect		: io_file
+ * 					| io_here
+ * 					| IO_NUMBER io_file
+ * 					| IO_NUMBER io_here
+ */
 t_node	*io_redirect(t_token tok)
 {
 	t_node	*node;
@@ -82,10 +98,10 @@ t_node	*io_redirect(t_token tok)
 			node = malloc(sizeof(t_node));
 			node->left.c = tmp1;
 			node->right.v = tmp2;
-			node->f = NULL; //should be i_io_redirect ? ptet. ptet pas. a etudier.
+			node->f = NULL; //should be i_io_redirect ?
 			return (node);
 		}
-		exit(ft_printf("parsing error in io_redirect")); //
+		exit(ft_printf("parsing error in io_redirect"));
 	}
 	return (NULL);
 }

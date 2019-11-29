@@ -6,21 +6,25 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:38:29 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/28 10:10:39 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/11/29 11:12:52 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokens.h"
 
-int		is_potential(t_token tok, int i)
+/* is_potential renvoie 1 si il est susceptible d'etre
+ * le premier element d'un regle e_node, sinon 0
+ * Exemple : WORD peut etre le premier element d'un PREFIX
+ * PIPE ne peut pas etre le premier element d'un SUFFIX
+ */
+int		is_potential(t_token tok, int e_node)
 {
-	// TEMPORAIRE. MOCHE.
-	if (i == N_PREFIX)
+	if (e_node == N_PREFIX)
 		return(is_potential(tok, N_REDIRECT) || is_potential(tok, N_ASSIGNMENT_WORD));
-	if (i == N_SUFFIX)
+	if (e_node == N_SUFFIX)
 		return(is_potential(tok, N_REDIRECT) || is_potential(tok, N_WORD));
-	if (i == N_REDIRECT)
-		return (  tok.type == LESS
+	if (e_node == N_REDIRECT)
+		return (   tok.type == LESS
 				|| tok.type == LESSAND
 				|| tok.type == GREAT
 				|| tok.type == GREATAND
@@ -28,17 +32,17 @@ int		is_potential(t_token tok, int i)
 				|| tok.type == LESSGREAT
 				|| tok.type == CLOBBER
 				|| tok.type == IO_NUMBER);
-	if (i == N_ASSIGNMENT_WORD)
+	if (e_node == N_ASSIGNMENT_WORD)
 		return(tok.type == ASSIGNMENT_WORD);
-	if (i == N_WORD)
+	if (e_node == N_WORD)
 		return(tok.type == WORD || is_potential(tok, N_ASSIGNMENT_WORD));
-	if (i == N_CMD_NAME)
+	if (e_node == N_CMD_NAME)
 		return(is_potential(tok, N_WORD));
-	if (i == N_CMD_WORD)
+	if (e_node == N_CMD_WORD)
 		return(is_potential(tok, N_WORD));
-	if (i == N_PIPE)
+	if (e_node == N_PIPE)
 		return(tok.type == PIPE);
-	if (i == N_SEMI)
+	if (e_node == N_SEMI)
 		return(tok.type == SEMI);
 	return(0);
 }

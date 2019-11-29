@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 15:51:38 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/27 15:37:04 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/11/29 10:37:59 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ enum e_tokens
 	Rbrace
 };
 
-enum nodes
+enum e_nodes
 {
 	N_SUFFIX,
 	N_PREFIX,

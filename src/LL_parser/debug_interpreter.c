@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:44:12 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/28 10:17:04 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/11/29 11:10:59 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 #include "lexer.h"
 #include "libft.h"
 
-#if INTERPRETER_MODE == COMPILER
+/*
+ * comp_list	: and_or SEMI comp_list
+ */
 t_node	*comp_list(t_token tok)
 {
 	t_node	*node;
@@ -42,18 +44,6 @@ t_node	*comp_list(t_token tok)
 	return(NULL);
 }
 
-#elif INTERPRETER_MODE == INTERPRETER
-t_node	*inter_list(t_token tok)
-{
-	t_node	*tmp1;
-
-	while (is_potential(tok, N_SEMI))
-		tok = gnt(NULL);
-	tmp1 = and_or(tok);
-	return(tmp1);
-}
-#endif
-
 void	interpret(t_node *node)
 {
 	if (node)
@@ -65,17 +55,6 @@ void	interpret(t_node *node)
 
 void	debug_parser(char *input)
 {
-#if INTERPRETER_MODE == INTEPRETER
-	t_node *node;
-	
-	node = inter_list(get_next_token(input));
-	while (node)
-	{
-		interpret(node);
-		node = inter_list(gnt(NULL));
-	}
-#elif INTERPRETER_MODE == COMPILER
 	interpret(comp_list(get_next_token(input)));
-#endif
 	gnt(NULL);
 }

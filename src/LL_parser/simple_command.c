@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:36:39 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/27 15:34:26 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/11/29 10:34:17 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 #include "parser.h"
 #include "libft.h"
 
+/*
+ * cmd_suffix       : io_redirect      cmd_suffix
+ *                  | io_redirect
+ *                  | WORD             cmd_suffix
+ *                  | WORD
+ */
 t_node	*cmd_suffix(t_token tok)
 {
 	t_node	*node;
@@ -31,6 +37,10 @@ t_node	*cmd_suffix(t_token tok)
 	return(NULL);
 }
 
+/*
+ * exec             : cmd_word         cmd_suffix
+ *                  | cmd_word
+ */
 t_node *exec(t_token tok)
 {
 	t_node	*node;
@@ -48,12 +58,18 @@ t_node *exec(t_token tok)
 	return(NULL);
 }
 
+/*
+ * cmd_prefix       : io_redirect      cmd_prefix
+ *                  | io_redirect
+ *                  | ASSIGNEMENT_WORD cmd_prefix
+ *                  | ASSIGNMENT_WORD
+ */
 t_node	*cmd_prefix(t_token tok)
 {
 	t_node	*node;
 	t_elem	tmp1;
 
-	if (((tmp1.v = io_redirect(tok))) || (tmp1.c = assig_word(tok))) //HELP
+	if (((tmp1.v = io_redirect(tok))) || (tmp1.c = assig_word(tok)))
 	{
 			node = malloc(sizeof(t_node));
 			node->left = tmp1;
@@ -65,6 +81,11 @@ t_node	*cmd_prefix(t_token tok)
 	return(NULL);
 }
 
+/*
+ * simple_command   : cmd_prefix       exec
+ *                  | cmd_prefix
+ *                  | exec
+ */
 t_node	*simple_command(t_token tok)
 {
 	t_node *node;
@@ -89,6 +110,9 @@ t_node	*simple_command(t_token tok)
 	return(NULL);
 }
 
+/*
+ * command         : simple_command
+ */
 t_node	*command(t_token tok)
 {
 	return(simple_command(tok));
