@@ -11,5 +11,29 @@
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <stdio.h>
 
 #include "shell_variables.h"
+#include "../libft/libft.h"
+
+void	prtlist()
+{
+	struct s_svar *voyager;
+
+	voyager = g_svar;
+	while (g_svar)
+	{
+		printf("%s\n", ((char*)g_svar->str));
+		g_svar = g_svar->next;
+	}
+	g_svar = voyager;
+}
+
+int cmd_set(int argc, char **argv)
+{
+	(void)argc;
+	(void)argv;
+
+	prtlist();
+	return (0);
+}

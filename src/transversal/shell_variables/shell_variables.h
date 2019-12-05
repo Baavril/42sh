@@ -13,13 +13,25 @@
 #ifndef SHELL_VARIABLES_H
 # define SHELL_VARIABLES_H
 
-typedef struct	s_shevar
+# define PS1	"PS1"
+# define PS2	"PS2"
+# define PS3	"PS3"
+# define PS4	"PS4"
+# define PS1V	"[ 21sh ]->"
+# define PS2V	"quote> "
+# define PS3V	"script> "
+# define PS4V	"heredoc> "
+
+extern struct s_svar *g_svar;
+
+struct		s_svar
 {
-	char		*str;
-	char		*name;
-	char		*value;
-	int		expt;
-	int		set;
-}		t_shevar;
+	char			*str;
+	char			*key;
+	char			*value;
+	struct s_svar	*next;
+};
+
+int	init_shellvars(char **env);
 
 #endif
