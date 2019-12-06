@@ -13,10 +13,12 @@
 #include <unistd.h>
 #include <stdio.h>
 
-#include "shell_variables.h"
-#include "../libft/libft.h"
+#include "../../../include/shell_variables.h"
+#include "../../../libft/include/libft.h"
 
-void	ft_listadd_back(struct s_svar *new_back)
+struct s_svar *g_svar;
+
+void	listadd_back(struct s_svar *new_back)
 {
 	struct s_svar	*voyager;
 
@@ -123,6 +125,23 @@ struct s_svar	*newnodshell(char *env)
 	return (svar_lst);
 }
 
+void	setenvvar(char *key, char *value)
+{
+	char	*set;
+
+	set = ft_strjoin(key, value);
+	listadd_back(newnodshell(set));
+}
+
+void init_intvars()
+{
+	setenvvar(PS1, PS1V);
+	setenvvar(PS2, PS2V);
+	setenvvar(PS3, PS3V);
+	setenvvar(PS4, PS4V);
+	setenvvar(HISTSIZE, HISTSIZEV);
+}
+
 int	init_shellvars(char **env)
 {
 	int i;
@@ -137,11 +156,10 @@ int	init_shellvars(char **env)
 	voyager = g_svar;
 	while (i < len)
 	{
-		ft_listadd_back(newnodshell(env[i++]));
+		listadd_back(newnodshell(env[i++]));
 		g_svar = g_svar->next;
 	}
+	init_intvars();
 	g_svar = voyager;
 	return (1);
 }
-
-

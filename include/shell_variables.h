@@ -13,14 +13,21 @@
 #ifndef SHELL_VARIABLES_H
 # define SHELL_VARIABLES_H
 
-# define PS1	"PS1"
-# define PS2	"PS2"
-# define PS3	"PS3"
-# define PS4	"PS4"
-# define PS1V	"[ 21sh ]->"
+/* Keys of internal variables */
+
+# define PS1	"PS1="
+# define PS2	"PS2="
+# define PS3	"PS3="
+# define PS4	"PS4="
+# define HISTSIZE	"HISTSIZE="
+
+/* Values of internal variables */
+
+# define PS1V	"prompt->"
 # define PS2V	"quote> "
 # define PS3V	"script> "
 # define PS4V	"heredoc> "
+# define HISTSIZEV	"1000"
 
 extern struct s_svar *g_svar;
 
