@@ -109,7 +109,7 @@ int	tablen(char **env)
 	return (i);
 }
 
-struct s_svar	*newnodshell(char *env)
+struct s_svar	*newnodshell(char *env, int exp)
 {
 	struct s_svar *svar_lst;
 
@@ -120,6 +120,7 @@ struct s_svar	*newnodshell(char *env)
 		svar_lst->str = ft_strdup(env);
 		svar_lst->key = ft_strdupto(env, '=');
 		svar_lst->value = ft_strdupfm(env, '=');
+		svar_lst->exp = exp;
 	}
 	svar_lst->next = NULL;
 	return (svar_lst);
@@ -130,7 +131,7 @@ void	setenvvar(char *key, char *value)
 	char	*set;
 
 	set = ft_strjoin(key, value);
-	listadd_back(newnodshell(set));
+	listadd_back(newnodshell(set, 0));
 }
 
 void init_intvars()
@@ -152,11 +153,11 @@ int	init_shellvars(char **env)
 	if (!(g_svar = malloc(sizeof(*g_svar) * (tablen(env) + 1))))
 			return (0);
 	len = tablen(env);
-	g_svar = newnodshell(env[0]);
+	g_svar = newnodshell(env[0], 1);
 	voyager = g_svar;
 	while (i < len)
 	{
-		listadd_back(newnodshell(env[i++]));
+		listadd_back(newnodshell(env[i++], 1));
 		g_svar = g_svar->next;
 	}
 	init_intvars();

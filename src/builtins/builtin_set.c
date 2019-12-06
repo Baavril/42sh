@@ -14,7 +14,7 @@
 #include <stdio.h>
 
 #include "shell_variables.h"
-#include "../libft/libft.h"
+#include "libft.h"
 
 void	prtlist()
 {

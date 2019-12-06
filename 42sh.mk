@@ -42,6 +42,8 @@ SOURCES			:=		main.c \
 						job_control/path_concat.c \
 						job_control/get_sequence.c \
 						builtins/builtin_alias.c \
+						builtins/builtin_set.c \
+						builtins/builtin_export.c \
 						builtins/builtin_cd.c \
 						builtins/builtin_echo.c \
 						builtins/builtin_type.c \
@@ -85,15 +87,15 @@ SOURCES			:=		main.c \
 						transversal/hash/init_htable.c \
 						transversal/hash/string_routines.c \
 						transversal/shell_variables/shell_variables.c \
-      					LL_parser/debug_gnt.c \
-      					LL_parser/debug_interpreter.c \
-      					LL_parser/io_redirect.c \
-      					LL_parser/is_potential.c \
-      					LL_parser/parser.c \
-      					LL_parser/pipe_sequence.c \
-      					LL_parser/simple_command.c \
-      					LL_parser/terminals.c \
-      					LL_parser/wordtypes.c
+						LL_parser/debug_gnt.c \
+						LL_parser/debug_interpreter.c \
+						LL_parser/io_redirect.c \
+						LL_parser/is_potential.c \
+						LL_parser/parser.c \
+						LL_parser/pipe_sequence.c \
+						LL_parser/simple_command.c \
+						LL_parser/terminals.c \
+						LL_parser/wordtypes.c
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 

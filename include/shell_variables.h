@@ -13,6 +13,8 @@
 #ifndef SHELL_VARIABLES_H
 # define SHELL_VARIABLES_H
 
+#include "libft.h"
+
 /* Keys of internal variables */
 
 # define PS1	"PS1="
@@ -36,9 +38,18 @@ struct		s_svar
 	char			*str;
 	char			*key;
 	char			*value;
+	int				exp;
 	struct s_svar	*next;
 };
 
 int	init_shellvars(char **env);
+void	ft_listadd_back(struct s_svar *new_back);
+struct s_svar	*newnodshell(char *env, int exp);
+char		*get_key(char *var);
+char	*ft_strdupto(char *str, char c);
+char	*ft_strdupfm(char *str, char c);
+
+void	ft_lstadd_back(t_list **alst, t_list *new_back);
+void	ft_listadd_back(struct s_svar *new_back);
 
 #endif
