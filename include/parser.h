@@ -6,17 +6,13 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 16:02:57 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/27 15:39:10 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/12/03 19:07:46 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #ifndef PARSER_H
 # define PARSER_H
-
-#define INTERPRETER 1
-#define COMPILER 2
-#define INTERPRETER_MODE COMPILER
 
 #include "tokens.h"
 
@@ -30,7 +26,7 @@ typedef	struct	s_node
 {
 	t_elem	left;
 	t_elem	right;
-	int		(*f)(void *, void *);
+	int		(*f)(t_elem, t_elem);
 }				t_node;
 
 //parser.c
@@ -57,5 +53,13 @@ t_token	gnt(char *future);
 t_token	peek(void);
 //debug_interpreter.c
 void	debug_parser(char *input);
+
+int i_comp_list(t_elem left, t_elem right);
+int i_pipe_sequence(t_elem left, t_elem right);
+int i_simple_command(t_elem left, t_elem right);
+int i_prefix(t_elem left, t_elem right);
+int i_exec(t_elem left, t_elem right);
+int i_suffix(t_elem left, t_elem right);
+int i_debugredirect(t_elem left, t_elem right);
 
 #endif

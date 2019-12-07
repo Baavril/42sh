@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:44:12 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/29 11:10:59 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/12/03 12:37:14 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_node	*comp_list(t_token tok)
 				node = malloc(sizeof(t_node));
 				node->left.v = tmp1;
 				node->right.v = tmp2;
-				node->f = NULL; //should be i_comp_list();
+				node->f = i_comp_list;
 				ft_printf("comp_list full with 2 elems was created\n");
 				return(node);
 			}
@@ -47,7 +47,10 @@ t_node	*comp_list(t_token tok)
 void	interpret(t_node *node)
 {
 	if (node)
+	{
 		ft_printf("interpreting a command..\n");
+		node->f(node->left, node->right);
+	}
 	if (!node)
 		ft_printf("interpreting empty string..\n");
 	ft_printf("_______________________________________________\n");

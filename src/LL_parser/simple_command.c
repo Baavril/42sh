@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:36:39 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/29 10:34:17 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/12/03 19:07:47 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,20 @@
  *                  | io_redirect
  *                  | WORD             cmd_suffix
  *                  | WORD
+ *     node            tmp1               tmp2
  */
 t_node	*cmd_suffix(t_token tok)
 {
 	t_node	*node;
 	t_elem	tmp1;
 
-	if (((tmp1.v = io_redirect(tok))) || (tmp1.c = word(tok)))
+	if (((tmp1.v = io_redirect(tok))) || (tmp1.c = word(tok))) //ALED
 	{
 		node = malloc(sizeof(t_node));
 		node->left = tmp1;
 		if (is_potential(peek(), N_SUFFIX))
 			node->right.v = cmd_suffix(gnt(NULL));
-		node->f	= NULL; //should be i_suffix();
+		node->f	= i_suffix;
 		return(node);
 	}
 	return(NULL);
@@ -40,6 +41,7 @@ t_node	*cmd_suffix(t_token tok)
 /*
  * exec             : cmd_word         cmd_suffix
  *                  | cmd_word
+ *     node            tmp1               tmp2
  */
 t_node *exec(t_token tok)
 {
@@ -52,7 +54,7 @@ t_node *exec(t_token tok)
 		node->left.c = tmp1;
 		if (is_potential(peek(), N_SUFFIX))
 			node->right.v = cmd_suffix(gnt(NULL));
-		node->f	= NULL; //should be i_exec();
+		node->f	= i_exec;
 		return(node);
 	}
 	return(NULL);
@@ -63,19 +65,20 @@ t_node *exec(t_token tok)
  *                  | io_redirect
  *                  | ASSIGNEMENT_WORD cmd_prefix
  *                  | ASSIGNMENT_WORD
+ *     node            tmp1               tmp2
  */
 t_node	*cmd_prefix(t_token tok)
 {
 	t_node	*node;
 	t_elem	tmp1;
 
-	if (((tmp1.v = io_redirect(tok))) || (tmp1.c = assig_word(tok)))
+	if (((tmp1.v = io_redirect(tok))) || (tmp1.c = assig_word(tok))) //ALED
 	{
 			node = malloc(sizeof(t_node));
 			node->left = tmp1;
 		if (is_potential(peek(), N_PREFIX))
 			node->right.v = cmd_prefix(gnt(NULL));
-		node->f	= NULL; //should be i_prefix();
+		node->f	= i_prefix;
 		return(node);
 	}
 	return(NULL);
@@ -85,6 +88,7 @@ t_node	*cmd_prefix(t_token tok)
  * simple_command   : cmd_prefix       exec
  *                  | cmd_prefix
  *                  | exec
+ *     node            tmp1            tmp2
  */
 t_node	*simple_command(t_token tok)
 {
@@ -98,7 +102,7 @@ t_node	*simple_command(t_token tok)
 			node = malloc(sizeof(t_node));
 			node->left.v = tmp1;
 			node->right.v = exec(gnt(NULL));
-			node->f = NULL; //should be i_simple_command();
+			node->f = i_simple_command;
 			return(node);
 		}
 		return(tmp1);

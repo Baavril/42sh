@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 09:38:27 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/27 14:22:29 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/12/02 14:03:47 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char	*io_number(t_token tok)
 {
 	if (tok.type == IO_NUMBER)
 	{
+		ft_printf("tok.type of type IO_NUMBER detected with value '%s' !\n", tok.symbol);
 		return(tok.symbol);
 	}
 	return(NULL);

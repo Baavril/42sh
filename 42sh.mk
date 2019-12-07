@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/11/27 11:04:49 by bprunevi         ###   ########.fr        #
+#    Updated: 2019/12/03 18:46:03 by bprunevi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,7 +96,8 @@ SOURCES			:=		main.c \
       					LL_parser/pipe_sequence.c \
       					LL_parser/simple_command.c \
       					LL_parser/terminals.c \
-      					LL_parser/wordtypes.c
+      					LL_parser/wordtypes.c \
+      					interpreter/interpreter.c
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
