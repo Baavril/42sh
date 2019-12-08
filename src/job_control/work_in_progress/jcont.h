@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:18:20 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/07 18:14:21 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/08 16:47:52 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,24 @@
 # define P_OPT					2
 
 # define RUNNING				0x20000
-# define ISRUNNING(status)		(status & RUNNING) && 
+# define ISRUNNING(status)		(status & RUNNING) && !WIFSTOPPED(status)
 # define BACKGROUND				0x10000
 # define FOREGROUND				0x0
 # define ISBACKGROUND(status)	(status & BACKGROUND)
 # define ISFOREGROUND(status)	!(ISBACKGROUND(status))
 
+typedef struct		s_process
+{
+	pid_t			pid;
+//	int				std_fd[3];//est-ce que j'en ai vraiment besoin ?
+	int				status;
+}					t_process;
+
 typedef struct		s_job
 {
+	t_list			*process;
 	pid_t			pgid;
+	pid_t			controlling_pid;
 	int				status;
 	char			*cmd;
 	int				nbr;
