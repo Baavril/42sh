@@ -50,6 +50,6 @@ char	*ft_strdupto(char *str, char c);
 char	*ft_strdupfm(char *str, char c);
 
 void	ft_lstadd_back(t_list **alst, t_list *new_back);
-void	ft_listadd_back(struct s_svar *new_back);
+void	listadd_back(struct s_svar *new_back);
 
 #endif

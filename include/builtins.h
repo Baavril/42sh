@@ -48,6 +48,7 @@ int				cmd_history(int argc, char **argv);
 int				cmd_alias(int ac, char **av);
 int				cmd_unalias(int ac, char **av);
 int				cmd_set(int argc, char **argv);
+int				cmd_export(int argc, char **argv);
 int				cmd_fc(int argc, char **argv);
 
 /*

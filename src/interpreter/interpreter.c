@@ -13,6 +13,8 @@
 #include "libft.h"
 #include "sys/wait.h"
 #include "parser.h"
+#include "shell_variables.h"
+#include "builtins.h"
 #include <unistd.h>
 char **argv;
 
@@ -60,12 +62,11 @@ int i_simple_command(t_elem left, t_elem right)
 }
 int i_prefix(t_elem left, t_elem right)
 {
-	(void) left;
 	(void) right;
-	extern char **environ;
 
-	while (*environ + 1)
-		environ++;
+	/* comment parcourir tout l'arbre et recuperer les donnees ? */
+	listadd_back(newnodshell(left.c, 0));
+	cmd_set(0, NULL);
 	return(0);
 }
 

@@ -72,6 +72,7 @@ int		main(int argc, char **argv)
 	int				status;
 
 	(void)argc;
+	args = NULL;
 	copybuff = NULL;
 	input = NULL;
 	g_progname = argv[0];
@@ -103,6 +104,10 @@ int		main(int argc, char **argv)
 		{
 			lexer(&input);
 			debug_parser(input);
+			/* way to test builtins without waiting interpreter */
+			args = ft_strsplit_whitespaces(input);
+			if (ft_strcmp("export", args[0]) == 0)
+				cmd_export(0, args);
 			exit(0); 
 			args = lexer(&input);
 			ft_memdel((void**)&input);

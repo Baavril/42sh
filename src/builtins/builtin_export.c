@@ -14,7 +14,10 @@
 #include <stdio.h>
 
 #include "shell_variables.h"
-#include "../../libft/include/libft.h"
+#include "builtins.h"
+#include "libft.h"
+
+//char **environ;
 
 void	ft_lstadd_back(t_list **alst, t_list *new_back)
 {
@@ -110,11 +113,38 @@ int		checkvarlst(char *argv)
 	return (1);
 }
 
-int		cmd_export(int argc, char **argv, t_list *current_env_list)
+char	**ft_realloc_environ(char **environ, char *str)
+{
+	int i;
+	char **cpy;
+
+	i = 0;
+	cpy = ft_tabcpy(environ);
+	while (environ[i])
+	{
+		ft_strdel(&(environ[i]));
+		i++;
+	}
+	free(environ);
+	if (!(environ = (char**)malloc(sizeof(char*) * (ft_tablen(cpy) + 2))))
+		return (0);
+	i = 0;
+	while (cpy[i])
+	{
+		environ[i] = ft_strdup(cpy[i]);
+		i++;
+	}
+	environ[i] = ft_strdup(str);
+	environ[++i] = 0;
+	return (environ);
+}
+
+int		cmd_export(int argc, char **argv)
 {
 	int i;
 	int exp;
 	(void)argc;
+	extern char **environ;
 
 	i = 0;
 	exp = 0;
@@ -130,9 +160,15 @@ int		cmd_export(int argc, char **argv, t_list *current_env_list)
 		{
 			ft_listadd_back(newnodshell(argv[i], exp));
 			if (exp == 1)
-				ft_lstadd_back(&current_env_list, ft_lstnew((char*)argv[i], ft_strlen(argv[i]) + 1));
+				environ = ft_realloc_environ(environ, argv[i]);
 		}
 		i++;
 	}
+	/* in order to check the environ settings */
+	ft_printf("\nInternvars\n");
+	cmd_set(0, NULL);
+	ft_printf("\nEnviron\n");
+	while (*environ)
+		ft_putendl(*environ++); 
 	return(0);
 }
