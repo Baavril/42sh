@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "sys/wait.h"
 #include "parser.h"
 #include <unistd.h>
 char **argv;
@@ -62,9 +63,9 @@ int i_prefix(t_elem left, t_elem right)
 	(void) left;
 	(void) right;
 	extern char **environ;
+
 	while (*environ + 1)
 		environ++;
-	*environ = ft_strdup("SALUT=SALUT");
 	return(0);
 }
 

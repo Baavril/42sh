@@ -13,8 +13,8 @@
 #include <unistd.h>
 #include <stdio.h>
 
-#include "../../../include/shell_variables.h"
-#include "../../../libft/include/libft.h"
+#include "shell_variables.h"
+#include "libft.h"
 
 struct s_svar *g_svar;
 
@@ -76,7 +76,7 @@ char	*ft_strdupfm(char *str, char c)
 		i++;
 		lim++;
 	}
-	ret[lim] = '\0';
+	ret[i] = '\0';
 	return (ret);
 }
 
@@ -132,6 +132,7 @@ void	setenvvar(char *key, char *value)
 
 	set = ft_strjoin(key, value);
 	listadd_back(newnodshell(set, 0));
+	ft_strdel(&set);
 }
 
 void init_intvars()

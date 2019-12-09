@@ -17,6 +17,7 @@
 #include <signal.h>
 
 #include "libft.h"
+#include "shell_variables.h"
 #include "history.h"
 #include "sig_handler.h"
 #include "builtins.h"
@@ -74,6 +75,8 @@ int		main(int argc, char **argv)
 	copybuff = NULL;
 	input = NULL;
 	g_progname = argv[0];
+	init_shellvars(environ);
+	/* cmd_set(argc, argv); to show the list of internvars */
 	if (!(history(INIT, NULL, NULL)))
 		return (1);
 	if (!(environ = ft_tabcpy(environ)))
