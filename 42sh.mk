@@ -42,6 +42,8 @@ SOURCES			:=		main.c \
 						job_control/path_concat.c \
 						job_control/get_sequence.c \
 						builtins/builtin_alias.c \
+						builtins/builtin_set.c \
+						builtins/builtin_export.c \
 						builtins/builtin_cd.c \
 						builtins/builtin_echo.c \
 						builtins/builtin_type.c \
@@ -84,9 +86,6 @@ SOURCES			:=		main.c \
 						transversal/hash/htable_type_dispatcher.c \
 						transversal/hash/init_htable.c \
 						transversal/hash/string_routines.c \
-						transversal/shell_variables/assignement_shellvar.c \
-						transversal/shell_variables/tools_parser_shvar.c \
-						transversal/shell_variables/utils_shell_variables.c \
 						transversal/shell_variables/shell_variables.c \
       					LL_parser/debug_gnt.c \
       					LL_parser/debug_interpreter.c \
