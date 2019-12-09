@@ -139,29 +139,54 @@ char	**ft_realloc_environ(char **environ, char *str)
 	return (environ);
 }
 
+char	**ft_check_ifset(char *to_check, char **environ)
+{
+	struct s_svar *tmp;
+	char **keep;
+
+	tmp = g_svar;
+	while (g_svar)
+	{
+		if (ft_strncmp(to_check, g_svar->str, ft_strlen(to_check)) == 0)
+		{
+			keep = ft_realloc_environ(environ, g_svar->str);
+			g_svar = tmp;
+			return (keep);
+		}
+		g_svar = g_svar->next;
+	}
+	g_svar = tmp;
+	return (environ);
+}
+
 int		cmd_export(int argc, char **argv)
 {
 	int i;
-	int exp;
+	int flag;
 	(void)argc;
 	extern char **environ;
 
 	i = 0;
-	exp = 0;
+	flag = 0;
 	if (!(ft_strcmp(argv[i], "export")))
 	{
 		(argv[i + 1]) ? i++ : ft_prtsrtlst();
-		exp = 1;
+		flag = 1;
 	}
 	/* gerer les options */
 	while (argv[i] && ft_strchr(argv[i], '='))
 	{
 		if (checkvarlst(argv[i]))
 		{
-			ft_listadd_back(newnodshell(argv[i], exp));
-			if (exp == 1)
+			ft_listadd_back(newnodshell(argv[i], flag));
+			if (flag)
 				environ = ft_realloc_environ(environ, argv[i]);
 		}
+		i++;
+	}
+	while (argv[i])
+	{
+		environ = ft_check_ifset(argv[i], environ);
 		i++;
 	}
 	/* in order to check the environ settings */
