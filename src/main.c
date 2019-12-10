@@ -108,6 +108,10 @@ int		main(int argc, char **argv)
 			args = ft_strsplit_whitespaces(input);
 			if (ft_strcmp("export", args[0]) == 0)
 				cmd_export(0, args);
+			else if (ft_strcmp("unset", args[0]) == 0)
+				cmd_unset(0, args);
+			else if (ft_strcmp("set", args[0]) == 0)
+				cmd_set(0, args);
 			exit(0); 
 			args = lexer(&input);
 			ft_memdel((void**)&input);

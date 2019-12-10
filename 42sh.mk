@@ -43,6 +43,7 @@ SOURCES			:=		main.c \
 						job_control/get_sequence.c \
 						builtins/builtin_alias.c \
 						builtins/builtin_set.c \
+						builtins/builtin_unset.c \
 						builtins/builtin_export.c \
 						builtins/builtin_cd.c \
 						builtins/builtin_echo.c \
