@@ -141,8 +141,8 @@ char	**ft_realloc_environ(char **environ, char *str)
 
 char	**ft_check_ifset(char *to_check, char **environ)
 {
-	struct s_svar *tmp;
 	char **keep;
+	struct s_svar *tmp;
 
 	tmp = g_svar;
 	while (g_svar)
@@ -159,6 +159,19 @@ char	**ft_check_ifset(char *to_check, char **environ)
 	return (environ);
 }
 
+int		export_opt(char *opt)
+{
+	if (ft_strcmp(opt, "-p") == 0
+	|| ft_strcmp(opt, "--") == 0)
+		ft_prtsrtlst();
+	else
+	{
+		ft_printf("42sh: export: %s: invalid option\nexport: usage: export -p\n", opt);
+		return (1);
+	}
+	return (0);
+}
+
 int		cmd_export(int argc, char **argv)
 {
 	int i;
@@ -168,26 +181,28 @@ int		cmd_export(int argc, char **argv)
 
 	i = 0;
 	flag = 0;
-	if (!(ft_strcmp(argv[i], "export")))
+	if (ft_strcmp(argv[i], "export") == 0)
 	{
 		(argv[i + 1]) ? i++ : ft_prtsrtlst();
 		flag = 1;
 	}
 	/* gerer les options */
-	while (argv[i] && ft_strchr(argv[i], '='))
-	{
-		if (checkvarlst(argv[i]))
-		{
-			ft_listadd_back(newnodshell(argv[i], flag));
-			if (flag)
-				environ = ft_realloc_environ(environ, argv[i]);
-		}
-		i++;
-	}
 	while (argv[i])
 	{
-		environ = ft_check_ifset(argv[i], environ);
-		i++;
+		if (flag == 1 && argv[i][0] == '-' && ft_tablen(argv) == 2)
+			return (export_opt(argv[i]));
+		if (ft_strchr(argv[i], '='))
+		{
+			if (checkvarlst(argv[i]))
+			{
+				ft_listadd_back(newnodshell(argv[i], flag));
+				if (flag)
+					environ = ft_realloc_environ(environ, argv[i]);
+			}
+		}
+		else
+			environ = ft_check_ifset(argv[i], environ);
+		++i;
 	}
 	/* in order to check the environ settings */
 	ft_printf("\nInternvars\n");
