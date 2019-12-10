@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:50:48 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/07 15:27:28 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:34:06 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,21 @@ extern t_jcont		g_jcont;
 void		ft_sigchld_handler(int nbr)
 {
 	int			ret_status;
-	int			pgid;
-	t_list		*voyager;
+	int			pid;
 	t_job		*job;
+	t_process	*process;
 
-	if (!(voyager = g_jcont.jobs)
-	|| (pgid = waitpid(WAIT_ANY, &ret_status, WUNTRACED | WNOHANG)) < 0)
-		return ;
-	while ((voyager))
+	while ((pid = waitpid(WAIT_ANY, &ret_status, WUNTRACED | WNOHANG)) > 0)
 	{
-		job = voyager->content;
-		if (job->pgid == pgid
-		&& ISBACKGROUND(job->status) && killpg(job->pgid, 0) == -1)
-			job->status = ret_status | BACKGROUND;
-		voyager = voyager->next;
+		if (job = ft_get_job_pgid(pid))
+		{
+			job->status = ret_status;
+		if ((process = ft_get_process_from_job(job, pid)))
+			process->status = ret_status;
+		}
+		else if (!(process = ft_get_process_pid(pid)))
+			continue ;
+		process->status = ret_status; // et peut etre des trucs a moi.
 	}
+	ft_update_job_status();
 }

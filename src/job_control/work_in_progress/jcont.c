@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:56:52 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/08 17:10:37 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:12:29 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,24 @@ t_jcont		g_jcont = {NULL, 1, {0, 0}};
 t_list		*g_proclist = NULL;
 pid_t		g_pgid = 0;
 
-t_job		*ft_add_job(pid_t pgid, int status, char *cmd)
+t_job		*ft_add_job(int status, char *cmd)
 {
 	t_job	new;
 	t_list	*new_front;
 
-	if (cmd && !(new.cmd = ft_strdup(cmd)))
+	if (!g_proclist || (cmd && !(new.cmd = ft_strdup(cmd))))
 		return (NULL);
-	new.pgid = pgid;
-	new.nbr = (g_jcont.job_nbr)++;
-	new.status = status;
 	if (!(new_front = ft_lstnew(&new, sizeof(t_job))))
 	{
 		free(new.cmd);
 		return (NULL);
 	}
+	new.pgid = g_pgid;
+	new.nbr = (g_jcont.job_nbr)++;
+	new.status = status;
+	new.process = g_proclist;
+	g_proclist = NULL;
+	g_pgid = 0;
 	ft_lstadd(&(g_jcont.jobs), new_front);
 	ft_set_prio();
 	return (&new);
@@ -42,17 +45,17 @@ void		ft_stdredir(int std_fd[3])
 	if (std_fd[0] != STDIN_FILENO)
 	{
 		dup2(std_fd[0], STDIN_FILENO);
-		close(STDIN_FILENO);
+		close(std_fd[0]);
 	}
 	if (std_fd[1] != STDOUT_FILENO)
 	{
 		dup2(std_fd[1], STDOUT_FILENO);
-		close(STDOUT_FILENO);
+		close(std_fd[1]);
 	}
 	if (std_fd[2] != STDERR_FILENO)
 	{
 		dup2(std_fd[2], STDERR_FILENO);
-		close(STDERR_FILENO);
+		close(std_fd[2]);
 	}
 }
 
@@ -63,10 +66,10 @@ void		ft_set_child_signal(void)//Cela suffira-t-il ?
 	signal (SIGTSTP, SIG_DFL);
 	signal (SIGTTIN, SIG_DFL);
 	signal (SIGTTOU, SIG_DFL);
-	signal (SIGCHLD, SIG_DFL);
+	signal (SIGCHLD, &ft_sigchild_handler);
 }
 
-int			ft_create_process(void *ast_node, int std_fd[3])
+int			ft_add_process(void *ast_node, int std_fd[3], int fd_to_close[2])
 {
 	pid_t		pgid;
 	pid_t		pid;
@@ -74,45 +77,47 @@ int			ft_create_process(void *ast_node, int std_fd[3])
 
 	if (pid = fork())
 	{
+		if (fd_to_close[0] != -1)
+			close(fd_to_close[0]);
+		if (fd_to_close[1] != -1)
+			close(fd_to_close[1]);
 		pgid = (g_pgid) ? g_pgid : getpid();
 		setpgid(pgid, getpid())
 		ft_stdredir(std_fd);
 		ft_set_child_signal();
-	
+//		ft_exec_ast_node(ast_node);
 	}
 	if (!g_pgid)
 		g_pgid = pid;
 	process.pid = pid;
 	process.status = 0;
-	ft_lstadd(&g_proclist, ft_lstnew(&process, sizeof(t_process)));
-	ft_exec_ast_node(ast_node);
+	ft_lstadd(&g_proclist, ft_lstnew(&process, sizeof(t_process))); //a memcheck ?
+	return (0);
 }
 
 int			ft_launch_job(char *cmd, int status)
 {
+	t_job	*job;
 	int		ret_status;
 	pid_t	pid;
 
+	job = ft_add_job(cmd, status);
 	if (ISFOREGROUND(status))
 	{
-		tcsetpgrp(STDIN_FILENO, g_pgid);
-		while ((pid = waitpid(-g_pgid, &ret_status, WUNTRACED)) != -1)
+		tcsetpgrp(STDIN_FILENO, job->pgid);
+		while ((pid = waitpid(-job->pgid, &ret_status, WUNTRACED)) != -1)
 		{
-			process = ft_get_pid(pid);
+			if (pid == job->pgid)
+				job->status = ret_status;
+			process = ft_get_process_from_job(job, pid);
 			process->status = ret_status;
 		}
 		tcsetpgrp(STDIN_FILENO, getpid());
-		//if WIFSTOPPED(job_status)
-		//	status = job_status;
-		//else
-		//	return (WIFEXITED(job_status));
+		ret_status = job->status;
+		ft_pop_job(job->nbr);
+		return (ret_status);
 	}
-	if (ISBACKGROUND(status) || WIFSTOPPED(status))
-	{
-		new_job = ft_add_job(g_pgid, status, cmd);
-		
-	
-	}
+	return (0);
 }
 
 int			ft_pop_job(int nbr)
@@ -142,49 +147,6 @@ int			ft_pop_job(int nbr)
 	ft_set_prio();
 	g_jcont.job_nbr = (g_jcont.jobs) ? ((t_job*)(g_jcont.jobs->content))->nbr + 1 : 1;
 	return (0);
-}
-
-int			ft_get_pgid(int nbr)
-{
-	t_list	*voyager;
-
-	if (!(voyager = g_jcont.jobs))
-		return (-1);
-	if (nbr < 1)
-		nbr = g_jcont.active_jobs[0];
-	if (nbr >= g_jcont.job_nbr)
-		return (-1);
-	while ((voyager) && ((t_job*)(voyager->content))->nbr != nbr)
-		voyager = voyager->next;
-	if (!voyager)
-		return (-1);
-	return (((t_job*)(voyager->content))->pgid);
-}
-
-t_job		*ft_get_job_nbr(pid_t pgid)
-{
-	t_list	*voyager;
-
-	if (!(voyager = g_jcont.jobs))
-		return (NULL);
-	while ((voyager) && ((t_job*)(voyager->content))->pgid != pgid)
-		voyager = voyager->next;
-	if (!voyager)
-		return (NULL);
-	return ((t_job*)(voyager->content));
-}
-
-t_job		*ft_get_job_nbr(int job_nbr)
-{
-	t_list	*voyager;
-
-	if (!(voyager = g_jcont.jobs))
-		return (NULL);
-	while ((voyager) && ((t_job*)(voyager->content))->nbr != job_nbr)
-		voyager = voyager->next;
-	if (!voyager)
-		return (NULL);
-	return ((t_job*)(voyager->content));
 }
 
 void		ft_print_jobs(t_list *job_list, int opt)

@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:18:20 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/08 16:47:52 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:11:31 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@
 # define FOREGROUND				0x0
 # define ISBACKGROUND(status)	(status & BACKGROUND)
 # define ISFOREGROUND(status)	!(ISBACKGROUND(status))
+# define MAJOR_FAILLURE			0x40000
 
 typedef struct		s_process
 {
 	pid_t			pid;
-//	int				std_fd[3];//est-ce que j'en ai vraiment besoin ?
 	int				status;
 }					t_process;
 
@@ -51,6 +51,15 @@ typedef struct		s_jcont
 	size_t			job_nbr;
 	size_t			active_jobs[2];
 }					t_jcont;
+
+/* ft_get_job.c */
+int					ft_get_nbr_pgid(int nbr);
+t_job				*ft_get_job_nbr(int job_nbr);
+t_job				*ft_get_job_pgid(pid_t pgid);
+
+/* ft_get_process_pid.c */
+t_process			*ft_get_process_from_job(t_job *job, pid_t pid); // a passer en static ?
+t_process			*ft_get_process_pid(pid_t pid);
 
 void				ft_print_job(t_job *job);
 void				ft_free_job(void *content, size_t size);

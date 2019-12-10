@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/08 08:46:44 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/08 16:58:22 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/10 15:03:54 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ void	exec_test1(char **argv, char **envp, pid_t pgid, int std_fd[3])// exec yes
 	if (std_fd[0] != STDIN_FILENO)
 	{
 		dup2(std_fd[0], STDIN_FILENO);
-		close(STDIN_FILENO);
+		close(std_fd[0]);
 	}
 	if (std_fd[1] != STDOUT_FILENO)
 	{
 		dup2(std_fd[1], STDOUT_FILENO);
-		close(STDOUT_FILENO);
+		close(std_fd[1]);
 	}
-	execve("/usr/bin/yes", argv, envp); //print en boucle argv[1]
+	execve("/bin/ls", argv, envp); //print en boucle argv[1]
 }
 
 void	exec_test2(char **argv, char **envp, pid_t pgid, int std_fd[3]) //exec nl
@@ -56,14 +56,14 @@ void	exec_test2(char **argv, char **envp, pid_t pgid, int std_fd[3]) //exec nl
 	if (std_fd[0] != STDIN_FILENO)
 	{
 		dup2(std_fd[0], STDIN_FILENO);
-		close(STDIN_FILENO);
+		close(std_fd[0]);
 	}
 	if (std_fd[1] != STDOUT_FILENO)
 	{
 		dup2(std_fd[1], STDOUT_FILENO);
-		close(STDOUT_FILENO);
+		close(std_fd[1]);
 	}
-	execve("/usr/bin/false", argv, envp);
+	execve("/usr/bin/nl", argv, envp);
 }
 
 void		ft_sigchld_handler(int nbr)
@@ -100,14 +100,11 @@ int main(int argc, char **argv, char **envp)
 	int std_fd3[3];
 
 
-// Mise en place des pipes: ici, c'est degeux parce que je close jamais rien.
+	// Mise en place des pipes: ici, c'est degeux parce que je close jamais rien.
 	std_fd1[0] = STDIN_FILENO;
 	pipe(pipe1_fd);
 	std_fd1[1] = pipe1_fd[1];
 	std_fd2[0] = pipe1_fd[0];
-	pipe(pipe2_fd);
-	std_fd2[1] = pipe2_fd[1];
-	std_fd3[0] = pipe2_fd[0];
 	std_fd3[1] = STDOUT_FILENO;
 	std_fd1[2] = STDERR_FILENO;
 	std_fd2[2] = STDERR_FILENO;
@@ -126,6 +123,9 @@ int main(int argc, char **argv, char **envp)
 		setpgid(i, i); //creation d'un groupe de process
 		exec_test1(argv, envp, i, std_fd1);
 	}
+	pipe(pipe2_fd);
+	std_fd2[1] = pipe2_fd[1];
+	std_fd3[0] = pipe2_fd[0];
 	if (!(fork()))
 	{
 		sleep(1);
@@ -134,28 +134,38 @@ int main(int argc, char **argv, char **envp)
 		setpgid(getpid(), i);// ajout dans le groupe
 		exec_test2(argv, envp, i, std_fd2);
 	}
-	if (!(fork()))
+	else
 	{
-		sleep(1);
-		close(pipe2_fd[1]);
-		setpgid(getpid(), i);// ajout dans le groupe
-		exec_test2(argv, envp, i, std_fd3);
+		close(pipe1_fd[0]);
+		close(pipe1_fd[1]);
+		if (!(fork()))
+		{
+			sleep(1);
+			close(pipe2_fd[1]);
+			setpgid(getpid(), i);// ajout dans le groupe
+			exec_test2(argv, envp, i, std_fd3);
+		}
+		else
+		{
+			close(pipe2_fd[0]);
+			close(pipe2_fd[1]);
+			sleep(1);
+			dprintf(2, "return of tcsetpgrp in parent %i for son id : %i\n", j = tcsetpgrp(shell_term, i), i);//mise en avant du groupe enfant dans le terminal
+			if (j == -1) //fail de la mise en avant
+			{
+				dprintf(2, "FAIL de prise de controle du terminal: ");
+				if (errno == EINVAL)
+					dprintf(2, "invalid PGID\n");
+				if (errno == ENOTTY)
+					dprintf(2, "On est pas dasn un terminal ?\n");
+				if (errno == EPERM)
+					dprintf(2, "Probleme de session ???? WUT\n");
+				if (errno == EPERM)
+					dprintf(2, "Probleme de Session\n");
+			}
+			dprintf(2, "program group in foreground of term: %i\n", tcgetpgrp(shell_term)); //groupe en avant
+			while (1) //boucle debile pour faire tourner le pere: pas de wait => groupe en background
+				sleep(1);
+		}
 	}
-	sleep(1);
-	dprintf(2, "return of tcsetpgrp in parent %i for son id : %i\n", j = tcsetpgrp(shell_term, i), i);//mise en avant du groupe enfant dans le terminal
-	if (j == -1) //fail de la mise en avant
-	{
-		dprintf(2, "FAIL de prise de controle du terminal: ");
-		if (errno == EINVAL)
-			dprintf(2, "invalid PGID\n");
-		if (errno == ENOTTY)
-			dprintf(2, "On est pas dasn un terminal ?\n");
-		if (errno == EPERM)
-			dprintf(2, "Probleme de session ???? WUT\n");
-		if (errno == EPERM)
-			dprintf(2, "Probleme de Session\n");
-	}
-	dprintf(2, "program group in foreground of term: %i\n", tcgetpgrp(shell_term)); //groupe en avant
-	while (1) //boucle debile pour faire tourner le pere: pas de wait => groupe en background
-		sleep(1);
 }
