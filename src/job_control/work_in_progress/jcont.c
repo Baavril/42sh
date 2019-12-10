@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:56:52 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/10 16:12:29 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/10 17:45:13 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,28 +168,4 @@ int			ft_launch_job(pid_t pid, char *cmd, int flag)
 	if (ISFOREGROUND(flag))
 		waitpid(-pid, &ret_status, WUNTRACED);
 	return (SUCESS);
-}
-
-void		ft_check_bgstatus(void)
-{
-	size_t	i;
-	int		job_topop[g_jcont.job_nbr];
-	t_job	*job;
-	t_list	*voyager;
-
-	i = 0;
-	if (!(voyager = g_jcont.job_list))
-		return ;
-	while (voyager)
-	{
-		job = voyager->content;
-		if (ISBACKGROUND(job->status) && WIFEXITED(job->status))
-			job_topop[i++] = job_nbr->nbr;
-		voyager = voyager->next;
-	}
-	while (i--)
-	{
-		ft_print_job(job_topop[i], 0);
-		ft_pop_job(job_topop[i]);
-	}
 }

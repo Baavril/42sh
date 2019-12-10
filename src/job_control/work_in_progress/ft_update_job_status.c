@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_update_job_status.c                             :+:      :+:    :+:   */
+/*   job_status.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:01:09 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/10 16:35:51 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/10 17:43:13 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,31 @@ static int			ft_accumulate_proc_status(t_list *proclist)
 	return (process->status | ft_accumulate_proc_status(proclist->next));
 }
 
+void		ft_check_bgstatus(void)
+{
+	size_t	i;
+	int		job_topop[g_jcont.job_nbr];
+	t_job	*job;
+	t_list	*voyager;
+
+	i = 0;
+	if (!(voyager = g_jcont.job_list))
+		return ;
+	while (voyager)
+	{
+		job = voyager->content;
+		status = ft_accumulate_proc_status(job->process);
+		if (ISBACKGROUND(job->status) && WIFEXITED(status))
+			job_topop[i++] = job_nbr->nbr;
+		voyager = voyager->next;
+	}
+	while (i--)
+	{
+		ft_print_job(job_topop[i], 0);
+		ft_pop_job(job_topop[i]);
+	}
+}
+
 void				ft_update_job_status(void)
 {
 	int			status;
@@ -32,15 +57,15 @@ void				ft_update_job_status(void)
 	voyager = g_jcont.jobs;
 	while (voyager)
 	{
-		status = ft_accumulate_proc_status(voyager->process);
+		status = ft_accumulate_proc_status(((t_job*)voyager->content)->process);
 		if (WIFSTOPPED(status))
 			((t_job*)voyager->content)->status = status;
 		else if (WIFEXITED(status))
-			((t_job*)voyager->content)->status &= ~RUNNING;
+			((t_job*)voyager->content)->status &= ~RUNNING & ~_WSTOPPED;
 		else
 		{
 			((t_job*)voyager->content)->status &= ~RUNNING;
-			((t_job*)voyager->content)->status |= MAJOR_FAILLURE; // un certain nombre de programmes ont fail (signal != stop) et les autres ontourn
+			((t_job*)voyager->content)->status |= MAJOR_FAILLURE; // un certain nombre de programmes ont fail (signal != stop) et les autres ont retourne
 		}
 		voyager = voyager->next;
 	}
