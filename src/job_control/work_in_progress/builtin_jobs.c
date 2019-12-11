@@ -6,10 +6,11 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 10:08:05 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/07 14:41:18 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/11 18:36:44 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
 #include "jcont.h"
 
 extern t_jcont		g_jcont;
@@ -45,7 +46,7 @@ int					cmd_jobs(int ac, char **av)
 		ft_print_jobs(g_jcont.jobs, opt);
 	while (i < ac)
 	{
-		if (ft_inumber(av[i]) && (job = ft_get_job_nbr(ft_atoi(av[i]))))
+		if (ft_isnumber(av[i]) && (job = ft_get_job_nbr(ft_atoi(av[i]))))
 			ft_print_job(job, opt);
 		else if (++ret)
 			ft_dprintf(STDERR_FILENO, "%s: jobs: %s: no such job.\n", g_progname, av[i]);

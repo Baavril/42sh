@@ -6,19 +6,22 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 10:57:05 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/08 13:06:25 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/11 18:48:13 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
+#include <signal.h>
 #include "jcont.h"
 
 extern t_jcont		g_jcont;
+extern char			*g_progname;
 
 int					ft_resume_in_bg(t_job *job)
 {
 	if (!killpg(-job->pgid, SIGCONT))
 	{
-		job->status |= RUNNING & BACKGROUND;
+		job->status |= RUNNING | BACKGROUND;
 //		ft_set_prio();
 		return (0);
 	}
@@ -39,30 +42,30 @@ int					cmd_bg(int ac, char **av)
 	ret = 0;
 	if (ac == 1)
 	{
-		if (!(jcont->jobs) && (++ret))
+		if (!(g_jcont.jobs) && (++ret))
 			ft_dprintf(STDERR_FILENO, "%s: bg: no current job.\n", g_progname);
-		else if (job = ft_get_job_nbr(jcont.active_jobs[0]))
+		else if ((job = ft_get_job_nbr(g_jcont.active_jobs[0])))
 		{
 			if (ISBACKGROUND(job->status) && ISRUNNING(job->status))
-				ft_dprintf(STDERR_FILENO, "%s: bg: job %i is already in background.\n", g_progname, jcont.active_jobs[0]);
-			if (WIFEXITED(job->status) && (++ret))
+				ft_dprintf(STDERR_FILENO, "%s: bg: job %i is already in background.\n", g_progname, g_jcont.active_jobs[0]);
+			else if (!WIFSTOPPED(job->status) && (++ret))
 				ft_dprintf(STDERR_FILENO, "%s: bg: job has terminated.\n", g_progname);
 			else
-				ret = ft_resume_in_bg();
+				ret = ft_resume_in_bg(job);
 		}
 		return (ret);
 	}
 	i = 0;
 	while (++i < ac)
 	{
-		if (ft_inumber(av[1]) && (job = ft_get_job_nbr(ft_atoi(av[1]))))
+		if (ft_isnumber(av[1]) && (job = ft_get_job_nbr(ft_atoi(av[1]))))
 		{
-			if (ISSUSPENDED(job->status))
-				ret += ft_resume_in_bg();
-			else if (WIFEXITED(job->status) && (++ret))
-				ft_dprintf(STDERR_FILENO, "%s: bg: job has terminated.\n", g_progname);
-			else if (ISBACKGROUND(job->status))
+			if (WIFSTOPPED(job->status))
+				ret += ft_resume_in_bg(job);
+			else if (ISBACKGROUND(job->status) && ISRUNNING(job->status))
 				ft_dprintf(STDERR_FILENO, "%s: bg: job %s is already in background.\n", g_progname, av[1]);
+			else if (++ret)
+				ft_dprintf(STDERR_FILENO, "%s: bg: job has terminated.\n", g_progname);
 		}
 		else if (++ret)
 			ft_dprintf(STDERR_FILENO, "%s: bg: %s: no such job.\n", g_progname, av[1]);

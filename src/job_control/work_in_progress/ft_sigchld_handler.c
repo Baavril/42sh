@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:50:48 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/10 16:34:06 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/11 18:14:51 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ void		ft_sigchld_handler(int nbr)
 
 	while ((pid = waitpid(WAIT_ANY, &ret_status, WUNTRACED | WNOHANG)) > 0)
 	{
-		if (job = ft_get_job_pgid(pid))
+		if ((job = ft_get_job_pgid(pid)))
 		{
 			job->status = ret_status;
-		if ((process = ft_get_process_from_job(job, pid)))
-			process->status = ret_status;
+			if (!(process = ft_get_process_from_job(job, pid)))
+				continue ;
 		}
 		else if (!(process = ft_get_process_pid(pid)))
 			continue ;

@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:18:20 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/10 16:11:31 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/11 18:21:22 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define P_OPT					2
 
 # define RUNNING				0x20000
-# define ISRUNNING(status)		(status & RUNNING) && !WIFSTOPPED(status)
+# define ISRUNNING(status)		(status & RUNNING)
 # define BACKGROUND				0x10000
 # define FOREGROUND				0x0
 # define ISBACKGROUND(status)	(status & BACKGROUND)
@@ -61,9 +61,12 @@ t_job				*ft_get_job_pgid(pid_t pgid);
 t_process			*ft_get_process_from_job(t_job *job, pid_t pid); // a passer en static ?
 t_process			*ft_get_process_pid(pid_t pid);
 
-void				ft_print_job(t_job *job);
+void				ft_print_job(t_job *job, int opt);
 void				ft_free_job(void *content, size_t size);
-int					ft_add_job(pid_t pgid, char *cmd);
+t_job				*ft_add_job(int status, char *cmd);
 void				ft_set_prio(void);
+int					ft_pop_job(int nbr);
+void				ft_sigchld_handler(int nbr);
+void				ft_update_job_status(void);
 
 #endif

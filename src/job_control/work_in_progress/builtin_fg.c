@@ -6,40 +6,43 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 11:17:51 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/08 13:06:21 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/11 18:36:36 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
+#include <signal.h>
 #include "jcont.h"
 
 extern t_jcont		g_jcont;
+extern char			*g_progname;
 
 int				ft_resume_in_fg(t_job *job)
 {
+	pid_t			pid;
 	int				ret_status;
 	t_process		*process;
 
 	if (WIFSTOPPED(job->status))
 	{
 		if (!killpg(-job->pgid, SIGCONT))
-			job->status |= RUNNING;
+			job->status = RUNNING;
 		else
 		{
 			ft_dprintf(2, "%s: fg: error while sending continue signal(SIGCONT).", g_progname);
 			return (1);
 		}
 	}
-	if (jcont.active_jobs[0] != job->nbr)
-		jcont.active_jobs[1] = jcont.active_jobs[0];
-	jcont.active_jobs[0] = job->nbr;
-/*	while (pid = waitpid(-job->pgid, &ret_status, WUNTRACED) > 0);
+	if (g_jcont.active_jobs[0] != job->nbr)
+		g_jcont.active_jobs[1] = g_jcont.active_jobs[0];
+	g_jcont.active_jobs[0] = job->nbr;
+	while ((pid = waitpid(-job->pgid, &ret_status, WUNTRACED)) > 0)
 	{
-		if (process = ft_get_process_pid(pid))
-			process->status = ret_status;
-	}
-** Dois-je wait chaque process du job ? si oui, dois-je stocker le status d'un
-** process en particulier dans le job ? En cas de suspension, que ? -> je crois bien
-*/
+		if (!(process = ft_get_process_from_job(job, pid)))
+			continue ;
+		process->status = ret_status;
+		if (pid == job->pgid)
+			job->status = ret_status;
 	}
 	return (0);
 }
@@ -54,25 +57,26 @@ int					cmd_fg(int ac, char **av)
 {
 	t_job		*job;
 	int			ret;
+	int			status;
 
 	ret = 0;
 	if (ac == 1)
 	{
-		if (!(jcont->jobs) && (++ret))
+		if (!(g_jcont.jobs) && (++ret))
 			ft_dprintf(STDERR_FILENO, "%s: fg: no current job.\n", g_progname);
-		else if (job = ft_get_job_nbr(jcont.active_jobs[0]))
+		else if ((job = ft_get_job_nbr(g_jcont.active_jobs[0])))
 		{
 			if (WIFEXITED(job->status) && (++ret))
 				ft_dprintf(STDERR_FILENO, "%s: fg: job has terminated.\n", g_progname);
 			else if ((ISBACKGROUND(job->status) && ISRUNNING(job->status))
 			|| WIFSTOPPED(job->status))
-				ret = ft_resume_in_fg();
+				ret = ft_resume_in_fg(job);
 		}
 	}
-	else if (ft_inumber(av[1]) && (job = ft_get_job_nbr(ft_atoi(av[1]))))
+	else if (ft_isnumber(av[1]) && (job = ft_get_job_nbr(ft_atoi(av[1]))))
 	{
 		if (WIFSTOPPED(job->status) || ISBACKGROUND(job->status))
-			ret = ft_resume_in_fg();
+			ret = ft_resume_in_fg(job);
 		else if (WIFEXITED(job->status) && (++ret))
 			ft_dprintf(STDERR_FILENO, "%s: fg: job has terminated.\n", g_progname);
 	}

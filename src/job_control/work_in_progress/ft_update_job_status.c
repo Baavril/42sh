@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:01:09 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/10 17:43:13 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/11 18:12:54 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,26 @@ static int			ft_accumulate_proc_status(t_list *proclist)
 
 void		ft_check_bgstatus(void)
 {
-	size_t	i;
-	int		job_topop[g_jcont.job_nbr];
-	t_job	*job;
-	t_list	*voyager;
+	size_t		i;
+	int			job_topop[g_jcont.job_nbr];
+	int			status;
+	t_job		*job;
+	t_list		*voyager;
 
 	i = 0;
-	if (!(voyager = g_jcont.job_list))
+	if (!(voyager = g_jcont.jobs))
 		return ;
 	while (voyager)
 	{
 		job = voyager->content;
 		status = ft_accumulate_proc_status(job->process);
-		if (ISBACKGROUND(job->status) && WIFEXITED(status))
-			job_topop[i++] = job_nbr->nbr;
+		if (ISBACKGROUND(job->status) && WIFEXITED(job->status))
+			job_topop[i++] = job->nbr;
 		voyager = voyager->next;
 	}
 	while (i--)
 	{
-		ft_print_job(job_topop[i], 0);
+		ft_print_job(ft_get_job_nbr(job_topop[i]), 0);
 		ft_pop_job(job_topop[i]);
 	}
 }
@@ -65,7 +66,7 @@ void				ft_update_job_status(void)
 		else
 		{
 			((t_job*)voyager->content)->status &= ~RUNNING;
-			((t_job*)voyager->content)->status |= MAJOR_FAILLURE; // un certain nombre de programmes ont fail (signal != stop) et les autres ont retourne
+			((t_job*)voyager->content)->status |= MAJOR_FAILLURE;// un certain nombre de programmes ont fail (signal != stop) et les autres ont retourne
 		}
 		voyager = voyager->next;
 	}

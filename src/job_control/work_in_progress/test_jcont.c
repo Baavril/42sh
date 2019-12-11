@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/08 08:46:44 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/10 15:03:54 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/11 17:54:56 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 #include <sys/errno.h>
 #include <signal.h>
 #include <string.h>
+
+#include "jcont.h"
+
 
 extern int errno;
 
@@ -102,14 +105,14 @@ int main(int argc, char **argv, char **envp)
 
 	// Mise en place des pipes: ici, c'est degeux parce que je close jamais rien.
 	std_fd1[0] = STDIN_FILENO;
-	pipe(pipe1_fd);
-	std_fd1[1] = pipe1_fd[1];
-	std_fd2[0] = pipe1_fd[0];
 	std_fd3[1] = STDOUT_FILENO;
 	std_fd1[2] = STDERR_FILENO;
 	std_fd2[2] = STDERR_FILENO;
 	std_fd3[2] = STDERR_FILENO;
-	signal (SIGINT, SIG_IGN);
+	pipe(pipe2_fd);
+	std_fd2[1] = pipe2_fd[1];
+	std_fd3[0] = pipe2_fd[0];
+	 signal (SIGINT, SIG_IGN);
 	signal (SIGQUIT, SIG_IGN);
 	signal (SIGTSTP, SIG_IGN);
 	signal (SIGTTIN, SIG_IGN);
@@ -119,37 +122,34 @@ int main(int argc, char **argv, char **envp)
 	dprintf(2, "return of attempt at putting self in fg: %i\n", j = tcsetpgrp(shell_term, getpgrp())); //mise en avant du shell group dans le terminal
 	if (!(i = fork()))
 	{
-		close(pipe1_fd[0]);
 		setpgid(i, i); //creation d'un groupe de process
-		exec_test1(argv, envp, i, std_fd1);
+			close(pipe2_fd[1]);
+			exec_test2(argv, envp, i, std_fd3);
 	}
-	pipe(pipe2_fd);
-	std_fd2[1] = pipe2_fd[1];
-	std_fd3[0] = pipe2_fd[0];
+	pipe(pipe1_fd);
+	std_fd1[1] = pipe1_fd[1];
+	std_fd2[0] = pipe1_fd[0];
 	if (!(fork()))
 	{
-		sleep(1);
+		setpgid(getpid(), i);// ajout dans le groupe
 		close(pipe1_fd[1]);
 		close(pipe2_fd[0]);
-		setpgid(getpid(), i);// ajout dans le groupe
 		exec_test2(argv, envp, i, std_fd2);
 	}
 	else
 	{
-		close(pipe1_fd[0]);
-		close(pipe1_fd[1]);
+			close(pipe2_fd[0]);
+			close(pipe2_fd[1]);
 		if (!(fork()))
 		{
-			sleep(1);
-			close(pipe2_fd[1]);
 			setpgid(getpid(), i);// ajout dans le groupe
-			exec_test2(argv, envp, i, std_fd3);
+		close(pipe1_fd[0]);
+		exec_test1(argv, envp, i, std_fd1);
 		}
 		else
 		{
-			close(pipe2_fd[0]);
-			close(pipe2_fd[1]);
-			sleep(1);
+		close(pipe1_fd[0]);
+		close(pipe1_fd[1]);
 			dprintf(2, "return of tcsetpgrp in parent %i for son id : %i\n", j = tcsetpgrp(shell_term, i), i);//mise en avant du groupe enfant dans le terminal
 			if (j == -1) //fail de la mise en avant
 			{
