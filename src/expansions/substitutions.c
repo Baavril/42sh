@@ -73,10 +73,29 @@ int		plus_exp(char **token)
 
 int		dash_exp(char **token)
 {
-	(void)token;
+	char *keep;
+	struct s_svar *tmp;
 
-	ft_printf("dash success");
-	return (SUCCESS);
+	tmp = g_svar;
+	keep = ft_strchr(*token, DASH) + 1;
+	while (g_svar)
+	{
+		if (ft_strncmp(g_svar->key, *token + 1, ft_strlen(g_svar->key) - 1) == 0)
+		{
+			ft_strdel(token);
+			if (g_svar->value)
+				*token = ft_strdup(g_svar->value);
+			else
+				*token = ft_strdup(keep);
+			g_svar = tmp;
+			return (SUCCESS);
+		}
+		g_svar = g_svar->next;
+	}
+	ft_strdel(token);
+	*token = ft_strndup(keep, ft_strlen(keep) - 1);
+	g_svar = tmp;
+	return (ERROR);
 }
 
 int		equal_exp(char **token)
