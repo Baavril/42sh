@@ -20,6 +20,7 @@
 #include "shell_variables.h"
 #include "history.h"
 #include "sig_handler.h"
+#include "expansions.h"
 #include "builtins.h"
 #include "prompt.h"
 #include "input.h"
@@ -112,6 +113,8 @@ int		main(int argc, char **argv)
 				cmd_unset(0, args);
 			else if (ft_strcmp("set", args[0]) == 0)
 				cmd_set(0, args);
+			else
+				expansions_management(args);
 			exit(0); 
 			args = lexer(&input);
 			ft_memdel((void**)&input);

@@ -28,13 +28,10 @@ SOURCES			:=		main.c \
 						input/keyboard_dispatcher.c \
 						lexer/lexer.c \
 						lexer/grammar_symbols.c \
-						lexer/expansions/expansions.c \
-						lexer/expansions/expansion_utils.c \
-						lexer/expansions/get_param.c \
-						lexer/expansions/parameter_expansions.c \
-						lexer/expansions/tilde_expansion.c \
-						lexer/separators/pipeline_separators.c \
 						lexer/separators/unglue_metachr.c \
+						lexer/separators/pipeline_separators.c \
+						expansions/expansions.c \
+						expansions/substitutions.c \
 						job_control/synt.c \
 						job_control/synt_const.c \
 						job_control/jcont.c \
