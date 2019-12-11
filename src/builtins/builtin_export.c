@@ -17,8 +17,6 @@
 #include "builtins.h"
 #include "libft.h"
 
-//char **environ;
-
 void	ft_lstadd_back(t_list **alst, t_list *new_back)
 {
 	t_list	*voyager;

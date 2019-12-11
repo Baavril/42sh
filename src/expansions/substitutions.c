@@ -7,17 +7,30 @@
 /* ************************************************************************** */
 
 #include "expansions.h"
+#include "shell_variables.h"
 #include "libft.h"
 
-int		direct_exp(char *token)
+int		direct_exp(char **token)
 {
-	(void)token;
+	struct s_svar *tmp;
 
-	ft_printf("direct success");
-	return (SUCCESS);
+	tmp = g_svar;
+	while (g_svar)
+	{
+		if (ft_strncmp(g_svar->key, *token + 1, ft_strlen(g_svar->key) - 1) == 0)
+		{
+			ft_strdel(token);
+			*token = ft_strdup(g_svar->value);
+			g_svar = tmp;
+			return (SUCCESS);
+		}
+		g_svar = g_svar->next;
+	}
+	g_svar = tmp;
+	return (ERROR);
 }
 
-int		simple_exp(char *token)
+int		simple_exp(char **token)
 {
 	(void)token;
 
@@ -25,7 +38,7 @@ int		simple_exp(char *token)
 	return (SUCCESS);
 }
 
-int		why_exp(char *token)
+int		why_exp(char **token)
 {
 	(void)token;
 
@@ -33,7 +46,7 @@ int		why_exp(char *token)
 	return (SUCCESS);
 }
 
-int		plus_exp(char *token)
+int		plus_exp(char **token)
 {
 	(void)token;
 
@@ -41,7 +54,7 @@ int		plus_exp(char *token)
 	return (SUCCESS);
 }
 
-int		dash_exp(char *token)
+int		dash_exp(char **token)
 {
 	(void)token;
 
@@ -49,7 +62,7 @@ int		dash_exp(char *token)
 	return (SUCCESS);
 }
 
-int		equal_exp(char *token)
+int		equal_exp(char **token)
 {
 	(void)token;
 
@@ -57,7 +70,7 @@ int		equal_exp(char *token)
 	return (SUCCESS);
 }
 
-int		bsharp_exp(char *token)
+int		bsharp_exp(char **token)
 {
 	(void)token;
 
@@ -65,7 +78,7 @@ int		bsharp_exp(char *token)
 	return (SUCCESS);
 }
 
-int		osharp_exp(char *token)
+int		osharp_exp(char **token)
 {
 	(void)token;
 
@@ -73,7 +86,7 @@ int		osharp_exp(char *token)
 	return (SUCCESS);
 }
 
-int		dsharp_exp(char *token)
+int		dsharp_exp(char **token)
 {
 	(void)token;
 
@@ -81,7 +94,7 @@ int		dsharp_exp(char *token)
 	return (SUCCESS);
 }
 
-int		opercent_exp(char *token)
+int		opercent_exp(char **token)
 {
 	(void)token;
 
@@ -89,7 +102,7 @@ int		opercent_exp(char *token)
 	return (SUCCESS);
 }
 
-int		dpercent_exp(char *token)
+int		dpercent_exp(char **token)
 {
 	(void)token;
 

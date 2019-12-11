@@ -127,10 +127,12 @@ int		expansions_management(char **tokens)
 		while (g_symexp[j].expand)
 		{
 			if (g_symexp[j].sym == type)
-				g_symexp[j].expand(tokens[i]);
+				g_symexp[j].expand(&tokens[i]);
 			++j;
 		}
 		++i;
 	}
+	while (*tokens)
+		ft_putendl(*tokens++);
 	return (SUCCESS);
 }
