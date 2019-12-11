@@ -89,10 +89,22 @@ int		equal_exp(char **token)
 
 int		bsharp_exp(char **token)
 {
-	(void)token;
+	struct s_svar *tmp;
 
-	ft_printf("bsharp success");
-	return (SUCCESS);
+	tmp = g_svar;
+	while (g_svar)
+	{
+		if (ft_strncmp(g_svar->key, *token + 3, ft_strlen(g_svar->key) - 1) == 0)
+		{
+			ft_strdel(token);
+			*token = ft_itoa(ft_strlen(g_svar->value));
+			g_svar = tmp;
+			return (SUCCESS);
+		}
+		g_svar = g_svar->next;
+	}
+	g_svar = tmp;
+	return (ERROR);
 }
 
 int		osharp_exp(char **token)
