@@ -1,3 +1,7 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   substitutions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -32,10 +36,23 @@ int		direct_exp(char **token)
 
 int		simple_exp(char **token)
 {
-	(void)token;
+	struct s_svar *tmp;
 
-	ft_printf("simple success");
-	return (SUCCESS);
+	tmp = g_svar;
+	while (g_svar)
+	{
+		if (ft_strncmp(g_svar->key, *token + 2, ft_strlen(g_svar->key) - 1) == 0)
+		{
+			ft_strdel(token);
+			*token = ft_strdup(g_svar->value);
+			g_svar = tmp;
+			return (SUCCESS);
+		}
+		g_svar = g_svar->next;
+	}
+	g_svar = tmp;
+	return (ERROR);
+
 }
 
 int		why_exp(char **token)
