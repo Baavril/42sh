@@ -24,6 +24,8 @@
 # define OP_BRACE '{'
 # define CL_BRACE '}'
 
+# define EMPTY_STR ""
+
 # define ERROR -1
 # define SUCCESS 0
 # define DIRECT_EXP 1

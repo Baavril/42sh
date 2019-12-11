@@ -56,12 +56,62 @@ int		simple_exp(char **token)
 
 }
 
+char *ft_strcdup(char *token, char c)
+{
+	int i;
+	char *ret;
+
+	i = 0;
+	ret = NULL;
+	while (token[i] != c)
+		++i;
+	if (!(ret = (char*)malloc(sizeof(char) * (i + 1))))
+		return (0);
+	i = 0;
+	while (token[i] != c)
+	{
+		ret[i] = token[i];
+		i++;
+	}
+	ret[i] = '\0';
+	return (ret);
+}
+
 int		why_exp(char **token)
 {
-	(void)token;
+	char *var;
+	char *word;
+	struct s_svar *tmp;
 
-	ft_printf("why success");
-	return (SUCCESS);
+	tmp = g_svar;
+	word = ft_strcdup(ft_strchr(*token, WHY) + 1, CL_BRACE);
+	var = ft_strcdup(*token + 2, COLON);
+	while (g_svar)
+	{
+		if (ft_strncmp(g_svar->key, *token + 2, ft_strlen(g_svar->key) - 1) == 0)
+		{
+			ft_strdel(token);
+			if (g_svar->value)
+				*token = ft_strdup(g_svar->value);
+			else
+			{
+				*token = ft_strdup(EMPTY_STR);
+				ft_printf("42sh : %s: %s\n", var, word);
+			}
+			ft_strdel(&var);
+			ft_strdel(&word);
+			g_svar = tmp;
+			return (SUCCESS);
+		}
+		g_svar = g_svar->next;
+	}
+	ft_strdel(token);
+	*token = ft_strdup(EMPTY_STR);
+	ft_printf("42sh : %s: %s\n", var, word);
+	ft_strdel(&var);
+	ft_strdel(&word);
+	g_svar = tmp;
+	return (ERROR);
 }
 
 int		plus_exp(char **token)
@@ -81,13 +131,13 @@ int		dash_exp(char **token)
 	keep = ft_strchr(*token, DASH) + 1;
 	while (g_svar)
 	{
-		if (ft_strncmp(g_svar->key, *token + 1, ft_strlen(g_svar->key) - 1) == 0)
+		if (ft_strncmp(g_svar->key, *token + 2, ft_strlen(g_svar->key) - 1) == 0)
 		{
 			ft_strdel(token);
 			if (g_svar->value)
 				*token = ft_strdup(g_svar->value);
 			else
-				*token = ft_strdup(keep);
+				*token = ft_strndup(keep, ft_strlen(keep) - 1);
 			g_svar = tmp;
 			return (SUCCESS);
 		}
@@ -101,36 +151,15 @@ int		dash_exp(char **token)
 
 char	*setasvar(char *token)
 {
-	int i;
-	int j;
-	int cpy;
 	char *ret;
-	char *keep;
+	char *var;
+	char *word;
 
-	i = 0;
-	j = 0;
-	cpy = 0;
-	ret = NULL;
-	keep = ft_strchr(token, EQUAL) + 1;
-	keep = ft_strndup(keep, ft_strlen(keep) - 1);
-	while (token[i] && !(ft_isalpha(token[i])))
-		i++;
-	j = 1;
-	cpy = i;
-	while (token[i] && (ft_isalpha(token[i])))
-	{
-		j++;
-		i++;
-	}
-	if (!(ret = (char *)ft_memalloc(sizeof(char) * (j + 2))))
-		return (0);
-	i = 0;
-	while (token[cpy] && i < j - 1)
-		ret[i++] = token[cpy++];
-	ret[i] = EQUAL;
-	ret[i + 1] = '\0';
-	ret = ft_strjoin(ret, keep);
-	ft_strdel(&keep);
+	var = ft_strcdup(token + 2, COLON);
+	word = ft_strcdup(ft_strchr(token, EQUAL), CL_BRACE);
+	ret = ft_strjoin(var, word);
+	ft_strdel(&word);
+	ft_strdel(&var);
 	return (ret);
 }
 
@@ -145,7 +174,7 @@ int		equal_exp(char **token)
 	keep = ft_strchr(*token, EQUAL) + 1;
 	while (g_svar)
 	{
-		if (ft_strncmp(g_svar->key, &(token[0])[2], ft_strlen(g_svar->key) - 1) == 0)
+		if (ft_strncmp(g_svar->key, *token + 2, ft_strlen(g_svar->key) - 1) == 0)
 		{
 			ft_strdel(token);
 			if (g_svar->value)
