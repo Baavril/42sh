@@ -15,6 +15,7 @@
 #include "history.h"
 #include "keys.h"
 #include "display.h"
+#include "auto_completion.h"
 #include "prompt.h"
 
 #include <unistd.h>

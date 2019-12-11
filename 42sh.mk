@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/12/11 13:55:30 by yberramd         ###   ########.fr        #
+#    Updated: 2019/12/11 14:06:52 by yberramd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,8 @@ SOURCES			:=		main.c \
 						input/analyzer.c \
 						input/keyboard_commands.c \
 						input/keyboard_dispatcher.c \
+						input/auto_completion/auto_completion.c \
+						input/auto_completion/tst.c \
 						lexer/lexer.c \
 						lexer/grammar_symbols.c \
 						lexer/separators/unglue_metachr.c \
