@@ -6,14 +6,14 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:56:52 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/11 18:48:18 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/11 21:01:27 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <unistd.h>
 #include "jcont.h"
-#include "parser.h"
+//#include "parser.h"
 
 t_jcont		g_jcont = {NULL, 1, {0, 0}};
 t_list		*g_proclist = NULL;
@@ -24,6 +24,7 @@ t_job		*ft_add_job(int status, char *cmd)
 	t_job	new;
 	t_list	*new_front;
 
+	ft_putendl("ft_add_job");
 	if (!g_proclist || (cmd && !(new.cmd = ft_strdup(cmd))))
 		return (NULL);
 	if (!(new_front = ft_lstnew(&new, sizeof(t_job))))
@@ -39,6 +40,7 @@ t_job		*ft_add_job(int status, char *cmd)
 	g_pgid = 0;
 	ft_lstadd(&(g_jcont.jobs), new_front);
 	ft_set_prio();
+	ft_putendl("ft_add_job_job_create");
 	return (new_front->content);
 }
 
@@ -71,7 +73,7 @@ void		ft_set_child_signal(void)//Cela suffira-t-il ?
 	signal (SIGCHLD, &ft_sigchld_handler);
 }
 
-int			ft_add_process(t_node ast_node, int std_fd[3], int fd_to_close[2])
+int			ft_add_process(void ft_exec(int[3]), int std_fd[3], int fd_to_close[2])
 {
 	pid_t		pgid;
 	pid_t		pid;
@@ -87,6 +89,7 @@ int			ft_add_process(t_node ast_node, int std_fd[3], int fd_to_close[2])
 		setpgid(pgid, getpid());
 		ft_stdredir(std_fd);
 		ft_set_child_signal();
+		(*ft_exec)(std_fd);
 //		ft_exec_ast_node(ast_node);
 	}
 	if (!g_pgid)
@@ -104,10 +107,15 @@ int			ft_launch_job(char *cmd, int status)
 	int			ret_status;
 	pid_t		pid;
 
+	ft_putendl("ft_launch_job");
 	job = ft_add_job(status, cmd);
+	ft_putendl("ft_add_job_end");
+	printf("job_address %p\n", job);
 	if (ISFOREGROUND(status))
 	{
+	ft_putendl("FOREGROUND_TEST");
 		tcsetpgrp(STDIN_FILENO, job->pgid);
+	ft_putendl("wait_start");
 		while ((pid = waitpid(-job->pgid, &ret_status, WUNTRACED)) != -1)
 		{
 			if (!(process = ft_get_process_from_job(job, pid)))
@@ -116,7 +124,9 @@ int			ft_launch_job(char *cmd, int status)
 			if (pid == job->pgid)
 				job->status = ret_status;
 		}
+	ft_putendl("wait_end");
 		tcsetpgrp(STDIN_FILENO, getpid());
+	ft_putendl("apres tcsetpgrp");
 		ret_status = ((t_process*)job->process->content)->status;
 		if (job && !WIFSTOPPED(job->status))
 			ft_pop_job(job->nbr);
