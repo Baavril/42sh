@@ -113,6 +113,7 @@ struct s_svar	*newnodshell(char *env, int exp)
 {
 	struct s_svar *svar_lst;
 
+	svar_lst = NULL;
 	if (*env)
 	{
 		if (!(svar_lst = (struct s_svar*)malloc(sizeof(struct s_svar))))
@@ -121,8 +122,8 @@ struct s_svar	*newnodshell(char *env, int exp)
 		svar_lst->key = ft_strdupto(env, '=');
 		svar_lst->value = ft_strdupfm(env, '=');
 		svar_lst->exp = exp;
+		svar_lst->next = NULL;
 	}
-	svar_lst->next = NULL;
 	return (svar_lst);
 }
 
