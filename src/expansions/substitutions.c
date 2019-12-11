@@ -116,10 +116,27 @@ int		why_exp(char **token)
 
 int		plus_exp(char **token)
 {
-	(void)token;
+	struct s_svar *tmp;
 
-	ft_printf("plus success");
-	return (SUCCESS);
+	tmp = g_svar;
+	while (g_svar)
+	{
+		if (ft_strncmp(g_svar->key, *token + 2, ft_strlen(g_svar->key) - 1) == 0)
+		{
+			ft_strdel(token);
+			if (g_svar->value)
+				*token = ft_strdup(g_svar->value);
+			else
+				*token = ft_strdup(EMPTY_STR);
+			g_svar = tmp;
+			return (SUCCESS);
+		}
+		g_svar = g_svar->next;
+	}
+	ft_strdel(token);
+	*token = ft_strdup(EMPTY_STR);
+	g_svar = tmp;
+	return (ERROR);
 }
 
 int		dash_exp(char **token)
