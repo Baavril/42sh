@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:56:52 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/11 21:01:27 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/12 01:11:18 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,18 @@ t_job		*ft_add_job(int status, char *cmd)
 	ft_putendl("ft_add_job");
 	if (!g_proclist || (cmd && !(new.cmd = ft_strdup(cmd))))
 		return (NULL);
-	if (!(new_front = ft_lstnew(&new, sizeof(t_job))))
-	{
-		free(new.cmd);
-		return (NULL);
-	}
 	new.pgid = g_pgid;
 	new.nbr = (g_jcont.job_nbr)++;
 	new.status = status | RUNNING;
 	new.process = g_proclist;
 	g_proclist = NULL;
+	ft_dprintf(2, ">>> job pgid: %i <<<\n", new.pgid);
 	g_pgid = 0;
+	if (!(new_front = ft_lstnew(&new, sizeof(t_job))))
+	{
+		free(new.cmd);
+		return (NULL);
+	}
 	ft_lstadd(&(g_jcont.jobs), new_front);
 	ft_set_prio();
 	ft_putendl("ft_add_job_job_create");
@@ -65,35 +66,37 @@ void		ft_stdredir(int std_fd[3])
 
 void		ft_set_child_signal(void)//Cela suffira-t-il ?
 {
-	signal (SIGINT, SIG_DFL);
-	signal (SIGQUIT, SIG_DFL);
-	signal (SIGTSTP, SIG_DFL);
-	signal (SIGTTIN, SIG_DFL);
-	signal (SIGTTOU, SIG_DFL);
-	signal (SIGCHLD, &ft_sigchld_handler);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGTSTP, SIG_DFL);
+	signal(SIGTTIN, SIG_DFL);
+	signal(SIGTTOU, SIG_DFL);
+	signal(SIGCHLD, &ft_sigchld_handler);
 }
 
-int			ft_add_process(void ft_exec(int[3]), int std_fd[3], int fd_to_close[2])
+int			ft_add_process(void ft_exec(void), int std_fd[3], int fd_to_close[2])
 {
 	pid_t		pgid;
 	pid_t		pid;
 	t_process	process;
 
-	if ((pid = fork()))
+	if (!(pid = fork()))
 	{
+		ft_set_child_signal();
 		if (fd_to_close[0] != -1)
 			close(fd_to_close[0]);
 		if (fd_to_close[1] != -1)
 			close(fd_to_close[1]);
 		pgid = (g_pgid) ? g_pgid : getpid();
-		setpgid(pgid, getpid());
+//	ft_dprintf(2, "pgid in son: %i\n", pgid);
+		setpgid(getpid(), pgid);
 		ft_stdredir(std_fd);
-		ft_set_child_signal();
-		(*ft_exec)(std_fd);
+		(*ft_exec)();
 //		ft_exec_ast_node(ast_node);
 	}
 	if (!g_pgid)
 		g_pgid = pid;
+//	ft_dprintf(2, "pgid: %i\n", g_pgid);
 	process.pid = pid;
 	process.status = 0;
 	ft_lstadd(&g_proclist, ft_lstnew(&process, sizeof(t_process))); //a memcheck ?
@@ -109,12 +112,13 @@ int			ft_launch_job(char *cmd, int status)
 
 	ft_putendl("ft_launch_job");
 	job = ft_add_job(status, cmd);
+	ft_dprintf(2, ">>> job pgid: %i <<<\n", job->pgid);
 	ft_putendl("ft_add_job_end");
 	printf("job_address %p\n", job);
 	if (ISFOREGROUND(status))
 	{
 	ft_putendl("FOREGROUND_TEST");
-		tcsetpgrp(STDIN_FILENO, job->pgid);
+		ft_dprintf(2, "Return of tcsetpgrp: %i for son pgid: %i\n", tcsetpgrp(STDIN_FILENO, job->pgid), job->pgid);
 	ft_putendl("wait_start");
 		while ((pid = waitpid(-job->pgid, &ret_status, WUNTRACED)) != -1)
 		{
