@@ -13,6 +13,12 @@
 #ifndef EXPANSIONS_H
 # define EXPANSIONS_H
 
+# define STAR '*'
+# define AROB '@'
+# define EXCLAM '!'
+# define OP_SQUAR '['
+# define CL_SQUAR ']'
+
 # define WHY '?'
 # define PLUS '+'
 # define DASH '-'

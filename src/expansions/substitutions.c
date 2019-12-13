@@ -31,6 +31,8 @@ int		direct_exp(char **token)
 		}
 		g_svar = g_svar->next;
 	}
+	ft_strdel(token);
+	*token = ft_strdup(EMPTY_STR);
 	g_svar = tmp;
 	return (ERROR);
 }
@@ -51,9 +53,10 @@ int		simple_exp(char **token)
 		}
 		g_svar = g_svar->next;
 	}
+	ft_strdel(token);
+	*token = ft_strdup(EMPTY_STR);
 	g_svar = tmp;
 	return (ERROR);
-
 }
 
 char *ft_strcdup(char *token, char c)
@@ -63,6 +66,8 @@ char *ft_strcdup(char *token, char c)
 
 	i = 0;
 	ret = NULL;
+	if (!token || !*token || *token == c)
+		return (EMPTY_STR);
 	while (token[i] != c)
 		++i;
 	if (!(ret = (char*)malloc(sizeof(char) * (i + 1))))
@@ -145,7 +150,7 @@ int		dash_exp(char **token)
 	struct s_svar *tmp;
 
 	tmp = g_svar;
-	keep = ft_strchr(*token, DASH) + 1;
+	keep = ft_strcdup(ft_strchr(*token, DASH) + 1, CL_BRACE);
 	while (g_svar)
 	{
 		if (ft_strncmp(g_svar->key, *token + 2, ft_strlen(g_svar->key) - 1) == 0)
@@ -154,14 +159,14 @@ int		dash_exp(char **token)
 			if (g_svar->value)
 				*token = ft_strdup(g_svar->value);
 			else
-				*token = ft_strndup(keep, ft_strlen(keep) - 1);
+				*token = keep;
 			g_svar = tmp;
 			return (SUCCESS);
 		}
 		g_svar = g_svar->next;
 	}
 	ft_strdel(token);
-	*token = ft_strndup(keep, ft_strlen(keep) - 1);
+	*token = keep;
 	g_svar = tmp;
 	return (ERROR);
 }
@@ -237,12 +242,168 @@ int		bsharp_exp(char **token)
 	return (ERROR);
 }
 
+char *ft_alpharange(char c, char x)
+{
+	int i;
+	int lim;
+	char *ret;
+
+	i = 0;
+	ret = NULL;
+	lim = (x - c) + 1;
+	if (lim > 1)
+	{
+		if (!(ret = (char *)malloc(sizeof(char) * (lim + 1))))
+			return (0);
+		while (i < lim)
+			ret[i++] = c++;
+		ret[i] = '\0';
+	}
+	else
+		ret = ft_strdup(EMPTY_STR);
+	return (ret);
+}
+
+char	*ft_deploy(char *match)
+{
+	int		i;
+	int		j;
+	int		flag;
+	int		dash;
+	char	*keep;
+	char	*range;
+
+	i = 0;
+	j = 0;
+	flag = 0;
+	dash = 0;
+	keep = NULL;
+	range = NULL;
+	if (!(keep = (char*)malloc(sizeof(char) * (ft_strlen(match) + 1))))
+		return(0);
+	while (match[i] && match[i + 1])
+	{
+		flag = 0;
+		if (match[i + 1] == DASH)
+		{
+			if (ft_isalpha(match[i]) && ft_isalpha(match[i + 2]))
+			{
+				range = (!dash) ? ft_alpharange(match[i], match[i + 2]) : ft_strjoin(range, ft_alpharange(match[i], match[i + 2]));
+				dash += 1;
+				flag = 1;
+				i += 2;
+			}
+		}
+		if (!flag)
+			keep[j++] = match[i];
+		++i;
+	}
+	keep[j] = '\0';
+	if (range)
+		keep = ft_strjoin(keep, range);
+	return (keep);
+}
+
+int		ft_getbmatch(char *token, char *match, char delim)
+{
+	int i;
+
+	i = 0;
+	if (ft_isin(DASH, match))
+		match = ft_deploy(match);
+	while (match[i] && match[i] != delim)
+	{
+		if (*token == match[i])
+			return (SUCCESS);
+		++i;
+	}
+	return (ERROR);
+}
+
+char *ft_strwhy(char *token, char *match)
+{
+	int i;
+	int len;
+	int lim;
+	char *ret;
+
+	i = 0;
+	lim = 0;
+	ret = NULL;
+	len = (int)ft_strlen(token) - (int)ft_strlen(match);
+	if (len > 0)
+	{
+		if (!(ret = (char*)malloc(sizeof(char) * (len + 1))))
+			return (NULL);
+		lim = ft_strlen(match);
+	}
+	else
+		return (token);
+	while (i < len)
+		ret[i++] = token[lim++];
+	ret[i] = '\0';
+	return (ret);
+}
+
+int	ft_strpchr(char *str, char c)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] - c == 0)
+			return (i);
+		i++;
+	}
+	return (0);
+}
+
+char	*ft_strmatch(char *token, char *match)
+{
+	int len;
+	char *ret;
+
+	ret = NULL;
+	len = ft_strlen(match);
+	if (ft_strncmp(token, match, len) == 0)
+		ret = ft_strdupfm(token, match[len - 1]);
+	else if (match[ft_strpchr(match, WHY)] == WHY)
+		ret = ft_strwhy(token, &match[ft_strpchr(match, WHY)]);
+	else if (len == 1 && match[len - 1] == STAR)
+	{
+		/*here */
+	}
+	else if (len > 1 && *match == OP_SQUAR
+	&& ft_getbmatch(token, match + 1, CL_SQUAR) == SUCCESS)
+		ret = ft_strdup(&token[1]);
+	else
+		ret = ft_strdup(token);
+	return (ret);
+}
+
 int		osharp_exp(char **token)
 {
-	(void)token;
+	char *word;
+	struct s_svar *tmp;
 
-	ft_printf("osharp success");
-	return (SUCCESS);
+	tmp = g_svar;
+	word = ft_strcdup(ft_strchr(*token, SHARP) + 1, CL_BRACE);
+	while (g_svar)
+	{
+		if (ft_strncmp(g_svar->key, *token + 2, ft_strlen(g_svar->key) - 1) == 0)
+		{
+			ft_strdel(token);
+			*token = ft_strmatch(g_svar->value, word);
+			g_svar = tmp;
+			return (SUCCESS);
+		}
+		g_svar = g_svar->next;
+	}
+	ft_strdel(token);
+	*token = ft_strdup(EMPTY_STR);
+	g_svar = tmp;
+	return (ERROR);
 }
 
 int		dsharp_exp(char **token)
