@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:56:52 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/14 20:27:52 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/14 21:20:15 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void		ft_set_child_signal(void)//Cela suffira-t-il ?
 	signal(SIGTSTP, SIG_DFL);
 	signal(SIGTTIN, SIG_DFL);
 	signal(SIGTTOU, SIG_DFL);
-	signal(SIGCHLD, &ft_sigchld_handler);
 }
 
 int			ft_add_process(t_node ast_node, int std_fd[3], int fd_to_close)
@@ -97,11 +96,12 @@ int			ft_launch_job(char *cmd, int status)
 		ft_dprintf(2, "FOREGROUND_TEST\n");
 		ft_dprintf(2, "Return of tcsetpgrp: %i for son pgid: %i\n", tcsetpgrp(STDIN_FILENO, job->pgid), job->pgid);
 		ft_dprintf(2, "wait_start\n");
-		while (ISRUNNING(job->status))
+//		while (ISRUNNING(job->status))
 			sigsuspend(&wakeup_sig);
-		ft_dprintf(2, "wait_end\n");
+//		ft_dprintf(2, "wait_end\n");
+
 		tcsetpgrp(STDIN_FILENO, getpid());
-		ft_dprintf(2, "apres tcsetpgrp\n");
+		ft_dprintf(2, "apres tcsetpgrp. Job status: %i   ISRUNNING(job): %i\n", job->status, ISRUNNING(job->status));
 		ret_status = ((t_process*)job->process->content)->status;
 		if (job && !WIFSTOPPED(job->status))
 			ft_pop_job(job->nbr);

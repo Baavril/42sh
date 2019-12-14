@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:13:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/14 20:01:49 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/14 21:26:10 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int i_pipe_sequence(t_elem left, t_elem right)
 	close(pipe_fd[1]);
 	g_fclose = -1;
 	right.v->f(right.v->left, right.v->right);// P1, 1, 2 | -1 -1 -1
-	close(pipe_fd[1]);
+	close(pipe_fd[0]);
 	return(-1);
 }
 
