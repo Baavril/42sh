@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:44:12 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/03 12:37:14 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/12/14 13:08:54 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	interpret(t_node *node)
 	{
 		ft_printf("interpreting a command..\n");
 		node->f(node->left, node->right);
+		ft_printf("FT_LAUNCH_JOB(FOREGROUND)\n");
 	}
 	if (!node)
 		ft_printf("interpreting empty string..\n");
