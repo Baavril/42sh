@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/12/14 16:26:56 by tgouedar         ###   ########.fr        #
+#    Updated: 2019/12/14 18:29:13 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,6 @@ SOURCES			:=		main.c \
 						job_control/ft_set_prio.c \
 						job_control/ft_sigchld_handler.c \
 						job_control/ft_update_job_status.c \
-						job_control/job.c \
 						job_control/path_concat.c \
 						job_control/get_sequence.c \
 						builtins/builtin_alias.c \
@@ -107,6 +106,8 @@ SOURCES			:=		main.c \
 						LL_parser/terminals.c \
 						LL_parser/wordtypes.c \
 						interpreter/interpreter.c
+
+#						job_control/job.c
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 

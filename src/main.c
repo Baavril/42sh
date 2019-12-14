@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2019/12/14 16:27:37 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/14 18:06:32 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ int		main(int argc, char **argv)
 	char			**args;
 	int				status;
 
+	ft_dprintf(2, "Return of tcsetpgrp: %i for self\n", tcsetpgrp(STDIN_FILENO, getpid()));
+	signal(SIGCHLD, &ft_sigchld_handler);
 	(void)argc;
 	args = NULL;
 	copybuff = NULL;
@@ -115,7 +117,7 @@ int		main(int argc, char **argv)
 				cmd_set(0, args);
 			else
 				expansions_management(args);
-			exit(0); 
+			continue ; 
 			args = lexer(&input);
 			ft_memdel((void**)&input);
 			if (!args)

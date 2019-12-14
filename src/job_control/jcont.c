@@ -6,13 +6,14 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:56:52 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/14 16:34:00 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/14 20:27:52 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "jcont.h"
 #include <sys/types.h>
 #include <unistd.h>
+#include <signal.h>
 
 t_jcont		g_jcont = {NULL, 1, {0, 0}};
 t_list		*g_proclist = NULL;
@@ -50,7 +51,7 @@ void		ft_set_child_signal(void)//Cela suffira-t-il ?
 int			ft_add_process(t_node ast_node, int std_fd[3], int fd_to_close)
 {
 	ft_printf("ADDPROCESS %s with {%d,%d,%d}, closes {%d}\n",
-		ast_node.right.v->left.c, std_fd[0], std_fd[1], std_fd[2], fd_to_close); 
+			ast_node.right.v->left.c, std_fd[0], std_fd[1], std_fd[2], fd_to_close); 
 	pid_t		pgid;
 	pid_t		pid;
 	t_process	process;
@@ -61,15 +62,15 @@ int			ft_add_process(t_node ast_node, int std_fd[3], int fd_to_close)
 		if (fd_to_close != -1)
 			close(fd_to_close);
 		pgid = (g_pgid) ? g_pgid : getpid();
-//	ft_dprintf(2, "pgid in son: %i\n", pgid);
-		ft_dprintf(2, "add porcess: setpgid ret: %i\n", setpgid(getpid(), pgid));
-		ft_dprintf(2, "add porcess: pgid of call: %i       actualpgid: %i\n", pgid, getpgrp());
+		//	ft_dprintf(2, "pgid in son: %i\n", pgid);
+		ft_dprintf(2, "add process: In son: %i setpgid ret: %i\n", getpid(), setpgid(getpid(), pgid));
+		ft_dprintf(2, "add process: In son: %i pgid of call: %i       actualpgid: %i\n", getpid(), pgid, getpgrp());
 		ft_stdredir(std_fd);
 		ast_node.f(ast_node.left, ast_node.right);
 	}
 	if (!g_pgid)
 		g_pgid = pid;
-//	ft_dprintf(2, "pgid: %i\n", g_pgid);
+	//	ft_dprintf(2, "pgid: %i\n", g_pgid);
 	process.pid = pid;
 	process.status = 0;
 	ft_lstadd(&g_proclist, ft_lstnew(&process, sizeof(t_process))); //a memcheck ?
@@ -78,36 +79,29 @@ int			ft_add_process(t_node ast_node, int std_fd[3], int fd_to_close)
 
 int			ft_launch_job(char *cmd, int status)
 {
+	sigset_t	wakeup_sig;
 	t_job		*job;
 	int			ret_status;
 
+
 	ft_dprintf(2, "ft_launch_job\n");
 	job = ft_add_job(status, cmd);
-	ft_dprintf(2, ">>> job pgid: %i <<<\n", job->pgid);
+	//	ft_dprintf(2, ">>> job pgid: %i <<<\n", job->pgid);
 	ft_dprintf(2, "ft_add_job_end\n");
-	ft_dprintf(2, "job_address %p\n", job);
+	//	ft_dprintf(2, "job_address %p\n", job);
 	if (ISFOREGROUND(status))
 	{
-	ft_dprintf(2, "FOREGROUND_TEST\n");
+		sigemptyset(&wakeup_sig);
+		//sigaddset(&wakeup_sig, SIGCHLD);
+		sigaction(SIGCHLD, &(struct sigaction){.sa_handler = ft_sigchld_handler }, 0);
+		ft_dprintf(2, "FOREGROUND_TEST\n");
 		ft_dprintf(2, "Return of tcsetpgrp: %i for son pgid: %i\n", tcsetpgrp(STDIN_FILENO, job->pgid), job->pgid);
-	ft_dprintf(2, "wait_start\n");
-/*		while ((pid = waitpid(-job->pgid, &ret_status, WUNTRACED)) > 0)
-		{
-	ft_dprintf(2, "launch job: wait caught pid: %i\n", pid);
-			if (!(process = ft_get_process_from_job(job, pid)))
-				continue ;
-			process->status = ret_status;
-			if (pid == job->pgid)
-				job->status = ret_status;
-		}*/
-		while (pause())
-		{
-			if (WIFSTOPPED(job->status) || WIFEXITED(job->status) || WIFSIGNALED(job->status))
-				break ;
-		}
-	ft_dprintf(2, "wait_end\n");
+		ft_dprintf(2, "wait_start\n");
+		while (ISRUNNING(job->status))
+			sigsuspend(&wakeup_sig);
+		ft_dprintf(2, "wait_end\n");
 		tcsetpgrp(STDIN_FILENO, getpid());
-	ft_dprintf(2, "apres tcsetpgrp\n");
+		ft_dprintf(2, "apres tcsetpgrp\n");
 		ret_status = ((t_process*)job->process->content)->status;
 		if (job && !WIFSTOPPED(job->status))
 			ft_pop_job(job->nbr);
@@ -122,7 +116,7 @@ int			ft_pop_job(int nbr)
 	t_list	*tmp;
 
 	if (!(voyager = g_jcont.jobs) || nbr >= g_jcont.job_nbr)
-			return (1);
+		return (1);
 	if (!nbr)
 		nbr = g_jcont.active_jobs[0];
 	if (nbr == ((t_job*)(voyager->content))->nbr)

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/09/25 16:42:17 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/12/14 18:40:45 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int		cmd_env(int argc, char **argv)
 		++g_optind;
 	}
 	if (argv[g_optind] && !is_a_builtin(argv[g_optind]))
-		opt = job(&argv[g_optind], env_copy);
+		opt = 0;//job(&argv[g_optind], env_copy);
 	else
 	{
 		psherror(e_invalid_input, "[builtin [argument...]]", e_cmd_type);
