@@ -23,6 +23,7 @@
 # define PLUS '+'
 # define DASH '-'
 # define EQUAL '='
+# define CARET '^'
 # define SHARP '#'
 # define COLON ':'
 # define DOLLAR '$'
@@ -31,6 +32,7 @@
 # define CL_BRACE '}'
 
 # define EMPTY_STR ""
+# define MAXCHR 95
 
 # define ERROR -1
 # define SUCCESS 0

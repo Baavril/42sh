@@ -288,7 +288,8 @@ char	*ft_deploy(char *match)
 		{
 			if (ft_isalpha(match[i]) && ft_isalpha(match[i + 2]))
 			{
-				range = (!dash) ? ft_alpharange(match[i], match[i + 2]) : ft_strjoin(range, ft_alpharange(match[i], match[i + 2]));
+				range = (!dash) ? ft_alpharange(match[i], match[i + 2])
+				: ft_strjoin(range, ft_alpharange(match[i], match[i + 2]));
 				dash += 1;
 				flag = 1;
 				i += 2;
@@ -304,6 +305,63 @@ char	*ft_deploy(char *match)
 	return (keep);
 }
 
+char	*ft_struchr(char *match, int len)
+{
+	int i;
+	int j;
+	char *ret;
+
+	j = 0;
+	i = 1;
+	if (!(ret = (char*)ft_memalloc(sizeof(char) * (len + 1))))
+		return (NULL);
+	ret[0] = match[1];
+	while (match[i] && match[i] != CL_SQUAR)
+	{
+		j = 0;
+		while (ret[j])
+		{
+			if ((ret[j] - match[i]) == 0)
+				break;
+			if (ret[j + 1] == '\0')
+				ret[j + 1] = match[i];
+			++j;
+		}
+		++i;
+	}
+	return (ret);
+}
+
+char	*ft_strneg(char *match)
+{
+	int i;
+	int j;
+	int c;
+	char *strneg;
+	char *strpos;
+
+	i = 0;
+	j = 0;
+	c = 32;
+	strpos = ft_struchr(match, ft_strlen(match));
+	if (!(strneg = (char*)ft_memalloc(sizeof(char) * MAXCHR)))
+		return (NULL);
+	while (strpos[i] && c < 127)
+	{
+		if ((strpos[i] - c) == 0)
+		{
+			ft_printf("%c\n", strpos[i]);
+			++i;
+			++c;
+		}
+		else
+			strneg[j++] = c++;
+	}
+	while (c < 127)
+		strneg[j++] = c++;
+	return (strneg);
+}
+
 int		ft_getbmatch(char *token, char *match, char delim)
 {
 	int i;
@@ -311,6 +369,10 @@ int		ft_getbmatch(char *token, char *match, char delim)
 	i = 0;
 	if (ft_isin(DASH, match))
 		match = ft_deploy(match);
+	if (ft_isin(EXCLAM, match) || ft_isin(CARET, match))
+	{
+		match = ft_strneg(match);
+	}
 	while (match[i] && match[i] != delim)
 	{
 		if (*token == match[i])
@@ -366,14 +428,12 @@ char	*ft_strmatch(char *token, char *match)
 
 	ret = NULL;
 	len = ft_strlen(match);
-	if (ft_strncmp(token, match, len) == 0)
+	if (ft_isin(STAR, match))
+		ret = ft_strdup(token);
+	else if (ft_strncmp(token, match, len) == 0)
 		ret = ft_strdupfm(token, match[len - 1]);
 	else if (match[ft_strpchr(match, WHY)] == WHY)
 		ret = ft_strwhy(token, &match[ft_strpchr(match, WHY)]);
-	else if (len == 1 && match[len - 1] == STAR)
-	{
-		/*here */
-	}
 	else if (len > 1 && *match == OP_SQUAR
 	&& ft_getbmatch(token, match + 1, CL_SQUAR) == SUCCESS)
 		ret = ft_strdup(&token[1]);
