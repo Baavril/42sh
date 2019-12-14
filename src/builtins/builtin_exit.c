@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/16 21:51:54 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/14 16:28:18 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "error.h"
 #include "jcont.h"
 
+extern int g_retval;
 struct s_svar *g_svar;
 
 static int	part_sep(int argc, char **argv)

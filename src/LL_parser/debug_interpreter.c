@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:44:12 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/14 13:08:54 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/12/14 16:32:25 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "parser.h"
 #include "lexer.h"
 #include "libft.h"
+#include "jcont.h"
 
 /*
  * comp_list	: and_or SEMI comp_list
@@ -50,7 +51,7 @@ void	interpret(t_node *node)
 	{
 		ft_printf("interpreting a command..\n");
 		node->f(node->left, node->right);
-		ft_printf("FT_LAUNCH_JOB(FOREGROUND)\n");
+		ft_launch_job("plop", FOREGROUND);
 	}
 	if (!node)
 		ft_printf("interpreting empty string..\n");

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2019/11/27 15:03:09 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/12/14 16:27:37 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int		main(int argc, char **argv)
 				ft_tabdel(&args);
 				continue;
 			}
-			g_retval = jcont(args, environ);
+			g_retval = 0;
 			ft_tabdel(&args);
 		}
 		else

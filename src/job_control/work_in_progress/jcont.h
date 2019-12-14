@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:18:20 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/14 16:14:12 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/12 00:38:07 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define JCONT_H
 
 # include <stdlib.h>
-# include "parser.h"
 # include "libft.h"
 
 # define MAX_STATE_LEN			23
@@ -49,8 +48,8 @@ typedef struct		s_job
 typedef struct		s_jcont
 {
 	t_list			*jobs;
-	int				job_nbr;
-	int				active_jobs[2];
+	size_t			job_nbr;
+	size_t			active_jobs[2];
 }					t_jcont;
 
 /* ft_get_job.c */
@@ -71,19 +70,8 @@ void				ft_sigchld_handler(int nbr);
 void				ft_update_job_status(void);
 
 
-#include <sys/wait.h>
-#include <stdio.h>
-int			ft_add_process(t_node ast_node, int std_fd[3], int fd_to_close);
+
+int			ft_add_process(void ft_exec(void), int std_fd[3], int fd_to_close[2]);
 int			ft_launch_job(char *cmd, int status);
-t_job		*ft_add_job(int status, char *cmd);
-
-
-
-
-# include <stdio.h>
-int			ft_isnumber(char *str);
-int				ft_resume_in_fg(t_job *job);
-
-
 
 #endif

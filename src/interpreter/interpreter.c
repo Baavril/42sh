@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:13:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/14 14:20:38 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/12/14 16:39:37 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,34 +18,20 @@
 #include <unistd.h>
 #include "builtins.h"
 #include "error.h"
+#include "jcont.h"
 
 #define STDIN 0
 #define STDOUT 1
 #define STDERR 2
-#define FOREGROUND 1
-#define BACKGROUND 0
 
 char **g_argv;
 int g_fd[3] = {STDIN, STDOUT, STDERR};
 int g_fclose = -1;
 
-int ft_add_process(t_node execnode, int fd[3], int fclose)
-{
-	ft_printf("ADDPROCESS %s with {%d,%d,%d}, closes {%d}\n",
-		execnode.right.v->left.c, fd[0], fd[1], fd[2], fclose); 
-	return(0);
-}
-
-int ft_launch_job(int arg)
-{
-	ft_printf("FT_LAUNCH_JOB(FOREGROUND)\n");
-	return(arg);
-}
-
 int i_comp_list(t_elem left, t_elem right)
 {
 	left.v->f(left.v->left, left.v->right);
-	ft_launch_job(FOREGROUND);
+	ft_launch_job("plop", FOREGROUND);
 	right.v->f(right.v->left, right.v->right);
 	return (0);
 }
@@ -59,16 +45,16 @@ int i_pipe_sequence(t_elem left, t_elem right)
 	ft_printf("Create pipe with {%d->%d}\n", pipe_fd[0], pipe_fd[1]);
 	//0, 1, 2 | -1 -1 -1
 	bckp = g_fd[1];
-	g_fd[1] = pipe_fd[0];
-	g_fclose = pipe_fd[1];
+	g_fd[1] = pipe_fd[1];
+	g_fclose = pipe_fd[0];
 	left.v->f(left.v->left, left.v->right);// 0, P0, 2 | P1 -1 -1
 	g_fd[1] = bckp;
-	g_fd[0] = pipe_fd[1];
-	ft_printf("pipe_seq closing {%d}\n", pipe_fd[0]);
-	close(pipe_fd[0]);
+	g_fd[0] = pipe_fd[0];
+	ft_printf("pipe_seq closing {%d}\n", pipe_fd[1]);
+	close(pipe_fd[1]);
 	g_fclose = -1;
 	right.v->f(right.v->left, right.v->right);// P1, 1, 2 | -1 -1 -1
-	close(pipe_fd[0]);
+	close(pipe_fd[1]);
 	return(-1);
 }
 
