@@ -129,7 +129,7 @@ LDLIBS += -ltermcap  $(PATH_LIB)libft.a
 
 LDFLAGS += $(CDEBUG)
 
-CFLAGS += -Wall -Wextra -Werror -ansi -D_POSIX_C_SOURCE=200112L -std=c99 $(CDEBUG)
+CFLAGS += -Wall -Wextra -Werror -ansi -D_POSIX_C_SOURCE=200809L -std=c99 $(CDEBUG)
 #CFLAGS += -fno-builtin -O2
 
 CDEBUG += -g -fsanitize=address

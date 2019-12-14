@@ -362,27 +362,27 @@ char	*ft_strneg(char *match)
 	return (strneg);
 }
 
-int		ft_getbmatch(char *token, char *match, char delim)
+int		ft_getbmatch(char *token, char *match, int flag)
 {
 	int i;
+	int len;
 
 	i = 0;
+	len = (flag == OPERCENT_EXP) ? ft_strlen(token) - 1 : 0;
 	if (ft_isin(DASH, match))
 		match = ft_deploy(match);
 	if (ft_isin(EXCLAM, match) || ft_isin(CARET, match))
-	{
 		match = ft_strneg(match);
-	}
-	while (match[i] && match[i] != delim)
+	while (match[i])
 	{
-		if (*token == match[i])
+		if (token[len] == match[i])
 			return (SUCCESS);
 		++i;
 	}
 	return (ERROR);
 }
 
-char *ft_strwhy(char *token, char *match)
+char *ft_strwhy(char *token, char *match, int flag)
 {
 	int i;
 	int len;
@@ -392,7 +392,13 @@ char *ft_strwhy(char *token, char *match)
 	i = 0;
 	lim = 0;
 	ret = NULL;
-	len = (int)ft_strlen(token) - (int)ft_strlen(match);
+	if ((len = (int)ft_strlen(token) - (int)ft_strlen(match)) <= 0)
+		return (ft_strdup(EMPTY_STR));
+	if (flag == OPERCENT_EXP)
+	{
+		if (len > 0)
+			return (ret = ft_strndup(token, len));
+	}
 	if (len > 0)
 	{
 		if (!(ret = (char*)malloc(sizeof(char) * (len + 1))))
@@ -421,7 +427,7 @@ int	ft_strpchr(char *str, char c)
 	return (0);
 }
 
-char	*ft_strmatch(char *token, char *match)
+char	*ft_strmatch(char *token, char *match, char flag)
 {
 	int len;
 	char *ret;
@@ -429,32 +435,48 @@ char	*ft_strmatch(char *token, char *match)
 	ret = NULL;
 	len = ft_strlen(match);
 	if (ft_isin(STAR, match))
-		ret = ft_strdup(token);
+		ret = (flag == 2) ? ft_strdup(EMPTY_STR)
+		: ft_strdup(token);
 	else if (ft_strncmp(token, match, len) == 0)
 		ret = ft_strdupfm(token, match[len - 1]);
 	else if (match[ft_strpchr(match, WHY)] == WHY)
-		ret = ft_strwhy(token, &match[ft_strpchr(match, WHY)]);
+		ret = ft_strwhy(token, &match[ft_strpchr(match, WHY)], OSHARP_EXP);
 	else if (len > 1 && *match == OP_SQUAR
-	&& ft_getbmatch(token, match + 1, CL_SQUAR) == SUCCESS)
+	&& ft_getbmatch(token, match + 1, OSHARP_EXP) == SUCCESS)
 		ret = ft_strdup(&token[1]);
 	else
 		ret = ft_strdup(token);
 	return (ret);
 }
 
+int ft_spechrlen(char *token)
+{
+	int pos;
+
+	if ((pos = ft_strpchr(token, SHARP)))
+		return ((token[pos + 1] == SHARP)
+		? SUCCESS : ERROR);
+	if ((pos = ft_strpchr(token, PERCENT)))
+		return ((token[pos + 1] == PERCENT)
+		? SUCCESS : ERROR);
+	return (ERROR);
+}
+
 int		osharp_exp(char **token)
 {
+	int flag;
 	char *word;
 	struct s_svar *tmp;
 
 	tmp = g_svar;
-	word = ft_strcdup(ft_strchr(*token, SHARP) + 1, CL_BRACE);
+	flag = (!(ft_spechrlen(*token))) ? 2 : 1;
+	word = ft_strcdup(ft_strchr(*token, SHARP) + flag, CL_BRACE);
 	while (g_svar)
 	{
 		if (ft_strncmp(g_svar->key, *token + 2, ft_strlen(g_svar->key) - 1) == 0)
 		{
 			ft_strdel(token);
-			*token = ft_strmatch(g_svar->value, word);
+			*token = ft_strmatch(g_svar->value, word, flag);
 			g_svar = tmp;
 			return (SUCCESS);
 		}
@@ -466,26 +488,79 @@ int		osharp_exp(char **token)
 	return (ERROR);
 }
 
-int		dsharp_exp(char **token)
+int ft_strlncmp(const char *s1, const char *s2, size_t len)
 {
-	(void)token;
+	size_t i;
+	size_t j;
 
-	ft_printf("dsharp success");
-	return (SUCCESS);
+	i = 0;
+	j = 0;
+	while (s1[i])
+		++i;
+	--i;
+	while (s2[j])
+		++j;
+	--j;
+	while (len > 0 && s1[i] && s2[j] && s1[i] == s2[j])
+	{
+	ft_printf("%c\n", s1[i]);
+	ft_printf("%c\n", s2[j]);
+		--len;
+		--i;
+		--j;
+	}
+	if (!len)
+	{
+		i++;
+		j++;
+	}
+	return ((unsigned char)s1[i] - (unsigned char)s2[j]);
+}
+
+char	*ft_strpmatch(char *token, char *match, char flag)
+{
+	int len;
+	char *ret;
+
+	ret = NULL;
+	len = ft_strlen(match);
+	if (ft_isin(STAR, match))
+		ret = (flag == 2) ? ft_strdup(EMPTY_STR)
+		: ft_strdup(token);
+	else if (ft_strlncmp(token, match, len) == 0)
+		ret = ft_strndup(token, ft_strlen(token) - ft_strlen(match));
+	else if (match[ft_strpchr(match, WHY)] == WHY)
+		ret = ft_strwhy(token, &match[ft_strpchr(match, WHY)], OPERCENT_EXP);
+	else if (len > 1 && *match == OP_SQUAR
+	&& ft_getbmatch(token, match + 1, OPERCENT_EXP) == SUCCESS)
+		ret = ft_strndup(token, ft_strlen(token) - 1);
+	else
+		ret = ft_strdup(token);
+	return (ret);
 }
 
 int		opercent_exp(char **token)
 {
-	(void)token;
+	int flag;
+	char *word;
+	struct s_svar *tmp;
 
-	ft_printf("opercent success");
-	return (SUCCESS);
-}
-
-int		dpercent_exp(char **token)
-{
-	(void)token;
-
-	ft_printf("dpercent success");
-	return (SUCCESS);
+	tmp = g_svar;
+	flag = (!(ft_spechrlen(*token))) ? 2 : 1;
+	word = ft_strcdup(ft_strchr(*token, PERCENT) + flag, CL_BRACE);
+	while (g_svar)
+	{
+		if (ft_strncmp(g_svar->key, *token + 2, ft_strlen(g_svar->key) - 1) == 0)
+		{
+			ft_strdel(token);
+			*token = ft_strpmatch(g_svar->value, word, flag);
+			g_svar = tmp;
+			return (SUCCESS);
+		}
+		g_svar = g_svar->next;
+	}
+	ft_strdel(token);
+	*token = ft_strdup(EMPTY_STR);
+	g_svar = tmp;
+	return (ERROR);
 }

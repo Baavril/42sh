@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include "parser.h"
+# include "sys/types.h"
 # include "libft.h"
 
 # define MAX_STATE_LEN			23
@@ -22,6 +23,7 @@
 # define L_OPT					1
 # define P_OPT					2
 
+# define WSTPED					0x1f
 # define RUNNING				0x20000
 # define ISRUNNING(status)		(status & RUNNING)
 # define BACKGROUND				0x10000

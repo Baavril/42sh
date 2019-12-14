@@ -28,7 +28,6 @@ void		ft_check_bgstatus(void)
 {
 	size_t		i;
 	int			job_topop[g_jcont.job_nbr];
-	int			status;
 	t_job		*job;
 	t_list		*voyager;
 
@@ -38,7 +37,6 @@ void		ft_check_bgstatus(void)
 	while (voyager)
 	{
 		job = voyager->content;
-		status = ft_accumulate_proc_status(job->process);
 		if (ISBACKGROUND(job->status) && WIFEXITED(job->status))
 			job_topop[i++] = job->nbr;
 		voyager = voyager->next;
@@ -62,7 +60,7 @@ void				ft_update_job_status(void)
 		if (WIFSTOPPED(status))
 			((t_job*)voyager->content)->status = status;
 		else if (WIFEXITED(status))
-			((t_job*)voyager->content)->status &= ~RUNNING & ~_WSTOPPED;
+			((t_job*)voyager->content)->status &= ~RUNNING & ~WSTPED;
 		else
 		{
 			((t_job*)voyager->content)->status &= ~RUNNING;

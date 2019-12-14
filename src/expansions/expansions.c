@@ -24,9 +24,9 @@ t_symexp	g_symexp[] =
 	{EQUAL_EXP, &equal_exp},
 	{BSHARP_EXP, &bsharp_exp},
 	{OSHARP_EXP, &osharp_exp},
-	{DSHARP_EXP, &dsharp_exp},
+	{DSHARP_EXP, &osharp_exp},
 	{OPERCENT_EXP, &opercent_exp},
-	{DPERCENT_EXP, &dpercent_exp},
+	{DPERCENT_EXP, &opercent_exp},
 	{0, NULL}
 };
 
