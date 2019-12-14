@@ -17,8 +17,10 @@
 #include <signal.h>
 
 #include "libft.h"
+#include "shell_variables.h"
 #include "history.h"
 #include "sig_handler.h"
+#include "expansions.h"
 #include "builtins.h"
 #include "prompt.h"
 #include "input.h"
@@ -71,9 +73,12 @@ int		main(int argc, char **argv)
 	int				status;
 
 	(void)argc;
+	args = NULL;
 	copybuff = NULL;
 	input = NULL;
 	g_progname = argv[0];
+	init_shellvars(environ);
+	/* cmd_set(argc, argv); to show the list of internvars */
 	if (!(history(INIT, NULL, NULL)))
 		return (1);
 	if (!(environ = ft_tabcpy(environ)))
@@ -100,6 +105,16 @@ int		main(int argc, char **argv)
 		{
 			lexer(&input);
 			debug_parser(input);
+			/* way to test builtins without waiting interpreter */
+			args = ft_strsplit_whitespaces(input);
+			if (ft_strcmp("export", args[0]) == 0)
+				cmd_export(0, args);
+			else if (ft_strcmp("unset", args[0]) == 0)
+				cmd_unset(0, args);
+			else if (ft_strcmp("set", args[0]) == 0)
+				cmd_set(0, args);
+			else
+				expansions_management(args);
 			exit(0); 
 			args = lexer(&input);
 			ft_memdel((void**)&input);

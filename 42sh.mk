@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/12/03 18:46:03 by bprunevi         ###   ########.fr        #
+#    Updated: 2019/12/11 14:06:52 by yberramd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,15 +26,14 @@ SOURCES			:=		main.c \
 						input/analyzer.c \
 						input/keyboard_commands.c \
 						input/keyboard_dispatcher.c \
+						input/auto_completion/auto_completion.c \
+						input/auto_completion/tst.c \
 						lexer/lexer.c \
 						lexer/grammar_symbols.c \
-						lexer/expansions/expansions.c \
-						lexer/expansions/expansion_utils.c \
-						lexer/expansions/get_param.c \
-						lexer/expansions/parameter_expansions.c \
-						lexer/expansions/tilde_expansion.c \
-						lexer/separators/pipeline_separators.c \
 						lexer/separators/unglue_metachr.c \
+						lexer/separators/pipeline_separators.c \
+						expansions/expansions.c \
+						expansions/substitutions.c \
 						job_control/synt.c \
 						job_control/synt_const.c \
 						job_control/jcont.c \
@@ -42,6 +41,9 @@ SOURCES			:=		main.c \
 						job_control/path_concat.c \
 						job_control/get_sequence.c \
 						builtins/builtin_alias.c \
+						builtins/builtin_set.c \
+						builtins/builtin_unset.c \
+						builtins/builtin_export.c \
 						builtins/builtin_cd.c \
 						builtins/builtin_echo.c \
 						builtins/builtin_type.c \
@@ -84,9 +86,6 @@ SOURCES			:=		main.c \
 						transversal/hash/htable_type_dispatcher.c \
 						transversal/hash/init_htable.c \
 						transversal/hash/string_routines.c \
-						transversal/shell_variables/assignement_shellvar.c \
-						transversal/shell_variables/tools_parser_shvar.c \
-						transversal/shell_variables/utils_shell_variables.c \
 						transversal/shell_variables/shell_variables.c \
       					LL_parser/debug_gnt.c \
       					LL_parser/debug_interpreter.c \

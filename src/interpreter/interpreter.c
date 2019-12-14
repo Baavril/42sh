@@ -6,12 +6,15 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:13:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/14 14:11:53 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/12/14 14:20:38 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "sys/wait.h"
 #include "parser.h"
+#include "shell_variables.h"
+#include "builtins.h"
 #include <unistd.h>
 #include "builtins.h"
 #include "error.h"
@@ -71,9 +74,10 @@ int i_pipe_sequence(t_elem left, t_elem right)
 
 int i_prefix(t_elem left, t_elem right)
 {
-	(void) left.c;
-	extern char **environ;
-	*environ = ft_strdup("Cette ligne est a remplacer !");
+	/* comment parcourir tout l'arbre et recuperer les donnees ? */
+	listadd_back(newnodshell(left.c, 0));
+	cmd_set(0, NULL);
+	/* reponse : comme ceci :D */
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
 	return(0);

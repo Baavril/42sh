@@ -15,8 +15,11 @@
 #include "history.h"
 #include "builtins.h"
 #include "libft.h"
+#include "shell_variables.h"
 #include "error.h"
 #include "jcont.h"
+
+struct s_svar *g_svar;
 
 static int	part_sep(int argc, char **argv)
 {
@@ -73,6 +76,23 @@ static void	nomatter_exit(char **argv, int i)
 	exit(2);
 }
 
+static void	ft_free_internvars(void)
+{
+	/* need to be tested when interpreter is done */
+	struct s_svar *tmp;
+
+	tmp = NULL;
+	while (g_svar)
+	{
+		tmp = g_svar->next;
+		ft_strdel(&(g_svar->str));
+		ft_strdel(&(g_svar->key));
+		ft_strdel(&(g_svar->value));
+		g_svar = tmp;
+	}
+	free(g_svar);
+}
+
 int		cmd_exit(int argc, char **argv)
 {
 	extern char	**environ;
@@ -94,5 +114,6 @@ int		cmd_exit(int argc, char **argv)
 	ft_tabdel(&environ);
 	history(DELETE, NULL, NULL);
 	ft_free_bintable();
+	ft_free_internvars();
 	exit(status);
 }

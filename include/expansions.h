@@ -1,46 +1,72 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expansions.h                                        :+:      :+:    :+:   */
+/*   expansions.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/01 17:13:35 by abarthel          #+#    #+#             */
-/*   Updated: 2019/08/01 18:40:54 by abarthel         ###   ########.fr       */
+/*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
+/*   Updated: 2019/11/09 11:47:27 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXPANSIONS_H
 # define EXPANSIONS_H
-# include <stdlib.h>
 
-struct	s_tags
+# define STAR '*'
+# define AROB '@'
+# define EXCLAM '!'
+# define OP_SQUAR '['
+# define CL_SQUAR ']'
+
+# define WHY '?'
+# define PLUS '+'
+# define DASH '-'
+# define EQUAL '='
+# define CARET '^'
+# define SHARP '#'
+# define COLON ':'
+# define DOLLAR '$'
+# define PERCENT '%'
+# define OP_BRACE '{'
+# define CL_BRACE '}'
+
+# define EMPTY_STR ""
+# define MAXCHR 95
+
+# define ERROR -1
+# define SUCCESS 0
+# define DIRECT_EXP 1
+# define SIMPLE_EXP 2
+# define COMPLEX_EXP 3
+# define WHY_EXP 4
+# define PLUS_EXP 5
+# define DASH_EXP 6
+# define EQUAL_EXP 7
+# define BSHARP_EXP 8
+# define OSHARP_EXP 9
+# define DSHARP_EXP 10
+# define OPERCENT_EXP 11
+# define DPERCENT_EXP 12
+
+typedef struct	s_symexp
 {
-	char	*opentag;
-	int	(*f)(size_t*, char**, const char*, const char*);
-	char	*closetag;
-};
+				int		sym;
+				int		(*expand)(char **);
+}				t_symexp;
 
-struct	s_param
-{
-	char	*pname;
-	char	*(*g)(const char*);
-};
+int		expansions_management(char **tokens);
 
-int		treat_expansions(char **tokens);
-
-int		getenv_content(char **content, char *str, const char *closetag);
-
-size_t		ft_varlen(const char *s, const char *closetag);
-
-int		is_a_valid_chr(const char c);
-
-int		is_valid_param(const char *str);
-
-int		parameter_expansions(size_t *index, char **str,
-		const char *opentag, const char *closetag);
-
-int		tilde_expansion(size_t *index, char **str,
-		const char *opentag, const char *closetag);
+int		direct_exp(char **token);
+int		simple_exp(char **token);
+int		why_exp(char **token);
+int		plus_exp(char **token);
+int		dash_exp(char **token);
+int		equal_exp(char **token);
+int		bsharp_exp(char **token);
+int		osharp_exp(char **token);
+int		dsharp_exp(char **token);
+int		opercent_exp(char **token);
+int		dpercent_exp(char **token);
 
 #endif
