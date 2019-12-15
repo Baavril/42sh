@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2019/12/14 21:06:49 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/15 15:04:48 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int		main(int argc, char **argv)
 			psherror(e_cannot_allocate_memory, argv[0], e_cmd_type);
 			return (1);
 		}
-		if (status != -1)
+		if (status != -1 && input[0])
 		{
 			lexer(&input);
 			debug_parser(input);
@@ -116,6 +116,8 @@ int		main(int argc, char **argv)
 				cmd_unset(0, args);
 			else if (ft_strcmp("set", args[0]) == 0)
 				cmd_set(0, args);
+			else if (ft_strcmp("exit", args[0]) == 0)
+				exit(0);
 			else
 				expansions_management(args);
 			continue ; 
