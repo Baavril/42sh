@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:56:52 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/14 21:20:15 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/16 13:22:22 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ int			ft_add_process(t_node ast_node, int std_fd[3], int fd_to_close)
 	}
 	if (!g_pgid)
 		g_pgid = pid;
-	//	ft_dprintf(2, "pgid: %i\n", g_pgid);
+	ft_dprintf(2, "pgid: %i\n", g_pgid);
 	process.pid = pid;
-	process.status = 0;
+	process.status = RUNNING;
 	ft_lstadd(&g_proclist, ft_lstnew(&process, sizeof(t_process))); //a memcheck ?
 	return (0);
 }
@@ -82,8 +82,7 @@ int			ft_launch_job(char *cmd, int status)
 	t_job		*job;
 	int			ret_status;
 
-
-	ft_dprintf(2, "ft_launch_job\n");
+	ft_dprintf(2, "\n\n>>>> LAUNCH JOB <<<<\n");
 	job = ft_add_job(status, cmd);
 	//	ft_dprintf(2, ">>> job pgid: %i <<<\n", job->pgid);
 	ft_dprintf(2, "ft_add_job_end\n");
@@ -96,7 +95,7 @@ int			ft_launch_job(char *cmd, int status)
 		ft_dprintf(2, "FOREGROUND_TEST\n");
 		ft_dprintf(2, "Return of tcsetpgrp: %i for son pgid: %i\n", tcsetpgrp(STDIN_FILENO, job->pgid), job->pgid);
 		ft_dprintf(2, "wait_start\n");
-//		while (ISRUNNING(job->status))
+		while (ISRUNNING(job->status))
 			sigsuspend(&wakeup_sig);
 //		ft_dprintf(2, "wait_end\n");
 

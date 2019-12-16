@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:01:09 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/14 20:35:05 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/16 13:50:37 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static int			ft_accumulate_proc_status(t_list *proclist)
 	if (!proclist)
 		return (0);
 	process = (t_process*)(proclist->content);
+	ft_dprintf(2, "UPDATE: status : %i of process: %i\n", process->status, process->pid);
 	return (process->status | ft_accumulate_proc_status(proclist->next));
 }
 
@@ -52,20 +53,17 @@ void				ft_update_job_status(void)
 {
 	int			status;
 	t_list		*voyager;
+	t_job		*job;
 
 	voyager = g_jcont.jobs;
 	while (voyager)
 	{
-		status = ft_accumulate_proc_status(((t_job*)voyager->content)->process);
-		if (WIFSTOPPED(status))
-			((t_job*)voyager->content)->status = status;
+		job = (t_job*)(voyager->content);
+		status = ft_accumulate_proc_status(job->process);
+		if (ISRUNNING(status) || WIFSTOPPED(status))
+			job->status = status;
 		else if (WIFEXITED(status))
-			((t_job*)voyager->content)->status &= ~RUNNING & ~WSTPED;
-		else
-		{
-			((t_job*)voyager->content)->status &= ~RUNNING;
-			((t_job*)voyager->content)->status |= MAJOR_FAILLURE;// un certain nombre de programmes ont fail (signal != stop) et les autres ont retourne
-		}
+			job->status = ((t_process*)(job->process->content))->status;
 		voyager = voyager->next;
 	}
 }
