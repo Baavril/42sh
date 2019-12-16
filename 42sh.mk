@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/12/16 20:50:01 by tgouedar         ###   ########.fr        #
+#    Updated: 2019/12/16 22:21:50 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,6 @@ SOURCES			:=		main.c \
 						job_control/ft_get_job.c \
 						job_control/ft_pop_job.c \
 						job_control/ft_get_process_pid.c \
-						job_control/ft_isnumber.c \
 						job_control/ft_add_job.c \
 						job_control/ft_print_job.c \
 						job_control/ft_set_prio.c \

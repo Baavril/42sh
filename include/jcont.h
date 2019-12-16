@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:18:20 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/16 20:49:09 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/16 22:22:34 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int					ft_wait_foreground(t_job *job);
 int					ft_isready(t_job *job);
 
 #include <sys/wait.h>
-#include <stdio.h>
 int			ft_add_process(t_node ast_node, int std_fd[3], int fd_to_close);
 int			ft_launch_job(char *cmd, int status);
 t_job		*ft_add_job(int status, char *cmd);
@@ -85,7 +84,6 @@ t_job		*ft_add_job(int status, char *cmd);
 
 
 # include <stdio.h>
-int			ft_isnumber(char *str);
 int			ft_resume_in_fg(t_job *job);
 
 
