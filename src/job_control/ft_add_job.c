@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:36:57 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/16 19:35:01 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/16 19:50:38 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 extern t_jcont		g_jcont;
 extern t_job		g_curjob;
+extern int			g_fd[3];
 
-t_job		*ft_add_job(int status, char *cmd)
+t_job				*ft_add_job(int status, char *cmd)
 {
 	t_job	new;
 	t_list	*new_front;
@@ -36,5 +37,6 @@ t_job		*ft_add_job(int status, char *cmd)
 	ft_lstadd(&(g_jcont.jobs), new_front);
 	ft_set_prio();
 	ft_bzero(&g_curjob, sizeof(t_job));
+	f_fd = {STDIN_FILENO, STDOUT_FILENO, STDERR_FILENO}
 	return (new_front->content);
 }
