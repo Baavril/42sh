@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2019/12/16 18:30:37 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/16 19:37:20 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,15 @@ static int	set_minimal_env(void)
 void		ft_sigusr1_handler(int nbr, siginfo_t *siginfo, void *context)
 {
 	extern t_jcont		g_jcont;
+	extern t_job		g_curjob;
 	t_process			*process;
 
 	(void)nbr;
 	(void)context;
 	ft_dprintf(2, "\nJE SUIS DANS L'ACTION et j'ai le pid: %i\n\n", siginfo->si_pid);
-	process = ft_get_process_pid(siginfo->si_pid);
+	if (!(process = ft_get_process_pid(siginfo->si_pid))
+	&& !(process = ft_get_process_from_job(&g_curjob, siginfo->si_pid)))
+		return ;
 	process->ready = 1;
 }
 

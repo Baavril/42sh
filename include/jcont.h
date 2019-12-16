@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:18:20 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/16 18:13:49 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/16 19:26:08 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ typedef struct		s_job
 {
 	t_list			*process;
 	pid_t			pgid;
-	pid_t			controlling_pid;
 	int				status;
 	char			*cmd;
 	int				nbr;

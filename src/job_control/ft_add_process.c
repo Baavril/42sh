@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 15:51:32 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/16 18:27:01 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/16 19:37:40 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 #include <unistd.h>
 #include <signal.h>
 
-t_list			*g_proclist = NULL;
-pid_t			g_pgid = 0;
+extern t_job	g_curjob;
 
 
 void			ft_stdredir(int std_fd[3])
@@ -80,7 +79,7 @@ int				ft_add_process(t_node ast_node, int std_fd[3], int fd_to_close)
 	{
 		if (fd_to_close != -1)
 			close(fd_to_close);
-		pgid = (g_pgid) ? g_pgid : getpid();
+		pgid = (g_curjob.pgid) ? g_curjob.pgid : getpid();
 		//	ft_dprintf(2, "pgid in son: %i\n", pgid);
 		ft_dprintf(2, "add process: In son: %i setpgid ret: %i\n", getpid(), setpgid(getpid(), pgid));
 		ft_dprintf(2, "add process: In son: %i pgid of call: %i       actualpgid: %i\n", getpid(), pgid, getpgrp());
@@ -88,13 +87,12 @@ int				ft_add_process(t_node ast_node, int std_fd[3], int fd_to_close)
 		ft_stdredir(std_fd);
 		ast_node.f(ast_node.left, ast_node.right);
 	}
-	if (!g_pgid)
-		g_pgid = pid;
-	ft_dprintf(2, "pgid: %i\n", g_pgid);
+	if (!(g_curjob.pgid))
+		g_curjob.pgid = pid;
+	ft_dprintf(2, "pgid: %i\n", g_curjob.pgid);
 	process.pid = pid;
 	process.ready = 0;
 	process.status = RUNNING;
-	ft_lstadd(&g_proclist, ft_lstnew(&process, sizeof(t_process))); //a memcheck ?
+	ft_lstadd(&(g_curjob.process), ft_lstnew(&process, sizeof(t_process))); //a memcheck ?
 	return (0);
 }
-
