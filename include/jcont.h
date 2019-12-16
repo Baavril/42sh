@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:18:20 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/16 22:22:34 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/16 22:43:14 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void				ft_free_job(void *content, size_t size);
 t_job				*ft_add_job(int status, char *cmd);
 void				ft_set_prio(void);
 int					ft_pop_job(int nbr);
-void				ft_sigchld_handler(int nbr);
 void				ft_update_job_status(void);
 int					ft_wait_foreground(t_job *job);
 int					ft_isready(t_job *job);
@@ -81,11 +80,7 @@ int			ft_launch_job(char *cmd, int status);
 t_job		*ft_add_job(int status, char *cmd);
 
 
-
-
 # include <stdio.h>
 int			ft_resume_in_fg(t_job *job);
-
-
 
 #endif

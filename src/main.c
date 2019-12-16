@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2019/12/16 19:37:20 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/16 22:47:53 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,21 +65,6 @@ static int	set_minimal_env(void)
 	return (e_success);
 }
 
-void		ft_sigusr1_handler(int nbr, siginfo_t *siginfo, void *context)
-{
-	extern t_jcont		g_jcont;
-	extern t_job		g_curjob;
-	t_process			*process;
-
-	(void)nbr;
-	(void)context;
-	ft_dprintf(2, "\nJE SUIS DANS L'ACTION et j'ai le pid: %i\n\n", siginfo->si_pid);
-	if (!(process = ft_get_process_pid(siginfo->si_pid))
-	&& !(process = ft_get_process_from_job(&g_curjob, siginfo->si_pid)))
-		return ;
-	process->ready = 1;
-}
-
 int		main(int argc, char **argv)
 {
 	extern char		**environ;
@@ -87,18 +72,9 @@ int		main(int argc, char **argv)
 	char			**args;
 	int				status;
 
-	ft_dprintf(2, "Return of tcsetpgrp: %i for self\n", tcsetpgrp(STDIN_FILENO, getpid()));
-	signal(SIGCHLD, &ft_sigchld_handler);
-	
-	struct sigaction	action;
-	
-	ft_bzero(&action, sizeof(sigaction));
-	action.sa_flags = SA_SIGINFO;
-	action.sa_sigaction = &ft_sigusr1_handler;
-	sigaction(SIGUSR1, &action, NULL);
-	signal(SIGTTOU, SIG_IGN);
-	signal(SIGTTIN, SIG_IGN);
 	(void)argc;
+	tcsetpgrp(STDIN_FILENO, getpid()); //Control the terminal
+	set_signals();
 	args = NULL;
 	copybuff = NULL;
 	input = NULL;
@@ -119,7 +95,6 @@ int		main(int argc, char **argv)
 		ft_tabdel(&environ);
 		return (1);
 	}
-	set_signals(0);
 	while (!read_command(&input) || get_next_line(0, &input))
 	{
 		if (!(status = history(ADD_CMD, &input, NULL)))
@@ -144,7 +119,7 @@ int		main(int argc, char **argv)
 			else
 				expansions_management(args);
 			continue ; 
-			args = lexer(&input);
+/*			args = lexer(&input);
 			ft_memdel((void**)&input);
 //			if (!args)
 				continue;
@@ -156,7 +131,7 @@ int		main(int argc, char **argv)
 				continue;
 			}
 			g_retval = 0;
-			ft_tabdel(&args);
+			ft_tabdel(&args);*/
 		}
 		else
 			ft_memdel((void**)&input);

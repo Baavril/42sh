@@ -6,14 +6,15 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 15:51:32 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/16 19:37:40 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/16 22:47:33 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "jcont.h"
 #include <sys/types.h>
 #include <unistd.h>
 #include <signal.h>
+#include "sig_handler.h"
+#include "jcont.h"
 
 extern t_job	g_curjob;
 
@@ -35,11 +36,6 @@ void			ft_stdredir(int std_fd[3])
 		dup2(std_fd[2], STDERR_FILENO);
 		close(std_fd[2]);
 	}
-}
-
-void			ft_catch_sigusr1(int nbr)
-{
-	(void)nbr;
 }
 
 void			ft_set_child_signal(int shell_pid)//Cela suffira-t-il ?
