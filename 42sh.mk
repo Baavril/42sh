@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/12/16 19:48:53 by tgouedar         ###   ########.fr        #
+#    Updated: 2019/12/16 19:57:18 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,8 +34,6 @@ SOURCES			:=		main.c \
 						lexer/separators/pipeline_separators.c \
 						expansions/expansions.c \
 						expansions/substitutions.c \
-						job_control/synt.c \
-						job_control/synt_const.c \
 						job_control/jcont.c \
 						job_control/ft_add_process.c \
 						job_control/ft_free_job.c \
