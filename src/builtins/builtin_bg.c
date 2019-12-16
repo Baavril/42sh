@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 10:57:05 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/16 14:53:49 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/16 20:34:24 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int					ft_resume_in_bg(t_job *job)
 {
 	if (!killpg(-job->pgid, SIGCONT))
 	{
-		job->status |= RUNNING | BACKGROUND;
-//		ft_set_prio();
+		job->status = RUNNING | BACKGROUND;
+		ft_set_prio();
 		return (0);
 	}
 	ft_dprintf(2, "%s: bg: error while sending continue signal(SIGCONT).", g_progname);

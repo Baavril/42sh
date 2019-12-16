@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:18:20 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/16 19:26:08 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/16 20:49:09 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void				ft_set_prio(void);
 int					ft_pop_job(int nbr);
 void				ft_sigchld_handler(int nbr);
 void				ft_update_job_status(void);
-
 int					ft_wait_foreground(t_job *job);
 int					ft_isready(t_job *job);
 

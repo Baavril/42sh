@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:56:52 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/16 19:37:10 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/16 20:48:28 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int			ft_isready(t_job *job)
 
 int			ft_launch_job(char *cmd, int status)
 {
-	t_job		*job;
 	sigset_t	wakeup_sig;
+	t_job		*job;
 	int			ret_status;
 
 	ft_dprintf(2, "\n\n>>>> LAUNCH JOB <<<<\n");
@@ -50,15 +50,8 @@ int			ft_launch_job(char *cmd, int status)
 	sigdelset(&wakeup_sig, SIGUSR1);
 	while (!ft_isready(job)) //Attente de la creation et mise en place de tout les fils
 		sigsuspend(&wakeup_sig);
-	tcsetpgrp(STDIN_FILENO, job->pgid); //mise au premier plan vis-a-vis le term
-	sigfillset(&wakeup_sig);
-	sigdelset(&wakeup_sig, SIGCHLD);
-	killpg(job->pgid, SIGUSR1);
-	while (ISRUNNING(job->status)) //Attente de l'arret/suspension de tout les fils
-		sigsuspend(&wakeup_sig);
-	tcsetpgrp(STDIN_FILENO, getpid()); //mise au premier plan vis-a-vis du shell
-	ret_status = job->status;
-	if (job && !WIFSTOPPED(job->status))
+	ret_status = ft_wait_foreground(job);
+	if (!WIFSTOPPED(job->status))
 		ft_pop_job(job->nbr);
 	return (ret_status);
 }

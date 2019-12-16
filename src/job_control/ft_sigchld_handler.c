@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:50:48 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/16 19:37:56 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/16 20:35:22 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void		ft_sigchld_handler(int nbr)
 	ft_dprintf(2, "handler: wait caught pid: %i\n", pid);
 		if ((job = ft_get_job_pgid(pid)))
 		{
-			job->status = ret_status;
+			job->status = ret_status | (BACKGROUND &job->status);
 			if (!(process = ft_get_process_from_job(job, pid)))
 				continue ;
 		}

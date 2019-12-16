@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/12/16 19:57:18 by tgouedar         ###   ########.fr        #
+#    Updated: 2019/12/16 20:50:01 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ SOURCES			:=		main.c \
 						lexer/separators/pipeline_separators.c \
 						expansions/expansions.c \
 						expansions/substitutions.c \
-						job_control/jcont.c \
+						job_control/ft_launch_job.c \
 						job_control/ft_add_process.c \
 						job_control/ft_free_job.c \
 						job_control/ft_get_job.c \
@@ -46,6 +46,7 @@ SOURCES			:=		main.c \
 						job_control/ft_set_prio.c \
 						job_control/ft_sigchld_handler.c \
 						job_control/ft_update_job_status.c \
+						job_control/ft_wait_foreground.c \
 						job_control/path_concat.c \
 						job_control/get_sequence.c \
 						builtins/builtin_alias.c \
