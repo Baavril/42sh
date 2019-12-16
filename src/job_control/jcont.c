@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:56:52 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/16 13:22:22 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/16 18:33:33 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,65 +15,23 @@
 #include <unistd.h>
 #include <signal.h>
 
-t_jcont		g_jcont = {NULL, 1, {0, 0}};
-t_list		*g_proclist = NULL;
-pid_t		g_pgid = 0;
+t_jcont				g_jcont = {NULL, 1, {0, 0}};
+extern t_list		*g_proclist;
+extern pid_t		g_pgid;
 
-void		ft_stdredir(int std_fd[3])
+static int			ft_accumulate_ready(t_list *proclist)
 {
-	if (std_fd[0] != STDIN_FILENO)
-	{
-		dup2(std_fd[0], STDIN_FILENO);
-		close(std_fd[0]);
-	}
-	if (std_fd[1] != STDOUT_FILENO)
-	{
-		dup2(std_fd[1], STDOUT_FILENO);
-		close(std_fd[1]);
-	}
-	if (std_fd[2] != STDERR_FILENO)
-	{
-		dup2(std_fd[2], STDERR_FILENO);
-		close(std_fd[2]);
-	}
+	t_process	*process;
+
+	if (!proclist)
+		return (1);
+	process = (t_process*)(proclist->content);
+	return (process->ready & ft_accumulate_ready(proclist->next));
 }
 
-void		ft_set_child_signal(void)//Cela suffira-t-il ?
+int			ft_isready(t_job *job)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-	signal(SIGTSTP, SIG_DFL);
-	signal(SIGTTIN, SIG_DFL);
-	signal(SIGTTOU, SIG_DFL);
-}
-
-int			ft_add_process(t_node ast_node, int std_fd[3], int fd_to_close)
-{
-	ft_printf("ADDPROCESS %s with {%d,%d,%d}, closes {%d}\n",
-			ast_node.right.v->left.c, std_fd[0], std_fd[1], std_fd[2], fd_to_close); 
-	pid_t		pgid;
-	pid_t		pid;
-	t_process	process;
-
-	if (!(pid = fork()))
-	{
-		ft_set_child_signal();
-		if (fd_to_close != -1)
-			close(fd_to_close);
-		pgid = (g_pgid) ? g_pgid : getpid();
-		//	ft_dprintf(2, "pgid in son: %i\n", pgid);
-		ft_dprintf(2, "add process: In son: %i setpgid ret: %i\n", getpid(), setpgid(getpid(), pgid));
-		ft_dprintf(2, "add process: In son: %i pgid of call: %i       actualpgid: %i\n", getpid(), pgid, getpgrp());
-		ft_stdredir(std_fd);
-		ast_node.f(ast_node.left, ast_node.right);
-	}
-	if (!g_pgid)
-		g_pgid = pid;
-	ft_dprintf(2, "pgid: %i\n", g_pgid);
-	process.pid = pid;
-	process.status = RUNNING;
-	ft_lstadd(&g_proclist, ft_lstnew(&process, sizeof(t_process))); //a memcheck ?
-	return (0);
+	return (ft_accumulate_ready(job->process));
 }
 
 int			ft_launch_job(char *cmd, int status)
@@ -87,26 +45,39 @@ int			ft_launch_job(char *cmd, int status)
 	//	ft_dprintf(2, ">>> job pgid: %i <<<\n", job->pgid);
 	ft_dprintf(2, "ft_add_job_end\n");
 	//	ft_dprintf(2, "job_address %p\n", job);
-	if (ISFOREGROUND(status))
+	if (ISBACKGROUND(status))
 	{
-		sigemptyset(&wakeup_sig);
-		//sigaddset(&wakeup_sig, SIGCHLD);
-		sigaction(SIGCHLD, &(struct sigaction){.sa_handler = ft_sigchld_handler }, 0);
-		ft_dprintf(2, "FOREGROUND_TEST\n");
-		ft_dprintf(2, "Return of tcsetpgrp: %i for son pgid: %i\n", tcsetpgrp(STDIN_FILENO, job->pgid), job->pgid);
-		ft_dprintf(2, "wait_start\n");
-		while (ISRUNNING(job->status))
-			sigsuspend(&wakeup_sig);
-//		ft_dprintf(2, "wait_end\n");
-
-		tcsetpgrp(STDIN_FILENO, getpid());
-		ft_dprintf(2, "apres tcsetpgrp. Job status: %i   ISRUNNING(job): %i\n", job->status, ISRUNNING(job->status));
-		ret_status = ((t_process*)job->process->content)->status;
-		if (job && !WIFSTOPPED(job->status))
-			ft_pop_job(job->nbr);
-		return (ret_status);
+		killpg(job->pgid, SIGUSR1);
+		return (0);
 	}
-	return (0);
+	sigfillset(&wakeup_sig);
+	sigdelset(&wakeup_sig, SIGUSR1);
+	ft_dprintf(2, "FOREGROUND_TEST\n");
+
+	int j = 1;
+
+	while (!ft_isready(job))
+	{
+		ft_dprintf(2, "\nJE SUIS PAS PRET\n\n");
+		sigsuspend(&wakeup_sig);
+	}
+	ft_dprintf(2, "Return of tcsetpgrp: %i for son pgid: %i\n", j = tcsetpgrp(STDIN_FILENO, job->pgid), job->pgid);
+	sigfillset(&wakeup_sig);
+	sigdelset(&wakeup_sig, SIGCHLD);
+	killpg(job->pgid, SIGUSR1);
+
+	ft_dprintf(2, "wait_start\n");
+	while (ISRUNNING(job->status))
+		sigsuspend(&wakeup_sig);
+	j = tcsetpgrp(STDIN_FILENO, getpid());
+	ft_dprintf(2, "apres tcsetpgrp (ret: %i) Job status: %i   ISRUNNING(job): %i\n", j, job->status, ISRUNNING(job->status));
+	ret_status = ((t_process*)job->process->content)->status;
+	if (job && !WIFSTOPPED(job->status))
+	{
+		ft_dprintf(2, "plop\n");
+		ft_pop_job(job->nbr);
+	}
+	return (ret_status);
 }
 
 int			ft_pop_job(int nbr)
@@ -122,6 +93,7 @@ int			ft_pop_job(int nbr)
 	{
 		g_jcont.jobs = voyager->next;
 		ft_lstdelone(&voyager, &ft_free_job);
+		ft_dprintf(2, "plip\n");
 	}
 	else
 	{

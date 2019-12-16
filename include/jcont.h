@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:18:20 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/14 16:14:12 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/16 18:13:49 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct		s_process
 {
 	pid_t			pid;
 	int				status;
+	int				ready;
 }					t_process;
 
 typedef struct		s_job
@@ -61,9 +62,10 @@ t_job				*ft_get_job_nbr(int job_nbr);
 t_job				*ft_get_job_pgid(pid_t pgid);
 
 /* ft_get_process_pid.c */
-t_process			*ft_get_process_from_job(t_job *job, pid_t pid); // a passer en static ?
+t_process			*ft_get_process_from_job(t_job *job, pid_t pid);
 t_process			*ft_get_process_pid(pid_t pid);
 
+void				ft_print_jobs(t_list *job_list, int opt);
 void				ft_print_job(t_job *job, int opt);
 void				ft_free_job(void *content, size_t size);
 t_job				*ft_add_job(int status, char *cmd);
@@ -72,6 +74,8 @@ int					ft_pop_job(int nbr);
 void				ft_sigchld_handler(int nbr);
 void				ft_update_job_status(void);
 
+int					ft_wait_foreground(t_job *job);
+int					ft_isready(t_job *job);
 
 #include <sys/wait.h>
 #include <stdio.h>
@@ -84,7 +88,7 @@ t_job		*ft_add_job(int status, char *cmd);
 
 # include <stdio.h>
 int			ft_isnumber(char *str);
-int				ft_resume_in_fg(t_job *job);
+int			ft_resume_in_fg(t_job *job);
 
 
 

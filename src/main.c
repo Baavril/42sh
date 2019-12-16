@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2019/12/15 15:04:48 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/12/16 18:30:37 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,18 @@ static int	set_minimal_env(void)
 	return (e_success);
 }
 
+void		ft_sigusr1_handler(int nbr, siginfo_t *siginfo, void *context)
+{
+	extern t_jcont		g_jcont;
+	t_process			*process;
+
+	(void)nbr;
+	(void)context;
+	ft_dprintf(2, "\nJE SUIS DANS L'ACTION et j'ai le pid: %i\n\n", siginfo->si_pid);
+	process = ft_get_process_pid(siginfo->si_pid);
+	process->ready = 1;
+}
+
 int		main(int argc, char **argv)
 {
 	extern char		**environ;
@@ -74,7 +86,15 @@ int		main(int argc, char **argv)
 
 	ft_dprintf(2, "Return of tcsetpgrp: %i for self\n", tcsetpgrp(STDIN_FILENO, getpid()));
 	signal(SIGCHLD, &ft_sigchld_handler);
+	
+	struct sigaction	action;
+	
+	ft_bzero(&action, sizeof(sigaction));
+	action.sa_flags = SA_SIGINFO;
+	action.sa_sigaction = &ft_sigusr1_handler;
+	sigaction(SIGUSR1, &action, NULL);
 	signal(SIGTTOU, SIG_IGN);
+	signal(SIGTTIN, SIG_IGN);
 	(void)argc;
 	args = NULL;
 	copybuff = NULL;

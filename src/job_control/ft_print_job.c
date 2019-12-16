@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 18:25:57 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/14 16:11:49 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/16 15:52:04 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,15 @@ static void		ft_statestring(char mess[MAX_STATE_LEN], int status) //d'autres mes
 	else if (WIFSTOPPED(status))
 	{
 		sig = WSTOPSIG(status);
-		ft_memcpy(&(mess[0]), "Stopped(", 8);
+		ft_memcpy(&(mess[0]), "Stopped(\0", 9);
 		if (sig == SIGTSTP)
 			ft_memcpy(&(mess[8]), "SIGTSTP)\0", 9);
 		if (sig == SIGSTOP)
 			ft_memcpy(&(mess[8]), "SIGSTOP)\0", 9);
+		if (sig == SIGTTOU)
+			ft_memcpy(&(mess[8]), "SIGTTOU)\0", 9);
+		if (sig == SIGTTIN)
+			ft_memcpy(&(mess[8]), "SIGTTIN)\0", 9);
 	}
 	else if (WIFEXITED(status))
 		ft_memcpy(&(mess[0]), "Done\0", 5);

@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:01:09 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/16 13:50:37 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/16 14:43:41 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static int			ft_accumulate_proc_status(t_list *proclist)
 	if (!proclist)
 		return (0);
 	process = (t_process*)(proclist->content);
-	ft_dprintf(2, "UPDATE: status : %i of process: %i\n", process->status, process->pid);
 	return (process->status | ft_accumulate_proc_status(proclist->next));
 }
 
@@ -60,10 +59,11 @@ void				ft_update_job_status(void)
 	{
 		job = (t_job*)(voyager->content);
 		status = ft_accumulate_proc_status(job->process);
-		if (ISRUNNING(status) || WIFSTOPPED(status))
-			job->status = status;
-		else if (WIFEXITED(status))
-			job->status = ((t_process*)(job->process->content))->status;
+		if (WIFEXITED(status))
+			status = ((t_process*)(job->process->content))->status;
+		if (ISBACKGROUND(job->status))
+			status |= BACKGROUND;
+		job->status = status;
 		voyager = voyager->next;
 	}
 }
