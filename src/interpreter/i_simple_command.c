@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:43:35 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/18 13:22:19 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/12/18 14:52:48 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,24 @@ int i_prefix(t_elem left, t_elem right)
 
 int i_exec(t_elem left, t_elem right)
 {
+	int i;
 	extern char **environ;
 
 	g_argv = malloc(sizeof(char *) * 16); //16 ARGS MAX, NON
-	if (eval_command(&left.c))
-	{
-		ft_dprintf(1, "unknown command : %s\n", left.c);
-		exit(0);
-	}
 	g_argv[0] = left.c;
 	g_argv[1] = NULL;
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
-	return(execve(g_argv[0], g_argv, environ));
+	i = builtins_dispatcher(g_argv);
+	if (i == e_command_not_found)
+	{
+		if (eval_command(g_argv))
+			exit(ft_dprintf(1, "unknown command : %s\n", g_argv));
+		else
+			return(execve(g_argv[0], g_argv, environ));
+	}
+	else
+		return(i);
 }
 
 int i_suffix(t_elem left, t_elem right)
