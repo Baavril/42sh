@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:56:52 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/18 13:07:35 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/18 15:04:20 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,15 @@ int			ft_launch_job(char *cmd, int status)
 		return (0);
 	ft_dprintf(2, "\n\n>>>> LAUNCH JOB <<<<\n");
 	job = ft_add_job(status, cmd); //may fail due to malloc
+	sigfillset(&wakeup_sig);
+	sigdelset(&wakeup_sig, SIGUSR1);
+	while (!ft_isready(job)) //Attente de la creation et mise en place de tout les fils
+		sigsuspend(&wakeup_sig);
 	if (ISBACKGROUND(status))
 	{
 		killpg(job->pgid, SIGUSR1);
 		return (0);
 	}
-	sigfillset(&wakeup_sig);
-	sigdelset(&wakeup_sig, SIGUSR1);
-	while (!ft_isready(job)) //Attente de la creation et mise en place de tout les fils
-		sigsuspend(&wakeup_sig);
 	ret_status = ft_wait_foreground(job);
 	if (!WIFSTOPPED(job->status))
 		ft_pop_job(job->nbr);
