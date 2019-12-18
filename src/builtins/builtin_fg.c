@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 11:17:51 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/11 18:36:36 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/16 20:48:10 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@
 extern t_jcont		g_jcont;
 extern char			*g_progname;
 
-int				ft_resume_in_fg(t_job *job)
+int				ft_resume_in_fg(t_job *job)//need to test the synchronicity of killpg/sigsupend calls
 {
-	pid_t			pid;
 	int				ret_status;
-	t_process		*process;
 
+	if (g_jcont.active_jobs[0] != job->nbr)
+		g_jcont.active_jobs[1] = g_jcont.active_jobs[0];
+	g_jcont.active_jobs[0] = job->nbr;
 	if (WIFSTOPPED(job->status))
 	{
 		if (!killpg(-job->pgid, SIGCONT))
@@ -33,21 +34,14 @@ int				ft_resume_in_fg(t_job *job)
 			return (1);
 		}
 	}
-	if (g_jcont.active_jobs[0] != job->nbr)
-		g_jcont.active_jobs[1] = g_jcont.active_jobs[0];
-	g_jcont.active_jobs[0] = job->nbr;
-	while ((pid = waitpid(-job->pgid, &ret_status, WUNTRACED)) > 0)
-	{
-		if (!(process = ft_get_process_from_job(job, pid)))
-			continue ;
-		process->status = ret_status;
-		if (pid == job->pgid)
-			job->status = ret_status;
-	}
-	return (0);
+	ret_status = ft_wait_foreground(job);
+	if (!WIFSTOPPED(job->status))
+		ft_pop_job(job->nbr);
+	return (ret_status);
 }
 
-/* Took some freedom vis-a-vis the bash arguments of background builtin to match
+/*
+** Took some freedom vis-a-vis the bash arguments of background builtin to match
 ** the jobs builtin arg (no need of '%' to get the job-id).
 ** I supposed it would only interpret one argument since bash's fg seems to
 ** ignore any of the other arguments. This builtin has no options.
@@ -57,7 +51,6 @@ int					cmd_fg(int ac, char **av)
 {
 	t_job		*job;
 	int			ret;
-	int			status;
 
 	ret = 0;
 	if (ac == 1)

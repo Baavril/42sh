@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/02 16:56:23 by abarthel          #+#    #+#             */
-/*   Updated: 2019/12/14 18:40:04 by tgouedar         ###   ########.fr       */
+/*   Created: 2019/12/16 22:47:47 by tgouedar          #+#    #+#             */
+/*   Updated: 2019/12/16 22:50:01 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,18 @@
 
 #include "libft.h"
 #include "sig_handler.h"
-#include "job.h"
 
-int	set_signals(int type)
+void			set_signals(void)
 {
-(void)type;
-	return(0);
+	struct sigaction	action;
+
+	signal(SIGCHLD, &ft_sigchld_handler);
+	ft_bzero(&action, sizeof(sigaction));
+	action.sa_flags = SA_SIGINFO;
+	action.sa_sigaction = &ft_sigusr1_handler;
+	sigaction(SIGUSR1, &action, NULL);
+	signal(SIGTTOU, SIG_IGN);
+	signal(SIGTTIN, SIG_IGN);
+	signal(SIGSTOP, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
 }

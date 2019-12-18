@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 10:08:05 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/11 18:36:44 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/16 15:25:29 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,11 @@ int					cmd_jobs(int ac, char **av)
 {
 	int			ret;
 	t_job		*job;
-	size_t		i;
+	int			i;
 	int			opt;
+
+	ft_dprintf(2, "\n\n>>> JOBS <<<\n");
+
 
 	opterr = 0;
 	optind = 1;
