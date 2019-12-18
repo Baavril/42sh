@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:18:20 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/16 22:43:14 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/18 12:42:40 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ int			ft_add_process(t_node ast_node, int std_fd[3], int fd_to_close);
 int			ft_launch_job(char *cmd, int status);
 t_job		*ft_add_job(int status, char *cmd);
 
+void			ft_save_term_fd(int std_redir[3], int save_fd[3]);
+void			ft_stdredir(int std_fd[3]);
 
 # include <stdio.h>
 int			ft_resume_in_fg(t_job *job);

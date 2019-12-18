@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:56:52 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/16 20:48:28 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/18 13:07:35 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int			ft_launch_job(char *cmd, int status)
 	t_job		*job;
 	int			ret_status;
 
+	if (!(g_curjob.process))
+		return (0);
 	ft_dprintf(2, "\n\n>>>> LAUNCH JOB <<<<\n");
 	job = ft_add_job(status, cmd); //may fail due to malloc
 	if (ISBACKGROUND(status))
