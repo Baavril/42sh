@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 10:57:05 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/16 20:34:24 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/18 15:24:48 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ extern char			*g_progname;
 
 int					ft_resume_in_bg(t_job *job)
 {
-	if (!killpg(-job->pgid, SIGCONT))
+	if (!killpg(job->pgid, SIGCONT))
 	{
 		job->status = RUNNING | BACKGROUND;
 		ft_set_prio();

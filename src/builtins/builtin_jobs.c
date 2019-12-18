@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 10:08:05 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/16 15:25:29 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/18 16:26:08 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,27 @@ extern int			optopt;
 extern int			optind;
 extern int			opterr;
 
+void				ft_pop_done(void)
+{
+	size_t		i;
+	int			job_topop[g_jcont.job_nbr];
+	t_list		*voyager;
+	t_job		*job;
+
+	i = 0;
+	voyager = g_jcont.jobs;
+	while (voyager)
+	{
+		job = voyager->content;
+		if (!WIFSTOPPED(job->status) && !ISRUNNING(job->status))
+			job_topop[i++] = job->nbr;
+		voyager = voyager->next;
+	}
+	while (i--)
+		ft_pop_job(job_topop[i]);
+	ft_set_prio();
+}
+
 int					cmd_jobs(int ac, char **av)
 {
 	int			ret;
@@ -27,8 +48,6 @@ int					cmd_jobs(int ac, char **av)
 	int			opt;
 
 	ft_dprintf(2, "\n\n>>> JOBS <<<\n");
-
-
 	opterr = 0;
 	optind = 1;
 	while ((ret = getopt(ac, av, JOBS_OPT)) > 0)
@@ -55,5 +74,6 @@ int					cmd_jobs(int ac, char **av)
 			ft_dprintf(STDERR_FILENO, "%s: jobs: %s: no such job.\n", g_progname, av[i]);
 		i++;
 	}
+	ft_pop_done();
 	return (ret > 0 ? 1 : 0);
 }

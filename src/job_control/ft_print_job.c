@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 18:25:57 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/18 13:13:40 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/12/18 16:00:27 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ static void		ft_statestring(char mess[MAX_STATE_LEN], int status) //d'autres mes
 		if (sig == SIGTTIN)
 			ft_memcpy(&(mess[8]), "SIGTTIN)\0", 9);
 	}
+	else if (WIFSIGNALED(status))
+	{
+		sig = WTERMSIG(status);
+		ft_memcpy(&(mess[0]), "Terminated: \0", 13);
+		ft_memcpy(&(mess[12]), ft_itoa(sig), 3);
+	}
 	else if (WIFEXITED(status))
 		ft_memcpy(&(mess[0]), "Done\0", 5);
 }
@@ -51,11 +57,11 @@ void			ft_print_job(t_job *job, int opt)
 	else if (g_jcont.active_jobs[1] == job->nbr)
 		prio = '-';
 	if (opt == L_OPT)
-		ft_dprintf(2, "[%i]%-2c %i%-*s%s\n", job->nbr, prio, job->pgid, MAX_STATE_LEN, mess, job->cmd);
+		ft_printf("[%i]%-2c %i%-*s%s\n", job->nbr, prio, job->pgid, MAX_STATE_LEN, mess, job->cmd);
 	else if (opt == P_OPT)
-		ft_dprintf(2, "%i\n", job->pgid);
+		ft_printf("%i\n", job->pgid);
 	else
-		ft_dprintf(2, "[%i]%-2c %-*s%s\n", job->nbr, prio, MAX_STATE_LEN, mess, job->cmd);
+		ft_printf("[%i]%-2c %-*s%s\n", job->nbr, prio, MAX_STATE_LEN, mess, job->cmd);
 }
 
 void		ft_print_jobs(t_list *job_list, int opt)
