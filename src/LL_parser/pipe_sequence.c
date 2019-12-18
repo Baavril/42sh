@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:48:12 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/03 12:35:53 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/12/15 15:19:01 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static t_node	*pipe_sequence(t_token tok)
 			node = malloc(sizeof(t_node));
 			node->left.v = tmp1;
 			node->right.v = tmp2;
-			ft_printf("pipeseq with 2 elems was created\n");
+			ft_dprintf(2, "pipeseq with 2 elems was created\n");
 			node->f = i_pipe_sequence;
 			return(node);
 		}

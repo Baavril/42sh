@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 16:02:57 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/14 13:05:58 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/12/16 16:55:02 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,7 @@ int i_add_process(t_elem left, t_elem right);
 int i_exec(t_elem left, t_elem right);
 int i_suffix(t_elem left, t_elem right);
 int i_debugredirect(t_elem left, t_elem right);
+
+int eval_command(char **arg);
 
 #endif

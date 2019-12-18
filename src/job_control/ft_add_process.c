@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 15:51:32 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/18 12:41:41 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/18 13:29:31 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void			ft_set_child_signal(int shell_pid)//Cela suffira-t-il ?
 
 int				ft_add_process(t_node ast_node, int std_fd[3], int fd_to_close)
 {
-	ft_printf("ADDPROCESS %s with {%d,%d,%d}, closes {%d}\n", ast_node.right.v->left.c, std_fd[0], std_fd[1], std_fd[2], fd_to_close);
+	ft_dprintf(2, "ADDPROCESS %s with {%d,%d,%d}, closes {%d}\n", ast_node.right.v->left.c, std_fd[0], std_fd[1], std_fd[2], fd_to_close);
 	pid_t		pgid;
 	pid_t		pid;
 	t_process	process;
