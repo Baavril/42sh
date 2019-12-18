@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 11:17:51 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/16 20:48:10 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/18 15:00:58 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int				ft_resume_in_fg(t_job *job)//need to test the synchronicity of killpg/sig
 	g_jcont.active_jobs[0] = job->nbr;
 	if (WIFSTOPPED(job->status))
 	{
-		if (!killpg(-job->pgid, SIGCONT))
+		if (!killpg(job->pgid, SIGCONT))
 			job->status = RUNNING;
 		else
 		{

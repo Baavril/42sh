@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 15:51:32 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/18 13:29:31 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/18 15:04:20 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void			ft_set_child_signal(int shell_pid)//Cela suffira-t-il ?
 	signal(SIGTSTP, SIG_DFL);
 	signal(SIGTTIN, SIG_DFL);
 	signal(SIGTTOU, SIG_DFL);
+	signal(SIGUSR1, SIG_IGN);
 	ft_dprintf(2, "In SOn: >>>>> top a la vachette <<<<<<<<<<<<\n");
 }
 
