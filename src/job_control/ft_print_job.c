@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 18:25:57 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/14 16:11:49 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/15 15:24:08 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ void			ft_print_job(t_job *job, int opt)
 	else if (g_jcont.active_jobs[1] == job->nbr)
 		prio = '-';
 	if (opt == L_OPT)
-		ft_printf("[%i]%-2c %i%-*s%s\n", job->nbr, prio, job->pgid, MAX_STATE_LEN, mess, job->cmd);
+		ft_dprintf(2, "[%i]%-2c %i%-*s%s\n", job->nbr, prio, job->pgid, MAX_STATE_LEN, mess, job->cmd);
 	else if (opt == P_OPT)
-		ft_printf("%i\n", job->pgid);
+		ft_dprintf(2, "%i\n", job->pgid);
 	else
-		ft_printf("[%i]%-2c %-*s%s\n", job->nbr, prio, MAX_STATE_LEN, mess, job->cmd);
+		ft_dprintf(2, "[%i]%-2c %-*s%s\n", job->nbr, prio, MAX_STATE_LEN, mess, job->cmd);
 }

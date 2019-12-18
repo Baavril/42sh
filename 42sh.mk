@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/12/15 15:01:12 by bprunevi         ###   ########.fr        #
+#    Updated: 2019/12/16 16:49:51 by bprunevi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -106,7 +106,8 @@ SOURCES			:=		main.c \
 						LL_parser/terminals.c \
 						LL_parser/wordtypes.c \
 						interpreter/interpreter.c \
-						interpreter/i_simple_command.c
+						interpreter/i_simple_command.c \
+						interpreter/eval_command.c
 
 #						job_control/job.c
 
