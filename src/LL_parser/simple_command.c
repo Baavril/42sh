@@ -6,13 +6,14 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:36:39 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/14 14:11:52 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/12/19 11:07:54 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokens.h"
 #include "parser.h"
 #include "libft.h"
+#include "builtins.h"
 
 /*
  * cmd_suffix       : io_redirect      cmd_suffix
@@ -56,7 +57,7 @@ t_node *exec(t_token tok)
 		node->right.v = NULL;
 		if (is_potential(peek(), N_SUFFIX))
 			node->right.v = cmd_suffix(gnt(NULL));
-		node->f	= i_exec;
+		node->f	= is_a_builtin(tmp1) ? i_builtin : i_exec;
 		return(node);
 	}
 	return(NULL);

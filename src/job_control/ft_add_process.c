@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 15:51:32 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/18 15:38:26 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/19 11:08:40 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <signal.h>
 #include "sig_handler.h"
 #include "jcont.h"
+#include "parser.h"
 
 extern t_job	g_curjob;
 
@@ -79,9 +80,9 @@ void			ft_set_child_signal(int shell_pid)//Cela suffira-t-il ?
 }
 
 
-int				ft_add_process(t_node ast_node, int std_fd[3], int fd_to_close)
+int				ft_add_process(t_elem left, t_elem right, int std_fd[3], int fd_to_close)
 {
-	ft_dprintf(2, "ADDPROCESS %s with {%d,%d,%d}, closes {%d}\n", ast_node.right.v->left.c, std_fd[0], std_fd[1], std_fd[2], fd_to_close);
+	ft_dprintf(2, "ADDPROCESS %s with {%d,%d,%d}, closes {%d}\n", right.v->left.c, std_fd[0], std_fd[1], std_fd[2], fd_to_close);
 	pid_t		pgid;
 	pid_t		pid;
 	t_process	process;
@@ -98,7 +99,7 @@ int				ft_add_process(t_node ast_node, int std_fd[3], int fd_to_close)
 		ft_dprintf(2, "add process: In son: %i pgid of call: %i       actualpgid: %i\n", getpid(), pgid, getpgrp());
 		ft_set_child_signal(shell_pid);
 		ft_stdredir(std_fd);
-		ast_node.f(ast_node.left, ast_node.right);
+		i_execnode(left, right);
 	}
 	if (!(g_curjob.pgid))
 		g_curjob.pgid = pid;

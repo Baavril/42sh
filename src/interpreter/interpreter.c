@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:13:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/18 13:29:03 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/19 11:19:05 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,39 +61,30 @@ int				i_execnode(t_elem left, t_elem right)
 	return(0);
 }
 
-int				i_simple_builtin(t_elem left, t_elem right)
+int				i_simple_command(t_elem left, t_elem right)
 {
 	char		**save_env;
 	int			save_stdfd[3];
 
-	save_env = NULL;
-	ft_save_term_fd(g_fd, save_stdfd);
-	ft_stdredir(g_fd);
-	if ((left.v))
+	if (right.v->f == i_builtin)
 	{
-		save_env = environ;
-		environ = ft_tabcpy(environ);
-		left.v->f(left.v->left, left.v->right);
+		save_env = NULL;
+		ft_save_term_fd(g_fd, save_stdfd);
+		ft_stdredir(g_fd);
+		if (left.v)
+		{
+			save_env = environ;
+			environ = ft_tabcpy(environ);
+			left.v->f(left.v->left, left.v->right);
+			right.v->f(right.v->left, right.v->right);
+			ft_tabdel(&environ);
+			environ = save_env;
+		}
+		else
+			right.v->f(right.v->left, right.v->right);
+		ft_stdredir(save_stdfd);
 	}
-	right.v->f(right.v->left, right.v->right);
-	if ((save_env))
-	{
-		ft_tabdel(&environ);
-		environ = save_env;
-	}
-	ft_stdredir(save_stdfd);
-	return (0);
-}
-
-int				i_simple_command(t_elem left, t_elem right)
-{
-	t_node		execnode;
-
-	if (is_a_builtin(right.v->left.c))
-		return (i_simple_builtin(left, right));
-	execnode.left = left;
-	execnode.right = right;
-	execnode.f = i_execnode;
-	ft_add_process(execnode, g_fd, g_fclose);
-	return (0);
+	else
+		ft_add_process(left, right, g_fd, g_fclose);
+	return(0);
 }

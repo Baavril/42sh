@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 16:02:57 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/16 16:55:02 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/12/19 10:55:50 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	debug_parser(char *input);
 int i_comp_list(t_elem left, t_elem right);
 int i_pipe_sequence(t_elem left, t_elem right);
 int i_simple_command(t_elem left, t_elem right);
+int i_execnode(t_elem left, t_elem right);
+int i_builtin(t_elem left, t_elem right);
 int i_prefix(t_elem left, t_elem right);
 int i_add_process(t_elem left, t_elem right);
 int i_exec(t_elem left, t_elem right);

@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:43:35 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/18 14:52:48 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/12/19 11:19:07 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,8 @@ int i_prefix(t_elem left, t_elem right)
 	return(0);
 }
 
-int i_exec(t_elem left, t_elem right)
+int i_builtin(t_elem left, t_elem right)
 {
-	int i;
 	extern char **environ;
 
 	g_argv = malloc(sizeof(char *) * 16); //16 ARGS MAX, NON
@@ -39,16 +38,22 @@ int i_exec(t_elem left, t_elem right)
 	g_argv[1] = NULL;
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
-	i = builtins_dispatcher(g_argv);
-	if (i == e_command_not_found)
-	{
-		if (eval_command(g_argv))
-			exit(ft_dprintf(1, "unknown command : %s\n", g_argv));
-		else
-			return(execve(g_argv[0], g_argv, environ));
-	}
+	return(builtins_dispatcher(g_argv));
+}
+
+int i_exec(t_elem left, t_elem right)
+{
+	extern char **environ;
+
+	g_argv = malloc(sizeof(char *) * 16); //16 ARGS MAX, NON
+	g_argv[0] = left.c;
+	g_argv[1] = NULL;
+	if (right.v)
+		right.v->f(right.v->left, right.v->right);
+	if (eval_command(g_argv))
+		exit(ft_dprintf(1, "unknown command : %s\n", g_argv));
 	else
-		return(i);
+		return(execve(g_argv[0], g_argv, environ));
 }
 
 int i_suffix(t_elem left, t_elem right)
