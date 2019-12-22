@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/12/21 10:50:48 by bprunevi         ###   ########.fr        #
+#    Updated: 2019/12/22 11:47:12 by bprunevi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -111,7 +111,8 @@ SOURCES			:=		main.c \
 						interpreter/interpreter.c \
 						interpreter/i_simple_command.c \
 						interpreter/eval_command.c \
-						interpreter/i_redirect.c
+						interpreter/i_redirect.c \
+						interpreter/i_heredoc.c
 
 #						job_control/job.c
 

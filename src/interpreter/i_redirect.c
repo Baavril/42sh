@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 12:08:47 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/22 10:55:08 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/12/22 15:30:26 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@
 
 int	i_less(t_elem left, t_elem right)
 {
-	(void) left;
+	int fd1;
+
+	fd1 = left.c ? *left.c - '0' : 0;
 	if (!access(right.c, R_OK))
 	{
 		if (is_regfile(right.c))
-			return (dup2(open(right.c, O_RDONLY), 0));
+			return (dup2(open(right.c, O_RDONLY), fd1));
 		ft_printf("%s exists and is not a regular file\n", right.c);
 	}
 	else if (!access(right.c, F_OK))
@@ -31,19 +33,16 @@ int	i_less(t_elem left, t_elem right)
 	return (-1);
 }
 
-int	i_dless(t_elem left, t_elem right)
-{
-	(void) left;
-	(void) right;
-	return (-1);
-}
 int	i_lessand(t_elem left, t_elem right)
 {
-	(void) left;
-	(void) right;
-	ft_printf("i_lessand\n"); 
+	int fd1;
+
+	fd1 = left.c ? *left.c - '0' : 0;
+	if (dup2(*right.c - '0', fd1) == -1)
+		ft_printf("error : %s : incorrect fd\n", right.c);
 	return (0);
 }
+
 int	i_great(t_elem left, t_elem right)
 {
 	int fd1;
@@ -102,15 +101,8 @@ int	i_lessgreat(t_elem left, t_elem right)
 		dup2(fd2, *left.c - '0');
 	return (fd2);
 }
-int	i_dlessdash(t_elem left, t_elem right)
-{
-	(void) left;
-	(void) right;
-	ft_printf("i_dlessdash\n"); 
-	return (0);
-}
+
 int	i_clobber(t_elem left, t_elem right)
 {
-	i_great(left, right);
-	return (0);
+	return(i_great(left, right));
 }
