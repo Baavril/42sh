@@ -13,16 +13,26 @@
 #ifndef EXPANSIONS_H
 # define EXPANSIONS_H
 
+# define STAR '*'
+# define AROB '@'
+# define EXCLAM '!'
+# define OP_SQUAR '['
+# define CL_SQUAR ']'
+
 # define WHY '?'
 # define PLUS '+'
 # define DASH '-'
 # define EQUAL '='
+# define CARET '^'
 # define SHARP '#'
 # define COLON ':'
 # define DOLLAR '$'
 # define PERCENT '%'
 # define OP_BRACE '{'
 # define CL_BRACE '}'
+
+# define EMPTY_STR ""
+# define MAXCHR 95
 
 # define ERROR -1
 # define SUCCESS 0
@@ -42,21 +52,21 @@
 typedef struct	s_symexp
 {
 				int		sym;
-				int		(*expand)(char *);
+				int		(*expand)(char **);
 }				t_symexp;
 
 int		expansions_management(char **tokens);
 
-int		direct_exp(char *token);
-int		simple_exp(char *token);
-int		why_exp(char *token);
-int		plus_exp(char *token);
-int		dash_exp(char *token);
-int		equal_exp(char *token);
-int		bsharp_exp(char *token);
-int		osharp_exp(char *token);
-int		dsharp_exp(char *token);
-int		opercent_exp(char *token);
-int		dpercent_exp(char *token);
+int		direct_exp(char **token);
+int		simple_exp(char **token);
+int		why_exp(char **token);
+int		plus_exp(char **token);
+int		dash_exp(char **token);
+int		equal_exp(char **token);
+int		bsharp_exp(char **token);
+int		osharp_exp(char **token);
+int		dsharp_exp(char **token);
+int		opercent_exp(char **token);
+int		dpercent_exp(char **token);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 15:51:38 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/29 10:37:59 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/12/19 14:23:13 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,32 +18,30 @@
 
 enum e_tokens
 {
-	NONE, /* not shell grammar native */
-	E_ERROR, /* not shell grammar native */
-	E_EOF, /* not shell grammar native */
-	PIPE, /* not shell grammar native */
-	GREAT, /* not shell grammar native */
-	LESS, /* not shell grammar native */
-	CLOBBER, /* not shell grammar native */
-	SEMI, /* not shell grammar native */
-
+	NONE,
+	E_ERROR,
+	E_EOF,
+	PIPE,
+	SEMI,
 	WORD,
 	ASSIGNMENT_WORD,
 	NAME,
 	NEWLINE,
 	IO_NUMBER,
-
-/* The following are the operators (see XBD Operator)
-   containing more than one character. */
-
 	AND_IF,
 	OR_IF,
+
+/* The following are the redirect operators */
+
+	LESS,
 	DLESS,
-	DGREAT,
 	LESSAND,
+	GREAT,
+	DGREAT,
 	GREATAND,
 	LESSGREAT,
 	DLESSDASH,
+	CLOBBER,
 
 /* The following are the reserved words. */
 

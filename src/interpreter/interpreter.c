@@ -6,98 +6,85 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:13:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/07 14:28:54 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/12/19 11:19:05 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "sys/wait.h"
-#include "parser.h"
-#include "shell_variables.h"
-#include "builtins.h"
 #include <unistd.h>
-char **argv;
+#include "builtins.h"
+#include "parser.h"
+#include "jcont.h"
 
-int i_comp_list(t_elem left, t_elem right)
+#define STDIN 0
+#define STDOUT 1
+#define STDERR 2
+
+extern char		**environ;
+int				g_fd[3] = {STDIN, STDOUT, STDERR};
+int				g_fclose = -1;
+
+int				i_comp_list(t_elem left, t_elem right)
 {
-	int i;
-	int rtn_value;
-	if (!(i = fork()))
-		left.v->f(left.v->left, left.v->right);
-	waitpid(i, &rtn_value, WUNTRACED);
-	if (!(i = fork()))
-		right.v->f(right.v->left, right.v->right);
-	waitpid(i, &rtn_value, WUNTRACED);
-	ft_printf("command returned %d\n", rtn_value);
-	return (rtn_value);
+	left.v->f(left.v->left, left.v->right);
+	ft_launch_job("plop", FOREGROUND);
+	right.v->f(right.v->left, right.v->right);
+	return (0);
 }
-int i_pipe_sequence(t_elem left, t_elem right)
+
+int				i_pipe_sequence(t_elem left, t_elem right)
 {
 	int pipe_fd[2];
+	int bckp;
 
 	pipe(pipe_fd);
-	if (!fork())
-	{
-		ft_printf("Started prog_1 with {%d;%d}\n", pipe_fd[0], pipe_fd[1]);
-		close(pipe_fd[0]);
-		dup2(pipe_fd[1], 1);
-		left.v->f(left.v->left, left.v->right);
-	}
-	else
-	{
-		ft_printf("Started prog_2 with {%d;%d}\n", pipe_fd[0], pipe_fd[1]);
-		close(pipe_fd[1]);
-		dup2(pipe_fd[0], 0);
-		right.v->f(right.v->left, right.v->right);
-	}
-	return(-1);
+	ft_dprintf(2, "Create pipe with {%d->%d}\n", pipe_fd[0], pipe_fd[1]);
+	//valeurs de g_fd et g_fclose : 0, 1, 2 | -1 
+	bckp = g_fd[1];
+	g_fd[1] = pipe_fd[1];
+	g_fclose = pipe_fd[0];
+	left.v->f(left.v->left, left.v->right);// 0, P0, 2 | P1
+	g_fd[1] = bckp;
+	g_fd[0] = pipe_fd[0];
+	ft_dprintf(2, "pipe_seq closing {%d}\n", pipe_fd[1]);
+	close(pipe_fd[1]);
+	g_fclose = -1;
+	right.v->f(right.v->left, right.v->right);// P1, 1, 2 | -1
+	close(pipe_fd[0]);
+	return (-1);
 }
-int i_simple_command(t_elem left, t_elem right)
+
+int				i_execnode(t_elem left, t_elem right)
 {
-	(void) left;
-	(void) right;
-	left.v->f(left.v->left, left.v->right);
+	if (left.v)
+		left.v->f(left.v->left, left.v->right);
 	right.v->f(right.v->left, right.v->right);
 	return(0);
 }
-int i_prefix(t_elem left, t_elem right)
-{
-	(void) right;
 
-	/* comment parcourir tout l'arbre et recuperer les donnees ? */
-	listadd_back(newnodshell(left.c, 0));
-	cmd_set(0, NULL);
-	return(0);
-}
+int				i_simple_command(t_elem left, t_elem right)
+{
+	char		**save_env;
+	int			save_stdfd[3];
 
-int i_exec(t_elem left, t_elem right)
-{
-	(void) left;
-	(void) right;
-	extern char **environ;
-	argv = malloc(sizeof(char *) * 3);
-	argv[0] = left.c;
-	argv[1] = NULL;
-	//right.v->f(right.v->left, right.v->right);
-	execve(argv[0], argv, environ);
-	return(-1);
-}
-int i_suffix(t_elem left, t_elem right)
-{
-	(void) left;
-	(void) right;
-	int i;
-	i = 0;
-	while (argv[++i])
-		(void) i;
-	argv[i] = left.c;
-	argv[++i] = NULL;
-	return(0);
-}
-int i_debugredirect(t_elem left, t_elem right)
-{
-	(void) left;
-	(void) right;
-	ft_printf("REDIRECT");
+	if (right.v->f == i_builtin)
+	{
+		save_env = NULL;
+		ft_save_term_fd(g_fd, save_stdfd);
+		ft_stdredir(g_fd);
+		if (left.v)
+		{
+			save_env = environ;
+			environ = ft_tabcpy(environ);
+			left.v->f(left.v->left, left.v->right);
+			right.v->f(right.v->left, right.v->right);
+			ft_tabdel(&environ);
+			environ = save_env;
+		}
+		else
+			right.v->f(right.v->left, right.v->right);
+		ft_stdredir(save_stdfd);
+	}
+	else
+		ft_add_process(left, right, g_fd, g_fclose);
 	return(0);
 }

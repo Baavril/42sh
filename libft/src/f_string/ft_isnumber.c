@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sig_handler.h                                      :+:      :+:    :+:   */
+/*   ft_isnumber.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/16 22:36:47 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/16 22:50:00 by tgouedar         ###   ########.fr       */
+/*   Created: 2019/12/14 11:42:37 by tgouedar          #+#    #+#             */
+/*   Updated: 2019/12/16 18:40:23 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIG_HANDLER_H
-# define SIG_HANDLER_H
+#include "libft.h"
 
-void			ft_sigchld_handler(int nbr);
-void			ft_sigusr1_handler(int nbr, siginfo_t *siginfo, void *context);
-void			ft_catch_sigusr1(int nbr);
+//needs to go in a lib
 
-void			set_signals(void);
-
-#endif
+int			ft_isnumber(char *str)
+{
+	while (*str)
+	{
+		if (!ft_isdigit(*str))
+			return (0);
+		str++;
+	}
+	return (1);
+}

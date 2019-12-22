@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2019/11/27 15:03:09 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/12/18 13:14:43 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int		main(int argc, char **argv)
 	int				status;
 
 	(void)argc;
+	tcsetpgrp(STDIN_FILENO, getpid()); //Control the terminal
+	set_signals();
 	args = NULL;
 	copybuff = NULL;
 	input = NULL;
@@ -93,7 +95,6 @@ int		main(int argc, char **argv)
 		ft_tabdel(&environ);
 		return (1);
 	}
-	set_signals(0);
 	while (!read_command(&input) || get_next_line(0, &input))
 	{
 		if (!(status = history(ADD_CMD, &input, NULL)))
@@ -101,7 +102,7 @@ int		main(int argc, char **argv)
 			psherror(e_cannot_allocate_memory, argv[0], e_cmd_type);
 			return (1);
 		}
-		if (status != -1)
+		if (status != -1 && input[0])
 		{
 			lexer(&input);
 			debug_parser(input);
@@ -113,12 +114,14 @@ int		main(int argc, char **argv)
 				cmd_unset(0, args);
 			else if (ft_strcmp("set", args[0]) == 0)
 				cmd_set(0, args);
+			else if (ft_strcmp("exit", args[0]) == 0)
+				exit(0);
 			else
 				expansions_management(args);
-			exit(0); 
-			args = lexer(&input);
+			continue ; 
+/*			args = lexer(&input);
 			ft_memdel((void**)&input);
-			if (!args)
+//			if (!args)
 				continue;
 			status = synt(args);
 			if (status != e_success)
@@ -127,8 +130,8 @@ int		main(int argc, char **argv)
 				ft_tabdel(&args);
 				continue;
 			}
-			g_retval = jcont(args, environ);
-			ft_tabdel(&args);
+			g_retval = 0;
+			ft_tabdel(&args);*/
 		}
 		else
 			ft_memdel((void**)&input);

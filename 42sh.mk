@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/12/19 16:47:17 by yberramd         ###   ########.fr        #
+#    Updated: 2019/12/22 18:57:09 by yberramd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,10 +34,19 @@ SOURCES			:=		main.c \
 						lexer/separators/pipeline_separators.c \
 						expansions/expansions.c \
 						expansions/substitutions.c \
-						job_control/synt.c \
-						job_control/synt_const.c \
-						job_control/jcont.c \
-						job_control/job.c \
+						job_control/ft_launch_job.c \
+						job_control/ft_add_process.c \
+						job_control/ft_free_job.c \
+						job_control/ft_get_job.c \
+						job_control/ft_pop_job.c \
+						job_control/ft_get_process_pid.c \
+						job_control/ft_add_job.c \
+						job_control/ft_print_job.c \
+						job_control/ft_set_prio.c \
+						job_control/ft_sigchld_handler.c \
+						job_control/ft_sigusr1_handler.c \
+						job_control/ft_update_job_status.c \
+						job_control/ft_wait_foreground.c \
 						job_control/path_concat.c \
 						job_control/get_sequence.c \
 						builtins/builtin_alias.c \
@@ -56,6 +65,9 @@ SOURCES			:=		main.c \
 						builtins/builtin_unsetenv.c \
 						builtins/builtin_truefalse.c \
 						builtins/builtin_fc.c \
+						builtins/builtin_fg.c \
+						builtins/builtin_bg.c \
+						builtins/builtin_jobs.c \
 						builtins/builtin_test/test_free.c \
 						builtins/builtin_test/test_tools.c \
 						builtins/builtin_test/test_dispatchers.c \
@@ -87,16 +99,22 @@ SOURCES			:=		main.c \
 						transversal/hash/init_htable.c \
 						transversal/hash/string_routines.c \
 						transversal/shell_variables/shell_variables.c \
-      					LL_parser/debug_gnt.c \
-      					LL_parser/debug_interpreter.c \
-      					LL_parser/io_redirect.c \
-      					LL_parser/is_potential.c \
-      					LL_parser/parser.c \
-      					LL_parser/pipe_sequence.c \
-      					LL_parser/simple_command.c \
-      					LL_parser/terminals.c \
-      					LL_parser/wordtypes.c \
-      					interpreter/interpreter.c
+						LL_parser/debug_gnt.c \
+						LL_parser/debug_interpreter.c \
+						LL_parser/io_redirect.c \
+						LL_parser/is_potential.c \
+						LL_parser/parser.c \
+						LL_parser/pipe_sequence.c \
+						LL_parser/simple_command.c \
+						LL_parser/terminals.c \
+						LL_parser/wordtypes.c \
+						interpreter/interpreter.c \
+						interpreter/i_simple_command.c \
+						interpreter/eval_command.c \
+						interpreter/i_redirect.c \
+						interpreter/i_heredoc.c
+
+#						job_control/job.c
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
@@ -118,7 +136,7 @@ LDLIBS += -ltermcap  $(PATH_LIB)libft.a
 
 LDFLAGS += $(CDEBUG)
 
-CFLAGS += -Wall -Wextra -Werror -ansi -D_POSIX_C_SOURCE -std=c99 $(CDEBUG)
+CFLAGS += -Wall -Wextra -Werror -ansi -D_POSIX_C_SOURCE=200809L -std=c99 $(CDEBUG)
 #CFLAGS += -fno-builtin -O2
 
-#CDEBUG += -g -fsanitize=address
+CDEBUG += -g -fsanitize=address

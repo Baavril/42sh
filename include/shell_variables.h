@@ -52,4 +52,7 @@ char	*ft_strdupfm(char *str, char c);
 void	ft_lstadd_back(t_list **alst, t_list *new_back);
 void	listadd_back(struct s_svar *new_back);
 
+int	unsetvarset(char *argv);
+int		checkvarlst(char *argv);
+
 #endif

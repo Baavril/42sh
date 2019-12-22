@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sig_handler.h                                      :+:      :+:    :+:   */
+/*   ft_new_job.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/16 22:36:47 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/16 22:50:00 by tgouedar         ###   ########.fr       */
+/*   Created: 2019/12/03 16:36:57 by tgouedar          #+#    #+#             */
+/*   Updated: 2019/12/03 18:22:19 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIG_HANDLER_H
-# define SIG_HANDLER_H
+#include "jcont.h"
 
-void			ft_sigchld_handler(int nbr);
-void			ft_sigusr1_handler(int nbr, siginfo_t *siginfo, void *context);
-void			ft_catch_sigusr1(int nbr);
+t_job		*ft_new_job(int pgid, char *cmd)
+{
+	t_job	*new;
 
-void			set_signals(void);
-
-#endif
+	if (!(new = (t_job*)malloc(sizeof(t_job))))
+		return (NULL);
+	
+	return (new);
+}

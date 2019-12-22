@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/02 16:56:23 by abarthel          #+#    #+#             */
-/*   Updated: 2019/09/30 08:52:25 by abarthel         ###   ########.fr       */
+/*   Created: 2019/12/16 22:47:47 by tgouedar          #+#    #+#             */
+/*   Updated: 2019/12/16 22:50:01 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,32 +17,18 @@
 
 #include "libft.h"
 #include "sig_handler.h"
-#include "job.h"
 
-void	kill_child(int sig)
+void			set_signals(void)
 {
-	extern pid_t	g_childpid;
+	struct sigaction	action;
 
-	(void)sig;
-	if (g_childpid)
-	{
-		kill(g_childpid, SIGKILL);
-		g_childpid = 0;
-		ft_putchar('\n');
-	}
-}
-
-int	set_signals(int type)
-{
-	if (!type)
-	{
-		if ((signal(SIGINT, SIG_IGN) == SIG_ERR))
-			exit(2);
-	}
-	else
-	{
-		if ((signal(SIGINT, kill_child) == SIG_ERR))
-			exit(2);
-	}
-	return (0);
+	signal(SIGCHLD, &ft_sigchld_handler);
+	ft_bzero(&action, sizeof(sigaction));
+	action.sa_flags = SA_SIGINFO;
+	action.sa_sigaction = &ft_sigusr1_handler;
+	sigaction(SIGUSR1, &action, NULL);
+	signal(SIGTTOU, SIG_IGN);
+	signal(SIGTTIN, SIG_IGN);
+	signal(SIGSTOP, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
 }

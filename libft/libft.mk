@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/11/21 14:57:32 by yberramd         ###   ########.fr        #
+#    Updated: 2019/12/16 22:15:39 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -180,6 +180,7 @@ SOURCES	:=	ds_btree/btree_apply_infix.c \
 		f_string/ft_memcpy.c \
 		f_string/ft_memmove.c \
 		f_string/ft_memset.c \
+		f_string/ft_isnumber.c \
 		f_string/ft_strcat.c \
 		f_string/ft_strchr.c \
 		f_string/ft_strcmp.c \

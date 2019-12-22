@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 17:59:39 by abarthel          #+#    #+#             */
-/*   Updated: 2019/11/27 15:53:59 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/12/15 15:07:57 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,17 +205,17 @@ char	**lexer(char **input)
 	t_token	token;
 
 	token = get_next_token(*input);
-	ft_printf("_______________________________________________\n");
-	ft_printf("token.symbol : %s\n", token.symbol);
-	ft_printf("token.type : %d = %s\n", token.type, get_token_symbol(token.type));
+	ft_dprintf(2, "_______________________________________________\n");
+	ft_dprintf(2, "token.symbol : %s\n", token.symbol);
+	ft_dprintf(2, "token.type : %d = %s\n", token.type, get_token_symbol(token.type));
 	while (token.type != E_EOF && token.type != E_ERROR)
 	{
 		token = get_next_token(NULL);
-		ft_printf("_______________________________________________\n");
-		ft_printf("token.symbol : %s\n", token.symbol);
-		ft_printf("token.type : %d = %s\n", token.type, get_token_symbol(token.type));
+		ft_dprintf(2, "_______________________________________________\n");
+		ft_dprintf(2, "token.symbol : %s\n", token.symbol);
+		ft_dprintf(2, "token.type : %d = %s\n", token.type, get_token_symbol(token.type));
 	}
-	ft_printf("_______________________________________________\n");
+	ft_dprintf(2, "_______________________________________________\n");
 
 /*	gnt(NULL);
 this should be a link between parser and lexer calling back and forth*/
