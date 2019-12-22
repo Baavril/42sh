@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:36:39 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/19 11:07:54 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/12/21 17:15:01 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,17 @@ t_node	*cmd_suffix(t_token tok)
 {
 	t_node	*node;
 	t_elem	tmp1;
+	int (*f)(t_elem left, t_elem right);
 
-	if (((tmp1.v = io_redirect(tok))) || (tmp1.c = word(tok))) //ALED
+	if (((tmp1.v = io_redirect(tok)) && (f = i_suffix_redirect))
+	 || ((tmp1.c = word(tok)) && (f = i_suffix_word))) //ALED
 	{
 		node = malloc(sizeof(t_node));
 		node->left = tmp1;
 		node->right.v = NULL;
 		if (is_potential(peek(), N_SUFFIX))
 			node->right.v = cmd_suffix(gnt(NULL));
-		node->f	= i_suffix;
+		node->f	= f;
 		return(node);
 	}
 	return(NULL);

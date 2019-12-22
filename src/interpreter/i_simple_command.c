@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:43:35 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/19 11:19:07 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/12/21 15:40:43 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int i_exec(t_elem left, t_elem right)
 		return(execve(g_argv[0], g_argv, environ));
 }
 
-int i_suffix(t_elem left, t_elem right)
+int i_suffix_word(t_elem left, t_elem right)
 {
 	int i;
 	i = 0;
@@ -69,10 +69,10 @@ int i_suffix(t_elem left, t_elem right)
 	return(0);
 }
 
-int i_debugredirect(t_elem left, t_elem right)
+int i_suffix_redirect(t_elem left, t_elem right)
 {
-	(void) left;
-	(void) right;
-	ft_dprintf(2, "REDIRECT\n");
+	left.v->f(left.v->left, left.v->right);
+	if (right.v)
+		right.v->f(right.v->left, right.v->right);
 	return(0);
 }

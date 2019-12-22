@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 16:02:57 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/19 10:55:50 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/12/21 17:15:02 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,21 @@ int i_builtin(t_elem left, t_elem right);
 int i_prefix(t_elem left, t_elem right);
 int i_add_process(t_elem left, t_elem right);
 int i_exec(t_elem left, t_elem right);
-int i_suffix(t_elem left, t_elem right);
+int i_suffix_word(t_elem left, t_elem right);
+int i_suffix_redirect(t_elem left, t_elem right);
 int i_debugredirect(t_elem left, t_elem right);
 
+int	i_less(t_elem left, t_elem right);
+int	i_dless(t_elem left, t_elem right);
+int	i_lessand(t_elem left, t_elem right);
+int	i_great(t_elem left, t_elem right);
+int	i_dgreat(t_elem left, t_elem right);
+int	i_greatand(t_elem left, t_elem right);
+int	i_lessgreat(t_elem left, t_elem right);
+int	i_dlessdash(t_elem left, t_elem right);
+int	i_clobber(t_elem left, t_elem right);
+
+int is_regfile(const char *arg);
 int eval_command(char **arg);
 
 #endif
