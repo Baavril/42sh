@@ -28,7 +28,8 @@ typedef struct		s_tst
 
 t_tst	*ft_tst(void);
 void	del_double_char(char **tab2);
-void	del_ternary_search_tree(t_tst *tst);
+void	print_double_char(char **tab);
+void	del_tst(t_tst *tst);
 int		search_tst(t_tst *tst, char *str);
 char	**ft_auto_completion(t_tst *tst, char *input);
 

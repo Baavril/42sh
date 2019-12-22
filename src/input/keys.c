@@ -132,14 +132,16 @@ int backspace_key(char **buff, t_cursor *cursor)
 
 int tab_key(char **buff, t_cursor *cursor)
 {
-	char *str;
-	char *tmp;
+	t_tst 	*tst;
+	char 	**binary;
 
-	str = ft_strdup("tabulation");
-	tmp = str;
-	while (*tmp)
-		normal_char(buff, cursor, *tmp++);
-	ft_strdel(&str);
+	(void)cursor;
+	tst = ft_tst();
+	if (!(binary = ft_auto_completion(tst, *buff)))
+		return (0);
+	print_double_char(binary);
+	del_tst(tst);
+	del_double_char(binary);
 	return (1);
 }
 

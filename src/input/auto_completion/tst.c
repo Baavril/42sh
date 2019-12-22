@@ -31,16 +31,16 @@ void		del_double_char(char **tab2)
 	tab2 = NULL;
 }
 
-void		del_ternary_search_tree(t_tst *tst)
+void		del_tst(t_tst *tst)
 {
 	if (tst)
 	{
 		if (tst->right)
-			del_ternary_search_tree(tst->right);
+			del_tst(tst->right);
 		if (tst->middle)
-			del_ternary_search_tree(tst->middle);
+			del_tst(tst->middle);
 		if (tst->left)
-			del_ternary_search_tree(tst->left);
+			del_tst(tst->left);
 		free(tst);
 		tst = NULL;
 	}
@@ -64,6 +64,7 @@ int		search_tst(t_tst *tst, char *str)
 	}
 	return (0);
 }
+
 /*static void	print_double_char(char **tab)
 {
 	int	i;
@@ -332,7 +333,7 @@ t_tst	*ft_tst()
 		path_dir = create_dir(path);// dir peut etre = a NULL
 	binaires = create_binary(path_dir);
 	if (create_tst(binaires, &tst) == -1)
-		del_ternary_search_tree(tst);
+		del_tst(tst);
 	del_double_char(path_dir);
 	del_double_char(binaires);
 	return (tst);

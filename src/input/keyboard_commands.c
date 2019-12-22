@@ -52,7 +52,8 @@ int keyboard_tabulation(union u_tc *term, char **buff, t_cursor *cursor)
 			history(RESET, buff, NULL);
 			return (0);
 		}
-		tab_key(buff, cursor);
+		if (!(tab_key(buff, cursor)))
+			return (-1);
 		return (0);
 	}
 	return (1);

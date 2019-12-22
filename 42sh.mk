@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/12/11 14:06:52 by yberramd         ###   ########.fr        #
+#    Updated: 2019/12/19 16:47:17 by yberramd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -121,4 +121,4 @@ LDFLAGS += $(CDEBUG)
 CFLAGS += -Wall -Wextra -Werror -ansi -D_POSIX_C_SOURCE -std=c99 $(CDEBUG)
 #CFLAGS += -fno-builtin -O2
 
-CDEBUG += -g -fsanitize=address
+#CDEBUG += -g -fsanitize=address

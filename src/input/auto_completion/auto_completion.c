@@ -13,25 +13,26 @@
 #include "auto_completion.h"
 #include <stdio.h>
 
-static void	print_double_char(char **tab)
+void	print_double_char(char **tab)
 {
 	int	i;
 
 	i = 0;
 	while (tab && tab[i] != NULL)
 	{
+		ft_printf("%d\n", i);
 		ft_putendl(tab[i]);
 		i++;
 	}
 }
 
-static char	**ft_path(t_tst *tst, char *input)
+static char	**ft_path(char *input)
 {
 	char	**words;
 
-	(void)tst, (void)input;
+	(void)input;
 	words = NULL;
-	printf("PATH\n");
+	printf("\nPATH\n");
 	return (words);
 }
 
@@ -91,15 +92,15 @@ static int	malloc_words(t_tst *tst, int len, int index, char **words)
 	if (tst->middle && tst->c != '\0')
 	{
 		len++;
-		printf("%c", tst->c);
+		//printf("%c", tst->c);
 		index = malloc_words(tst->middle, len, index, words);
 	}
 	if (tst->end == true)
 	{
-		printf("\n");
+		/*printf("\n");
 		printf("len_word = [%d]\n", len);
 		printf("index_word = [%d]\n", index);
-		printf("_____________________________\n");
+		printf("_____________________________\n");*/
 		if (!(words[index] = (char*)malloc(sizeof(char) * (len + 1))))
 			return (-1);
 		index++;
@@ -137,8 +138,8 @@ static int	ft_words(t_tst *tst, int len, int index, char **words)
 		index = ft_words(tst->left, len, index, words);
 	if (tst->middle && tst->c != '\0')
 	{
-		printf("len [%d]\n", len);
-		printf("tst-> [%c]\n", tst->c);
+		//printf("len [%d]\n", len);
+		//printf("tst-> [%c]\n", tst->c);
 		words[index][len] = tst->c;
 		len++;
 		index = ft_words(tst->middle, len, index, words);
@@ -158,15 +159,16 @@ static int	assign_words(t_tst *tst, char **words, char *input, int len)
 	i = 0;
 	if (go_to_char(&tst, input) == 0)
 		return (-1);
-	printf("HEAD: [%c]\n", tst->c);
+	//printf("HEAD: [%c]\n", tst->c);
 	if (malloc_words(tst, ft_strlen(input), 0, words) == -1)
 		return (-1);
+	//ASSIG
 	while (i < len)
 	{
 		ft_strcpy(words[i], input);
 		i++;
 	}
-	printf("HEAD: [%c]\n", tst->c);
+	//printf("HEAD: [%c]\n", tst->c);
 	ft_words(tst, ft_strlen(input), 0, words);
 	return (1);
 }
@@ -176,6 +178,7 @@ static char	**ft_binary(t_tst *tst, char *input)
 	int		len;
 	char	**words;
 
+	printf("\nBINARY\n");
 	if ((len = nbr_words(tst, input)) == 0)
 		return (NULL);
 	if (!(words = (char**)malloc(sizeof(char*) * (len + 1))))
@@ -186,9 +189,7 @@ static char	**ft_binary(t_tst *tst, char *input)
 		del_double_char(words);
 		return (NULL);
 	}
-	printf("ft_binary nbr = [%d]\n", len);
-	print_double_char(words);
-	del_double_char(words);
+	//printf("ft_binary nbr = [%d]\n", len);
 	return (words);
 }
 
@@ -197,7 +198,7 @@ char	**ft_auto_completion(t_tst *tst, char *input)
 	char	**words;
 
 	if (ft_strchr(input, '/'))
-		words = ft_path(tst, input);
+		words = ft_path(input);
 	else
 		words = ft_binary(tst, input);
 	return (words);
