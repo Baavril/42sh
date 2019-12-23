@@ -26,7 +26,7 @@ int				ft_resume_in_fg(t_job *job)//need to test the synchronicity of killpg/sig
 	g_jcont.active_jobs[0] = job->nbr;
 	if (WIFSTOPPED(job->status))
 	{
-		if (!kill(job->pgid, SIGCONT))
+		if (!killpg(job->pgid, SIGCONT))
 			job->status = RUNNING;
 		else
 		{

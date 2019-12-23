@@ -49,7 +49,7 @@ int			ft_launch_job(char *cmd, int status)
 		sigsuspend(&wakeup_sig);
 	if (ISBACKGROUND(status))
 	{
-		kill(job->pgid, SIGUSR1);
+		killpg(job->pgid, SIGUSR1);
 		return (0);
 	}
 	ret_status = ft_wait_foreground(job);
