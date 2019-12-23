@@ -79,19 +79,17 @@ static void	nomatter_exit(char **argv, int i)
 
 static void	ft_free_internvars(void)
 {
-	/* need to be tested when interpreter is done */
 	struct s_svar *tmp;
 
-	tmp = NULL;
 	while (g_svar)
 	{
 		tmp = g_svar->next;
 		ft_strdel(&(g_svar->str));
 		ft_strdel(&(g_svar->key));
 		ft_strdel(&(g_svar->value));
+		free(g_svar);
 		g_svar = tmp;
 	}
-	free(g_svar);
 }
 
 int		cmd_exit(int argc, char **argv)

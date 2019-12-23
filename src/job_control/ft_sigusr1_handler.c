@@ -15,7 +15,6 @@
 
 void		ft_sigusr1_handler(int nbr, siginfo_t *siginfo, void *context)
 {
-	extern t_jcont		g_jcont;
 	extern t_job		g_curjob;
 	t_process			*process;
 
