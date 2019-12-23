@@ -152,8 +152,6 @@ int	init_shellvars(char **env)
 	struct s_svar *voyager;
 
 	i = 1;
-	if (!(g_svar = malloc(sizeof(*g_svar) * (tablen(env) + 1))))
-			return (0);
 	len = tablen(env);
 	g_svar = newnodshell(env[0], 1);
 	voyager = g_svar;

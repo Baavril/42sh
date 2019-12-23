@@ -22,7 +22,7 @@ int		ft_wait_foreground(t_job* job)
 	tcsetpgrp(STDIN_FILENO, job->pgid); //mise au premier plan vis-a-vis le term
 	sigfillset(&wakeup_sig);
 	sigdelset(&wakeup_sig, SIGCHLD);
-	killpg(job->pgid, SIGUSR1);
+	kill(job->pgid, SIGUSR1);
 	ft_dprintf(2, "Job in foreground: %i\n", tcgetpgrp(0));
 	while (ISRUNNING(job->status)) //Attente de l'arret/suspension de tout les fils
 		sigsuspend(&wakeup_sig);

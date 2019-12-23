@@ -31,8 +31,6 @@ int i_prefix(t_elem left, t_elem right)
 
 int i_builtin(t_elem left, t_elem right)
 {
-	extern char **environ;
-
 	g_argv = malloc(sizeof(char *) * 16); //16 ARGS MAX, NON
 	g_argv[0] = left.c;
 	g_argv[1] = NULL;
