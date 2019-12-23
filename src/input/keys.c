@@ -74,7 +74,7 @@ char *get_history(char **buff, t_cursor *cursor)
 	return (match);
 }
 
-int set_string(char **buff, t_cursor *cursor, char *str)
+int set_string(char **buff, t_cursor *cursor, char *str)//set line
 {
 	size_t len;
 
@@ -132,14 +132,23 @@ int backspace_key(char **buff, t_cursor *cursor)
 
 int tab_key(char **buff, t_cursor *cursor)
 {
+	int 	ret;
 	t_tst 	*tst;
 	char 	**binary;
 
-	(void)cursor;
+	if (!cursor->end)
+		return(1);
 	tst = ft_tst();
-	if (!(binary = ft_auto_completion(tst, *buff)))
+	if (!(ret = ft_auto_completion(tst, *buff, &binary)))
 		return (0);
-	//print_double_char(binary);
+	else if (ret == 1)
+	{
+		//printf("binary [%s]\n", binary[0]);
+		set_string(buff, cursor, binary[0]);
+	}
+	else
+		print_double_char(binary);
+	//printf("ret = %d\n", ret);
 	del_tst(tst);
 	del_double_char(binary);
 	return (1);

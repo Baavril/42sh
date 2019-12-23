@@ -18,9 +18,9 @@ void	print_double_char(char **tab)
 	int	i;
 
 	i = 0;
+	ft_putchar('\n');
 	while (tab && tab[i] != NULL)
 	{
-		ft_printf("%d\n", i);
 		ft_putendl(tab[i]);
 		i++;
 	}
@@ -30,9 +30,15 @@ static char	**ft_path(char *input)
 {
 	char	**words;
 
-	(void)input;
 	words = NULL;
-	printf("\nPATH\n");
+	if (input && input[0] == '/')
+	{
+		
+	}
+	else if (input)
+	{
+
+	}
 	return (words);
 }
 
@@ -178,7 +184,8 @@ static char	**ft_binary(t_tst *tst, char *input)
 	int		len;
 	char	**words;
 
-	printf("\nBINARY\n");
+	//printf("\nBINARY\n");
+	words = NULL;
 	if ((len = nbr_words(tst, input)) == 0)
 		return (NULL);
 	if (!(words = (char**)malloc(sizeof(char*) * (len + 1))))
@@ -193,13 +200,12 @@ static char	**ft_binary(t_tst *tst, char *input)
 	return (words);
 }
 
-char	**ft_auto_completion(t_tst *tst, char *input)
+int 	ft_auto_completion(t_tst *tst, char *input, char ***words)
 {
-	char	**words;
-
-	if (ft_strchr(input, '/'))
-		words = ft_path(input);
-	else
-		words = ft_binary(tst, input);
-	return (words);
+	if (((*words) = ft_binary(tst, input)) == NULL)
+		if (((*words) = ft_path(input)) == NULL)
+			return (0);
+	if ((*words) && (*words)[0] != NULL &&(*words)[1] == NULL)
+		return (1);
+	return (2);
 }
