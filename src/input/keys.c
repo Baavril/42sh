@@ -139,7 +139,7 @@ int tab_key(char **buff, t_cursor *cursor)
 	tst = ft_tst();
 	if (!(binary = ft_auto_completion(tst, *buff)))
 		return (0);
-	print_double_char(binary);
+	//print_double_char(binary);
 	del_tst(tst);
 	del_double_char(binary);
 	return (1);
