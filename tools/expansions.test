@@ -12,8 +12,8 @@ echo 11/home/$USER/$LOGNAME#endf
 echo 12/home/$USER/$LOGNAME%endf
 echo 13/home/$USER/$LOGNAME^endf
 echo 14/home/$LOGNAME/$LOGNAME_endf
-echo 15/home/$LOGNAME/$LOGNAME(endf
-echo 16/home/$MAIL/$LOGNAME)endf
+echo 15/home/$LOGNAME/$LOGNAMEendf
+echo 16/home/$MAIL/$LOGNAMEendf
 echo 17/home/$MAIL/$LOGNAME{}endf
 echo 18/home/$MAIL/$LOGNAME:endf
 echo 19/home/$MAIL/$LOGNAME;endf
@@ -46,6 +46,7 @@ echo $?
 echo $??
 echo $$?
 echo $?$
+echo 35/home/$MAIL/$LOGNAME(:endf
 $
 $$
 $?

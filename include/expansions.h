@@ -19,17 +19,23 @@
 # define OP_SQUAR '['
 # define CL_SQUAR ']'
 
+# define SPC ' '
 # define WHY '?'
 # define PLUS '+'
 # define DASH '-'
+# define SLASH '/'
 # define EQUAL '='
 # define CARET '^'
 # define SHARP '#'
+# define AMPER '&'
 # define COLON ':'
 # define DOLLAR '$'
+# define BSLASH '\\'
 # define PERCENT '%'
+# define DQUOTES '"'
 # define OP_BRACE '{'
 # define CL_BRACE '}'
+# define UNDERSCORE '_'
 
 # define EMPTY_STR ""
 # define MAXCHR 95
@@ -55,7 +61,7 @@ typedef struct	s_symexp
 				int		(*expand)(char **);
 }				t_symexp;
 
-int		expansions_management(char **tokens);
+int		expansions_treatment(char **tokens);
 
 int		direct_exp(char **token);
 int		simple_exp(char **token);
@@ -68,5 +74,7 @@ int		osharp_exp(char **token);
 int		dsharp_exp(char **token);
 int		opercent_exp(char **token);
 int		dpercent_exp(char **token);
+
+int	ft_strpchr(char *str, char c);
 
 #endif

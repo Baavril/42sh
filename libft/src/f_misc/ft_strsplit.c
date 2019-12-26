@@ -47,7 +47,7 @@ static char		*mallnwrite(char const *s, size_t *l, char c)
 		++*l;
 	while (s[*l + k] != c && s[*l + k] && s[*l])
 		++k;
-	string = (char*)malloc(sizeof(string) * k + 1);
+	string = (char*)malloc(sizeof(string) * (k + 1));
 	if (!string)
 		return (NULL);
 	string[k] = '\0';
@@ -72,7 +72,7 @@ char			**ft_strsplit(char const *s, char c)
 		nb = nb_words(s, c);
 	else
 		return (NULL);
-	array = (char**)malloc(sizeof(char*) * nb + 1);
+	array = (char**)malloc(sizeof(char*) * (nb + 1));
 	if (!array)
 		return (NULL);
 	array[nb] = 0;

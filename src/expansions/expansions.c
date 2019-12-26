@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "lexer.h"
+#include "shell_variables.h"
 #include "expansions.h"
 #include "libft.h"
 
@@ -32,11 +33,18 @@ t_symexp	g_symexp[] =
 
 static int		check_braces(char *token)
 {
-	int len;;
+	int i;
 
-	len = ft_strlen(token) - 1;
-	if (token[0] == OP_BRACE && token[len] == CL_BRACE)
-		return (SIMPLE_EXP);
+	i = 0;
+	if (token[i] == OP_BRACE)
+	{
+		while (token[i])
+		{
+			if (token[i] == CL_BRACE)
+				return (SIMPLE_EXP);
+			++i;
+		}
+	}
 	return (DIRECT_EXP);
 }
 
@@ -92,47 +100,253 @@ static int		check_colon_symbol(char *token)
 
 static int		identifier(char *token)
 {
-	int i;
-
-	i = 1;
-	if (token[0] == DOLLAR)
+	if (*token == DOLLAR)
 	{
-		while (token[i])
+		if (check_braces(token + 1) == SIMPLE_EXP)
 		{
-			if (check_braces(&token[i]) == SIMPLE_EXP)
-			{
-				if (check_colon(&token[i]) == COMPLEX_EXP)
-					return (check_colon_symbol(&token[i]));
-				return (check_symbol(&token[i]));
-			}
-			i++;
+			if (check_colon(token + 1) == COMPLEX_EXP)
+				return (check_colon_symbol(token + 1));
+			return (check_symbol(token + 1));
 		}
 		return (DIRECT_EXP);
 	}
 	return (ERROR);
 }
 
-int		expansions_management(char **tokens)
+char	*ft_quoted(char *tokens)
+{
+	int c;
+	int d;
+	char *ret;
+
+	c = 0;
+	d = 0;
+	ret = NULL;
+	while (*tokens && *tokens != DQUOTES)
+		tokens++;
+	tokens++;
+	while (*(tokens + c))
+	{
+		if (*(tokens + c) == DQUOTES)
+			d++;
+		c++;
+	}
+	if (c > d)
+	{
+		if (!(ret = (char*)ft_memalloc(sizeof(char) * (c - d + 1))))
+			return (NULL);
+	}
+	else
+	{
+		if (!(ret = (char*)ft_memalloc(sizeof(char) * (d - c + 1))))
+			return (NULL);
+	}
+	c = 0;
+	d = 0;
+	while (*(tokens + c))
+	{
+		if (*(tokens + c) == DQUOTES)
+			c++;
+		else
+			ret[d++] = *(tokens + c++);
+	}
+	return (ret);
+}
+
+char	*ft_getbtw(char *tokens, int type)
+{
+	if (*tokens != DOLLAR)
+		return (NULL);
+	if (*tokens == DOLLAR && (*(tokens + 1) == SLASH
+	|| *(tokens + 1) == SPC || !*(tokens + 1)))
+		return (ft_strdup(tokens));
+	if (ft_isin(DQUOTES, tokens))
+		return (ft_quoted(tokens));
+	while (*tokens && !ft_isalpha(*tokens))
+		tokens++;
+	while (*tokens && (ft_isalpha(*tokens) || ft_isdigit(*tokens)
+	|| *tokens == AMPER || *tokens == UNDERSCORE))
+		tokens++;
+	if (type != DIRECT_EXP && *tokens == CL_BRACE)
+		tokens++;
+	if (*tokens == BSLASH)
+		tokens++;
+	return (ft_strdup(tokens));
+}
+
+int	ft_back_slashed(char **tokens)
 {
 	int i;
 	int j;
-	int type;
-	
+	int ret;
+	char *tmp;
+
 	i = 0;
-	while (tokens[i])
+	j = 0;
+	ret = 0;
+	tmp = NULL;
+	while (*((*tokens) + i) && *((*tokens) + i) == BSLASH)
+		++i;
+	j = i;
+	if (j % 2)
+	{
+		j--;
+		ret = -1;
+	}
+	j /= 2;
+	if (j >= 0)
+	{
+		if (!ret)
+		{
+			tmp = ft_strdup((*tokens) + i);
+			free(*tokens);
+			*tokens = ft_strdup(tmp);
+			free(tmp);
+			ret = j;
+		}
+		else
+		{
+			tmp = ft_strdup((*tokens) + j + 1);
+			free(*tokens);
+			*tokens = ft_strdup(tmp);
+			free(tmp);
+		}
+	}
+	return (ret);
+}
+
+int		ft_setbslash(char **tokens, int nb)
+{
+	int i;
+	char *tmp;
+
+	if (!(tmp = (char*)ft_memalloc(sizeof(char) * (nb + 1))))
+		return (0);
+	i = 0;
+	while (nb > 0)
+	{
+		*(tmp + i++) = BSLASH;
+		--nb;
+	}
+	tmp = ft_strjoin(tmp, *tokens);
+	free(*tokens);
+	*tokens = ft_strdup(tmp);
+	ft_strdel(&tmp);
+	return (SUCCESS);
+}
+
+char	*expansions_management(char **tokens)
+{
+	int j;
+	int nb;
+	int type;
+	char *tmp;
+	char *btw;
+
+	j = 0;
+	nb = 0;
+	tmp = NULL;
+	btw = NULL;
+	while (*tokens)
 	{
 		j = 0;
-		type = identifier(tokens[i]);
-		ft_printf("%d\n", type);
-		while (g_symexp[j].expand)
+		if ((nb = ft_back_slashed(&(*tokens))) >= 0)
 		{
-			if (g_symexp[j].sym == type)
-				g_symexp[j].expand(&tokens[i]);
-			++j;
+			type = identifier(*tokens);
+			btw = ft_getbtw(*tokens, type);
+			while (g_symexp[j].expand)
+			{
+				if (g_symexp[j].sym == type)
+					g_symexp[j].expand(&(*tokens));
+				++j;
+			}
+			if (nb > 0)
+				ft_setbslash(&(*tokens), nb);
 		}
-		++i;
+		if (*tokens)
+		{
+			tmp = (tmp == NULL) ? ft_strdup(*tokens)
+			: ft_strjoin(tmp, *tokens);
+		}
+		if (btw)
+		{
+			tmp = (tmp == NULL) ? ft_strdup(btw)
+			: ft_strjoin(tmp, btw);
+			ft_strdel(&btw);
+		}
+		++tokens;
 	}
+	return (tmp);
+}
+
+int		exp_limit(char *tokens)
+{
+	int i;
+
+	i = 0;
 	while (*tokens)
-		ft_putendl(*tokens++);
+	{
+		if (*tokens == BSLASH && *(tokens - 1) != BSLASH)
+			i++;
+		else if (*tokens == DOLLAR && *(tokens - 1) != BSLASH)
+			i++;
+		tokens++;
+	}
+	return (i);
+}
+
+char *malexps(char *str, int *len, char c)
+{
+	int r;
+	int s;
+	char *ret;
+
+	r = 0;
+	s = 0;
+	while ((str[*len + r] == c || str[*len + r] == BSLASH) && str[*len])
+		++r;
+	while (!(str[*len + r] == c || str[*len + r] == BSLASH)
+	&& str[*len + r] && str[*len])
+		++r;
+	if (!(ret = (char*)ft_memalloc(sizeof(char) * (r + 1))))
+		return (NULL);
+	r = 0;
+	while ((str[*len + r] == c || str[*len + r] == BSLASH) && str[*len])
+		ret[s++] = str[*len + r++];
+	while (!(str[*len + r] == c || str[*len + r] == BSLASH)
+	&& str[*len + r] && str[*len])
+		ret[s++] = str[*len + r++];
+	*len += r;
+	return (ret);
+}
+
+char **ft_expsplit(char *str, char c)
+{
+	int i;
+	int nb;
+	int len;
+	char **tab;
+
+	i = 0;
+	nb = exp_limit(str) + 1; /* nb +- 1 si '\' */
+	if (nb == 0)
+		return (NULL);
+	if (!(tab = (char**)malloc(sizeof(char*) * (nb + 1))))
+		return (NULL);
+	len = 0;
+	while (i < nb)
+		tab[i++] = malexps(str, &len, c);
+	tab[nb] = 0;
+	return (tab);
+}
+
+int		expansions_treatment(char **tokens)
+{
+	char **splitok;
+
+	if (!(splitok = ft_expsplit(*tokens, DOLLAR)))
+		return (SUCCESS);
+	free(*tokens);
+	*tokens = expansions_management(splitok);
 	return (SUCCESS);
 }

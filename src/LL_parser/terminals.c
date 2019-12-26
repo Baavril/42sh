@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "tokens.h"
+#include "expansions.h"
 #include "libft.h"
 
 char	*word(t_token tok)
@@ -18,6 +19,7 @@ char	*word(t_token tok)
 	if (tok.type == WORD || tok.type == ASSIGNMENT_WORD)
 	{
 		ft_dprintf(2, "tok.type of type WORD detected with value '%s' !\n", tok.symbol);
+		expansions_treatment(&tok.symbol);
 		return(tok.symbol);
 	}
 	return(NULL);

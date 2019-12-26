@@ -38,7 +38,7 @@ struct s_token	g_grammar_symbols[] =
 	{ Else, "else" },
 	{ Elif, "elif" },
 	{ Fi, "fi" },
-	{ Lbrace, "{" },
-	{ Rbrace, "}" },
+//	{ Lbrace, "{" },
+//	{ Rbrace, "}" },
 	{ -1, NULL }
 };

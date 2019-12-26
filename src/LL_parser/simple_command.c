@@ -54,7 +54,8 @@ t_node *exec(t_token tok)
 
 	if ((tmp1 = cmd_word(tok)))
 	{
-		node = malloc(sizeof(t_node));
+		if (!(node = malloc(sizeof(t_node))))
+			return (NULL);
 		node->left.c = tmp1;
 		node->right.v = NULL;
 		if (is_potential(peek(), N_SUFFIX))

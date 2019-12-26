@@ -60,7 +60,9 @@ char	*ft_get_word(char **str)
 				continue;
 			}
 			if (!open_quotes && (ft_istoken(&(*str)[i]) || ft_isspace((*str)[i])))
+			{
 				break;
+				}
 			if ((*str)[i] == quote_type)
 			{
 				++i;

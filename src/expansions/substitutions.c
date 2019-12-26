@@ -22,7 +22,10 @@ int		direct_exp(char **token)
 	tmp = g_svar;
 	while (g_svar)
 	{
-		if (ft_strncmp(g_svar->key, *token + 1, ft_strlen(g_svar->key) - 1) == 0)
+		if (ft_strncmp(g_svar->key, *token + 1, (int)ft_strlen(g_svar->key) - 1) == 0
+		&& !(ft_isalpha(token[0][(int)ft_strlen(g_svar->key)])
+		|| ft_isdigit(token[0][(int)ft_strlen(g_svar->key)])
+		|| token[0][(int)ft_strlen(g_svar->key)] == UNDERSCORE))
 		{
 			ft_strdel(token);
 			*token = ft_strdup(g_svar->value);

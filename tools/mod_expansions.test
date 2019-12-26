@@ -1,0 +1,3 @@
+echo ${USER:-ba}
+echo ${test:-ba}
+echo ${ok:-ba}

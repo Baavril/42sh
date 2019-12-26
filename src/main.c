@@ -69,13 +69,13 @@ int		main(int argc, char **argv)
 {
 	extern char		**environ;
 	char			*input;
-	char			**args;
+//	char			**args;
 	int				status;
 
 	(void)argc;
 	tcsetpgrp(STDIN_FILENO, getpid()); //Control the terminal
 	set_signals();
-	args = NULL;
+	//args = NULL;
 	copybuff = NULL;
 	input = NULL;
 	g_progname = argv[0];
@@ -107,7 +107,7 @@ int		main(int argc, char **argv)
 			lexer(&input);
 			debug_parser(input);
 			/* way to test builtins without waiting interpreter */
-			args = ft_strsplit_whitespaces(input);
+		/*	args = ft_strsplit_whitespaces(input);
 			if (ft_strcmp("export", args[0]) == 0)
 				cmd_export(0, args);
 			else if (ft_strcmp("unset", args[0]) == 0)
@@ -118,7 +118,7 @@ int		main(int argc, char **argv)
 				exit(0);
 			else
 				expansions_management(args);
-			continue ; 
+			continue ; */
 /*			args = lexer(&input);
 			ft_memdel((void**)&input);
 //			if (!args)
