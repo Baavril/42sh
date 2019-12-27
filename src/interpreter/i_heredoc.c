@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 11:36:54 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/22 15:05:45 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/12/27 14:38:23 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,21 @@
 #include "parser.h"
 #include <unistd.h>
 
-int	i_dless(t_elem left, t_elem right)
+static char	*find_firstchar(char *str)
 {
-	t_cursor cursor;
-	char *buff;
-	int pipe_fd[2];
-	(void) left;
+	if (str)
+		while (ft_isspace(*str))
+			str++;
+	return (str);
+}
 
+int			i_dless(t_elem left, t_elem right)
+{
+	t_cursor	cursor;
+	char		*buff;
+	int			pipe_fd[2];
+
+	(void)left;
 	toggle_termcaps();
 	buff = NULL;
 	pipe(pipe_fd);
@@ -40,21 +48,13 @@ int	i_dless(t_elem left, t_elem right)
 	return (dup2(pipe_fd[0], 0));
 }
 
-static char	*find_firstchar(char *str)
+int			i_dlessdash(t_elem left, t_elem right)
 {
-	if (str)
-		while (ft_isspace(*str))
-			str++;
-	return(str);
-}
+	t_cursor	cursor;
+	char		*buff;
+	int			pipe_fd[2];
 
-int	i_dlessdash(t_elem left, t_elem right)
-{
-	t_cursor cursor;
-	char *buff;
-	int pipe_fd[2];
-	(void) left;
-
+	(void)left;
 	toggle_termcaps();
 	buff = NULL;
 	pipe(pipe_fd);

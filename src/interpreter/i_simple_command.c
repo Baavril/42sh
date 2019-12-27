@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:43:35 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/21 15:40:43 by bprunevi         ###   ########.fr       */
+/*   Updated: 2019/12/27 14:38:31 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,26 @@
 
 char **g_argv;
 
-int i_prefix(t_elem left, t_elem right)
+int	i_prefix(t_elem left, t_elem right)
 {
-	/* comment parcourir tout l'arbre et recuperer les donnees ? */
 	listadd_back(newnodshell(left.c, 0));
 	cmd_set(0, NULL);
-	/* reponse : comme ceci :D */
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
-	return(0);
+	return (0);
 }
 
-int i_builtin(t_elem left, t_elem right)
+int	i_builtin(t_elem left, t_elem right)
 {
 	g_argv = malloc(sizeof(char *) * 16); //16 ARGS MAX, NON
 	g_argv[0] = left.c;
 	g_argv[1] = NULL;
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
-	return(builtins_dispatcher(g_argv));
+	return (builtins_dispatcher(g_argv));
 }
 
-int i_exec(t_elem left, t_elem right)
+int	i_exec(t_elem left, t_elem right)
 {
 	extern char **environ;
 
@@ -51,26 +49,27 @@ int i_exec(t_elem left, t_elem right)
 	if (eval_command(g_argv))
 		exit(ft_dprintf(1, "unknown command : %s\n", g_argv));
 	else
-		return(execve(g_argv[0], g_argv, environ));
+		return (execve(g_argv[0], g_argv, environ));
 }
 
-int i_suffix_word(t_elem left, t_elem right)
+int	i_suffix_word(t_elem left, t_elem right)
 {
 	int i;
+
 	i = 0;
 	while (g_argv[++i])
-		(void) i;
+		(void)i;
 	g_argv[i] = left.c;
 	g_argv[++i] = NULL;
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
-	return(0);
+	return (0);
 }
 
-int i_suffix_redirect(t_elem left, t_elem right)
+int	i_suffix_redirect(t_elem left, t_elem right)
 {
 	left.v->f(left.v->left, left.v->right);
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
-	return(0);
+	return (0);
 }
