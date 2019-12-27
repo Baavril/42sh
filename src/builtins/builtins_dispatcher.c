@@ -37,8 +37,8 @@ const t_builtins	g_builtins[] =
 	{ "fg", &cmd_fg},
 	{ "bg", &cmd_bg},
 	{ "jobs", &cmd_jobs},
-/*	{ "set", &cmd_set},
-*/	{ "\0", NULL}
+	{ "set", &cmd_set},
+	{ "\0", NULL}
 };
 
 _Bool	prior_builtin(char *str)

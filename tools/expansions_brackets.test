@@ -2,11 +2,11 @@ echo 1/$LOGNAMEhome/${LOGNAME}/${LOGNAME}endf
 echo 2/$LOGNAMEhome/${LOGNAME}/$LOGNAME}endf
 echo 3/$LOGNAMEhome/${LOGNAME}/${LOGNAME}endf
 echo 4/$LOGNAMEhome/${LOGNAME}/{$LOGNAME} endf
-echo 5/$LOGNAMEhome/${LOGNAME}/${LOGNAME }endf
+echo 5/$LOGNAMEhome/${LOGNAME}/${LOGNAME}endf
 echo 6/$LOGNAMEhome/${LOGNAME}/${LOGNAME}&endf
 echo 7/$LOGNAMEhome/${LOGNAME}/$[LOGNAME],endf
-echo 8/$LOGNAMEhome/${LOGNAME}/$LOGNAME }.endf
-echo 9/$LOGNAMEhome/${LOGNAME}/${LOGNAME{}}endf
+echo 8/$LOGNAMEhome/${LOGNAME}/$LOGNAME}.endf
+echo 9/$LOGNAMEhome/${LOGNAME}/${LOGNAME}endf
 echo 10$LOGNAME/home/${LOGNAME}/${LOGNAMEE}endf
 echo 11$LOGNAME/home/${LOGNAME}
 echo 12$LOGNAME/home/${LOGNAME}/.${LOGNAME}
@@ -31,8 +31,6 @@ echo 7/home/$/${LOGNAME.e}ndf
 echo 8/home/$/${LOGNAME\e}ndf
 echo 9/home/$/${LOGNAME*e}ndf
 echo 10/home/${USER}/${LOGNAME@e}ndf
-echo 11/home/${USER}/${LOGNAME#e}ndf
-echo 12/home/${USER}/${LOGNAME%}endf
 echo 13/home/${USER}/${LOGNAME^}endf
 echo 14/home/${LOGNAME}/${LOGNAME_}endf
 echo 15/home/${LOGNAME}/${LOGNAME(}endf
