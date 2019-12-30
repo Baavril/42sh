@@ -23,9 +23,9 @@ int		direct_exp(char **token)
 	while (g_svar)
 	{
 		if (ft_strncmp(g_svar->key, *token + 1, (int)ft_strlen(g_svar->key) - 1) == 0
-		&& !(ft_isalpha(token[0][(int)ft_strlen(g_svar->key)])
-		|| ft_isdigit(token[0][(int)ft_strlen(g_svar->key)])
-		|| token[0][(int)ft_strlen(g_svar->key)] == UNDERSCORE))
+				&& !(ft_isalpha(token[0][(int)ft_strlen(g_svar->key)])
+					|| ft_isdigit(token[0][(int)ft_strlen(g_svar->key)])
+					|| token[0][(int)ft_strlen(g_svar->key)] == UNDERSCORE))
 		{
 			ft_strdel(token);
 			*token = ft_strdup(g_svar->value);
@@ -48,9 +48,9 @@ int		simple_exp(char **token)
 	while (g_svar)
 	{
 		if (ft_strncmp(g_svar->key, *token + 2, ft_strlen(g_svar->key) - 1) == 0
-		&& !(ft_isalpha(token[0][(int)ft_strlen(g_svar->key) + 1])
-		|| ft_isdigit(token[0][(int)ft_strlen(g_svar->key) + 1])
-		|| token[0][(int)ft_strlen(g_svar->key) + 1] == UNDERSCORE))
+				&& !(ft_isalpha(token[0][(int)ft_strlen(g_svar->key) + 1])
+					|| ft_isdigit(token[0][(int)ft_strlen(g_svar->key) + 1])
+					|| token[0][(int)ft_strlen(g_svar->key) + 1] == UNDERSCORE))
 		{
 			ft_strdel(token);
 			*token = ft_strdup(g_svar->value);
@@ -101,9 +101,9 @@ int		why_exp(char **token)
 	while (g_svar)
 	{
 		if (ft_strncmp(g_svar->key, *token + 2, ft_strlen(g_svar->key) - 1) == 0
-		&& !(ft_isalpha(token[0][(int)ft_strlen(g_svar->key) + 1])
-		|| ft_isdigit(token[0][(int)ft_strlen(g_svar->key) + 1])
-		|| token[0][(int)ft_strlen(g_svar->key) + 1] == UNDERSCORE))
+				&& !(ft_isalpha(token[0][(int)ft_strlen(g_svar->key) + 1])
+					|| ft_isdigit(token[0][(int)ft_strlen(g_svar->key) + 1])
+					|| token[0][(int)ft_strlen(g_svar->key) + 1] == UNDERSCORE))
 		{
 			ft_strdel(token);
 			if (g_svar->value && *(g_svar->value))
@@ -112,7 +112,7 @@ int		why_exp(char **token)
 			{
 				*token = ft_strdup(EMPTY_STR);
 				(word) ? ft_printf("42sh : %s: %s\n", var, word)
-				: ft_printf("42sh : %s: parameter null\n", var);
+					: ft_printf("42sh : %s: parameter null\n", var);
 			}
 			ft_strdel(&var);
 			ft_strdel(&word);
@@ -124,7 +124,7 @@ int		why_exp(char **token)
 	ft_strdel(token);
 	*token = ft_strdup(EMPTY_STR);
 	(word) ? ft_printf("42sh : %s: %s\n", var, word)
-	: ft_printf("42sh : %s: parameter not set\n", var);
+		: ft_printf("42sh : %s: parameter not set\n", var);
 	ft_strdel(&var);
 	ft_strdel(&word);
 	g_svar = tmp;
@@ -141,13 +141,12 @@ int		plus_exp(char **token)
 	if (!(var = ft_strcdup(*token + 2, COLON)))
 		return (ERROR);
 	keep = ft_strcdup(ft_strchr(*token, PLUS) + 1, CL_BRACE);
-	ft_printf("KEEP\n");
 	while (g_svar)
 	{
 		if (ft_strncmp(g_svar->key, *token + 2, ft_strlen(g_svar->key) - 1) == 0
-		&& !(ft_isalpha(token[0][(int)ft_strlen(g_svar->key) + 1])
-		|| ft_isdigit(token[0][(int)ft_strlen(g_svar->key) + 1])
-		|| token[0][(int)ft_strlen(g_svar->key) + 1] == UNDERSCORE))
+				&& !(ft_isalpha(token[0][(int)ft_strlen(g_svar->key) + 1])
+					|| ft_isdigit(token[0][(int)ft_strlen(g_svar->key) + 1])
+					|| token[0][(int)ft_strlen(g_svar->key) + 1] == UNDERSCORE))
 		{
 			ft_strdel(token);
 			if (g_svar->value && *(g_svar->value) && keep && *keep)
@@ -178,23 +177,25 @@ int		dash_exp(char **token)
 	while (g_svar)
 	{
 		if (ft_strncmp(g_svar->key, *token + 2, ft_strlen(g_svar->key) - 1) == 0
-		&& !(ft_isalpha(token[0][(int)ft_strlen(g_svar->key) + 1])
-		|| ft_isdigit(token[0][(int)ft_strlen(g_svar->key) + 1])
-		|| token[0][(int)ft_strlen(g_svar->key) + 1] == UNDERSCORE))
+				&& !(ft_isalpha(token[0][(int)ft_strlen(g_svar->key) + 1])
+					|| ft_isdigit(token[0][(int)ft_strlen(g_svar->key) + 1])
+					|| token[0][(int)ft_strlen(g_svar->key) + 1] == UNDERSCORE))
 		{
 			ft_strdel(token);
 			if (g_svar->value && *(g_svar->value))
 				*token = ft_strdup(g_svar->value);
 			else
-				*token = (keep && *keep) ? keep : ft_strdup(EMPTY_STR);
+				*token = (keep && *keep) ? ft_strdup(keep) : ft_strdup(EMPTY_STR);
 			g_svar = tmp;
+			ft_strdel(&keep);
 			return (SUCCESS);
 		}
 		g_svar = g_svar->next;
 	}
 	ft_strdel(token);
-	*token = (keep && *keep) ? keep : ft_strdup(EMPTY_STR);
+	*token = (keep && *keep) ? ft_strdup(keep) : ft_strdup(EMPTY_STR);
 	g_svar = tmp;
+	ft_strdel(&keep);
 	return (SUCCESS);
 }
 
@@ -222,37 +223,39 @@ int		equal_exp(char **token)
 	tmp = g_svar;
 	if (!(nod = setasvar(*token)))
 		return (ERROR);
-	keep = ft_strdup(ft_strchr(*token, EQUAL) + 1);
+	keep = ft_strcdup(ft_strchr(*token, EQUAL) + 1, CL_BRACE);
 	while (g_svar)
 	{
 		if (ft_strncmp(g_svar->key, *token + 2, ft_strlen(g_svar->key) - 1) == 0
-		&& !(ft_isalpha(token[0][(int)ft_strlen(g_svar->key) + 1])
-		|| ft_isdigit(token[0][(int)ft_strlen(g_svar->key) + 1])
-		|| token[0][(int)ft_strlen(g_svar->key) + 1] == UNDERSCORE))
+				&& !(ft_isalpha(token[0][(int)ft_strlen(g_svar->key) + 1])
+					|| ft_isdigit(token[0][(int)ft_strlen(g_svar->key) + 1])
+					|| token[0][(int)ft_strlen(g_svar->key) + 1] == UNDERSCORE))
 		{
 			free(*token);
-			if (g_svar->value)
+			if (g_svar->value && *(g_svar->value))
 				*token = ft_strdup(g_svar->value);
 			else
 			{
-				*token = ft_strdup(keep);
+				*token = (keep && *keep) ? ft_strdup(keep) : ft_strdup(EMPTY_STR);
 				g_svar = tmp;
 				if (checkvarlst(nod))
 					listadd_back(newnodshell(nod, 0));
 			}
 			g_svar = tmp;
-			free(keep);
+			ft_strdel(&keep);
 			return (SUCCESS);
 		}
 		g_svar = g_svar->next;
 	}
 	free(*token);
-	*token = ft_strndup(keep, ft_strlen(keep) - 1);
-	free(keep);
+	*token = (keep && *keep) ? ft_strdup(keep) : ft_strdup(EMPTY_STR);
+	ft_strdel(&keep);
 	g_svar = tmp;
 	listadd_back(newnodshell(nod, 0));
 	return (SUCCESS);
 }
+
+/* still need to fix the management of positional parameters and arrays. see bash man p 28 */
 
 int		bsharp_exp(char **token)
 {
@@ -261,7 +264,10 @@ int		bsharp_exp(char **token)
 	tmp = g_svar;
 	while (g_svar)
 	{
-		if (ft_strncmp(g_svar->key, *token + 3, ft_strlen(g_svar->key) - 1) == 0)
+		if (ft_strncmp(g_svar->key, *token + 3, ft_strlen(g_svar->key) - 1) == 0
+				&& !(ft_isalpha(token[0][(int)ft_strlen(g_svar->key) + 2])
+					|| ft_isdigit(token[0][(int)ft_strlen(g_svar->key) + 2])
+					|| token[0][(int)ft_strlen(g_svar->key) + 2] == UNDERSCORE))
 		{
 			ft_strdel(token);
 			*token = ft_itoa(ft_strlen(g_svar->value));
@@ -271,7 +277,9 @@ int		bsharp_exp(char **token)
 		g_svar = g_svar->next;
 	}
 	g_svar = tmp;
-	return (ERROR);
+	ft_strdel(token);
+	*token = ft_itoa(0);
+	return (SUCCESS);
 }
 
 char *ft_alpharange(char c, char x)
@@ -321,7 +329,7 @@ char	*ft_deploy(char *match)
 			if (ft_isalpha(match[i]) && ft_isalpha(match[i + 2]))
 			{
 				range = (!dash) ? ft_alpharange(match[i], match[i + 2])
-				: ft_strjoin(range, ft_alpharange(match[i], match[i + 2]));
+					: ft_strjoin(range, ft_alpharange(match[i], match[i + 2]));
 				dash += 1;
 				flag = 1;
 				i += 2;
@@ -382,7 +390,6 @@ char	*ft_strneg(char *match)
 	{
 		if ((strpos[i] - c) == 0)
 		{
-			ft_printf("%c\n", strpos[i]);
 			++i;
 			++c;
 		}
@@ -459,6 +466,92 @@ int	ft_strpchr(char *str, char c)
 	return (0);
 }
 
+char *ft_starmatch(char *str, char *match, int flag)
+{
+	int i;
+	int n;
+	int j;
+	int diff;
+	char *ret;
+
+	i = 0;
+	j = 0;
+	n = 0;
+	diff = 0;
+	ret = NULL;
+	while (match[j])
+	{
+		ft_printf("match = %c\n", match[i]);
+		ft_printf("str = %c\n", str[i]);
+		while (match[i] && match[i] != STAR)
+		{
+			ft_printf("m0 = %c\n", match[i]);
+			ft_printf("s0 = %c\n", str[i]);
+			if (match[i] != str[i])
+			{
+				ft_printf("diff2 = %d\n", diff);
+				diff += 1;
+			}
+			++i;
+		}
+		j = i;
+		n = i;
+		ft_printf("match1 = %c\n", match[i]);
+		ft_printf("str1 = %c\n", str[i]);
+		while (match[j] && match[j] == STAR && match[j + 1] != '\0')
+		{
+			if (match[j + 1] != '\0' && match[j + 1] != STAR)
+			{
+				while (str[i] && str[i] != match[j + 1])
+				{
+					ft_printf("m3 = %c\n", match[j]);
+					ft_printf("s3 = %c\n", str[i]);
+					i++;
+				}
+				if (str[i] != match[j + 1])
+					diff += 1;
+				n = i + 1;
+			}
+			ft_printf("m1 = %c\n", match[j]);
+			++j;
+		}
+		ft_printf("n0 = %d\n", n);
+		ft_printf("match2 = %c\n", match[j]);
+		ft_printf("str2 = %c\n", str[i]);
+		while (match[j] && match[j] != STAR)
+		{
+			ft_printf("m2 = %c\n", match[j]);
+			ft_printf("s1 = %c\n", str[i]);
+			if (match[j] != str[i])
+			{
+				ft_printf("diff1 = %d\n", diff);
+				diff += 1;
+			}
+			++i;
+			++j;
+		}
+		while (str[i] && match[j] && match[j] == STAR && match[j + 1] == '\0' && !diff)
+		{
+			ft_printf("m3 = %c\n", match[j]);
+			ft_printf("s2 = %c\n", str[i]);
+			++i;
+		}
+		j++;
+	}
+	ft_printf("n = %d\n", n);
+	ft_printf("flag = %d\n", flag);
+	ft_printf("diff = %d\n", diff);
+	if (flag == 2 && !diff)
+		ret = ft_strdup(&str[i]);
+	else if (flag == 1 && !diff)
+		ret = (n != 0) ? ft_strdup(&str[n]) : str;
+	else
+		ret = str;
+	ft_printf("str = %s\n", str);
+	ft_printf("diff = %d\n", diff);
+	return (ret);
+}
+
 char	*ft_strmatch(char *token, char *match, char flag)
 {
 	int len;
@@ -466,15 +559,22 @@ char	*ft_strmatch(char *token, char *match, char flag)
 
 	ret = NULL;
 	len = ft_strlen(match);
-	if (ft_isin(STAR, match))
-		ret = (flag == 2) ? ft_strdup(EMPTY_STR)
-		: ft_strdup(token);
+	ft_printf("token %s\n", token);
+	ft_printf("match %s\n", match);
+	if (!match || !*match)
+		ret = ft_strdup(token);
+	else if (ft_isin(STAR, match))
+	{
+		ret = ft_starmatch(token, match, flag);
+		/*	ret = (flag == 2) ? ft_strdup(EMPTY_STR)
+			: ft_strdup(token); */
+	}
 	else if (ft_strncmp(token, match, len) == 0)
 		ret = ft_strdupfm(token, match[len - 1]);
 	else if (match[ft_strpchr(match, WHY)] == WHY)
 		ret = ft_strwhy(token, &match[ft_strpchr(match, WHY)], OSHARP_EXP);
 	else if (len > 1 && *match == OP_SQUAR
-	&& ft_getbmatch(token, match + 1, OSHARP_EXP) == SUCCESS)
+			&& ft_getbmatch(token, match + 1, OSHARP_EXP) == SUCCESS)
 		ret = ft_strdup(&token[1]);
 	else
 		ret = ft_strdup(token);
@@ -487,12 +587,14 @@ int ft_spechrlen(char *token)
 
 	if ((pos = ft_strpchr(token, SHARP)))
 		return ((token[pos + 1] == SHARP)
-		? SUCCESS : ERROR);
+				? SUCCESS : ERROR);
 	if ((pos = ft_strpchr(token, PERCENT)))
 		return ((token[pos + 1] == PERCENT)
-		? SUCCESS : ERROR);
+				? SUCCESS : ERROR);
 	return (ERROR);
 }
+
+/* still need to fix the management of positional parameters and arrays. see bash man p 28 */
 
 int		osharp_exp(char **token)
 {
@@ -505,7 +607,10 @@ int		osharp_exp(char **token)
 	word = ft_strcdup(ft_strchr(*token, SHARP) + flag, CL_BRACE);
 	while (g_svar)
 	{
-		if (ft_strncmp(g_svar->key, *token + 2, ft_strlen(g_svar->key) - 1) == 0)
+		if (ft_strncmp(g_svar->key, *token + 2, ft_strlen(g_svar->key) - 1) == 0
+				&& !(ft_isalpha(token[0][(int)ft_strlen(g_svar->key) + 1])
+					|| ft_isdigit(token[0][(int)ft_strlen(g_svar->key) + 1])
+					|| token[0][(int)ft_strlen(g_svar->key) + 1] == UNDERSCORE))
 		{
 			ft_strdel(token);
 			*token = ft_strmatch(g_svar->value, word, flag);
@@ -517,7 +622,7 @@ int		osharp_exp(char **token)
 	ft_strdel(token);
 	*token = ft_strdup(EMPTY_STR);
 	g_svar = tmp;
-	return (ERROR);
+	return (SUCCESS);
 }
 
 int ft_strlncmp(const char *s1, const char *s2, size_t len)
@@ -535,8 +640,8 @@ int ft_strlncmp(const char *s1, const char *s2, size_t len)
 	--j;
 	while (len > 0 && s1[i] && s2[j] && s1[i] == s2[j])
 	{
-	ft_printf("%c\n", s1[i]);
-	ft_printf("%c\n", s2[j]);
+		ft_printf("%c\n", s1[i]);
+		ft_printf("%c\n", s2[j]);
 		--len;
 		--i;
 		--j;
@@ -556,15 +661,17 @@ char	*ft_strpmatch(char *token, char *match, char flag)
 
 	ret = NULL;
 	len = ft_strlen(match);
+	if (!match || !*match)
+		ret = ft_strdup(token);
 	if (ft_isin(STAR, match))
 		ret = (flag == 2) ? ft_strdup(EMPTY_STR)
-		: ft_strdup(token);
+			: ft_strdup(token);
 	else if (ft_strlncmp(token, match, len) == 0)
 		ret = ft_strndup(token, ft_strlen(token) - ft_strlen(match));
 	else if (match[ft_strpchr(match, WHY)] == WHY)
 		ret = ft_strwhy(token, &match[ft_strpchr(match, WHY)], OPERCENT_EXP);
 	else if (len > 1 && *match == OP_SQUAR
-	&& ft_getbmatch(token, match + 1, OPERCENT_EXP) == SUCCESS)
+			&& ft_getbmatch(token, match + 1, OPERCENT_EXP) == SUCCESS)
 		ret = ft_strndup(token, ft_strlen(token) - 1);
 	else
 		ret = ft_strdup(token);
@@ -594,5 +701,5 @@ int		opercent_exp(char **token)
 	ft_strdel(token);
 	*token = ft_strdup(EMPTY_STR);
 	g_svar = tmp;
-	return (ERROR);
+	return (SUCCESS);
 }
