@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2019/12/18 13:14:43 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/02 12:16:30 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int		main(int argc, char **argv)
 
 	(void)argc;
 	tcsetpgrp(STDIN_FILENO, getpid()); //Control the terminal
-	set_signals();
+	set_signals(FATHER);
 	//args = NULL;
 	copybuff = NULL;
 	input = NULL;

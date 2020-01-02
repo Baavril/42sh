@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:36:57 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/18 16:03:18 by tgouedar         ###   ########.fr       */
+/*   Updated: 2019/12/18 17:03:28 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@ extern int			g_fd[3];
 
 t_job				*ft_add_job(int status, char *cmd)
 {
-	t_job	new;
 	t_list	*new_front;
 
-	if (!(g_curjob.process) || (cmd && !(new.cmd = ft_strdup(cmd))))
+	if (!(g_curjob.process) || (cmd && !(g_curjob.cmd = ft_strdup(cmd))))
 	{
 		ft_bzero(&g_curjob, sizeof(t_job));
 		return (NULL);

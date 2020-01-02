@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 15:51:32 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/19 11:08:40 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/02 15:01:40 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,24 +58,14 @@ void			ft_set_child_signal(int shell_pid)//Cela suffira-t-il ?
 {
 	sigset_t		wakeup_sig;
 
-	struct sigaction	action;
-
-	ft_bzero(&action, sizeof(sigaction));
-	action.sa_handler = &ft_catch_sigusr1;
-	sigaction(SIGUSR1, &action, NULL);
-
+	set_signals(CHILD);
 	sigfillset(&wakeup_sig);
 	sigdelset(&wakeup_sig, SIGUSR1);
 	ft_dprintf(2, "In Son: WAITING for the top a la vachette\n");
 	kill(shell_pid, SIGUSR1);
+//	ft_dprintf(2, "In Son: SIGUSR1 sent to pid : %i\n", shell_pid);
 	sigsuspend(&wakeup_sig);
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-	signal(SIGTSTP, SIG_DFL);
-	signal(SIGTTIN, SIG_DFL);
-	signal(SIGTTOU, SIG_DFL);
 	signal(SIGUSR1, SIG_IGN);
-	signal(SIGUSR2, SIG_IGN);
 	ft_dprintf(2, "In SOn: >>>>> top a la vachette <<<<<<<<<<<<\n");
 }
 
