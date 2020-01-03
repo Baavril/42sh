@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/03 11:32:03 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/03 19:05:50 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "shell_variables.h"
 #include "error.h"
 #include "jcont.h"
-#include "input.h"
+#include "termcaps.h"
 
 extern int		g_retval;
 struct s_svar	*g_svar;
@@ -115,7 +115,7 @@ int		cmd_exit(int argc, char **argv)
 	history(DELETE, NULL, NULL);
 	ft_free_bintable();
 	ft_free_internvars();
-	restore_term_mode();
+	set_termcaps(TC_RESTORE);
 	system("leaks 42sh");
 	exit(status);
 }

@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/01/02 19:43:19 by tgouedar         ###   ########.fr        #
+#    Updated: 2020/01/03 19:42:36 by bprunevi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SOURCES			:=		main.c \
 						input/keyboard_dispatcher.c \
 						input/auto_completion/auto_completion.c \
 						input/auto_completion/tst.c \
+						input/termcaps/termcaps.c \
 						lexer/lexer.c \
 						lexer/grammar_symbols.c \
 						lexer/separators/unglue_metachr.c \
@@ -139,4 +140,4 @@ CFLAGS += -Wall -Wextra -Werror -ansi -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200809
 
 #CFLAGS += -fno-builtin -O2
 
-#CDEBUG += -g -fsanitize=address -fno-optimize-sibling-calls
+CDEBUG += -g -fsanitize=address -fno-optimize-sibling-calls
