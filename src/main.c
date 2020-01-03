@@ -6,10 +6,11 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2019/12/18 13:14:43 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/03 19:30:28 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <term.h>
 #include <stdio.h>
 #include <limits.h>
 #include <stdlib.h>
@@ -24,6 +25,7 @@
 #include "builtins.h"
 #include "prompt.h"
 #include "input.h"
+#include "termcaps.h"
 #include "error.h"
 #include "lexer.h"
 #include "parser.h"
@@ -31,8 +33,9 @@
 #include "synt.h"
 #include "path.h"
 
-int	g_retval;
-char	g_pwd[] = {0};
+int					g_retval;
+char				g_pwd[] = {0};
+struct termios		g_old_termios;
 
 static int	set_minimal_env(void)
 {
@@ -73,9 +76,9 @@ int		main(int argc, char **argv)
 	int				status;
 
 	(void)argc;
+	set_termcaps(TC_SAVE);
 	tcsetpgrp(STDIN_FILENO, getpid()); //Control the terminal
-	set_signals();
-	//args = NULL;
+	set_signals(FATHER);
 	copybuff = NULL;
 	input = NULL;
 	g_progname = argv[0];
@@ -106,32 +109,6 @@ int		main(int argc, char **argv)
 		{
 			lexer(&input);
 			debug_parser(input);
-			/* way to test builtins without waiting interpreter */
-		/*	args = ft_strsplit_whitespaces(input);
-			if (ft_strcmp("export", args[0]) == 0)
-				cmd_export(0, args);
-			else if (ft_strcmp("unset", args[0]) == 0)
-				cmd_unset(0, args);
-			else if (ft_strcmp("set", args[0]) == 0)
-				cmd_set(0, args);
-			else if (ft_strcmp("exit", args[0]) == 0)
-				exit(0);
-			else
-				expansions_management(args);
-			continue ; */
-/*			args = lexer(&input);
-			ft_memdel((void**)&input);
-//			if (!args)
-				continue;
-			status = synt(args);
-			if (status != e_success)
-			{
-				g_retval = status;
-				ft_tabdel(&args);
-				continue;
-			}
-			g_retval = 0;
-			ft_tabdel(&args);*/
 		}
 		else
 			ft_memdel((void**)&input);
@@ -140,5 +117,7 @@ int		main(int argc, char **argv)
 	ft_tabdel(&environ);
 	ft_strdel(&copybuff);
 	ft_free_bintable();
+	set_termcaps(TC_RESTORE);
+	system("leaks 42sh");
 	return (0);
 }

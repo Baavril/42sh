@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:18:20 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/19 10:19:53 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/02 19:44:23 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef struct		s_process
 {
 	pid_t			pid;
 	int				status;
-	int				ready;
 }					t_process;
 
 typedef struct		s_job

@@ -155,6 +155,7 @@ char	*ft_quoted(char *tokens)
 
 char	*ft_getbtw(char *tokens, int type)
 {
+	ft_printf("RET = %s\n", tokens);
 	if (*tokens != DOLLAR)
 		return (NULL);
 	if (*tokens == DOLLAR && (*(tokens + 1) == SLASH
@@ -162,15 +163,22 @@ char	*ft_getbtw(char *tokens, int type)
 		return (ft_strdup(tokens));
 	if (ft_isin(DQUOTES, tokens))
 		return (ft_quoted(tokens));
-	while (*tokens && !ft_isalpha(*tokens))
+	while (*tokens && (*tokens == DOLLAR || *tokens == OP_BRACE))
 		tokens++;
-	while (*tokens && (ft_isalpha(*tokens) || ft_isdigit(*tokens)
+	while (type == DIRECT_EXP && *tokens && (ft_isalpha(*tokens) || ft_isdigit(*tokens)
 	|| *tokens == AMPER || *tokens == UNDERSCORE))
 		tokens++;
-	if (type != DIRECT_EXP && *tokens == CL_BRACE)
+	while (type != DIRECT_EXP && *tokens && *tokens != CL_BRACE)
+	{
 		tokens++;
-	if (*tokens == BSLASH)
-		tokens++;
+		if (*(tokens + 1) == AMPER)
+			++tokens;
+	}
+	if (*tokens == CL_BRACE)
+		++tokens;
+	//if (*tokens == BSLASH)
+	//	tokens++;
+	ft_printf("RET = %s\n", tokens);
 	return (ft_strdup(tokens));
 }
 
@@ -253,16 +261,27 @@ char	*expansions_management(char **tokens)
 		if ((nb = ft_back_slashed(&(*tokens))) >= 0)
 		{
 			type = identifier(*tokens);
+			ft_printf("type = %d\n", type);
 			btw = ft_getbtw(*tokens, type);
+			ft_printf("btw = %s\n", btw);
+			ft_printf("token = %s\n", *tokens);
 			while (g_symexp[j].expand)
 			{
 				if (g_symexp[j].sym == type)
-					g_symexp[j].expand(&(*tokens));
+				{
+					if (g_symexp[j].expand(&(*tokens)) == ERROR)
+					{
+						ft_printf("42sh: %s: bad substitution\n", *tokens);
+						return (NULL);
+					}
+					ft_printf("42sh: %s\n", *tokens);
+				}
 				++j;
 			}
 			if (nb > 0)
 				ft_setbslash(&(*tokens), nb);
 		}
+		ft_printf("subtok = %s\n", *tokens);
 		if (*tokens)
 		{
 			tmp = (tmp == NULL) ? ft_strdup(*tokens)
@@ -270,9 +289,14 @@ char	*expansions_management(char **tokens)
 		}
 		if (btw)
 		{
-			tmp = (tmp == NULL) ? ft_strdup(btw)
-			: ft_strjoin(tmp, btw);
-			ft_strdel(&btw);
+			if (!**tokens && type == WHY_EXP)
+				ft_strdel(&btw);
+			else
+			{
+				tmp = (tmp == NULL) ? ft_strdup(btw)
+				: ft_strjoin(tmp, btw);
+				ft_strdel(&btw);
+			}
 		}
 		++tokens;
 	}

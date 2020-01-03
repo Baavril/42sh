@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 11:17:51 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/18 15:38:25 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/02 14:13:58 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,25 @@
 extern t_jcont		g_jcont;
 extern char			*g_progname;
 
-int				ft_resume_in_fg(t_job *job)//need to test the synchronicity of killpg/sigsupend calls
+void				ft_set_running(t_job *job)
 {
-	int				ret_status;
+	t_list		*voyager;
+	t_process	*process;
+
+	voyager = job->process;
+	while (voyager)
+	{
+		process = (t_process*)(voyager->content);
+		if (WIFSTOPPED(process->status))
+			process->status =  RUNNING;
+		voyager = voyager->next;
+	}
+	job->status = RUNNING;
+}
+
+int					ft_resume_in_fg(t_job *job)//need to test the synchronicity of killpg/sigsupend calls
+{
+	int		ret_status;
 
 	if (g_jcont.active_jobs[0] != job->nbr)
 		g_jcont.active_jobs[1] = g_jcont.active_jobs[0];
@@ -27,7 +43,7 @@ int				ft_resume_in_fg(t_job *job)//need to test the synchronicity of killpg/sig
 	if (WIFSTOPPED(job->status))
 	{
 		if (!killpg(job->pgid, SIGCONT))
-			job->status = RUNNING;
+			ft_set_running(job);
 		else
 		{
 			ft_dprintf(2, "%s: fg: error while sending continue signal(SIGCONT).", g_progname);
@@ -47,10 +63,10 @@ int				ft_resume_in_fg(t_job *job)//need to test the synchronicity of killpg/sig
 ** ignore any of the other arguments. This builtin has no options.
 */
 
-int					cmd_fg(int ac, char **av)
+int						cmd_fg(int ac, char **av)
 {
-	t_job		*job;
-	int			ret;
+	t_job	*job;
+	int		ret;
 
 	ret = 0;
 	if (ac == 1)

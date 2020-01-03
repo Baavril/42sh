@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 16:02:57 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/21 17:15:02 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/02 20:53:12 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,5 @@ int	i_clobber(t_elem left, t_elem right);
 int is_regfile(const char *arg);
 int eval_command(char **arg);
 
+void	toggle_sig_mode(void);
 #endif

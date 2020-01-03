@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:50:48 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/16 20:35:22 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/02 13:26:07 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,19 @@ void		ft_sigchld_handler(int nbr)
 	t_process	*process;
 
 	(void)nbr;
-
+	ft_dprintf(2, "handler: SIGCHLD\n");
 	while ((pid = waitpid(-1, &ret_status, WUNTRACED | WNOHANG)) > 0)
 	{
-	ft_dprintf(2, "handler: wait caught pid: %i\n", pid);
+	ft_dprintf(2, "handler: SIGCHLD wait caught pid: %i\n", pid);
 		if ((job = ft_get_job_pgid(pid)))
 		{
 			job->status = ret_status | (BACKGROUND &job->status);
-			if (!(process = ft_get_process_from_job(job, pid)))
-				continue ;
+			process = ft_get_process_from_job(job, pid);
 		}
 		else if (!(process = ft_get_process_pid(pid)))
 			continue ;
-		ft_dprintf(2, "handler: process updated: %i\n", ret_status);
-		process->status = ret_status; // et peut etre des trucs a moi.
+		ft_dprintf(2, "handler: SIGCHLD process updated: %i\n", ret_status);
+		process->status = ret_status;
 	}
 	ft_update_job_status();
 }

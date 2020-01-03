@@ -6,12 +6,13 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 11:36:54 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/27 14:38:23 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/03 19:51:50 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "input.h"
+#include "termcaps.h"
 #include "parser.h"
 #include <unistd.h>
 
@@ -30,7 +31,7 @@ int			i_dless(t_elem left, t_elem right)
 	int			pipe_fd[2];
 
 	(void)left;
-	toggle_termcaps();
+	set_termcaps(TC_INPUT);
 	buff = NULL;
 	pipe(pipe_fd);
 	while (!buff || (ft_strcmp(right.c, buff) && write(1, "\n", 1)))
@@ -44,7 +45,7 @@ int			i_dless(t_elem left, t_elem right)
 		ft_putstr_fd("\n", pipe_fd[1]);
 	}
 	close(pipe_fd[1]);
-	toggle_termcaps();
+	set_termcaps(TC_RESTORE);
 	return (dup2(pipe_fd[0], 0));
 }
 
@@ -55,7 +56,7 @@ int			i_dlessdash(t_elem left, t_elem right)
 	int			pipe_fd[2];
 
 	(void)left;
-	toggle_termcaps();
+	set_termcaps(TC_INPUT);
 	buff = NULL;
 	pipe(pipe_fd);
 	while (!buff || (ft_strcmp(right.c, buff) && write(1, "\n", 1)))
@@ -69,6 +70,6 @@ int			i_dlessdash(t_elem left, t_elem right)
 		ft_putstr_fd("\n", pipe_fd[1]);
 	}
 	close(pipe_fd[1]);
-	toggle_termcaps();
+	set_termcaps(TC_RESTORE);
 	return (dup2(pipe_fd[0], 0));
 }

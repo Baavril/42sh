@@ -6,21 +6,19 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/28 10:26:37 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/03 17:33:00 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "input.h"
+#include "termcaps.h"
 #include "keys.h"
 #include "prompt.h"
 #include "display.h"
 #include "history.h"
 
 #include <unistd.h>
-#include <stdio.h>
-#include <term.h>
-#include <curses.h>
 #include <stdint.h>
 
 void	ft_init_cursor(t_cursor *cursor)
@@ -36,41 +34,16 @@ void	ft_init_cursor(t_cursor *cursor)
 	cursor->on = 0;
 }
 
-int toggle_termcaps(void)
-{
-	struct termios term;
-
-	term.c_cc[VMIN] = 1; /* si VTIME = 0 et ICANON desactive VMIN determine le nombre d'octets lus par read */
-	term.c_cc[VTIME] = 0;
-	if (tcgetattr(STDIN_FILENO, &term) < 0)
-	{
-		printf("Error tcgetattr");
-		return(1);
-	}
-	term.c_lflag ^= (ECHO | ICANON | ISIG | IEXTEN);
-	if (tcsetattr(STDIN_FILENO, TCSADRAIN, &term) < 0)
-	{
-		printf("Error tcsetattr");
-		return(1);
-	}
-	if (tgetent(NULL, getenv("TERM")) != 1)
-	{
-		printf("Error tgetent");
-		return(1);
-	}
-	return(0);
-}
-
 int read_command(char **buff)
 {
-	char *tmp;
-	t_cursor cursor;
+	char		*tmp;
+	t_cursor	cursor;
 
 	ft_init_cursor(&cursor);
 	if (!isatty(STDIN_FILENO))
-		return(1);
-	if (toggle_termcaps())
-		return(2);
+		return (1);
+	if (set_termcaps(TC_INPUT))
+		return (2);
 	cursor.prompt_len = mkprompt(&(cursor.prompt));
 	get_stdin(&cursor, buff);
 	write(1, "\n", 1);
@@ -84,6 +57,6 @@ int read_command(char **buff)
 		ft_init_cursor(&cursor);
 	}
 	ft_strdel(&(cursor.prompt));
-	toggle_termcaps();
-	return(0);
+	set_termcaps(TC_RESTORE);
+	return (0);
 }
