@@ -21,7 +21,8 @@ char **g_argv;
 int i_prefix(t_elem left, t_elem right)
 {
 	/* comment parcourir tout l'arbre et recuperer les donnees ? */
-	listadd_back(newnodshell(left.c, 0));
+	if (checkvarlst(left.c))
+		listadd_back(newnodshell(left.c, 0));
 	cmd_set(0, NULL);
 	/* reponse : comme ceci :D */
 	if (right.v)

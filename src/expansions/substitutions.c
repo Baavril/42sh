@@ -702,30 +702,30 @@ char *ft_starmatch(char *str, char *match, int flag)
 
 char	*ft_strmatch(char *token, char *match, char flag)
 {
-	int len;
+//	int len;
 	char *ret;
 
 	ret = NULL;
-	len = ft_strlen(match);
+//	len = ft_strlen(match);
 	ft_printf("token %s\n", token);
 	ft_printf("match %s\n", match);
 	if (!match || !*match)
 		ret = ft_strdup(token);
-	else if (ft_isin(STAR, match))
-	{
-		ret = ft_starmatch(token, match, flag);
+//	else if (ft_isin(STAR, match))
+//	{
+	ret = ft_starmatch(token, match, flag);
 		/*	ret = (flag == 2) ? ft_strdup(EMPTY_STR)
 			: ft_strdup(token); */
-	}
-	else if (ft_strncmp(token, match, len) == 0)
-		ret = ft_strdupfm(token, match[len - 1]);
-	else if (match[ft_strpchr(match, WHY)] == WHY)
-		ret = ft_strwhy(token, &match[ft_strpchr(match, WHY)], OSHARP_EXP);
-	else if (len > 1 && *match == OP_SQUAR
-			&& ft_getbmatch(token, match + 1, OSHARP_EXP) == SUCCESS)
-		ret = ft_strdup(&token[1]);
-	else
-		ret = ft_strdup(token);
+//	}
+//	else if (ft_strncmp(token, match, len) == 0)
+//		ret = ft_strdupfm(token, match[len - 1]);
+	//else if (match[ft_strpchr(match, WHY)] == WHY)
+	//	ret = ft_strwhy(token, &match[ft_strpchr(match, WHY)], OSHARP_EXP);
+//	else if (len > 1 && *match == OP_SQUAR
+//			&& ft_getbmatch(token, match + 1, OSHARP_EXP) == SUCCESS)
+//		ret = ft_strdup(&token[1]);
+//	else
+//		ret = ft_strdup(token);
 	return (ret);
 }
 
