@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 20:40:42 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/02 14:05:37 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/02 20:46:03 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int		ft_wait_foreground(t_job* job)
 	tcsetpgrp(STDIN_FILENO, job->pgid); //mise au premier plan vis-a-vis le term
 	sigfillset(&wakeup_sig);
 	sigdelset(&wakeup_sig, SIGCHLD);
-	killpg(job->pgid, SIGUSR1);
 	ft_dprintf(2, "Job in foreground: %i\n", tcgetpgrp(0));
 	while (ISRUNNING(job->status)) //Attente de l'arret/suspension de tout les fils
 		sigsuspend(&wakeup_sig);

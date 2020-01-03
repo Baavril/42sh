@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/12/23 15:04:50 by yberramd         ###   ########.fr        #
+#    Updated: 2020/01/02 19:43:19 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,6 @@ SOURCES			:=		main.c \
 						job_control/ft_print_job.c \
 						job_control/ft_set_prio.c \
 						job_control/ft_sigchld_handler.c \
-						job_control/ft_sigusr1_handler.c \
 						job_control/ft_update_job_status.c \
 						job_control/ft_wait_foreground.c \
 						job_control/path_concat.c \

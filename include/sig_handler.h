@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 22:36:47 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/02 14:30:55 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/02 19:44:14 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ typedef struct			s_sig
 
 
 void					ft_sigchld_handler(int nbr);
-void					ft_sigusr1_handler(int nbr, siginfo_t *siginfo, void *context);
-void					ft_catch_sigusr1(int nbr);
 
 void					set_signals(int id);
 

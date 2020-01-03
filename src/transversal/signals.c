@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 22:47:47 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/02 13:04:07 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/02 19:35:02 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,8 @@ t_sig			g_sigdispatcher[] =
 	{SIGXFSZ, {SIG_IGN, SIG_DFL}},
 	{SIGVTALRM, {SIG_IGN, SIG_DFL}},
 	{SIGPROF, {SIG_IGN, SIG_DFL}},
-//	{SIGWINCH, {SIG_IGN, SIG_DFL}},
-//	{SIGINFO, {SIG_IGN, SIG_DFL}},
-	{SIGUSR1, {(void*)(&ft_sigusr1_handler), &ft_catch_sigusr1}},
-	{SIGUSR2, {SIG_IGN, SIG_DFL}},
+	{SIGUSR1, {SIG_IGN, SIG_IGN}},
+	{SIGUSR2, {SIG_IGN, SIG_IGN}},
 	{0, {NULL, NULL}},
 };
 
@@ -54,17 +52,16 @@ t_sig			g_sigdispatcher[] =
 
 void			set_signals(int id)
 {
-	sigset_t			block_mask;
 	struct sigaction	action;
 	int					i;
 	t_sig				*signal;
 
 	i = 1;
-	sigemptyset(&block_mask);
 	signal = &(g_sigdispatcher[i]);
 	while ((signal->sig_nbr))
 	{
 		ft_bzero(&action, sizeof(sigaction));
+		sigemptyset(&action.sa_mask);
 		if (id == FATHER && signal->sig_nbr == SIGCHLD)
 		{
 			action.sa_flags = SA_SIGINFO;
@@ -72,7 +69,6 @@ void			set_signals(int id)
 		}
 		else
 			action.sa_handler = signal->handlers[id];
-		action.sa_mask = block_mask;
 		sigaction(signal->sig_nbr, &action, NULL);
 		signal = &(g_sigdispatcher[++i]);
 	}
