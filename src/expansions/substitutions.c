@@ -485,7 +485,7 @@ int	ft_strpchr(char *str, char c)
 	return (0);
 }
 
-int		ft_checkdeploy(char *str, char *match, int flag)
+int		ft_checkdeploy(char *str, char *match, int flag, int star)
 {
 	char *tmp;
 	char *ptm;
@@ -497,8 +497,11 @@ int		ft_checkdeploy(char *str, char *match, int flag)
 	c = 0;
 	ret = 0;
 	ptm = NULL;
-	if (match[i] == CARET || match[i + 1] == CARET)
+	if (star && (match[i] == CARET || match[i + 1] == CARET))
+	{
 		ptm = ft_strdupto(match + (ft_strpchr(match, CARET) + 1), CL_SQUAR);
+		ft_getdeploy(&ptm); /*voir si ca casse rien */
+	}
 	ft_printf("ptm = %s\n", ptm);
 	tmp = ft_strdupto(match + (ft_strpchr(match, OP_SQUAR) + 1), CL_SQUAR);
 	ft_printf("TNO = %s\n", tmp);
@@ -562,11 +565,13 @@ char *ft_starmatch(char *str, char *match, int flag)
 			ft_printf("s0 = %c\n", str[i]);
 			if (match[i + x] != str[i])
 			{
-				if (match[i + x] == OP_SQUAR)
+				if (match[i + x] == WHY && str[i] && ft_isprint(str[i]))
+					diff -= 1;
+				else if (match[i + x] == OP_SQUAR)
 				{
 					ft_printf("matchx3 = %s\n", &match[i + x]);
 					ft_printf("matchx31 = %s\n", &match[i]);
-					if (ft_strpchr(&match[i + x], CL_SQUAR) > 0 && ft_checkdeploy(&str[i], &match[i + x], flag) >= SUCCESS)
+					if (ft_strpchr(&match[i + x], CL_SQUAR) > 0 && ft_checkdeploy(&str[i], &match[i + x], flag, 0) >= SUCCESS)
 					{
 						x += ft_strpchr(&match[i + x], CL_SQUAR);
 						ft_printf("matchret = %s\n", &match[i]);
@@ -606,7 +611,7 @@ char *ft_starmatch(char *str, char *match, int flag)
 				}
 				else
 				{
-					c = ft_checkdeploy(&str[i], &match[j + 1], flag);
+					c = ft_checkdeploy(&str[i], &match[j + 1], flag, 1);
 						ft_printf("c = %c\n", c);
 						ft_printf("s5 = %c\n", str[i]);
 					while (ft_isprint(c) && str[i] != c)
@@ -646,13 +651,15 @@ char *ft_starmatch(char *str, char *match, int flag)
 			ft_printf("s1 = %c\n", str[i]);
 			if (match[j] != str[i])
 			{
+				if (match[j] == WHY && str[i] && ft_isprint(str[i]))
+					diff -= 1;
 				if (match[j] == OP_SQUAR)
 				{
 					ft_printf("mx = %c\n", match[i + x]);
 					ft_printf("mx = %c\n", match[i + x - 2]);
 					ft_printf("ml = %c\n", match[j]);
 					ft_printf("sx = %c\n", str[i]);
-					if ((ft_strpchr(&match[i + x], CL_SQUAR)) > 0 && ft_checkdeploy(&str[i], &match[j], flag) >= SUCCESS)
+					if ((ft_strpchr(&match[i + x], CL_SQUAR)) > 0 && ft_checkdeploy(&str[i], &match[j], flag, 0) >= SUCCESS)
 					{
 						j += ft_strpchr(&match[i + x], CL_SQUAR);
 						x += ft_strpchr(&match[i + x], CL_SQUAR) - 1;
@@ -802,7 +809,7 @@ int ft_strlncmp(const char *s1, const char *s2, size_t len)
 	return ((unsigned char)s1[i] - (unsigned char)s2[j]);
 }
 
-char	*ft_strpmatch(char *token, char *match, char flag)
+/*char	*ft_strpmatch(char *token, char *match, char flag)
 {
 	int len;
 	char *ret;
@@ -824,23 +831,56 @@ char	*ft_strpmatch(char *token, char *match, char flag)
 	else
 		ret = ft_strdup(token);
 	return (ret);
+}*/
+
+char *ft_strrev(char *token)
+{
+	int i;
+	int len;
+	char tmp;
+
+	i = 0;
+	len = ft_strlen(token) - 1;
+	while (i < len)
+	{
+		tmp = token[len];
+		token[len] = token[i];
+		token[i] = tmp;
+		i++;
+		len--;
+	}
+	return (token);
 }
 
 int		opercent_exp(char **token)
 {
 	int flag;
 	char *word;
+	char *value;
+//	char *ret;
 	struct s_svar *tmp;
 
 	tmp = g_svar;
+	value = NULL;
+	//ret = NULL;
 	flag = (!(ft_spechrlen(*token))) ? 2 : 1;
 	word = ft_strcdup(ft_strchr(*token, PERCENT) + flag, CL_BRACE);
 	while (g_svar)
 	{
-		if (ft_strncmp(g_svar->key, *token + 2, ft_strlen(g_svar->key) - 1) == 0)
+		if (ft_strncmp(g_svar->key, *token + 2, ft_strlen(g_svar->key) - 1) == 0
+				&& !(ft_isalpha(token[0][(int)ft_strlen(g_svar->key) + 1])
+					|| ft_isdigit(token[0][(int)ft_strlen(g_svar->key) + 1])
+					|| token[0][(int)ft_strlen(g_svar->key) + 1] == UNDERSCORE))
 		{
-			ft_strdel(token);
-			*token = ft_strpmatch(g_svar->value, word, flag);
+			free(*token);
+			value = ft_strdup(g_svar->value);
+			*token = ft_strmatch(ft_strrev(value), word, flag);
+			*token = ft_strrev(*token);
+			/*ret = ft_strmatch(ft_strrev(value), word, flag);
+				ft_printf("TOKEN = %s\n", *token);
+			*token = (ret && *ret) ? ft_strrev(ret) : ft_strdup(EMPTY_STR); 
+				ft_printf("TOKEN = %s\n", *token);
+			ft_strdel(&value);*/
 			g_svar = tmp;
 			return (SUCCESS);
 		}

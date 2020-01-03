@@ -274,6 +274,7 @@ char	*expansions_management(char **tokens)
 						ft_printf("42sh: %s: bad substitution\n", *tokens);
 						return (NULL);
 					}
+					ft_printf("42sh: %s\n", *tokens);
 				}
 				++j;
 			}
