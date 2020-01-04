@@ -6,11 +6,13 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 13:16:47 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/27 14:38:30 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/04 16:44:12 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "parser.h"
+#include <unistd.h>
 
 int	i_lessand(t_elem left, t_elem right)
 {

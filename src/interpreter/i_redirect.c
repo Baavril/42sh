@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 12:08:47 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/27 14:38:28 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/04 16:44:13 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "libft.h"
 #include <unistd.h>
 #include <fcntl.h>
-#define CREATE_RIGHTS S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH
 
 int	i_less(t_elem left, t_elem right)
 {
