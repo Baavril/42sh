@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 16:36:22 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/10/23 19:04:54 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/05 12:23:27 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void					ft_hash_path(t_htable *bin_table, char *path)
 		return ;
 	i = 0;
 	ft_empty_htable(bin_table);
-	/*ft_check_memory(*/dir = ft_strsplit(path, ':');
+	/*ft_check_memory(*/dir = ft_strsplit(path, ":");
 	while ((dir[i]))
 		ft_push_exec(bin_table, dir[i++]);
 	ft_tabdel(&dir);
