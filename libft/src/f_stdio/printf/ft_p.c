@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 17:00:19 by abarthel          #+#    #+#             */
-/*   Updated: 2019/07/07 14:14:53 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/01/05 14:16:37 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 extern t_flags		g_flags;
 extern t_modifier	g_modifier;
 
-void	ft_p(void *__restrict__ ptr)
+void				ft_p(void *restrict ptr)
 {
 	uintmax_t p_ptr;
 

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/03 14:01:24 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/05 15:17:57 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,13 +204,13 @@ typedef int			(*t_ft_cmp)(t_list *, t_list *);
 
 void				ft_lst_mergesort(t_list **lst, t_ft_cmp ft_cmp);
 
-void				ft_lstadd_back(t_list **alst, t_list *new);
+void				ft_lstadd_back(t_list **alst, t_list *_new);
 
 void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
 
 void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
 
-void				ft_lstadd(t_list **alst, t_list *new);
+void				ft_lstadd(t_list **alst, t_list *_new);
 
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 
@@ -256,14 +256,13 @@ int					ft_printbits(char c);
 size_t				ft_strclen(const char *s, char c)
 												__attribute__((nonnull(1)));
 
-int					ft_printf(const char *__restrict__ format, ...)
-										__attribute__((format(printf,1,2)));
+int					ft_printf(const char *restrict format, ...);
 
-int					ft_dprintf(int fd, const char *__restrict__ format, ...);
+int					ft_dprintf(int fd, const char *restrict format, ...);
 
 int					ft_asprintf(char **ret, const char *format, ...);
 
-int					ft_vdprintf(int fd, const char *__restrict__ format,
+int					ft_vdprintf(int fd, const char *restrict format,
 																va_list ap);
 
 int					ft_vasprintf(char **ret, const char *format, va_list ap);

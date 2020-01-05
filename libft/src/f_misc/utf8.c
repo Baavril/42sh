@@ -6,13 +6,13 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/29 18:54:10 by abarthel          #+#    #+#             */
-/*   Updated: 2019/08/27 18:23:33 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/01/05 14:23:21 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-static __inline__ int	m0x07ff_utf8(wchar_t *wc)
+static inline int	m0x07ff_utf8(wchar_t *wc)
 {
 	wchar_t	tmp;
 
@@ -24,7 +24,7 @@ static __inline__ int	m0x07ff_utf8(wchar_t *wc)
 	return ((int)*wc);
 }
 
-static __inline__ int	m0xffff_utf8(wchar_t *wc)
+static inline int	m0xffff_utf8(wchar_t *wc)
 {
 	*wc = ((*wc << 12) & ~0xF0FFFFFF) | ((*wc << 10) & ~0xFFC0FFFF)
 		| ((*wc << 8) & ~0xFFFFC0FF);
@@ -32,7 +32,7 @@ static __inline__ int	m0xffff_utf8(wchar_t *wc)
 	return ((int)*wc);
 }
 
-static __inline__ int	m0x10ffff_utf8(wchar_t *wc)
+static inline int	m0x10ffff_utf8(wchar_t *wc)
 {
 	*wc = ((*wc << 7) & ~0xF8FFFFFF) | ((*wc << 4) & ~0xFFC0FFFF)
 		| ((*wc << 2) & ~0xFFFFC0FF) | (*wc & ~0xFFFFFFC0);

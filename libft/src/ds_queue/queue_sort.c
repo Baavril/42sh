@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 13:52:49 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/31 08:56:39 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/01/05 14:41:07 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include "ft_queue.h"
 
-static __inline__ void	front_to_rear(struct s_queue *queue, size_t qsize)
+static inline void	front_to_rear(struct s_queue *queue, size_t qsize)
 {
 	while (qsize > 0)
 	{
@@ -24,7 +24,8 @@ static __inline__ void	front_to_rear(struct s_queue *queue, size_t qsize)
 	}
 }
 
-static void		sorted_enqueue(struct s_queue *queue, void *data, int (*cmp)(), size_t qsize)
+static void			sorted_enqueue(struct s_queue *queue, void *data,
+												int (*cmp)(), size_t qsize)
 {
 	if (queue_isempty(queue) || !qsize)
 		queue_enqueue(queue, data);
@@ -40,7 +41,8 @@ static void		sorted_enqueue(struct s_queue *queue, void *data, int (*cmp)(), siz
 	}
 }
 
-void			queue_sort(struct s_queue *queue, int (*cmp)(void *, void *))
+void				queue_sort(struct s_queue *queue,
+												int (*cmp)(void *, void *))
 {
 	void	*data;
 

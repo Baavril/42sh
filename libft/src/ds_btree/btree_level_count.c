@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 13:00:31 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/22 13:01:19 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/01/05 14:48:51 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 #include "ft_btree.h"
 
-static __inline__ size_t	ft_max(size_t a, size_t b)
+static inline size_t	ft_max(size_t a, size_t b)
 {
 	return (a > b ? a : b);
 }
 
-size_t				btree_level_count(struct s_btree *root)
+size_t					btree_level_count(struct s_btree *root)
 {
 	if (!root)
 		return (0);

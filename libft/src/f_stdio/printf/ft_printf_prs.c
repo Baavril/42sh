@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 12:39:43 by abarthel          #+#    #+#             */
-/*   Updated: 2019/06/26 15:24:32 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/01/05 14:09:29 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@
 #include "specifiers.h"
 #include "ft_expand_ret.h"
 
-static va_list	g_ap_origin;
-t_ret			g_ret;
-t_modifier		g_modifier =
+static va_list			g_ap_origin;
+t_ret					g_ret;
+t_modifier				g_modifier =
 {.hh = 0, .h = 0, .l = 0, .ll = 0, .j = 0, .t = 0, .z = 0, .upl = 0};
-t_options		g_options =
+t_options				g_options =
 {.width = -1, .precision = -1, .i_ap = 0, .val_dol = 0};
-t_flags			g_flags =
+t_flags					g_flags =
 {.hash = 0, .zero = 0, .minus = 0, .space = 0, .plus = 0, .apost = 0};
-_Bool			g_error = 0;
+_Bool					g_error = 0;
 
-static __inline__ void	reset_globals(void)
+static inline void		reset_globals(void)
 {
 	g_options.width = -1;
 	g_options.precision = -1;
@@ -51,8 +51,8 @@ static __inline__ void	reset_globals(void)
 	g_modifier.upl = 0;
 }
 
-static __inline__ _Bool	get_fwpm(const char *__restrict__ format, va_list ap
-		, _Bool *__restrict__ specifier)
+static inline _Bool		get_fwpm(const char *restrict format, va_list ap,
+											_Bool *restrict specifier)
 {
 	if (format[g_ret.fmt_i] > '0' && format[g_ret.fmt_i] <= '9')
 	{
@@ -80,7 +80,7 @@ static __inline__ _Bool	get_fwpm(const char *__restrict__ format, va_list ap
 		return (0);
 }
 
-static __inline__ _Bool	prs_specifier(const char *__restrict__ format, va_list ap)
+static inline _Bool		prs_specifier(const char *restrict format, va_list ap)
 {
 	void	*(*f)();
 	_Bool	specifier;
@@ -97,7 +97,7 @@ static __inline__ _Bool	prs_specifier(const char *__restrict__ format, va_list a
 			{
 				specifier = 0;
 				if (g_options.val_dol)
-					__va_copy(ap, g_ap_origin);
+					va_copy(ap, g_ap_origin);
 				wrapper(f, ap);
 			}
 			else if (specifier)
@@ -108,10 +108,10 @@ static __inline__ _Bool	prs_specifier(const char *__restrict__ format, va_list a
 	return (0);
 }
 
-int					printf_prs(const char *__restrict__ format, va_list ap)
+int						printf_prs(const char *restrict format, va_list ap)
 {
 	g_ret.fmt_i = 0;
-	__va_copy(g_ap_origin, ap);
+	va_copy(g_ap_origin, ap);
 	if (!(format))
 		return (-1);
 	while (format[g_ret.fmt_i] && !(prs_specifier(format, ap)))

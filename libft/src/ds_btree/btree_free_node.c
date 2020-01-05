@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 16:02:09 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/31 16:02:11 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/01/05 14:42:06 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 #include "ft_btree.h"
 
-void    *btree_free_node(struct s_btree *node, void (*del)(void *))
+void	*btree_free_node(struct s_btree *node, void (*del)(void *))
 {
-    void    *data;
+	void	*data;
 
-    data = NULL;
-    if (node)
-    {
-        if (del)
-            del(node->data);
-        else
-            data = node->data;
-        free(node);
-    }
-    return (data);
+	data = NULL;
+	if (node)
+	{
+		if (del)
+			del(node->data);
+		else
+			data = node->data;
+		free(node);
+	}
+	return (data);
 }

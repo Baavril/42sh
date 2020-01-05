@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 16:48:52 by abarthel          #+#    #+#             */
-/*   Updated: 2019/08/27 19:40:05 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/01/05 14:33:33 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include "libft.h"
 
-static __inline__ char	ft_fgetch(const int fd)
+static inline char		ft_fgetch(const int fd)
 {
 	int		ret;
 	char	ch;
@@ -30,7 +30,7 @@ static __inline__ char	ft_fgetch(const int fd)
 	}
 }
 
-static __inline__ char	*create_new_line(char *str, int *len)
+static inline char		*create_new_line(char *str, int *len)
 {
 	char	*new_line;
 
@@ -51,8 +51,8 @@ static __inline__ char	*create_new_line(char *str, int *len)
 	}
 }
 
-static __inline__ int	inwhile_fgetline(const int fd, char **line,
-		char c, char *new_line)
+static inline int		inwhile_fgetline(const int fd, char **line,
+												char c, char *new_line)
 {
 	int		len;
 	int		ret;
@@ -78,7 +78,7 @@ static __inline__ int	inwhile_fgetline(const int fd, char **line,
 	return (0);
 }
 
-int					ft_fgetline(const int fd, char **line, char c)
+int						ft_fgetline(const int fd, char **line, char c)
 {
 	int		ret;
 	char	*new_line;

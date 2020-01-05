@@ -6,11 +6,11 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/26 17:49:13 by abarthel          #+#    #+#             */
-/*   Updated: 2019/08/27 18:26:38 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/01/05 14:32:14 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static __inline__ char	ft_numlen_part2(unsigned int nb)
+static inline char		ft_numlen_part2(unsigned int nb)
 {
 	if (nb >= 1000)
 	{
@@ -28,7 +28,7 @@ static __inline__ char	ft_numlen_part2(unsigned int nb)
 	}
 }
 
-extern char			ft_numlen(unsigned int nb)
+extern char				ft_numlen(unsigned int nb)
 {
 	if (nb >= 100000)
 	{

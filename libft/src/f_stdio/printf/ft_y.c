@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 17:38:39 by abarthel          #+#    #+#             */
-/*   Updated: 2019/07/07 14:16:34 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/01/05 14:04:17 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ extern t_flags		g_flags;
 extern t_modifier	g_modifier;
 extern t_options	g_options;
 
-static __inline__ void	set_globals(void)
+static inline void	set_globals(void)
 {
 	g_options.width = -1;
 	g_options.precision = -1;
@@ -41,7 +41,7 @@ static __inline__ void	set_globals(void)
 	g_modifier.upl = 0;
 }
 
-static __inline__ void	ffff_coloring(unsigned short value)
+static inline void	ffff_coloring(unsigned short value)
 {
 	if (g_flags.hash)
 	{

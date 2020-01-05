@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 13:51:19 by abarthel          #+#    #+#             */
-/*   Updated: 2019/06/26 16:46:56 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/01/05 14:13:57 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "ft_vasprintf.h"
 #include "libft.h"
 
-int	ft_vdprintf(int fd, const char *__restrict__ format, va_list ap)
+int		ft_vdprintf(int fd, const char *restrict format, va_list ap)
 {
 	char	*str;
 	int		ret;
@@ -25,9 +25,7 @@ int	ft_vdprintf(int fd, const char *__restrict__ format, va_list ap)
 	if (ret != -1 && str)
 	{
 		if (write(fd, str, ret) == -1)
-		{
 			perror(NULL);
-		}
 	}
 	ft_memdel((void**)&str);
 	return (ret);
