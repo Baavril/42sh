@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 12:03:51 by abarthel          #+#    #+#             */
-/*   Updated: 2019/11/13 12:03:53 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/01/05 15:29:19 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "libft.h"
 #include "pipelines.h"
 
-char	**position_token(char **cmd)
+char				**position_token(char **cmd)
 {
 	int	i;
 
@@ -31,7 +31,7 @@ char	**position_token(char **cmd)
 	return (&(cmd[i]));
 }
 
-char **jump_sep(char **cmd)
+char				**jump_sep(char **cmd)
 {
 	int	i;
 
@@ -43,8 +43,8 @@ char **jump_sep(char **cmd)
 
 char				**get_sequence(char **cmd)
 {
-	char **seq;
-	int	i;
+	char	**seq;
+	int		i;
 
 	i = 0;
 	while (cmd[i] && !is_pipeline_separator(cmd[i]))

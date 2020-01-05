@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 18:49:12 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/05 12:04:09 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/05 15:42:38 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,8 @@ int					ft_pop_job(int nbr)
 		return (-1);
 	if (!nbr)
 		nbr = g_jcont.active_jobs[0];
-	if (nbr == ((t_job*)(voyager->content))->nbr)
-	{
+	if (nbr == ((t_job*)(voyager->content))->nbr && (tmp = voyager))
 		g_jcont.jobs = voyager->next;
-		ft_lstdelone(&voyager, &ft_free_job);
-		ft_dprintf(2, "Job was Popped\n");
-	}
 	else
 	{
 		while ((voyager->next) && ((t_job*)voyager->next->content)->nbr != nbr)
@@ -40,9 +36,10 @@ int					ft_pop_job(int nbr)
 			return (1);
 		tmp = voyager->next;
 		voyager->next = voyager->next->next;
-		ft_lstdelone(&tmp, &ft_free_job);
 	}
+	ft_lstdelone(&tmp, &ft_free_job);
 	ft_set_prio();
-	g_jcont.job_nbr = (g_jcont.jobs) ? ((t_job*)(g_jcont.jobs->content))->nbr + 1 : 1;
+	g_jcont.job_nbr = (g_jcont.jobs) ?
+								((t_job*)g_jcont.jobs->content)->nbr + 1 : 1;
 	return (0);
 }

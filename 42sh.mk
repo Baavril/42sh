@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/01/05 12:10:12 by tgouedar         ###   ########.fr        #
+#    Updated: 2020/01/05 16:22:56 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,9 @@ SOURCES			:=		main.c \
 						job_control/ft_wait_foreground.c \
 						job_control/path_concat.c \
 						job_control/get_sequence.c \
-						builtins/builtin_alias.c \
+						builtins/builtin_alias/cmd_alias.c \
+						builtins/builtin_alias/cmd_unalias.c \
+						builtins/builtin_alias/alias_tools.c \
 						builtins/builtin_set.c \
 						builtins/builtin_unset.c \
 						builtins/builtin_export.c \

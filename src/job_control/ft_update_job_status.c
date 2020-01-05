@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:01:09 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/16 14:43:41 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/05 15:24:33 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int			ft_accumulate_proc_status(t_list *proclist)
 	return (process->status | ft_accumulate_proc_status(proclist->next));
 }
 
-void		ft_check_bgstatus(void)
+void				ft_check_bgstatus(void)
 {
 	size_t		i;
 	int			job_topop[g_jcont.job_nbr];
