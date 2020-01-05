@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/05 09:34:43 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/05 11:55:05 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,6 @@ int		cmd_exit(int argc, char **argv)
 	ft_free_bintable();
 	ft_free_internvars();
 	set_termcaps(TC_RESTORE);
-	system("leaks 42sh");
+	//system("leaks 42sh");
 	exit(status);
 }

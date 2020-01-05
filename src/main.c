@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/05 10:19:52 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/05 11:54:55 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int		main(int argc, char **argv)
 		ft_tabdel(&environ);
 		return (1);
 	}
-	while (!read_command(&input) || get_next_line(0, &input))
+	if (!read_command(&input) || get_next_line(0, &input))
 	{
 		if (!(status = history(ADD_CMD, &input, NULL)))
 		{
@@ -112,5 +112,6 @@ int		main(int argc, char **argv)
 		else
 			ft_memdel((void**)&input);
 	}
+	cmd_exit(0, NULL);
 	return(0);
 }

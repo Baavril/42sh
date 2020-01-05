@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 17:59:39 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/05 11:11:02 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/05 11:55:35 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,7 @@ t_token	get_next_token(char *str)
 
 char	**lexer(char **input)
 {
+	return (input);
 	t_token	token;
 
 	token = get_next_token(*input);
@@ -221,5 +222,4 @@ char	**lexer(char **input)
 
 /*	gnt(NULL);
 this should be a link between parser and lexer calling back and forth*/
-	return (input);
 }
