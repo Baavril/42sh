@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 16:02:57 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/04 16:40:06 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/05 09:34:24 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,5 @@ int is_regfile(const char *arg);
 int eval_command(char **arg);
 int val_command(char **arg);
 int	open_on_fd(const char *path, int o_flags, mode_t mode, int final_fd);
+int	free_ast(t_node *node);
 #endif

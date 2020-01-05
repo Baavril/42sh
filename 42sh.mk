@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/01/04 16:41:08 by bprunevi         ###   ########.fr        #
+#    Updated: 2020/01/05 09:33:09 by bprunevi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -114,7 +114,8 @@ SOURCES			:=		main.c \
 						interpreter/i_redirect.c \
 						interpreter/i_redirect_and.c \
 						interpreter/i_heredoc.c \
-						interpreter/i_open_on_fd.c
+						interpreter/i_open_on_fd.c \
+						interpreter/free.c
 
 #						job_control/job.c
 

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 17:59:39 by abarthel          #+#    #+#             */
-/*   Updated: 2019/12/15 15:07:57 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/05 10:30:11 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,12 +210,14 @@ char	**lexer(char **input)
 	ft_dprintf(2, "_______________________________________________\n");
 	ft_dprintf(2, "token.symbol : %s\n", token.symbol);
 	ft_dprintf(2, "token.type : %d = %s\n", token.type, get_token_symbol(token.type));
+	ft_strdel(&(token.symbol));
 	while (token.type != E_EOF && token.type != E_ERROR)
 	{
 		token = get_next_token(NULL);
 		ft_dprintf(2, "_______________________________________________\n");
 		ft_dprintf(2, "token.symbol : %s\n", token.symbol);
 		ft_dprintf(2, "token.type : %d = %s\n", token.type, get_token_symbol(token.type));
+		ft_strdel(&(token.symbol));
 	}
 	ft_dprintf(2, "_______________________________________________\n");
 

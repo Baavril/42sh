@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/03 19:30:28 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/05 10:19:52 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,9 @@ int		main(int argc, char **argv)
 {
 	extern char		**environ;
 	char			*input;
-//	char			**args;
 	int				status;
 
-	(void)argc;
+	(void) argc;
 	set_termcaps(TC_SAVE);
 	tcsetpgrp(STDIN_FILENO, getpid()); //Control the terminal
 	set_signals(FATHER);
@@ -113,11 +112,5 @@ int		main(int argc, char **argv)
 		else
 			ft_memdel((void**)&input);
 	}
-	history(DELETE, NULL, NULL);
-	ft_tabdel(&environ);
-	ft_strdel(&copybuff);
-	ft_free_bintable();
-	set_termcaps(TC_RESTORE);
-	system("leaks 42sh");
-	return (0);
+	return(0);
 }
