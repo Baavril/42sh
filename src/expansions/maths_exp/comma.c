@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isin.c                                          :+:      :+:    :+:   */
+/*   comma.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/17 14:39:33 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/03 13:39:27 by tgouedar         ###   ########.fr       */
+/*   Created: 2019/10/12 14:24:45 by tgouedar          #+#    #+#             */
+/*   Updated: 2019/10/12 14:31:23 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_isin(const char c, const char *charset)
+#include "maths_interne.h"
+
+int				ft_comma(void *left_cmd, void *right_cmd, int64_t *res)
 {
-	while (*charset)
+	int64_t		left;
+	int64_t		right;
+
+	if (ft_eval_ast(left_cmd, &left, MANDATORY_TOKEN) == CONV_SUCCESS
+	&& ft_eval_ast(right_cmd, &right, MANDATORY_TOKEN) == CONV_SUCCESS)
 	{
-		if (!(*charset - c))
-			return (1);
-		charset++;
+		*res = right;
+		return (CONV_SUCCESS);
 	}
-	return (0);
+	return (CONV_FAIL);
 }

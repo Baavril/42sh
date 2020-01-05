@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isin.c                                          :+:      :+:    :+:   */
+/*   maths_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/17 14:39:33 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/03 13:39:27 by tgouedar         ###   ########.fr       */
+/*   Created: 2019/10/07 17:06:14 by tgouedar          #+#    #+#             */
+/*   Updated: 2019/10/09 21:30:50 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_isin(const char c, const char *charset)
+#include <stdlib.h>
+#include "maths_interne.h"
+
+t_maths_token	*ft_init_maths_token(char *word, size_t token_len, char flag)
 {
-	while (*charset)
-	{
-		if (!(*charset - c))
-			return (1);
-		charset++;
-	}
-	return (0);
+	t_maths_token	*new;
+
+	/*ft_check_memory(*/new = malloc(sizeof(*new));
+	/*ft_check_memory(*/new->token = ft_strndup(word, token_len);
+	if (flag == IS_OP)
+		new->prio = ft_get_op_priority(new->token);
+	else
+		new->prio = 0;
+	return (new);
 }

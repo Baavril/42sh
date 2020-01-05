@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
-/*   Updated: 2019/12/16 22:22:53 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/03 14:01:24 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,9 @@ void				ft_bzero(void *s, size_t n) __attribute__((nonnull(1)));
 
 int					ft_strfchr(char *str1, char *str2);
 
-
 int					ft_isspace(char c);
 
-int					ft_isin(int c, char *charset);
+int					ft_isin(const char c, const char *charset);
 
 int					ft_isalpha(int c);
 
@@ -34,6 +33,8 @@ int					ft_isalnum(int c);
 int					ft_isascii(int c);
 
 int					ft_isprint(int c);
+
+int					ft_isupper(char c);
 
 int					ft_toupper(int c);
 
@@ -184,8 +185,10 @@ char				*ft_strtrim(char const *s);
 
 char				*ft_itoa(int n);
 
-char				**ft_strsplit(char const *s, char c) __attribute__
-					((nonnull(1)));
+size_t				ft_indice(char c, const char *charset);
+
+char				**ft_strsplit(char const *s, const char *charset)
+					__attribute__((nonnull(1, 2)));
 
 char				**ft_strsplit_whitespaces(char *str) __attribute__
 					((nonnull(1)));
@@ -227,9 +230,15 @@ int					ft_str_is_lowercase(char *s) __attribute__((nonnull(1)));
 
 int					ft_str_is_uppercase(char *s) __attribute__((nonnull(1)));
 
+void				ft_strlower(char *str);
+
 int					ft_isprime(size_t n);
 
 int					ft_isnumber(char *str);
+
+int					ft_isnumber_base(char *to_test, const char *base);
+
+int					ft_pow(int n, unsigned int i);
 
 int					ft_isempty(char *s);
 

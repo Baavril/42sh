@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isin.c                                          :+:      :+:    :+:   */
+/*   ft_isnumber_base.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/17 14:39:33 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/03 13:39:27 by tgouedar         ###   ########.fr       */
+/*   Created: 2019/10/09 20:05:22 by tgouedar          #+#    #+#             */
+/*   Updated: 2019/10/09 20:07:16 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_isin(const char c, const char *charset)
+#include "libft.h"
+
+int				ft_isnumber_base(char *to_test, const char *base)
 {
-	while (*charset)
+	size_t	i;
+
+	i = 0;
+	while (to_test[i])
 	{
-		if (!(*charset - c))
-			return (1);
-		charset++;
+		if (!(ft_isin(to_test[i], base)))
+			return (0);
+		i++;
 	}
-	return (0);
+	return (1);
 }

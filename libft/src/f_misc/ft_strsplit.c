@@ -3,85 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/12 09:58:26 by abarthel          #+#    #+#             */
-/*   Updated: 2019/06/26 15:00:22 by abarthel         ###   ########.fr       */
+/*   Created: 2018/11/12 21:27:42 by tgouedar          #+#    #+#             */
+/*   Updated: 2020/01/03 14:06:09 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <stdlib.h>
 
-static size_t	nb_words(const char *s, char c)
-{
-	size_t	i;
-	size_t	p;
-	size_t	words_nb;
-
-	p = 0;
-	i = 0;
-	words_nb = 0;
-	while (s[i])
-	{
-		p = 0;
-		if (s[i] == c && s[i])
-			i++;
-		while (s[i] != c && s[i])
-		{
-			p++;
-			i++;
-		}
-		if (p != 0)
-			words_nb += 1;
-	}
-	return (words_nb);
-}
-
-static char		*mallnwrite(char const *s, size_t *l, char c)
+static size_t	ft_word(char const *str, const char *charset)
 {
 	size_t	k;
-	char	*string;
 
-	k = 0;
-	while (s[*l] == c && s[*l])
-		++*l;
-	while (s[*l + k] != c && s[*l + k] && s[*l])
-		++k;
-	string = (char*)malloc(sizeof(string) * (k + 1));
-	if (!string)
-		return (NULL);
-	string[k] = '\0';
-	k = 0;
-	while (s[*l + k] != c && s[*l + k] && s[*l])
+	k = ft_isin(*str, charset) ? 0 : 1;
+	while (*str)
 	{
-		string[k] = s[*l + k];
-		++k;
+		while (*str && !ft_isin(*str, charset))
+			str++;
+		while (*str && ft_isin(*str, charset))
+			str++;
+		if (*str)
+			k++;
 	}
-	*l += k;
-	return (string);
+	return (k);
 }
 
-char			**ft_strsplit(char const *s, char c)
+char			**ft_strsplit(char const *str, const char *charset)
 {
-	size_t	nb;
-	size_t	index;
+	size_t	k;
 	size_t	l;
-	char	**array;
+	char	**res;
 
-	if (s)
-		nb = nb_words(s, c);
-	else
+	if (!(k = 0) && !*charset)
 		return (NULL);
-	array = (char**)malloc(sizeof(char*) * (nb + 1));
-	if (!array)
+	if (!(res = (char**)malloc(sizeof(*res) * (ft_word(str, charset) + 1))))
 		return (NULL);
-	array[nb] = 0;
-	index = 0;
-	l = 0;
-	while (index < nb)
+	while (!(l = 0) && *str)
 	{
-		array[index] = mallnwrite(s, &l, c);
-		++index;
+		while (*str && ft_isin(*str, charset))
+			str++;
+		while (str[l] && !ft_isin(str[l], charset))
+			l++;
+		if (!(l))
+			break ;
+		res[k++] = ft_strndup(str, l);
+		str += l;
 	}
-	return (array);
+	res[k] = NULL;
+	return (res);
 }

@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isin.c                                          :+:      :+:    :+:   */
+/*   maths_module.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/17 14:39:33 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/03 13:39:27 by tgouedar         ###   ########.fr       */
+/*   Created: 2019/10/09 14:59:01 by tgouedar          #+#    #+#             */
+/*   Updated: 2019/10/11 21:59:19 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_isin(const char c, const char *charset)
-{
-	while (*charset)
-	{
-		if (!(*charset - c))
-			return (1);
-		charset++;
-	}
-	return (0);
-}
+#ifndef MATHS_MODULE_H
+# define MATHS_MODULE_H
+
+# define MATHS_ERROR		1
+# define MATHS_SUCCESS		0
+
+int			ft_maths_expansion(char *to_expand, char **return_str);
+
+#endif

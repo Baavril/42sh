@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isin.c                                          :+:      :+:    :+:   */
+/*   ft_strlower.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/17 14:39:33 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/03 13:39:27 by tgouedar         ###   ########.fr       */
+/*   Created: 2019/10/09 19:54:01 by tgouedar          #+#    #+#             */
+/*   Updated: 2020/01/03 13:36:38 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_isin(const char c, const char *charset)
+#include "libft.h"
+
+void	ft_strlower(char *str)
 {
-	while (*charset)
+	while (*str)
 	{
-		if (!(*charset - c))
-			return (1);
-		charset++;
+		if (ft_isupper(*str))
+			*str += 32;
+		str++;
 	}
-	return (0);
 }

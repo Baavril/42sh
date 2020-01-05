@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/12/16 22:15:39 by tgouedar         ###   ########.fr        #
+#    Updated: 2020/01/03 14:01:42 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,9 @@ SOURCES	:=	ds_btree/btree_apply_infix.c \
 		f_ctype/ft_isdigit.c \
 		f_ctype/ft_tolower.c \
 		f_ctype/ft_toupper.c \
+		f_ctype/ft_isupper.c \
 		f_errno/error_msg.c \
+		f_misc/ft_pow.c \
 		f_misc/ft_strfchr.c \
 		f_misc/ft_strnjoinfree.c \
 		f_misc/ft_isspace.c \
@@ -73,6 +75,7 @@ SOURCES	:=	ds_btree/btree_apply_infix.c \
 		f_misc/ft_fprintbits.c \
 		f_misc/ft_fputwcbits.c \
 		f_misc/ft_fputwsbits.c \
+		f_misc/ft_indice.c \
 		f_misc/ft_isempty.c \
 		f_misc/ft_isprime.c \
 		f_misc/ft_isprint.c \
@@ -104,6 +107,7 @@ SOURCES	:=	ds_btree/btree_apply_infix.c \
 		f_misc/ft_resolvepath.c \
 		f_misc/ft_sortopt.c \
 		f_misc/ft_str_is_alpha.c \
+		f_misc/ft_strlower.c \
 		f_misc/ft_str_is_lowercase.c \
 		f_misc/ft_str_is_numeric.c \
 		f_misc/ft_str_is_printable.c \
@@ -181,6 +185,7 @@ SOURCES	:=	ds_btree/btree_apply_infix.c \
 		f_string/ft_memmove.c \
 		f_string/ft_memset.c \
 		f_string/ft_isnumber.c \
+		f_string/ft_isnumber_base.c \
 		f_string/ft_strcat.c \
 		f_string/ft_strchr.c \
 		f_string/ft_strcmp.c \

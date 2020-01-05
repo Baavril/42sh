@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isin.c                                          :+:      :+:    :+:   */
+/*   ft_pow.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/17 14:39:33 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/03 13:39:27 by tgouedar         ###   ########.fr       */
+/*   Created: 2018/11/29 18:48:20 by tgouedar          #+#    #+#             */
+/*   Updated: 2018/12/02 14:45:50 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_isin(const char c, const char *charset)
+int		ft_pow(int n, unsigned int i)
 {
-	while (*charset)
-	{
-		if (!(*charset - c))
-			return (1);
-		charset++;
-	}
-	return (0);
+	if (!i)
+		return (1);
+	return (n * ft_pow(n, --i));
 }

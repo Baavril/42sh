@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 16:26:31 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/27 14:38:20 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/05 11:31:58 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char			*check_bin(char **argv)
 	i = -1;
 	if ((path = ft_agetenv("PATH")))
 	{
-		path_split = ft_strsplit(&(*path)[5], ':');
+		path_split = ft_strsplit(&(*path)[5], ":");
 		while (path_split[++i])
 		{
 			if ((tmp = path_join(path_split[i], *argv))
