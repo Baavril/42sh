@@ -14,6 +14,9 @@
 #include "shell_variables.h"
 #include "expansions.h"
 #include "libft.h"
+#include <dirent.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 t_symexp	g_symexp[] =
 {
@@ -364,10 +367,104 @@ char **ft_expsplit(char *str, char c)
 	return (tab);
 }
 
+
+char	*ft_globing(char **split)
+{
+	struct dirent *filedata;
+	DIR *dirhandle;
+	char **dir;
+	char *ret;
+	char **tmp;
+	int i;
+	int j;
+	int x;
+	int n;
+
+	i = 0;
+	j = 0;
+	n = 0;
+	ret = NULL;
+	filedata = NULL;
+	if (!(dir = (char **)ft_memalloc(sizeof(char *) * 4096)))
+		return (NULL);
+	while (split[i])
+	{
+		if (!i)
+		{
+			if (!(dirhandle = opendir(".")))
+			{
+				ft_printf("readdir\n");
+				return (NULL);
+			}
+			j = 0;
+			while ((filedata = readdir(dirhandle)))
+			{
+				if (*(filedata->d_name) != '.')
+				{
+					dir[j] = ft_starmatch(filedata->d_name, split[i], 3);
+					if (!*(dir[j]))
+						free(dir[j]);
+					else
+						++j;
+				}
+				dir[j] = 0;
+			}
+		}
+		else
+		{
+			j = 0;
+			x = 0;
+			tmp = ft_tabcpy(dir);
+			while (tmp[j])
+			{
+				if ((dirhandle = opendir(tmp[j])))
+				{
+					while ((filedata = readdir(dirhandle)))
+					{
+						if (*(filedata->d_name) != '.')
+						{
+						ft_printf("see = %s\n", filedata->d_name);
+
+							dir[x] = ft_strjoin(ft_strjoin(tmp[j], "/"), ft_starmatch(filedata->d_name, split[i], 3));
+							if (!(dir[x][ft_strpchr(dir[x], '/') + 1]))
+								free(dir[x]);
+							else
+								++x;
+						}
+					}
+					dir[x] = 0;
+				}
+				++j;
+			}
+		}
+		++i;
+	}
+	n = 0;
+	while (dir[n])
+	{
+		if (!ret)
+			ret = ft_strdup(dir[n]);
+		else
+			ret = ft_strjoin(ft_strjoin(ret, " "), dir[n]);
+		++n;
+	}
+	closedir(dirhandle);
+	return (ret);
+}
+
 int		expansions_treatment(char **tokens)
 {
+//	char *tmp;
 	char **splitok;
+	char **split;
 
+	if (**tokens == STAR || *(*tokens + 1) == STAR)
+	{
+		if (!(split = ft_strsplit(*tokens, "/")))
+			return (ERROR);
+		free(*tokens);
+		*tokens = ft_globing(split);
+	}
 	if (!(splitok = ft_expsplit(*tokens, DOLLAR)))
 		return (SUCCESS);
 	free(*tokens);

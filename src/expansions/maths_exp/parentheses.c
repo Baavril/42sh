@@ -64,5 +64,5 @@ int			ft_parentheses_nbr(char *expr)
 			brk_check--;
 		i++;
 	}
-	return ((par_check) || (brk_check) ? -1 : par_nbr);
+	return (((par_check) || (brk_check)) ? -1 : (int)par_nbr);
 }

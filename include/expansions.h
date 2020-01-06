@@ -76,5 +76,6 @@ int		opercent_exp(char **token);
 int		dpercent_exp(char **token);
 
 int	ft_strpchr(char *str, char c);
+char *ft_starmatch(char *str, char *match, int flag);
 
 #endif
