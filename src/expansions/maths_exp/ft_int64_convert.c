@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 13:30:02 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/05 12:15:16 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/08 17:11:30 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int				ft_int64_convert(int64_t *value, char *expr, char *base)
 		base = ft_get_base(&expr);
 	if (!(ft_isnumber_base(expr, base)))
 	{
+	ft_printf("is not number base: %s in base: %s\n", expr, base);
 //		print_error("value too great for base");
 		return (CONV_FAIL);
 	}

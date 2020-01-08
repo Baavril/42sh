@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 11:33:24 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/03 17:13:51 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/08 16:56:05 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@
 int		ft_eval_ast(t_maths_ast *ast, int64_t *res, char flag)
 {
 	if ((ast->calc_func))
+	{
+		ft_putendl("Operation");
 		return (ast->calc_func(ast->left_cmd, ast->right_cmd, res));
+	}
 
 	if (ast->tokens)
 	{
@@ -35,6 +38,7 @@ int		ft_eval_ast(t_maths_ast *ast, int64_t *res, char flag)
 		*res = 0;
 		return (CONV_SUCCESS);
 	}
+	ft_putendl("Ici, le F");
 	return (CONV_FAIL);
 }
 

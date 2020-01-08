@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2019/11/09 11:47:27 by baavril          ###   ########.fr       */
+/*   Updated: 2020/01/08 16:19:12 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_symexp	g_symexp[] =
 	{DSHARP_EXP, &osharp_exp},
 	{OPERCENT_EXP, &opercent_exp},
 	{DPERCENT_EXP, &opercent_exp},
+	{MATHS_EXP, &maths_exp},
 	{0, NULL}
 };
 
@@ -98,6 +99,30 @@ static int		check_colon_symbol(char *token)
 	return (SIMPLE_EXP);
 }
 
+static int		check_maths(char *token)
+{
+	int		i;
+	int		opar;
+
+	i = 2;
+	opar = 0;
+	if (!(token[0] == '(' && token[1] == '('))
+		return (ERROR);
+	while (token[i])
+	{
+		if (token[i] == '(')
+			opar++;
+		if ((token[i] == ')' && token[i + 1] == ')') && !opar)
+			return (MATHS_EXP);
+		if (token[i] == ')')
+			opar--;
+		if (opar < 0)
+			return (ERROR);// parentheses imbriquees
+		++i;
+	}
+	return (ERROR);
+}
+
 static int		identifier(char *token)
 {
 	if (*token == DOLLAR)
@@ -108,6 +133,8 @@ static int		identifier(char *token)
 				return (check_colon_symbol(token + 1));
 			return (check_symbol(token + 1));
 		}
+		else if (check_maths(token + 1) != ERROR)
+			return (MATHS_EXP);
 		return (DIRECT_EXP);
 	}
 	return (ERROR);
@@ -155,6 +182,8 @@ char	*ft_quoted(char *tokens)
 
 char	*ft_getbtw(char *tokens, int type)
 {
+	if (type == MATHS_EXP)
+		return (ft_strdup(&(tokens[maths_len(tokens) + 2])));
 	ft_printf("RET = %s\n", tokens);
 	if (*tokens != DOLLAR)
 		return (NULL);
@@ -258,7 +287,7 @@ char	*expansions_management(char **tokens)
 	while (*tokens)
 	{
 		j = 0;
-		if ((nb = ft_back_slashed(&(*tokens))) >= 0)
+		if ((nb = ft_back_slashed(tokens)) >= 0)
 		{
 			type = identifier(*tokens);
 			ft_printf("type = %d\n", type);
@@ -269,7 +298,7 @@ char	*expansions_management(char **tokens)
 			{
 				if (g_symexp[j].sym == type)
 				{
-					if (g_symexp[j].expand(&(*tokens)) == ERROR)
+					if (g_symexp[j].expand(tokens) == ERROR)
 					{
 						ft_printf("42sh: %s: bad substitution\n", *tokens);
 						return (NULL);
@@ -366,10 +395,18 @@ char **ft_expsplit(char *str, char c)
 
 int		expansions_treatment(char **tokens)
 {
+	int i;
 	char **splitok;
 
+	i = 0;
+	ft_printf("matchexp = %s\n", *tokens);
 	if (!(splitok = ft_expsplit(*tokens, DOLLAR)))
 		return (SUCCESS);
+	while(splitok[i])
+	{
+		ft_printf("split = %s\n", splitok[i]);
+		i++;
+	}
 	free(*tokens);
 	*tokens = expansions_management(splitok);
 	return (SUCCESS);

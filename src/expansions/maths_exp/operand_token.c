@@ -6,13 +6,13 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 11:41:38 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/05 12:15:37 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/08 17:12:19 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell_variables.h"
 #include "maths_interne.h"
-#include "maths_module.h"
+#include "expansions.h"
 #include "libft.h"
 
 int				ft_isnumber(char *to_test)
@@ -68,16 +68,13 @@ int				ft_arg_value(char *token, int64_t *value)
 
 	*value = 0;
 	if ((expr = ft_strchr(token, '#')))
-	{
-		ft_putendl("Reconnaissance de base");
 		return (ft_arg_value_base(token, expr, value));
-	}
 	if (ft_isdigit(*token))
 		return (ft_int64_convert(value, token, NULL));
 	expr = getshvar(token);
 	if (ft_isnumber(expr))
-		return (ft_int64_convert(value, token, NULL));
-	if (ft_maths_expansion(expr, &expr) == MATHS_SUCCESS)
+		return (ft_int64_convert(value, expr, DEF_BASE));
+	if (ft_maths_expansion(expr, &expr) == SUCCESS)
 		return (ft_int64_convert(value, expr, NULL));
 	*value = 0;
 	return (CONV_FAIL);

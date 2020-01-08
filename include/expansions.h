@@ -6,12 +6,14 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2019/11/09 11:47:27 by baavril          ###   ########.fr       */
+/*   Updated: 2020/01/08 16:19:41 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXPANSIONS_H
 # define EXPANSIONS_H
+
+# include <stddef.h>
 
 # define STAR '*'
 # define AROB '@'
@@ -54,6 +56,7 @@
 # define DSHARP_EXP 10
 # define OPERCENT_EXP 11
 # define DPERCENT_EXP 12
+# define MATHS_EXP 13
 
 typedef struct	s_symexp
 {
@@ -61,20 +64,22 @@ typedef struct	s_symexp
 				int		(*expand)(char **);
 }				t_symexp;
 
-int		expansions_treatment(char **tokens);
+int				expansions_treatment(char **tokens);
 
-int		direct_exp(char **token);
-int		simple_exp(char **token);
-int		why_exp(char **token);
-int		plus_exp(char **token);
-int		dash_exp(char **token);
-int		equal_exp(char **token);
-int		bsharp_exp(char **token);
-int		osharp_exp(char **token);
-int		dsharp_exp(char **token);
-int		opercent_exp(char **token);
-int		dpercent_exp(char **token);
+int				direct_exp(char **token);
+int				simple_exp(char **token);
+int				why_exp(char **token);
+int				plus_exp(char **token);
+int				dash_exp(char **token);
+int				equal_exp(char **token);
+int				bsharp_exp(char **token);
+int				osharp_exp(char **token);
+int				dsharp_exp(char **token);
+int				opercent_exp(char **token);
+int				dpercent_exp(char **token);
+int				maths_exp(char **token);
 
-int	ft_strpchr(char *str, char c);
+int				ft_strpchr(char *str, char c);
+size_t			maths_len(char *token);
 
 #endif

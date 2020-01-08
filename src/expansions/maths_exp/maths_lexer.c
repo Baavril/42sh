@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 16:22:17 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/03 13:59:01 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/08 15:42:37 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ void			ft_push_tokens(char *word, t_maths_list **token_list)
 
 t_maths_list			*ft_maths_lexer(char *expr)
 {
-	size_t	i;
 	t_maths_list	*token_list;
-	char	**words;
+	char			**words;
+	size_t			i;
 
 	i = 0;
 	token_list = NULL;

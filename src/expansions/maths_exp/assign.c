@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 18:12:11 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/05 11:29:51 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/08 17:24:29 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int		ft_assign(void *left_cmd, void *right_cmd, int64_t *res)
 	&& ft_eval_ast(right_cmd, &right, MANDATORY_TOKEN) == CONV_SUCCESS)
 	{
 		*res = right;
+		ft_dprintf(2, "setting shvar: %s    at value: %li\n", ((t_maths_ast*)left_cmd)->tokens->content->token, right);
 		setshvar(((t_maths_ast*)left_cmd)->tokens->content->token, right);
 		return (CONV_SUCCESS);
 	}

@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:43:12 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/05 12:05:08 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/08 18:19:18 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ char					*getshvar(char *var_name)
 	tmp = g_svar;
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->key, var_name, ft_strlen(tmp->key)))
+		if (!ft_strncmp(tmp->key, var_name, ft_strlen(tmp->key) - 1))
 		{
-			var_value = ft_strdup(g_svar->value); // ft_memcheck ?
+			var_value = ft_strdup(tmp->value); // ft_memcheck ?
 			break ;
 		}
 		tmp = tmp->next;
@@ -47,14 +47,17 @@ void					setshvar(char *var_name, int64_t value)
 
 	if (!var_name)
 		return ;
+	ft_dprintf(2, "setting shvar: params: %s, %li\n ", var_name, value);
 	var_value = ft_itoa64(value);
 	name_len = ft_strlen(var_name);
 	val_len = ft_strlen(var_value);
+	ft_dprintf(2, "setting shvar: len values: %zu, %zu\n ", name_len, val_len);
 	assig_word = (char*)malloc(name_len + val_len + 2); // ft_memcheck ?
-	ft_memcpy(var_name, assig_word, name_len);
+	ft_memcpy(assig_word, var_name, name_len);
 	assig_word[name_len] = '=';
-	ft_memcpy(var_value, assig_word + name_len + 1, val_len);
+	ft_memcpy(assig_word + name_len + 1, var_value, val_len);
 	assig_word[name_len + 1 + val_len] = '\0';
+	ft_dprintf(2, "setting shvar: assig_word: %s\n ", assig_word);
 	if (checkvarlst(assig_word))
 		listadd_back(newnodshell(assig_word, 0));
 }

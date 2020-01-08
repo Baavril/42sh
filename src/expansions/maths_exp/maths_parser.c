@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 19:24:31 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/03 14:41:49 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/08 16:31:17 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,15 @@ static int		ft_parse_assign(t_maths_list *list)
 	while (list)
 	{
 		tmp = list;
-		if (list || ++i)
+		if (list && ++i)
 			list = list->next;
 		if (list && list->content->prio == ASSIGN_PRIO)
 		{
 			if (!i)
 				return (CONV_FAIL); //assignation sans membre de gauche
-			if (i > 1 || !ft_is_varname(tmp->content->token))
+			if (i > 2 || !ft_is_varname(tmp->content->token))
 				return (CONV_FAIL); //assignation a une expression et non une variable
+			list = list->next;
 			while (list && list->content->prio < ASSIGN_PRIO)
 				list = list->next;
 			if (list && list->content->prio == ASSIGN_PRIO)
