@@ -470,14 +470,14 @@ int	ft_strpchr(char *str, char c)
 	int i;
 
 	i = 0;
-	ft_printf("getbrack1 = %s\n", &str[i]);
+	//ft_printf("getbrack1 = %s\n", &str[i]);
 	while (str[i])
 	{
 		if (str[i] - c == 0)
 		{
-			ft_printf("getbrack = %c\n", str[i]);
-			ft_printf("getbrackC = %c\n", c);
-			ft_printf("getbracki = %d\n", i);
+	//		ft_printf("getbrack = %c\n", str[i]);
+	//		ft_printf("getbrackC = %c\n", c);
+	//		ft_printf("getbracki = %d\n", i);
 			return (i);
 		}
 		i++;
@@ -502,11 +502,11 @@ int		ft_checkdeploy(char *str, char *match, int flag, int star)
 		ptm = ft_strdupto(match + (ft_strpchr(match, CARET) + 1), CL_SQUAR);
 		ft_getdeploy(&ptm); /*voir si ca casse rien */
 	}
-	ft_printf("ptm = %s\n", ptm);
+//	ft_printf("ptm = %s\n", ptm);
 	tmp = ft_strdupto(match + (ft_strpchr(match, OP_SQUAR) + 1), CL_SQUAR);
-	ft_printf("TNO = %s\n", tmp);
+//	ft_printf("TNO = %s\n", tmp);
 	ft_getdeploy(&tmp);
-	ft_printf("TMP = %s\n", tmp);
+//	ft_printf("TMP = %s\n", tmp);
 	if (!*str)
 		return (ret);
 	while (ptm && ptm[i])
@@ -522,12 +522,12 @@ int		ft_checkdeploy(char *str, char *match, int flag, int star)
 	{
 		if (tmp[i] == *str && flag == 1)
 			return (tmp[i]);
-		else if (tmp[i] == *str && flag == 2)
+		else if (tmp[i] == *str && flag >= 2)
 		{
 			str++;
 			c = tmp[i];
 			i = -1;
-			ft_printf("c1 = %c\n", c);
+//			ft_printf("c1 = %c\n", c);
 			ret++;
 		}
 		++i;
@@ -552,45 +552,47 @@ char *ft_starmatch(char *str, char *match, int flag)
 	c = 0;
 	diff = 0;
 	ret = NULL;
+	ft_printf("token %s\n", str);
+	ft_printf("match %s\n", match);
 	while (match[j])
 	{
-		ft_printf("match[j] = %c\n", match[j]);
+/*		ft_printf("match[j] = %c\n", match[j]);
 		ft_printf("match[i + x] = %c\n", match[i + x]);
 		ft_printf("str = %c\n", str[i]);
 		ft_printf("x = %d\n", x);
-		ft_printf("i = %d\n", i);
+		ft_printf("i = %d\n", i);*/
 		while (match[i + x] && match[i + x] != STAR)
 		{
-			ft_printf("m0 = %c\n", match[i + x]);
-			ft_printf("s0 = %c\n", str[i]);
+			//ft_printf("m0 = %c\n", match[i + x]);
+			//ft_printf("s0 = %c\n", str[i]);
 			if (match[i + x] != str[i])
 			{
 				if (match[i + x] == WHY && str[i] && ft_isprint(str[i]))
 					diff -= 1;
 				else if (match[i + x] == OP_SQUAR)
 				{
-					ft_printf("matchx3 = %s\n", &match[i + x]);
-					ft_printf("matchx31 = %s\n", &match[i]);
+			//		ft_printf("matchx3 = %s\n", &match[i + x]);
+			//		ft_printf("matchx31 = %s\n", &match[i]);
 					if (ft_strpchr(&match[i + x], CL_SQUAR) > 0 && ft_checkdeploy(&str[i], &match[i + x], flag, 0) >= SUCCESS)
 					{
 						x += ft_strpchr(&match[i + x], CL_SQUAR);
-						ft_printf("matchret = %s\n", &match[i]);
-						ft_printf("x = %d\n", x);
-						ft_printf("matchx = %s\n", &match[i + x]);
+			//			ft_printf("matchret = %s\n", &match[i]);
+			//			ft_printf("x = %d\n", x);
+			//			ft_printf("matchx = %s\n", &match[i + x]);
 						diff -= 1;
-						ft_printf("diff2 = %d\n", diff);
+			//			ft_printf("diff2 = %d\n", diff);
 					}
 				}
 				diff += 1;
-				ft_printf("diffn = %d\n", diff);
+			//	ft_printf("diffn = %d\n", diff);
 			}
 			++i;
 		}
 		j = i + x;
 		n = i;
-		ft_printf("i = %d\n", i);
-		ft_printf("match1 = %c\n", match[j]);
-		ft_printf("str1 = %c\n", str[i]);
+	//	ft_printf("i = %d\n", i);
+	//	ft_printf("match1 = %c\n", match[j]);
+	//	ft_printf("str1 = %c\n", str[i]);
 		while (match[j] && match[j] == STAR && match[j + 1] != '\0')
 		{
 			if (match[j + 1] != '\0' && match[j + 1] != STAR)
@@ -599,111 +601,122 @@ char *ft_starmatch(char *str, char *match, int flag)
 				{
 					while (str[i] && str[i] != match[j + 1])
 					{
-						ft_printf("m3 = %c\n", match[j]);
-						ft_printf("s3 = %c\n", str[i]);
-						i++;
+						++i;
+						if (str[i] == match[j + 1])
+						{
+							if (flag >= 2 && ft_isin(match[j + 1], &str[i + 1]))
+								++i;
+						}
+	//					ft_printf("m3 = %c\n", match[j]);
+	//					ft_printf("s3 = %c\n", str[i]);
 					}
 					if (str[i] != match[j + 1])
 					{
 						diff += 1;
-					ft_printf("diff3 = %d\n", diff);
+	//				ft_printf("diff3 = %d\n", diff);
 					}
 				}
 				else
 				{
 					c = ft_checkdeploy(&str[i], &match[j + 1], flag, 1);
-						ft_printf("c = %c\n", c);
-						ft_printf("s5 = %c\n", str[i]);
+	//					ft_printf("c = %c\n", c);
+	//					ft_printf("s5 = %c\n", str[i]);
 					while (ft_isprint(c) && str[i] != c)
 						i++;
-					//i = ft_strpchr(str, c);
-						ft_printf("i = %d\n", i);
+	//				ft_printf("i = %d\n", i);
 					if (c == ERROR)
 					{
 						diff += 1;
-						ft_printf("diff4 = %d\n", diff);
+	//					ft_printf("diff4 = %d\n", diff);
 					}
 					x += ft_strpchr(&match[i + x], CL_SQUAR) + 1;
 					j += ft_strpchr(&match[j], CL_SQUAR);
-					ft_printf("showm1 = %s\n", &match[j]);
-					if (flag == 2 && !match[j + 1])
+	//				ft_printf("showm1 = %s\n", &match[j]);
+					if (flag >= 2 && !match[j + 1])
 						++i;
-					ft_printf("showm = %s\n", &match[j]);
+	//				ft_printf("showm = %s\n", &match[j]);
 				}
 				n = i + 1;
-				ft_printf("n = %d\n", n);
+	//			ft_printf("n = %d\n", n);
 				if (match[j + 1] == STAR && match[j + 2] == OP_SQUAR)
 					i++;
 			}
 			++j;
-			ft_printf("m1 = %c\n", match[j]);
-			ft_printf("s1 = %c\n", str[i]);
+	//		ft_printf("m1 = %c\n", match[j]);
+	//		ft_printf("s1 = %c\n", str[i]);
 		}
-		ft_printf("n0 = %d\n", n);
-		ft_printf("i = %d\n", i);
-		ft_printf("x = %d\n", x);
-		ft_printf("match2 = %c\n", match[j]);
-		ft_printf("match6 = %s\n", &match[j]);
-		 ft_printf("str2 = %c\n", str[i]);
+	//	ft_printf("n0 = %d\n", n);
+	//	ft_printf("i = %d\n", i);
+	//	ft_printf("x = %d\n", x);
+	//	ft_printf("match2 = %c\n", match[j]);
+	//	ft_printf("match6 = %s\n", &match[j]);
+	//	ft_printf("str2 = %c\n", str[i]);
 		while (match[j] && match[j] != STAR)
 		{
-			ft_printf("m2 = %c\n", match[j]);
-			ft_printf("s1 = %c\n", str[i]);
+	//		ft_printf("m2 = %c\n", match[j]);
+	//		ft_printf("s1 = %c\n", str[i]);
 			if (match[j] != str[i])
 			{
 				if (match[j] == WHY && str[i] && ft_isprint(str[i]))
 					diff -= 1;
 				if (match[j] == OP_SQUAR)
 				{
-					ft_printf("mx = %c\n", match[i + x]);
-					ft_printf("mx = %c\n", match[i + x - 2]);
-					ft_printf("ml = %c\n", match[j]);
-					ft_printf("sx = %c\n", str[i]);
+	//				ft_printf("mx = %c\n", match[i + x]);
+	//				ft_printf("ml = %c\n", match[j]);
+	//				ft_printf("sx = %c\n", str[i]);
 					if ((ft_strpchr(&match[i + x], CL_SQUAR)) > 0 && ft_checkdeploy(&str[i], &match[j], flag, 0) >= SUCCESS)
 					{
 						j += ft_strpchr(&match[i + x], CL_SQUAR);
 						x += ft_strpchr(&match[i + x], CL_SQUAR) - 1;
-						ft_printf("j = %d\n", j);
-						ft_printf("matchx = %s\n", &match[j]);
+	//					ft_printf("j = %d\n", j);
+	//					ft_printf("matchx = %s\n", &match[j]);
 						diff -= 1;
 					}
 				}
 				diff += 1;
-				ft_printf("difflas = %d\n", diff);
+	//			ft_printf("difflas = %d\n", diff);
 			}
 			++i;
 			if (match[j] != STAR)
 				++j;
 		}
-		ft_printf("matchx2 = %s\n", &match[j]);
-		ft_printf("matchx4 = %s\n", &str[i]);
-		ft_printf("i = %d\n", i);
-		ft_printf("x = %d\n", x);
+	//	ft_printf("matchx2 = %s\n", &match[j]);
+	//	ft_printf("matchx4 = %s\n", &str[i]);
+	//	ft_printf("i = %d\n", i);
+	//	ft_printf("x = %d\n", x);
 		while (str[i] && match[j] && match[j] == STAR && match[j + 1] == '\0' && !diff)
 		{
-			ft_printf("m3 = %c\n", match[j]);
-			ft_printf("s2 = %c\n", str[i]);
+//			ft_printf("m3 = %c\n", match[j]);
+//			ft_printf("s2 = %c\n", str[i]);
 			++i;
 		}
-		ft_printf("m4 = %c\n", match[j]);
+//		ft_printf("m4 = %c\n", match[j]);
 		if (!match[j])
 			break ;
 		++j;
-		ft_printf("match[j + x + 1] = %c\n", match[j + x + 1]);
+//		ft_printf("match[j + x + 1] = %c\n", match[j + x + 1]);
 		if (match[j + x + 1] != STAR)
 			++x;
 	}
-	ft_printf("n = %d\n", n);
-	ft_printf("flag = %d\n", flag);
-	ft_printf("diff = %d\n", diff);
+//	ft_printf("n = %d\n", n);
+//	ft_printf("flag = %d\n", flag);
+//	ft_printf("diff = %d\n", diff);
+//	ft_printf("NNNNNNNNNNNNNNNNNNNNNNN\n");
 	if (flag == 2 && !diff)
 		ret = ft_strdup(&str[i]);
 	else if (flag == 1 && !diff)
 		ret = (n != 0) ? ft_strdup(&str[n]) : str;
+	else if (flag == 3)
+	{
+	//	ft_printf("i = %d\n", i);
+	//	ft_printf("strlen = %d\n", (int)ft_strlen(str));
+		ret = (((int)ft_strlen(str) != i) || diff) ? ft_strdup(EMPTY_STR) : str;
+	}
 	else
 		ret = str;
-	ft_printf("str = %s\n", str);
-	ft_printf("diff = %d\n", diff);
+//	ft_printf("str = %s\n", str);
+//	ft_printf("diff = %d\n", diff);
+//	ft_printf("SPLITTTTTTTTTTTTTTTTTTTTTTTTTTmatch %s\n", match);
 	return (ret);
 }
 

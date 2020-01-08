@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/08 16:19:41 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/08 18:23:48 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@
 
 typedef struct	s_symexp
 {
-				int		sym;
-				int		(*expand)(char **);
+	int			sym;
+	int			(*expand)(char **);
 }				t_symexp;
 
 int				expansions_treatment(char **tokens);
@@ -81,5 +81,7 @@ int				maths_exp(char **token);
 
 int				ft_strpchr(char *str, char c);
 size_t			maths_len(char *token);
+char			*ft_starmatch(char *str, char *match, int flag);
+char			**ft_globing(char **split);
 
 #endif
