@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2019/11/09 11:47:27 by baavril          ###   ########.fr       */
+/*   Updated: 2020/01/08 16:29:30 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -368,13 +368,14 @@ char **ft_expsplit(char *str, char c)
 }
 
 
-char	*ft_globing(char **split)
+char	**ft_globing(char **split)
 {
 	struct dirent *filedata;
 	DIR *dirhandle;
 	char **dir;
 	char *ret;
 	char **tmp;
+	char **ptm;
 	int i;
 	int j;
 	int x;
@@ -385,10 +386,11 @@ char	*ft_globing(char **split)
 	n = 0;
 	ret = NULL;
 	filedata = NULL;
-	if (!(dir = (char **)ft_memalloc(sizeof(char *) * 4096)))
+	if (!(dir = (char **)malloc(sizeof(char *) * 4096)))
 		return (NULL);
 	while (split[i])
 	{
+		ft_printf("HEREEEEEEEEEEEEEEEEEE = %s\n", split[i]);
 		if (!i)
 		{
 			if (!(dirhandle = opendir(".")))
@@ -407,8 +409,8 @@ char	*ft_globing(char **split)
 					else
 						++j;
 				}
-				dir[j] = 0;
 			}
+			dir[j] = 0;
 		}
 		else
 		{
@@ -440,24 +442,24 @@ char	*ft_globing(char **split)
 		++i;
 	}
 	n = 0;
+	ptm = (char**)malloc(sizeof(char*) * (ft_tablen(dir) + 1));
 	while (dir[n])
 	{
-		if (!ret)
-			ret = ft_strdup(dir[n]);
-		else
-			ret = ft_strjoin(ft_strjoin(ret, " "), dir[n]);
+		ptm[n] = ft_strdup(dir[n]);
 		++n;
 	}
+	ptm[n] = 0;
 	closedir(dirhandle);
-	return (ret);
+	return (ptm);
 }
 
 int		expansions_treatment(char **tokens)
 {
 //	char *tmp;
 	char **splitok;
-	char **split;
+//	char **split;
 
+	/*
 	if (**tokens == STAR || *(*tokens + 1) == STAR)
 	{
 		if (!(split = ft_strsplit(*tokens, "/")))
@@ -465,8 +467,9 @@ int		expansions_treatment(char **tokens)
 		free(*tokens);
 		*tokens = ft_globing(split);
 	}
+	*/
 	if (!(splitok = ft_expsplit(*tokens, DOLLAR)))
-		return (SUCCESS);
+		return (ERROR);
 	free(*tokens);
 	*tokens = expansions_management(splitok);
 	return (SUCCESS);

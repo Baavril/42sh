@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2019/11/09 11:47:27 by baavril          ###   ########.fr       */
+/*   Updated: 2020/01/06 15:17:05 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,6 @@ int		dpercent_exp(char **token);
 
 int	ft_strpchr(char *str, char c);
 char *ft_starmatch(char *str, char *match, int flag);
+char **ft_globing(char **split);
 
 #endif
