@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/08 18:26:31 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/08 18:31:11 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -484,12 +484,12 @@ char	**ft_globing(char **split)
 
 int		expansions_treatment(char **tokens)
 {
-	int i;
+//	int i;
 //	char *tmp;
 	char **splitok;
 //	char **split;
 
-	i = 0;
+/*	i = 0;
 	ft_printf("matchexp = %s\n", *tokens);
 	if (!(splitok = ft_expsplit(*tokens, DOLLAR)))
 		return (SUCCESS);
@@ -497,7 +497,7 @@ int		expansions_treatment(char **tokens)
 	{
 		ft_printf("split = %s\n", splitok[i]);
 		i++;
-	}
+	}*/
 	/*
 	if (**tokens == STAR || *(*tokens + 1) == STAR)
 	{
@@ -507,8 +507,8 @@ int		expansions_treatment(char **tokens)
 		*tokens = ft_globing(split);
 	}
 	*/
-//	if (!(splitok = ft_expsplit(*tokens, DOLLAR)))
-//		return (ERROR);
+	if (!(splitok = ft_expsplit(*tokens, DOLLAR)))
+		return (ERROR);
 	free(*tokens);
 	*tokens = expansions_management(splitok);
 	return (SUCCESS);
