@@ -31,7 +31,6 @@ void			ft_push_tokens(char *word, t_maths_list **token_list)
 	token = NULL;
 	while (*word)
 	{
-		ft_putendl(word);
 		if (ft_isin(*word, OPERATOR))
 		{
 			i = ft_op_len(word);
@@ -43,8 +42,6 @@ void			ft_push_tokens(char *word, t_maths_list **token_list)
 			flag = IS_ARG;
 		}
 		token = ft_init_maths_token(word, i, flag);
-		ft_putstr("new token: ");
-		ft_putendl(token->token);
 		ft_lstadd_back((t_list**)token_list, ft_lstnew(token, sizeof(t_maths_token)));
 		word += i;
 	}

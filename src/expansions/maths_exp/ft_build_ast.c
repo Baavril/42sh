@@ -67,11 +67,9 @@ int				ft_build_ast(t_maths_ast *ast, int flag)
 	mid_op = ft_get_max_prio(list);
 	if (!mid_op)
 	{
-		ft_putendl("pas d'operateur");
 		if (!(list->next))
 			return (CONV_SUCCESS);
 		//"syntax error: missing operator;"
-		ft_putendl("erreur ast: liste de tokens restant:");
 		while (list)
 		{
 			ft_putendl(((t_maths_token*)list->content)->token);
@@ -79,12 +77,6 @@ int				ft_build_ast(t_maths_ast *ast, int flag)
 		}
 		return (CONV_FAIL);
 	}
-
-	{
-	ft_putstr("on trouve l'operateur: ");
-	ft_putendl(mid_op->content->token);
-	}
-
 	ast->calc_func = ft_op_func(mid_op->content->token);
 	ast->right_cmd = ft_new_mathast_node(mid_op->next);
 	if (list != mid_op)

@@ -38,31 +38,19 @@ int			ft_maths_expansion(char *to_expand, char **expansion)
 	int				par;
 	int64_t			res;
 
-	ft_putendl("entree d'extension");
 	if ((par = ft_parentheses_nbr(to_expand)) < 0)
 	{
 //		print_error(PARENTHES_NBR || BRACKET_NBR);
 		return (ERROR);
 	}
-	ft_putendl("fin de parenthese test");
 	while (par > 0)
 	{
-		ft_putendl("\navant eval inter_parenthes");
 		if (!(to_expand = ft_eval_inner_parentheses(to_expand)))
 			return (ERROR);
-		ft_putendl("apres eval inter_parenthes\n");
 		par--;
 	}
-		ft_putendl("\nEvaluation de l'expression principale");
 	if (ft_eval(to_expand, &res) == CONV_FAIL)
 		return (ERROR);
-
-	{
-	ft_putendl("\nReussite de l'evaluation");
-	ft_putstr("valeur en sortie: ");
-	ft_printf("%lli\n", res);
-	}
-
 	*expansion = ft_itoa64(res);
 	return (SUCCESS);
 }
@@ -82,7 +70,6 @@ int			maths_exp(char **token)
 		return (ERROR);
 	}
 	free(to_expand);
-	ft_printf("%s\n", *token);
 	free(*token);
 	*token = expansion;
 	return (SUCCESS);

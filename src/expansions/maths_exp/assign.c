@@ -21,7 +21,6 @@ int		ft_assign(void *left_cmd, void *right_cmd, int64_t *res)
 	&& ft_eval_ast(right_cmd, &right, MANDATORY_TOKEN) == CONV_SUCCESS)
 	{
 		*res = right;
-		ft_dprintf(2, "setting shvar: %s    at value: %li\n", ((t_maths_ast*)left_cmd)->tokens->content->token, right);
 		setshvar(((t_maths_ast*)left_cmd)->tokens->content->token, right);
 		return (CONV_SUCCESS);
 	}

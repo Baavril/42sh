@@ -51,12 +51,6 @@ static int		ft_arg_value_base(char *base, char *nbr, int64_t *value)
 	}
 	ft_memcpy(conv_base, BASE, base_len);
 	conv_base[base_len] = '\0';
-	{
-	ft_putstr("On trouve le nombre: ");
-	ft_putendl(nbr);
-	ft_putstr("exprime dans la base: ");
-	ft_putendl(conv_base);
-	}
 	if (base_len < 37)
 		ft_strlower(nbr);
 	return (ft_int64_convert(value, nbr, conv_base));

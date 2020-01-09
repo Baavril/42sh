@@ -47,17 +47,14 @@ void					setshvar(char *var_name, int64_t value)
 
 	if (!var_name)
 		return ;
-	ft_dprintf(2, "setting shvar: params: %s, %li\n ", var_name, value);
 	var_value = ft_itoa64(value);
 	name_len = ft_strlen(var_name);
 	val_len = ft_strlen(var_value);
-	ft_dprintf(2, "setting shvar: len values: %zu, %zu\n ", name_len, val_len);
 	assig_word = (char*)malloc(name_len + val_len + 2); // ft_memcheck ?
 	ft_memcpy(assig_word, var_name, name_len);
 	assig_word[name_len] = '=';
 	ft_memcpy(assig_word + name_len + 1, var_value, val_len);
 	assig_word[name_len + 1 + val_len] = '\0';
-	ft_dprintf(2, "setting shvar: assig_word: %s\n ", assig_word);
 	if (checkvarlst(assig_word))
 		listadd_back(newnodshell(assig_word, 0));
 }

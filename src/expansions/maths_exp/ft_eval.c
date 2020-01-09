@@ -17,20 +17,7 @@
 int		ft_eval_ast(t_maths_ast *ast, int64_t *res, char flag)
 {
 	if ((ast->calc_func))
-	{
-		ft_putendl("Operation");
 		return (ast->calc_func(ast->left_cmd, ast->right_cmd, res));
-	}
-
-	if (ast->tokens)
-	{
-		ft_putstr("\nEvaluation du token: ");
-	if (((t_maths_token*)ast->tokens->content)->token)
-		ft_putendl(((t_maths_token*)ast->tokens->content)->token);
-	else
-		ft_putendl("vide");
-	}
-
 	if (ast->tokens && (t_maths_token*)ast->tokens->content && flag != NO_TOKEN)
 		return (ft_arg_value(((t_maths_token*)ast->tokens->content)->token, res));
 	if (flag != MANDATORY_TOKEN)
@@ -38,7 +25,6 @@ int		ft_eval_ast(t_maths_ast *ast, int64_t *res, char flag)
 		*res = 0;
 		return (CONV_SUCCESS);
 	}
-	ft_putendl("Ici, le F");
 	return (CONV_FAIL);
 }
 
@@ -60,45 +46,22 @@ char	*ft_construct_expansion(char *arg, char *expansion, size_t var_pos,
 
 int			ft_eval(char *expr, int64_t *res)
 {
-//	int				sig;
 	t_maths_list	*list;
 	t_maths_ast		*ast;
 
 	*res = 0;
-
-	ft_putendl("\navant lexer");
-
 	if (!(list = ft_maths_lexer(expr)))
 		return (CONV_FAIL);
-
-	ft_putendl("apres lexer\n");
 	if (ft_maths_parser(list) == CONV_FAIL)
 		return (CONV_FAIL);
 	ast = ft_new_mathast_node(list);
-
-	{
-	ft_putendl("=== LIST ===");
-	while (list)
-	{
-		ft_putendl(((t_maths_token*)list->content)->token);
-		list = list->next;
-	}
-
-	ft_putendl("=== END ===");
-	}
-
 	if (ft_build_ast(ast, POSSIBLY_TOKEN) == CONV_FAIL)
 	{
-		ft_putendl("ast build fail");
 //		print_error(sig); syntax error, DIV par zero, error de var
 		return (CONV_FAIL);
 	}
-	ft_putendl("ast succes finish");
-//	ft_print_ast(ast);
-//	printf("DEPTH : %zu\n", ft_ast_depth(ast));
 	if (ft_eval_ast(ast, res, NO_FLAG) == CONV_FAIL)
 	{
-		ft_putendl("ast eval fail");
 //		print_error(sig); syntax error, DIV par zero, error de var
 		return (CONV_FAIL);
 	}
@@ -125,6 +88,7 @@ char		*ft_eval_inner_parentheses(char *expr)
 			return (NULL);
 		}
 		res = ft_itoa64(conv);
+		expr[end_par] = ')';
 		res = ft_construct_expansion(expr, res, inner_par, len + 1);
 //		ft_strdel(&expr);
 		return (res);

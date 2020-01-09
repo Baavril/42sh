@@ -25,7 +25,6 @@ static int64_t	ft_atoi64_base(char *nbr, const char *base)
 	{
 		i = ft_indice(*nbr, base);
 		res = res * base_len + i;
-		ft_printf("digit: %c indice: %zu in base: %s gives res: %lli\n", *nbr, i, base, res);
 		nbr++;
 	}
 	return (res);
@@ -53,12 +52,9 @@ int				ft_int64_convert(int64_t *value, char *expr, char *base)
 		base = ft_get_base(&expr);
 	if (!(ft_isnumber_base(expr, base)))
 	{
-	ft_printf("is not number base: %s in base: %s\n", expr, base);
 //		print_error("value too great for base");
 		return (CONV_FAIL);
 	}
-	ft_printf("is number base: %s in base: %s\n", expr, base);
 	*value = ft_atoi64_base(expr, base);
-	ft_printf("value_ft_64_convert: %lli\n", *value);
 	return (CONV_SUCCESS);
 }
