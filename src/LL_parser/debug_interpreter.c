@@ -36,7 +36,7 @@ t_node	*comp_list(t_token tok)
 				node->left.v = tmp1;
 				node->right.v = tmp2;
 				node->f = i_comp_list;
-				ft_dprintf(2, "comp_list full with 2 elems was created\n");
+//				ft_dprintf(2, "comp_list full with 2 elems was created\n");
 				return(node);
 			}
 		}
@@ -49,15 +49,15 @@ void	interpret(t_node *node)
 {
 	if (node)
 	{
-		ft_dprintf(2, "_______________________________________________\n");
+//		ft_dprintf(2, "_______________________________________________\n");
 		node->f(node->left, node->right);
 		ft_launch_job("plop", FOREGROUND);
 		astdel(node);
 		node = NULL;
 	}
-	else
-		ft_dprintf(2, "interpreting empty string..\n");
-	ft_dprintf(2, "_______________________________________________\n");
+//	else
+//		ft_dprintf(2, "interpreting empty string..\n");
+//	ft_dprintf(2, "_______________________________________________\n");
 }
 
 void	debug_parser(char *input)

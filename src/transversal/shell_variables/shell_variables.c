@@ -88,7 +88,7 @@ char	*ft_strdupto(char *str, char c)
 
 	i = 0;
 	lim = ft_retinstr(str, c) + 1;
-	if (!(ret = (char*)malloc(sizeof(char) * lim + 1)))
+	if (!(ret = (char*)malloc(sizeof(char) * (lim + 1))))
 		return (NULL);
 	while (i < lim)
 	{

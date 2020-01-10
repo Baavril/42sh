@@ -18,8 +18,8 @@ char	*word(t_token tok)
 {
 	if (tok.type == WORD || tok.type == ASSIGNMENT_WORD)
 	{
-		ft_dprintf(2, "tok.type of type WORD detected with value '%s' !\n", tok.symbol);
-		ft_printf("HEREEEE = %s\n", tok.symbol);
+//		ft_dprintf(2, "tok.type of type WORD detected with value '%s' !\n", tok.symbol);
+//		ft_printf("HEREEEE = %s\n", tok.symbol);
 		expansions_treatment(&tok.symbol);
 		return(tok.symbol);
 	}

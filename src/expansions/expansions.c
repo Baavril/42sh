@@ -12,6 +12,7 @@
 
 #include "lexer.h"
 #include "shell_variables.h"
+#include "builtin_test.h"
 #include "expansions.h"
 #include "libft.h"
 #include <dirent.h>
@@ -187,7 +188,6 @@ char	*ft_getbtw(char *tokens, int type)
 {
 	if (type == MATHS_EXP)
 		return (ft_strdup(&(tokens[maths_len(tokens) + 2])));
-	ft_printf("RET = %s\n", tokens);
 	if (*tokens != DOLLAR)
 		return (NULL);
 	if (*tokens == DOLLAR && (*(tokens + 1) == SLASH
@@ -210,11 +210,10 @@ char	*ft_getbtw(char *tokens, int type)
 		++tokens;
 	//if (*tokens == BSLASH)
 	//	tokens++;
-	ft_printf("RET = %s\n", tokens);
 	return (ft_strdup(tokens));
 }
 
-int	ft_back_slashed(char **tokens)
+char	*ft_set_slashed(char **tokens)
 {
 	int i;
 	int j;
@@ -239,19 +238,32 @@ int	ft_back_slashed(char **tokens)
 		if (!ret)
 		{
 			tmp = ft_strdup((*tokens) + i);
-			free(*tokens);
-			*tokens = ft_strdup(tmp);
-			free(tmp);
 			ret = j;
 		}
 		else
-		{
 			tmp = ft_strdup((*tokens) + j + 1);
-			free(*tokens);
-			*tokens = ft_strdup(tmp);
-			free(tmp);
-		}
 	}
+	return (tmp);
+}
+
+int	ft_back_slashed(char **tokens)
+{
+	int i;
+	int j;
+	int ret;
+
+	i = 0;
+	j = 0;
+	ret = 0;
+	while (*((*tokens) + i) && *((*tokens) + i) == BSLASH)
+		++i;
+	j = i;
+	if (j % 2)
+	{
+		j--;
+		ret = -1;
+	}
+	j /= 2;
 	return (ret);
 }
 
@@ -275,28 +287,34 @@ int		ft_setbslash(char **tokens, int nb)
 	return (SUCCESS);
 }
 
-char	*expansions_management(char **tokens)
+char	*expansions_management(char **splitok)
 {
 	int j;
 	int nb;
 	int type;
 	char *tmp;
 	char *btw;
+	char *ptm;
+	char *keep;
+	char **tokens;
 
 	j = 0;
 	nb = 0;
 	tmp = NULL;
+	ptm = NULL;
 	btw = NULL;
+	tokens = ft_tabcpy(splitok);
+	ft_free_tabs(splitok);
 	while (*tokens)
 	{
 		j = 0;
 		if ((nb = ft_back_slashed(tokens)) >= 0)
 		{
+			keep = *tokens;
+			*tokens = ft_set_slashed(&keep);
+			ft_strdel(&keep);
 			type = identifier(*tokens);
-			ft_printf("type = %d\n", type);
 			btw = ft_getbtw(*tokens, type);
-			ft_printf("btw = %s\n", btw);
-			ft_printf("token = %s\n", *tokens);
 			while (g_symexp[j].expand)
 			{
 				if (g_symexp[j].sym == type)
@@ -306,28 +324,32 @@ char	*expansions_management(char **tokens)
 						ft_printf("42sh: %s: bad substitution\n", *tokens);
 						return (NULL);
 					}
-					ft_printf("42sh: %s\n", *tokens);
 				}
 				++j;
 			}
 			if (nb > 0)
 				ft_setbslash(&(*tokens), nb);
 		}
-		ft_printf("subtok = %s\n", *tokens);
 		if (*tokens)
 		{
-			tmp = (tmp == NULL) ? ft_strdup(*tokens)
-			: ft_strjoin(tmp, *tokens);
+			ptm = tmp;
+			tmp = (ptm == NULL) ? *tokens
+			: ft_strjoin(ptm, *tokens);
+			if (ptm)
+				ft_strdel(&ptm);
 		}
 		if (btw)
 		{
-			if (!**tokens && type == WHY_EXP)
+			if (ft_strlen(*tokens) == 0 && type == WHY_EXP)
 				ft_strdel(&btw);
 			else
 			{
-				tmp = (tmp == NULL) ? ft_strdup(btw)
-				: ft_strjoin(tmp, btw);
+				ptm = tmp;
+				tmp = (ptm == NULL) ? ft_strdup(btw)
+				: ft_strjoin(ptm, btw);
 				ft_strdel(&btw);
+				if (ptm)
+					ft_strdel(&ptm);
 			}
 		}
 		++tokens;
@@ -402,7 +424,6 @@ char	**ft_globing(char **split)
 	struct dirent *filedata;
 	DIR *dirhandle;
 	char **dir;
-	char *ret;
 	char **tmp;
 	char **ptm;
 	int i;
@@ -413,20 +434,15 @@ char	**ft_globing(char **split)
 	i = 0;
 	j = 0;
 	n = 0;
-	ret = NULL;
 	filedata = NULL;
 	if (!(dir = (char **)malloc(sizeof(char *) * 4096)))
 		return (NULL);
 	while (split[i])
 	{
-		ft_printf("HEREEEEEEEEEEEEEEEEEE = %s\n", split[i]);
 		if (!i)
 		{
 			if (!(dirhandle = opendir(".")))
-			{
-				ft_printf("readdir\n");
 				return (NULL);
-			}
 			j = 0;
 			while ((filedata = readdir(dirhandle)))
 			{
@@ -454,8 +470,6 @@ char	**ft_globing(char **split)
 					{
 						if (*(filedata->d_name) != '.')
 						{
-						ft_printf("see = %s\n", filedata->d_name);
-
 							dir[x] = ft_strjoin(ft_strjoin(tmp[j], "/"), ft_starmatch(filedata->d_name, split[i], 3));
 							if (!(dir[x][ft_strpchr(dir[x], '/') + 1]))
 								free(dir[x]);
@@ -463,8 +477,8 @@ char	**ft_globing(char **split)
 								++x;
 						}
 					}
-					dir[x] = 0;
 				}
+				dir[x] = 0;
 				++j;
 			}
 		}
@@ -484,32 +498,12 @@ char	**ft_globing(char **split)
 
 int		expansions_treatment(char **tokens)
 {
-//	int i;
-//	char *tmp;
 	char **splitok;
-//	char **split;
 
-/*	i = 0;
-	ft_printf("matchexp = %s\n", *tokens);
-	if (!(splitok = ft_expsplit(*tokens, DOLLAR)))
-		return (SUCCESS);
-	while (splitok[i])
-	{
-		ft_printf("split = %s\n", splitok[i]);
-		i++;
-	}*/
-	/*
-	if (**tokens == STAR || *(*tokens + 1) == STAR)
-	{
-		if (!(split = ft_strsplit(*tokens, "/")))
-			return (ERROR);
-		free(*tokens);
-		*tokens = ft_globing(split);
-	}
-	*/
 	if (!(splitok = ft_expsplit(*tokens, DOLLAR)))
 		return (ERROR);
 	free(*tokens);
 	*tokens = expansions_management(splitok);
+//	ft_free_tabs(splitok);
 	return (SUCCESS);
 }

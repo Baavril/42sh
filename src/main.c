@@ -97,7 +97,7 @@ int		main(int argc, char **argv)
 		ft_tabdel(&environ);
 		return (1);
 	}
-	if (!read_command(&input) || get_next_line(0, &input))
+	while (!read_command(&input) || get_next_line(0, &input))
 	{
 		if (!(status = history(ADD_CMD, &input, NULL)))
 		{
