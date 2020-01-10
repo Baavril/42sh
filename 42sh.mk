@@ -33,10 +33,14 @@ SOURCES			:=		main.c \
 						lexer/grammar_symbols.c \
 						lexer/separators/unglue_metachr.c \
 						lexer/separators/pipeline_separators.c \
-						expansions/expansions.c \
 						expansions/substitutions.c \
-						expansions/expansions.c \
-						expansions/substitutions.c \
+						expansions/globing_substitutions.c \
+						expansions/global_exp/expansions_main.c \
+						expansions/global_exp/expansions_split.c \
+						expansions/global_exp/expansions_bslash.c \
+						expansions/global_exp/expansions_checker.c \
+						expansions/global_exp/expansions_between.c \
+						expansions/global_exp/expansions_identifier.c \
 						expansions/maths_exp/assign.c \
 						expansions/maths_exp/addition.c \
 						expansions/maths_exp/ast_tools.c \
@@ -170,4 +174,4 @@ CFLAGS += -Wall -Wextra -Werror -ansi -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200809
 
 #CFLAGS += -fno-builtin -O2
 
-CDEBUG += -g -fsanitize=address -fno-optimize-sibling-calls
+#CDEBUG += -g -fsanitize=address -fno-optimize-sibling-calls

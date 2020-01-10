@@ -18,6 +18,8 @@
 # define STAR '*'
 # define AROB '@'
 # define EXCLAM '!'
+# define OP_PAR '('
+# define CL_PAR ')'
 # define OP_SQUAR '['
 # define CL_SQUAR ']'
 
@@ -64,6 +66,18 @@ typedef struct	s_symexp
 	int			(*expand)(char **);
 }				t_symexp;
 
+typedef struct	s_expand
+{
+	int			j;
+	int			nb;
+	int			type;
+	char		*tmp;
+	char		*btw;
+	char		*ptm;
+	char		*keep;
+	char		**tokens;
+}				t_expand;
+
 int				expansions_treatment(char **tokens);
 
 int				direct_exp(char **token);
@@ -82,6 +96,21 @@ int				maths_exp(char **token);
 int				ft_strpchr(char *str, char c);
 size_t			maths_len(char *token);
 char			*ft_starmatch(char *str, char *match, int flag);
+
+char			**ft_expsplit(char *str, char c);
+int				ft_setbslash(char **tokens, int nb);
+int				ft_back_slashed(char **tokens);
+char			*ft_set_slashed(char **tokens);
+char			*ft_getbtw(char *tokens, int type);
+char			*ft_quoted(char *tokens);
+int				identifier(char *token);
+
 char			**ft_globing(char **split);
+
+int				check_braces(char *token);
+int				check_colon(char *token);
+int				check_colon_symbol(char *token);
+int				check_symbol(char *token);
+int				check_maths(char *token);
 
 #endif
