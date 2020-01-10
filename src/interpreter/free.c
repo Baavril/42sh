@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 08:40:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/05 10:07:30 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/10 10:53:14 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,32 +35,27 @@ int				shape(t_node *node)
 		return(0b00);
 }
 
-int				free_ast(t_node *node)
+int				astdel(t_node *node)
 {
 	int node_type;
 
+	if (!node)
+		return(1);
 	node_type = shape(node);
-	ft_printf("new node with shape %d%d\n", (node_type & 0b10) / 2, node_type & 0b01);
 	if (node->left.c || node->left.v)
 	{
 		if (node_type & 0b10)
-		{
-			ft_printf("free %s!\n", node->left.c);
 			free(node->left.c);
-		}
 		else
-			free_ast(node->left.v);
+			astdel(node->left.v);
 		node->left.c = NULL;
 	}
 	if (node->right.c || node->right.v)
 	{
 		if (node_type & 0b01)
-		{
-			ft_printf("free %s!\n", node->right.c);
 			free(node->right.c);
-		}
 		else
-			free_ast(node->right.v);
+			astdel(node->right.v);
 		node->right.c = NULL;
 	}
 	free(node);

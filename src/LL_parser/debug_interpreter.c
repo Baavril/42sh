@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:44:12 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/05 09:52:25 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/10 10:52:14 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ void	interpret(t_node *node)
 		ft_dprintf(2, "_______________________________________________\n");
 		node->f(node->left, node->right);
 		ft_launch_job("plop", FOREGROUND);
-		free_ast(node);
+		astdel(node);
 		node = NULL;
 	}
-	if (!node)
+	else
 		ft_dprintf(2, "interpreting empty string..\n");
 	ft_dprintf(2, "_______________________________________________\n");
 }
