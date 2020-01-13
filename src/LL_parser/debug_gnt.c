@@ -21,7 +21,7 @@ static t_token *tokendup(t_token tok)
 
 	rtn = malloc(sizeof(t_token));
 	rtn->symbol = tok.symbol;
-	ft_printf("[%s]\n", tok.symbol);
+	//ft_printf("[%s]\n", tok.symbol);
 	rtn->type = tok.type;
 	return(rtn);
 }
@@ -34,7 +34,7 @@ static void		fill_stack(t_list **stack)
 
 	tmp1 = NULL;
 	tok = get_next_token(NULL);
-	if (tok.type == WORD && !ft_strcmp(tok.symbol, "*"))
+	if (tok.type == WORD && !ft_strcmp("*", tok.symbol))
 	{
 		tmp1 = ft_strsplit(tok.symbol, "/");
 		tmp2 = ft_globing(tmp1);
@@ -47,7 +47,7 @@ static void		fill_stack(t_list **stack)
 			ft_lstadd(stack, ft_lstnew(tokendup(tok), sizeof(t_token)));
 			tmp1++;
 		}
-		ft_printf("...%p\n", tmp2);
+	//	ft_printf("...%p\n", tmp2);
 		free(tmp2);
 	}
 	else
@@ -73,7 +73,7 @@ t_token	gnt(char *future)
 		free(stack);
 		stack = tmp_stack;
 	}
-	ft_printf("%s - %s\n",future,  tmp_tok.symbol);
+	//ft_printf("%s - %s\n",future,  tmp_tok.symbol);
 	return(tmp_tok);
 }
 
