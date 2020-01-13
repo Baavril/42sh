@@ -78,6 +78,28 @@ typedef struct	s_expand
 	char		**tokens;
 }				t_expand;
 
+typedef struct	s_deploy
+{
+	int			i;
+	int			j;
+	int			flag;
+	int			dash;
+	char		*keep;
+	char		*tmp;
+	char		*ptm;
+	char		*range;
+}				t_deploy;
+
+typedef struct	s_glob
+{
+	int			i;
+	int			x;
+	int			n;
+	int			j;
+	int			diff;
+	char		c;
+}				t_glob;
+
 int				expansions_treatment(char **tokens);
 
 int				direct_exp(char **token);
@@ -112,5 +134,26 @@ int				check_colon(char *token);
 int				check_colon_symbol(char *token);
 int				check_symbol(char *token);
 int				check_maths(char *token);
+
+int		check_next_var(char *var, char **token, int flag);
+char *ft_strcdup(char *token, char c);
+char *setasvar(char *token);
+char *ft_strrev(char *token);
+char *matching_ret(char *token, char *match, int flag);
+char *pattern_matching(char *token, char *match, int flag);
+int ft_spechrlen(char *token);
+int	check_deploy(char *str, char *match, int flag, int star);
+
+int star_deployement(t_glob *var, char *match, char *str, int flag);
+int star_no_deployement(t_glob *var, char *match, char *str, int flag);
+int reach_star_flag(t_glob *var, char *match, char *str, int flag);
+int fixing_star_flag(t_glob *var, char *match, char *str, int flag);
+int reach_next_star_flag(t_glob *var, char *match, char *str, int flag);
+int positionning_star_flag(t_glob *var, char *match, char *str);
+int get_deploy(char **match);
+
+
+char *ft_alpharange(char c, char x);
+char *ft_strneg(char *match);
 
 #endif
