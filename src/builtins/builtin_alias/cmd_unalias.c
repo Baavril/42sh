@@ -6,16 +6,16 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 16:12:27 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/05 17:44:28 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/13 19:15:49 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <getopt.h>
 #include "job.h"
 #include "libft.h"
 #include "error.h"
 #include "builtins.h"
+#include "ft_getopt.h"
 #include "hash_module.h"
 #include "htable_type_dispatcher.h"
 
@@ -26,9 +26,9 @@
 */
 
 extern t_htable	*g_alias;
-extern int		optind;
-extern int		opterr;
-extern int		optopt;
+extern int		g_optind;
+extern int		g_opterr;
+extern int		g_optopt;
 
 static int		ft_unalias_args(int ac, char **av)
 {
@@ -36,7 +36,7 @@ static int		ft_unalias_args(int ac, char **av)
 	int		i;
 
 	ret = 0;
-	i = optind;
+	i = g_optind;
 	while (i < ac)
 	{
 		if (!g_alias || !ft_del_entry(g_alias, av[i]))
@@ -56,14 +56,14 @@ static int		ft_parse_unalias_opt(int ac, char **av)
 	int		ret;
 
 	opt_a = 0;
-	opterr = 0;
-	optind = 1;
-	while ((ret = getopt(ac, av, "+a")) > 0)
+	g_opterr = 0;
+	g_optind = 1;
+	while ((ret = ft_getopt(ac, av, "a")) > 0)
 	{
 		if (ret == '?')
 		{
 			ft_dprintf(STDERR_FILENO,
-					"%s: unalias: -%c: invalid option.\n", g_progname, optopt);
+				"%s: unalias: -%c: invalid option.\n", g_progname, g_optopt);
 			return (2);
 		}
 		if (ret == 'a')

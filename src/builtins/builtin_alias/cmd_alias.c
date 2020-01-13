@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 16:12:11 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/05 17:40:21 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/13 19:16:10 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "libft.h"
 #include "error.h"
 #include "builtins.h"
+#include "ft_getopt.h"
 #include "hash_module.h"
 #include "htable_type_dispatcher.h"
 
@@ -28,9 +29,9 @@
 ** .invalid opt(code 2): "alias: usage: alias [-p] [name[=value] ... ]"
 */
 t_htable		*g_alias = NULL;
-extern int		optind;
-extern int		opterr;
-extern int		optopt;
+extern int		g_optind;
+extern int		g_opterr;
+extern int		g_optopt;
 
 static void		ft_print_sortalias(char *mes)
 {
@@ -61,7 +62,7 @@ static int		ft_new_alias(int ac, char **av, char *mes)
 	int			i;
 
 	ret = 0;
-	i = optind;
+	i = g_optind;
 	while (i < ac)
 	{
 		if ((str = ft_strchr(av[i], '=')))
@@ -89,14 +90,14 @@ static int		ft_parse_alias_opt(int ac, char **av)
 	int		opt_p;
 
 	opt_p = 0;
-	opterr = 0;
-	optind = 1;
-	while ((ret = getopt(ac, av, "+p")) > 0)
+	g_opterr = 0;
+	g_optind = 1;
+	while ((ret = ft_getopt(ac, av, "p")) > 0)
 	{
 		if (ret == '?')
 		{
 			ft_dprintf(STDERR_FILENO,
-					"%s: unalias: -%c: invalid option.\n", g_progname, optopt);
+				"%s: alias: -%c: invalid option.\n", g_progname, g_optopt);
 			ft_dprintf(STDERR_FILENO,
 					"alias: usage: alias [-p] [name[=value] ... ].\n");
 			return (2);
