@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 13:47:26 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/05 13:49:12 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/13 18:28:45 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ static int	parse_char_mod(int argc, char *const *argv, char *c,
 	}
 	else
 		g_optarg = &c[1];
-	++g_optind;
 	return (0);
 }
 
@@ -81,55 +80,30 @@ static int	parse_char(int argc, char *const *argv, char *c,
 	return ('?');
 }
 
-static int	parse_optstring(int argc, char *const *argv, const char *optstring)
+int		ft_getopt(int ac, char *const av[], const char *optstring)
 {
-	static int	index;
-	static int	i = 1;
-	int			ret;
+	int				ret;
+	static char		*optarg = NULL;
+	static char		*opt = NULL;
 
 	ret = 0;
-	if (!g_optind)
-	{
-		i = 1;
-		return (0);
-	}
-	if (g_optarg || index > g_optind)
-	{
-		i = 1;
-		g_optarg = NULL;
-	}
-	index = g_optind;
-	ret = parse_char(argc, argv, &argv[g_optind][i], optstring);
-	++i;
-	if (argv[g_optind] && !argv[g_optind][i])
-	{
-		i = 1;
-		if (!g_optarg)
-			++g_optind;
-	}
-	return (ret);
-}
-
-int			ft_getopt(int argc, char *const argv[], const char *optstring)
-{
-	int		ret;
-
-	ret = 0;
-	if (!optstring || g_optind >= argc || !argv[g_optind]
-			|| *(argv[g_optind]) != '-' || !ft_strcmp((argv[g_optind]), "-"))
+	if (!optstring || g_optind < 0 || g_optind > ac)
 		return (-1);
-	else if (!ft_strcmp((argv[g_optind]), "--"))
+	if (!optarg || !opt || !(*opt) || g_optind == 1 || g_optarg)
 	{
-		g_optopt = *argv[g_optind];
-		++g_optind;
-		return (-1);
+		if (!av[g_optind] || *av[g_optind] != '-' || !ft_strcmp(av[g_optind], "-"))
+			return (-1);
+		optarg = av[g_optind++];
+		if (!ft_strcmp(optarg, "--"))
+		{
+			g_optopt = '-';
+			return (-1);
+		}
+		opt = optarg + 1;
 	}
-	else if (argv[g_optind] && *(argv[g_optind]))
-	{
-		g_optarg = NULL;
-		g_optopt = 0;
-		ret = parse_optstring(argc, argv, optstring);
-	}
+	g_optarg = NULL;
+	g_optopt = 0;
+	ret = parse_char(ac, av, opt++, optstring);
 	if (!g_optopt)
 		g_optopt = ret;
 	return (ret);
