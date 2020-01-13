@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 12:08:48 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/10/30 14:17:36 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/13 21:27:35 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 
 t_htable_type		g_htype[] =
 {
-	{&ft_free_string, &ft_print_string, &ft_string_lstcpy, &ft_cmp_entry_key, 0},
-	{&ft_free_bash, &ft_print_bash, &ft_bash_lstcpy, &ft_bash_cmp, sizeof(t_bash_hash)}
+	{&ft_free_string, &ft_print_string, &ft_string_lstcpy, \
+		&ft_cmp_entry_key, 0},
+	{&ft_free_bash, &ft_print_bash, &ft_bash_lstcpy, \
+		&ft_bash_cmp, sizeof(t_bash_hash)}
 };
 
 t_ft_free			ft_get_free(int e_table_type)

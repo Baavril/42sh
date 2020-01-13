@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/01/13 20:58:41 by tgouedar         ###   ########.fr        #
+#    Updated: 2020/01/13 21:50:04 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -134,6 +134,7 @@ SOURCES			:=		main.c \
 						builtins/ft_putenv_table.c \
 						transversal/hash/bash_routines.c \
 						transversal/hash/corps_fini_tools.c \
+						transversal/hash/random_tools.c \
 						transversal/hash/ft_empty_htable.c \
 						transversal/hash/ft_free_htable.c \
 						transversal/hash/ft_get_entry.c \

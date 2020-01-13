@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 15:33:05 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/11/04 15:08:33 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/13 21:52:08 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef void		(*t_ft_free)(void *, size_t);
 typedef t_list		*(*t_ft_lstcpy)(t_list *);
 typedef int			(*t_ft_cmp_entries)(t_list *, t_list *);
 
+unsigned int		ft_random_range(unsigned int min, unsigned int max);
 uint64_t			ft_hash(const t_htable *htable, const char *to_hash);
 uint64_t			ft_get_prime(uint64_t min);
 uint64_t			ft_get_ran(uint64_t mod);

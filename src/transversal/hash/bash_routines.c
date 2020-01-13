@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 18:00:54 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/11/06 18:37:50 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/13 21:29:01 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int			ft_bash_cmp(t_list *to_cmp1, t_list *to_cmp2)
 	return (-1);
 }
 
-void	ft_free_bash(void *to_free, size_t null)
+void		ft_free_bash(void *to_free, size_t null)
 {
 	t_entry		*entry;
 
@@ -51,7 +51,7 @@ t_list		*ft_bash_lstcpy(t_list *elem)
 	return (elem);
 }
 
-void	ft_print_bash(t_list *to_print)
+void		ft_print_bash(t_list *to_print)
 {
 	t_bash_hash		*entry;
 	char			*print_text;
@@ -64,7 +64,7 @@ void	ft_print_bash(t_list *to_print)
 	ft_printf(print_text, entry->hit_value, entry->bin_path);
 }
 
-void	ft_insert_bash(t_htable *htable, char *key,
+void		ft_insert_bash(t_htable *htable, char *key,
 												char *path, unsigned int hit)
 {
 	t_bash_hash		new;
