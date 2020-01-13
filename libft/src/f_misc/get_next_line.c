@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/23 12:01:41 by abarthel          #+#    #+#             */
-/*   Updated: 2019/07/07 14:17:05 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/01/05 14:22:15 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 #define CHR_SRCH '\n'
 
-static __inline__ t_list	*lst_select(int fd)
+static inline t_list	*lst_select(int fd)
 {
 	static t_list	*lst;
 	t_list			*fd_lst;
@@ -38,7 +38,7 @@ static __inline__ t_list	*lst_select(int fd)
 	return (fd_lst);
 }
 
-static __inline__ int		feedline(t_list *lst, int ret, char **line, int has_chr)
+static inline int		feedline(t_list *lst, int ret, char **line, int has_chr)
 {
 	char	*location;
 	char	*tmp;
@@ -59,7 +59,7 @@ static __inline__ int		feedline(t_list *lst, int ret, char **line, int has_chr)
 	return (1);
 }
 
-static __inline__ int		readl(t_list *lst, int fd, char **line)
+static inline int		readl(t_list *lst, int fd, char **line)
 {
 	int		ret;
 	int		has_chr;

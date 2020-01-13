@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 14:39:26 by abarthel          #+#    #+#             */
-/*   Updated: 2019/08/27 18:24:36 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/01/05 14:19:29 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ unsigned short		ft_unbrlen(uintmax_t nb)
 	return (len > 0 ? len : 1);
 }
 
-static __inline__ void	ret_nbr(uintmax_t nb, short len)
+static inline void	ret_nbr(uintmax_t nb, short len)
 {
 	int	mod;
 
@@ -76,7 +76,7 @@ static __inline__ void	ret_nbr(uintmax_t nb, short len)
 	}
 }
 
-static __inline__ void	width_precision(void)
+static inline void	width_precision(void)
 {
 	while (!(g_flags.zero) && !(g_flags.minus) && g_options.width - g_prefix.len
 			- g_prefix.size > 0)

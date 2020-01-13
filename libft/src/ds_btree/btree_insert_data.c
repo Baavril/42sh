@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 12:24:24 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/22 12:25:28 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/01/05 14:43:25 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 #include "ft_btree.h"
 
-void	btree_insert_data(struct s_btree **root, void *data, int (*cmpf)(void *, void *))
+void	btree_insert_data(struct s_btree **root, void *data,
+												int (*cmpf)(void *, void *))
 {
 	struct s_btree	*node;
 

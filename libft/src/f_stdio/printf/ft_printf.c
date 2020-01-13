@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 14:27:49 by abarthel          #+#    #+#             */
-/*   Updated: 2019/04/29 11:44:08 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/01/05 14:15:41 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include "ft_vdprintf.h"
 
-int		ft_printf(const char *__restrict__ format, ...)
+int		ft_printf(const char *restrict format, ...)
 {
 	va_list ap;
 	int		ret;

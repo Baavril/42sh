@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 14:54:14 by abarthel          #+#    #+#             */
-/*   Updated: 2019/04/18 12:16:45 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/01/05 14:21:06 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 extern t_modifier	g_modifier;
 
-void	ft_cast_unbr(uintmax_t *__restrict__ nb)
+void				ft_cast_unbr(uintmax_t *restrict nb)
 {
 	if (g_modifier.hh)
 		*nb = (unsigned char)(*nb);
@@ -38,7 +38,7 @@ void	ft_cast_unbr(uintmax_t *__restrict__ nb)
 		*nb = (unsigned int)(*nb);
 }
 
-void	ft_cast_nbr(intmax_t *__restrict__ nb)
+void				ft_cast_nbr(intmax_t *restrict nb)
 {
 	if (g_modifier.hh)
 		*nb = (char)(*nb);

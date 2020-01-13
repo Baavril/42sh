@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_job.c                                      :+:      :+:    :+:   */
+/*   termcaps.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/03 18:18:41 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/03 18:22:23 by tgouedar         ###   ########.fr       */
+/*   Created: 2020/01/03 17:27:14 by bprunevi          #+#    #+#             */
+/*   Updated: 2020/01/03 17:29:13 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "jcont.h"
+#ifndef TERMCAPS_H
+# define TERMCAPS_H
+# define TC_SAVE 0
+# define TC_RESTORE 1
+# define TC_INPUT 2
 
-void	ft_free_job(void *content, size_t size)
-{
-	(void)size;
-	free(((t_job*)content)->cmd);
-}
+int set_termcaps(int arg);
+#endif

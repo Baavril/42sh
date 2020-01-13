@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 22:47:47 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/02 19:35:02 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/05 17:52:53 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ t_sig			g_sigdispatcher[] =
 	{SIGUSR2, {SIG_IGN, SIG_IGN}},
 	{0, {NULL, NULL}},
 };
-
-
 
 void			set_signals(int id)
 {

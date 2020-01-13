@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 17:00:19 by abarthel          #+#    #+#             */
-/*   Updated: 2019/04/17 11:03:22 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/01/05 14:17:00 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern t_ret	g_ret;
 
-void	ft_n(int *__restrict__ ptr)
+void			ft_n(int *restrict ptr)
 {
 	if (ptr)
 		*ptr = g_ret.i + 1;

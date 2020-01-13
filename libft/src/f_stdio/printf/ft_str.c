@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 14:39:26 by abarthel          #+#    #+#             */
-/*   Updated: 2019/07/07 14:15:33 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/01/05 14:15:06 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ extern t_options	g_options;
 extern t_modifier	g_modifier;
 extern t_prefix		g_prefix;
 
-void	ft_str(void *__restrict__ str)
+void				ft_str(void *restrict str)
 {
 	reset_prefix();
 	if (!(str) && !(g_modifier.l))
@@ -40,7 +40,7 @@ void	ft_str(void *__restrict__ str)
 	str_format(str);
 }
 
-void	ft_wstr(void *__restrict__ str)
+void				ft_wstr(void *restrict str)
 {
 	g_modifier.l = 1;
 	ft_str(str);

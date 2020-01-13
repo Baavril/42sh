@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/01/13 13:08:49 by yberramd         ###   ########.fr        #
+#    Updated: 2020/01/13 13:50:51 by yberramd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,12 +28,42 @@ SOURCES			:=		main.c \
 						input/keyboard_dispatcher.c \
 						input/auto_completion/auto_completion.c \
 						input/auto_completion/tst.c \
+						input/termcaps/termcaps.c \
 						lexer/lexer.c \
 						lexer/grammar_symbols.c \
 						lexer/separators/unglue_metachr.c \
 						lexer/separators/pipeline_separators.c \
-						expansions/expansions.c \
 						expansions/substitutions.c \
+						expansions/globing_substitutions.c \
+						expansions/global_exp/expansions_main.c \
+						expansions/global_exp/expansions_split.c \
+						expansions/global_exp/expansions_bslash.c \
+						expansions/global_exp/expansions_checker.c \
+						expansions/global_exp/expansions_between.c \
+						expansions/global_exp/expansions_identifier.c \
+						expansions/maths_exp/assign.c \
+						expansions/maths_exp/addition.c \
+						expansions/maths_exp/ast_tools.c \
+						expansions/maths_exp/bitwise.c \
+						expansions/maths_exp/bitwise_shifts.c \
+						expansions/maths_exp/comma.c \
+						expansions/maths_exp/compare.c \
+						expansions/maths_exp/equality_test.c \
+						expansions/maths_exp/ft_build_ast.c \
+						expansions/maths_exp/ft_eval.c \
+						expansions/maths_exp/ft_int64_convert.c \
+						expansions/maths_exp/ft_itoa64.c \
+						expansions/maths_exp/increment.c \
+						expansions/maths_exp/logic.c \
+						expansions/maths_exp/maths_dispatcher.c \
+						expansions/maths_exp/maths_expansion.c \
+						expansions/maths_exp/maths_lexer.c \
+						expansions/maths_exp/maths_parser.c \
+						expansions/maths_exp/maths_token.c \
+						expansions/maths_exp/multiplication.c \
+						expansions/maths_exp/operand_token.c \
+						expansions/maths_exp/parentheses.c \
+						expansions/maths_exp/shvar_tools.c \
 						job_control/ft_launch_job.c \
 						job_control/ft_add_process.c \
 						job_control/ft_free_job.c \
@@ -48,7 +78,9 @@ SOURCES			:=		main.c \
 						job_control/ft_wait_foreground.c \
 						job_control/path_concat.c \
 						job_control/get_sequence.c \
-						builtins/builtin_alias.c \
+						builtins/builtin_alias/cmd_alias.c \
+						builtins/builtin_alias/cmd_unalias.c \
+						builtins/builtin_alias/alias_tools.c \
 						builtins/builtin_set.c \
 						builtins/builtin_unset.c \
 						builtins/builtin_export.c \
@@ -111,7 +143,10 @@ SOURCES			:=		main.c \
 						interpreter/i_simple_command.c \
 						interpreter/eval_command.c \
 						interpreter/i_redirect.c \
-						interpreter/i_heredoc.c
+						interpreter/i_redirect_and.c \
+						interpreter/i_heredoc.c \
+						interpreter/i_open_on_fd.c \
+						interpreter/free.c
 
 #						job_control/job.c
 

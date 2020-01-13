@@ -6,13 +6,11 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 14:39:33 by tgouedar          #+#    #+#             */
-/*   Updated: 2018/11/17 19:11:57 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/03 13:39:27 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-
-int	ft_isin(const char c, const char *charset)
+int		ft_isin(const char c, const char *charset)
 {
 	while (*charset)
 	{

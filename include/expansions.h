@@ -6,16 +6,20 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2019/11/09 11:47:27 by baavril          ###   ########.fr       */
+/*   Updated: 2020/01/08 18:23:48 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXPANSIONS_H
 # define EXPANSIONS_H
 
+# include <stddef.h>
+
 # define STAR '*'
 # define AROB '@'
 # define EXCLAM '!'
+# define OP_PAR '('
+# define CL_PAR ')'
 # define OP_SQUAR '['
 # define CL_SQUAR ']'
 
@@ -54,27 +58,59 @@
 # define DSHARP_EXP 10
 # define OPERCENT_EXP 11
 # define DPERCENT_EXP 12
+# define MATHS_EXP 13
 
 typedef struct	s_symexp
 {
-				int		sym;
-				int		(*expand)(char **);
+	int			sym;
+	int			(*expand)(char **);
 }				t_symexp;
 
-int		expansions_treatment(char **tokens);
+typedef struct	s_expand
+{
+	int			j;
+	int			nb;
+	int			type;
+	char		*tmp;
+	char		*btw;
+	char		*ptm;
+	char		*keep;
+	char		**tokens;
+}				t_expand;
 
-int		direct_exp(char **token);
-int		simple_exp(char **token);
-int		why_exp(char **token);
-int		plus_exp(char **token);
-int		dash_exp(char **token);
-int		equal_exp(char **token);
-int		bsharp_exp(char **token);
-int		osharp_exp(char **token);
-int		dsharp_exp(char **token);
-int		opercent_exp(char **token);
-int		dpercent_exp(char **token);
+int				expansions_treatment(char **tokens);
 
-int	ft_strpchr(char *str, char c);
+int				direct_exp(char **token);
+int				simple_exp(char **token);
+int				why_exp(char **token);
+int				plus_exp(char **token);
+int				dash_exp(char **token);
+int				equal_exp(char **token);
+int				bsharp_exp(char **token);
+int				osharp_exp(char **token);
+int				dsharp_exp(char **token);
+int				opercent_exp(char **token);
+int				dpercent_exp(char **token);
+int				maths_exp(char **token);
+
+int				ft_strpchr(char *str, char c);
+size_t			maths_len(char *token);
+char			*ft_starmatch(char *str, char *match, int flag);
+
+char			**ft_expsplit(char *str, char c);
+int				ft_setbslash(char **tokens, int nb);
+int				ft_back_slashed(char **tokens);
+char			*ft_set_slashed(char **tokens);
+char			*ft_getbtw(char *tokens, int type);
+char			*ft_quoted(char *tokens);
+int				identifier(char *token);
+
+char			**ft_globing(char **split);
+
+int				check_braces(char *token);
+int				check_colon(char *token);
+int				check_colon_symbol(char *token);
+int				check_symbol(char *token);
+int				check_maths(char *token);
 
 #endif

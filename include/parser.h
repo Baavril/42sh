@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 16:02:57 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/02 20:53:12 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/10 10:52:12 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 # define PARSER_H
 
 #include "tokens.h"
+#include <fcntl.h>
+#define CREATE_RIGHTS S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH
 
 typedef union	elem
 {
@@ -78,6 +80,7 @@ int	i_clobber(t_elem left, t_elem right);
 
 int is_regfile(const char *arg);
 int eval_command(char **arg);
-
-void	toggle_sig_mode(void);
+int val_command(char **arg);
+int	open_on_fd(const char *path, int o_flags, mode_t mode, int final_fd);
+int	astdel(t_node *node);
 #endif

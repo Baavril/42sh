@@ -6,13 +6,13 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 14:28:19 by abarthel          #+#    #+#             */
-/*   Updated: 2019/04/19 17:07:56 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/01/05 14:34:17 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-int	ft_ewcswidth(const wchar_t *__restrict__ pwcs)
+int	ft_ewcswidth(const wchar_t *restrict pwcs)
 {
 	int	len;
 

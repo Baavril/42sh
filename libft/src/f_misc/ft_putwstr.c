@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/29 18:25:44 by abarthel          #+#    #+#             */
-/*   Updated: 2019/06/26 17:35:24 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/01/05 14:31:03 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include "ft_wchar.h"
 
-int	ft_putwstr(const wchar_t *__restrict__ ws)
+int		ft_putwstr(const wchar_t *restrict ws)
 {
 	int		ret;
 	size_t	i;

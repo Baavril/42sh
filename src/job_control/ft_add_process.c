@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 15:51:32 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/02 19:42:34 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/05 15:34:23 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,11 @@ void			ft_stdredir(int std_fd[3])
 	}
 }
 
-int				ft_add_process(t_elem left, t_elem right, int std_fd[3], int fd_to_close)
+int				ft_add_process(t_elem left, t_elem right, int std_fd[3],
+															int fd_to_close)
 {
-//	ft_dprintf(2, "ADDPROCESS %s with {%d,%d,%d}, closes {%d}\n", right.v->left.c, std_fd[0], std_fd[1], std_fd[2], fd_to_close);
 	pid_t		pid;
 	t_process	process;
-
 
 	if (!(pid = fork()))
 	{
@@ -71,12 +70,12 @@ int				ft_add_process(t_elem left, t_elem right, int std_fd[3], int fd_to_close)
 	}
 	else
 	{
-	if (!(g_curjob.pgid))
-		g_curjob.pgid = pid;
-	setpgid(pid, g_curjob.pgid);
-	process.pid = pid;
-	process.status = RUNNING;
-	ft_lstadd(&(g_curjob.process), ft_lstnew(&process, sizeof(t_process))); //a memcheck ?
-	return (0);
+		if (!(g_curjob.pgid))
+			g_curjob.pgid = pid;
+		setpgid(pid, g_curjob.pgid);
+		process.pid = pid;
+		process.status = RUNNING;
+		ft_lstadd(&(g_curjob.process), ft_lstnew(&process, sizeof(t_process))); //a memcheck ?
+		return (0);
 	}
 }

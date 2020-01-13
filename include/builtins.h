@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2019/12/16 14:51:02 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/05 17:39:28 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ int				ft_inbintable(char *bin_name, char **ret_val, char flag);
 void			ft_insert_bintable(char *bin_name, char *bin_path,
 													unsigned int hit_val);
 void			ft_free_bintable(void);
+void			ft_insert_alias(char *alias_name, char *alias_value);
 void			ft_treat_alias(char **first_arg);
+int				ft_isvalid_aliasname(char *name);
 void			ft_free_aliastable(void);
 
 /*
