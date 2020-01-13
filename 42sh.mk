@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/01/13 13:50:51 by yberramd         ###   ########.fr        #
+#    Updated: 2020/01/13 19:06:20 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -153,6 +153,7 @@ SOURCES			:=		main.c \
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
 PATH_LIB := ./libft/
+LIBFT := $(PATH_LIB)libft.a
 
 INCLUDES := -I./include/ -I$(PATH_LIB)include/
 
@@ -166,7 +167,7 @@ TESTS_SCRIPT := launch_test.sh "launch from makefile"
 
 TEST := $(SH) $(TESTS_PATH)$(TESTS_SCRIPT)
 
-LDLIBS += -ltermcap  $(PATH_LIB)libft.a
+LDLIBS += -ltermcap
 
 LDFLAGS += $(CDEBUG)
 

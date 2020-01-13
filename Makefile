@@ -6,20 +6,22 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:03:51 by abarthel          #+#    #+#              #
-#    Updated: 2019/10/16 21:54:41 by tgouedar         ###   ########.fr        #
+#    Updated: 2020/01/13 19:06:19 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 -include 42sh.mk
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re try_lib
 
-all: $(NAME)
+all: try_lib $(NAME)
 
-$(NAME): $(OBJECTS)
-	@$(MAKE) lib -j -C $(PATH_LIB)
+$(NAME): $(OBJECTS) $(LIBFT)
 	@$(CC) $^ -o $@ $(LDLIBS) $(LDFLAGS)
 	@printf "\n\e[38;5;44m%4s [\e[1m$(NAME) built]\n\n\e[0m"
+
+try_lib:
+	@cd $(PATH_LIB) && $(MAKE) lib -j
 
 clean:
 	@$(RM) $(OBJECTS) $(DEPENDS)
