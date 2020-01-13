@@ -1,9 +1,9 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   keys->c                                             :+:      :+:    :+:   */
+/*   keys->c                                             :+:      :+:    :+:  */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprunevi <marvin@42->fr>                    +#+  +:+       +#+        */
+/*   By: bprunevi <marvin@42->fr>                    +#+  +:+       +#+       */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 18:02:02 by bprunevi          #+#    #+#             */
 /*   Updated: 2019/11/16 21:53:45 by yberramd         ###   ########.fr       */
@@ -130,6 +130,54 @@ int backspace_key(char **buff, t_cursor *cursor)
  * plus de leaks sur les tab keys -> fonctions a realiser pour prendre en charge autocompletion
  */
 
+/***********************************************AUTOCOMPLETION*********************************************************/
+
+static int ft_last_back_slash(char *input, char **binary)
+{
+	int 	i;
+	char 	*point;
+	char 	*tmp;
+	char 	svg;
+
+	i = 0;
+	point = NULL;
+	while (input[i] != '\0')
+	{
+		if (input[i] == '/')
+		{
+			point = &input[i + 1];
+			svg = input[i + 1];
+		}
+		i++;
+	}
+	if (point)
+	{
+		*point = '\0';
+		if (!(tmp = ft_strjoin(input, *binary)))
+		{
+			*point = svg;
+			return (0);
+		}
+		ft_strdel(binary);
+		*binary = tmp;
+		*point = svg;
+	}
+	return (1);
+}
+
+int 	d_len(char **binary)
+{
+	int i;
+
+	i = 0;
+	if (binary)
+	{
+		while (binary[i])
+			i++;
+	}
+	return (i);
+}
+
 int tab_key(char **buff, t_cursor *cursor)
 {
 	int 	ret;
@@ -139,20 +187,33 @@ int tab_key(char **buff, t_cursor *cursor)
 	if (!cursor->end)
 		return(1);
 	tst = ft_tst();
-	if (!(ret = ft_auto_completion(tst, *buff, &binary)))
+	if (!(ret = ft_auto_completion(tst, *buff, &binary, cursor->start)))// curseur !!!!!!
 		return (0);
 	else if (ret == 1)
 	{
-		//printf("binary [%s]\n", binary[0]);
+		//printf("binary\n");
+		set_string(buff, cursor, binary[0]);
+	}
+	else if (ret == 2)
+	{
+		if (!(ft_last_back_slash(*buff, &binary[0])))
+		{
+			del_tst(tst);
+			del_double_char(binary);
+			return (0);
+		}
+		printf("path = [%s]\n", binary[0]);
 		set_string(buff, cursor, binary[0]);
 	}
 	else
-		print_double_char(binary);
+		print_double_char(binary);//FAIRE UN display
 	//printf("ret = %d\n", ret);
 	del_tst(tst);
 	del_double_char(binary);
 	return (1);
 }
+
+/********************************************************************************************************/
 
 int down_arrow(char **buff, t_cursor *cursor)
 {

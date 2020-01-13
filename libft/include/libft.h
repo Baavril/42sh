@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
-/*   Updated: 2019/12/16 22:22:53 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/08 16:09:55 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,5 +293,7 @@ char				*ft_strjoin_free(char *s1, char *s2, int opt);
 char				*ft_strjoinfree(char *s1, char *s2);
 
 char				*ft_strnjoinfree(int nb, char *s1, char *s2, ...);
+
+int					ft_select(int argc, char **argv);
 
 #endif

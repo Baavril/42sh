@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/12/16 22:15:39 by tgouedar         ###   ########.fr        #
+#    Updated: 2020/01/08 16:09:40 by yberramd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SOURCES	:=	ds_btree/btree_apply_infix.c \
 		ds_queue/queue_size.c \
 		ds_queue/queue_apply_to_each.c \
 		ds_singly_linked_list/ft_lstadd.c \
+		ds_singly_linked_list/ft_lstaddlast.c \
 		ds_singly_linked_list/ft_lstdel.c \
 		ds_singly_linked_list/ft_lstdelone.c \
 		ds_singly_linked_list/ft_lstiter.c \
@@ -215,4 +216,4 @@ DEPENDS := $(patsubst %.c,%.d,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
 ARFLAGS := rc
 
-CFLAGS += -Wall -Werror -Wextra -ansi -std=c99 -D_POSIX_C_SOURCE -fno-builtin -O2
+CFLAGS += -Wall -Werror -Wextra -ansi -std=c99 #-D_POSIX_C_SOURCE -fno-builtin -O2

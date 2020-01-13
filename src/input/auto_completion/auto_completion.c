@@ -10,6 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+les taches :
+- l'affichage des binaires
+- les leaks
+- et le path affichage et prise en compte*/
+
 #include "auto_completion.h"
 #include <stdio.h>
 
@@ -18,7 +24,6 @@ void	print_double_char(char **tab)
 	int	i;
 
 	i = 0;
-	ft_putchar('\n');
 	while (tab && tab[i] != NULL)
 	{
 		ft_putendl(tab[i]);
@@ -26,19 +31,136 @@ void	print_double_char(char **tab)
 	}
 }
 
-static char	**ft_path(char *input)
+static char *ft_dirchr(char *input)
 {
-	char	**words;
+	char 	*cur_dir;
+	char 	svg;
+	char 	*last_bslash;
+	int 	i;
 
-	words = NULL;
+	i = 0;
+	last_bslash = NULL;
+	while (input[i] != '\0')
+	{
+		if (input[i] == '/')
+		{
+			svg = input[i];
+			last_bslash = &input[i];
+		}
+		i++;
+	}
+	if (last_bslash != NULL)
+	{
+		*last_bslash = '\0';
+		cur_dir = ft_strdup(input);
+		*last_bslash = svg;
+	}
+	else
+		cur_dir = ft_strdup(getenv("PWD"));
+	return (cur_dir);
+}
+
+static char *ft_last_back_slash(char *input)
+{
+	int 	i;
+	char 	*point;
+
+	i = 0;
+	point = NULL;
+	while (input[i] != '\0')
+	{
+		if (input[i] == '/')
+			point = &input[i + 1];
+		i++;
+	}
+	if (point == NULL)
+		point = input;
+	return (point);
+}
+
+static char	**ft_path(char *input, int *ret)// FAIRE ATTENTION AUX FREE
+{
+	int 			i;
+	char			**words;
+	struct dirent 	*dirent;
+	DIR				*dir;
+	char 			*point;
+
+	i = 0;
+	*ret = 2;
+	dir = NULL;
+	if (!(words = (char**)malloc(sizeof(char*) * 64)))//realloc a voir !!!!!!!!!!!!!!!!!
+		return (NULL);
 	if (input && input[0] == '/')
 	{
-		
+		printf("PATH\n");
 	}
 	else if (input)
 	{
-
+		point = ft_dirchr(input);
+	//	ft_printf("before: point[%s]\n", point);
+		if ((dir = opendir(point)) == NULL)
+		{
+			ft_strdel(&point);
+			ft_dprintf(2, "No such file or directory\n");
+			return (NULL);
+		}
+		ft_strdel(&point);
+		point = ft_last_back_slash(input);
+		//ft_printf("after: point[%s]", point);
+		ft_putchar('\n');
+		while ((dirent = readdir(dir)) != NULL)//realloc
+		{
+			if (ft_strfchr(point, dirent->d_name))// add point
+			{
+				if (*point == '\0')
+				{
+					if (ft_strcmp("..", dirent->d_name) && ft_strcmp(".", dirent->d_name))
+					{
+						if (dirent->d_type == 4)
+						{
+							if (!(words[i] = ft_strjoin(dirent->d_name, "/")))
+							{
+								del_double_char(words);
+								return (NULL);
+							}
+						}
+						else
+						{
+							if (!(words[i] = ft_strdup(dirent->d_name)))
+							{
+								del_double_char(words);
+								return (NULL);
+							}
+						}
+						i++;
+					}
+				}
+				else if (dirent->d_type == 4)
+				{
+					if (!(words[i] = ft_strjoin(dirent->d_name, "/")))
+					{
+						del_double_char(words);
+						return (NULL);
+					}
+					i++;
+				}
+				else
+				{
+					if (!(words[i] = ft_strdup(dirent->d_name)))
+					{
+						del_double_char(words);
+						return (NULL);
+					}
+					i++;
+				}
+			}
+		}
+	//	printf("--PATH2\n");	
 	}
+	if (dir)
+		closedir(dir);
+	words[i] = NULL;
 	return (words);
 }
 
@@ -179,12 +301,13 @@ static int	assign_words(t_tst *tst, char **words, char *input, int len)
 	return (1);
 }
 
-static char	**ft_binary(t_tst *tst, char *input)
+static char	**ft_binary(t_tst *tst, char *input, int *ret)
 {
 	int		len;
 	char	**words;
 
 	//printf("\nBINARY\n");
+	*ret = 1;
 	words = NULL;
 	if ((len = nbr_words(tst, input)) == 0)
 		return (NULL);
@@ -200,12 +323,15 @@ static char	**ft_binary(t_tst *tst, char *input)
 	return (words);
 }
 
-int 	ft_auto_completion(t_tst *tst, char *input, char ***words)
+int 	ft_auto_completion(t_tst *tst, char *input, char ***words, int start)
 {
-	if (((*words) = ft_binary(tst, input)) == NULL)
-		if (((*words) = ft_path(input)) == NULL)
+	int ret;
+
+	(void)start;
+	if (((*words) = ft_binary(tst, input, &ret)) == NULL)
+		if (((*words) = ft_path(input, &ret)) == NULL)
 			return (0);
-	if ((*words) && (*words)[0] != NULL &&(*words)[1] == NULL)
-		return (1);
-	return (2);
+	if ((*words) && (*words)[0] != NULL && (*words)[1] == NULL)
+		return (ret);
+	return (3);
 }
