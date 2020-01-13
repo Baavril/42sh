@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:43:35 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/05 10:10:02 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/13 10:49:56 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "shell_variables.h"
 #include "error.h"
 #include <unistd.h>
+#define TAB_SIZE 16
 
 char **g_argv;
 
@@ -30,7 +31,7 @@ int	i_prefix(t_elem left, t_elem right)
 
 int	i_builtin(t_elem left, t_elem right)
 {
-	g_argv = malloc(sizeof(char *) * 16); //16 ARGS MAX, NON
+	g_argv = malloc(sizeof(char *) * TAB_SIZE);
 	g_argv[0] = left.c;
 	g_argv[1] = NULL;
 	if (right.v)
@@ -42,7 +43,7 @@ int	i_exec(t_elem left, t_elem right)
 {
 	extern char **environ;
 
-	g_argv = malloc(sizeof(char *) * 16); //16 ARGS MAX, NON
+	g_argv = malloc(sizeof(char *) * TAB_SIZE);
 	g_argv[0] = left.c;
 	g_argv[1] = NULL;
 	if (right.v)
@@ -53,13 +54,25 @@ int	i_exec(t_elem left, t_elem right)
 		return (execve(g_argv[0], g_argv, environ));
 }
 
+char **realloc_argv(char **argv, size_t i)
+{
+	char **tmp_argv;
+
+	tmp_argv = malloc(sizeof(char *) * i);
+	ft_memcpy(tmp_argv, argv, sizeof(char *) * (i - TAB_SIZE));
+	free(argv);
+	return(tmp_argv);
+}
+
 int	i_suffix_word(t_elem left, t_elem right)
 {
-	int i;
+	size_t i;
 
 	i = 0;
 	while (g_argv[++i])
-		(void)i;
+		(void) i;
+	if (!((i + 1) % TAB_SIZE))
+		g_argv = realloc_argv(g_argv, (i + 1) + TAB_SIZE);
 	g_argv[i] = left.c;
 	g_argv[++i] = NULL;
 	if (right.v)
