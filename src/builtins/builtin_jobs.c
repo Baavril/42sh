@@ -6,18 +6,19 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 10:08:05 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/18 16:26:08 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/13 22:18:03 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "jcont.h"
+#include "ft_getopt.h"
 
 extern t_jcont		g_jcont;
 extern char			*g_progname;
-extern int			optopt;
-extern int			optind;
-extern int			opterr;
+extern int			g_optopt;
+extern int			g_optind;
+extern int			g_opterr;
 
 void				ft_pop_done(void)
 {
@@ -40,6 +41,31 @@ void				ft_pop_done(void)
 	ft_set_prio();
 }
 
+static int			ft_parse_jobopt(int ac, char **av)
+{
+	int			ret;
+	int			opt;
+
+	g_opterr = 0;
+	g_optind = 1;
+	while ((ret = ft_getopt(ac, av, JOBS_OPT)) > 0)
+	{
+		if (ret == '?')
+		{
+			ft_dprintf(STDERR_FILENO, \
+					"%s: jobs: -%c: invalid option.\n", g_progname, g_optopt);
+			ft_dprintf(STDERR_FILENO, \
+					"jobs: usage: jobs [-lp] [jobspec ...]\n");
+			return (-1);
+		}
+		else if (ret == 'l')
+			opt = L_OPT;
+		else if (ret == 'p')
+			opt = P_OPT;
+	}
+	return (opt);
+}
+
 int					cmd_jobs(int ac, char **av)
 {
 	int			ret;
@@ -47,22 +73,9 @@ int					cmd_jobs(int ac, char **av)
 	int			i;
 	int			opt;
 
-	ft_dprintf(2, "\n\n>>> JOBS <<<\n");
-	opterr = 0;
-	optind = 1;
-	while ((ret = getopt(ac, av, JOBS_OPT)) > 0)
-	{
-		if (ret == '?')
-		{
-			ft_dprintf(STDERR_FILENO, "%s: jobs: -%c: invalid option.\n", g_progname, optopt);
-			ft_dprintf(STDERR_FILENO,"jobs: usage: jobs [-lp] [jobspec ...]");
-		}
-		else if (ret == 'l')
-			opt = L_OPT;
-		else if (ret == 'p')
-			opt = P_OPT;
-	}
-	i = optind;
+	if ((opt = ft_parse_jobopt(ac, av)) < 0)
+		return (2);
+	i = g_optind;
 	ret = 0;
 	if (i == ac)
 		ft_print_jobs(g_jcont.jobs, opt);
@@ -71,7 +84,8 @@ int					cmd_jobs(int ac, char **av)
 		if (ft_isnumber(av[i]) && (job = ft_get_job_nbr(ft_atoi(av[i]))))
 			ft_print_job(job, opt);
 		else if (++ret)
-			ft_dprintf(STDERR_FILENO, "%s: jobs: %s: no such job.\n", g_progname, av[i]);
+			ft_dprintf(STDERR_FILENO,
+						"%s: jobs: %s: no such job.\n", g_progname, av[i]);
 		i++;
 	}
 	ft_pop_done();

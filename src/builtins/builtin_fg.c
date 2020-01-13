@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 11:17:51 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/02 14:13:58 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/13 22:20:24 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ void				ft_set_running(t_job *job)
 	{
 		process = (t_process*)(voyager->content);
 		if (WIFSTOPPED(process->status))
-			process->status =  RUNNING;
+			process->status = RUNNING;
 		voyager = voyager->next;
 	}
 	job->status = RUNNING;
 }
 
-int					ft_resume_in_fg(t_job *job)//need to test the synchronicity of killpg/sigsupend calls
+int					ft_resume_in_fg(t_job *job)
 {
 	int		ret_status;
 
@@ -46,7 +46,8 @@ int					ft_resume_in_fg(t_job *job)//need to test the synchronicity of killpg/si
 			ft_set_running(job);
 		else
 		{
-			ft_dprintf(2, "%s: fg: error while sending continue signal(SIGCONT).", g_progname);
+			ft_dprintf(2, "%s: fg: error while sending signal(SIGCONT).", \
+																	g_progname);
 			return (1);
 		}
 	}
@@ -63,7 +64,7 @@ int					ft_resume_in_fg(t_job *job)//need to test the synchronicity of killpg/si
 ** ignore any of the other arguments. This builtin has no options.
 */
 
-int						cmd_fg(int ac, char **av)
+int					cmd_fg(int ac, char **av)
 {
 	t_job	*job;
 	int		ret;
