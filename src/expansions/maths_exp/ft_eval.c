@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 11:33:24 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/08 16:56:05 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/13 21:13:52 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,13 @@
 
 int		ft_eval_ast(t_maths_ast *ast, int64_t *res, char flag)
 {
+	t_maths_list	*toklist;
+
 	if ((ast->calc_func))
 		return (ast->calc_func(ast->left_cmd, ast->right_cmd, res));
-	if (ast->tokens && (t_maths_token*)ast->tokens->content && flag != NO_TOKEN)
-		return (ft_arg_value(((t_maths_token*)ast->tokens->content)->token, res));
+	toklist = ast->tokens;
+	if (toklist && (t_maths_token*)toklist->content && flag != NO_TOKEN)
+		return (ft_arg_value(((t_maths_token*)toklist->content)->token, res));
 	if (flag != MANDATORY_TOKEN)
 	{
 		*res = 0;
@@ -44,7 +47,7 @@ char	*ft_construct_expansion(char *arg, char *expansion, size_t var_pos,
 	return (res);
 }
 
-int			ft_eval(char *expr, int64_t *res)
+int		ft_eval(char *expr, int64_t *res)
 {
 	t_maths_list	*list;
 	t_maths_ast		*ast;
@@ -68,7 +71,7 @@ int			ft_eval(char *expr, int64_t *res)
 	return (CONV_SUCCESS);
 }
 
-char		*ft_eval_inner_parentheses(char *expr)
+char	*ft_eval_inner_parentheses(char *expr)
 {
 	size_t		len;
 	size_t		inner_par;

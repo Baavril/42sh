@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:47:32 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/03 14:42:12 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/13 21:01:58 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int				ft_exp(void *left_cmd, void *right_cmd, int64_t *res)
 	{
 		if (right < 0)
 		{
-			//print_error(exponent less than 0);
+//print_error(exponent less than 0);
 			return (CONV_FAIL);
 		}
 		if (left == 0)
@@ -49,6 +49,7 @@ int				ft_exp(void *left_cmd, void *right_cmd, int64_t *res)
 	}
 	return (CONV_FAIL);
 }
+
 int				ft_div(void *left_cmd, void *right_cmd, int64_t *res)
 {
 	int64_t		left;

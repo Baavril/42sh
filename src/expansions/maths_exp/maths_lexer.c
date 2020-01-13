@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 16:22:17 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/08 15:42:37 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/13 21:12:52 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,14 @@ void			ft_push_tokens(char *word, t_maths_list **token_list)
 			flag = IS_ARG;
 		}
 		token = ft_init_maths_token(word, i, flag);
-		ft_lstadd_back((t_list**)token_list, ft_lstnew(token, sizeof(t_maths_token)));
+		ft_lstadd_back((t_list**)token_list,
+				ft_lstnew(token, sizeof(t_maths_token)));
 		word += i;
 	}
 	ft_putendl(NULL);
 }
 
-t_maths_list			*ft_maths_lexer(char *expr)
+t_maths_list	*ft_maths_lexer(char *expr)
 {
 	t_maths_list	*token_list;
 	char			**words;

@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 19:24:31 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/08 16:31:17 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/13 21:03:58 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 int				ft_is_varname(char *token)
 {
 	if (ft_isdigit(*token))
-		return (0); //non variable (r_value)
-	if (ft_isnumber_base(token, BASE)) // pourquoi ? -> parce que BASE = les deux alphabets + les numbers + quelques chars  speciaux... (peut-il y avoir d'autres types de char dans un nom de variable ??)
+		return (0);//non variable (r_value)
+	if (ft_isnumber_base(token, BASE))// pourquoi ? -> parce que BASE = les deux alphabets + les numbers + quelques chars  speciaux... (peut-il y avoir d'autres types de char dans un nom de variable ??)
 		return (1);
-	return (0); //variable non alpha num
+	return (0);//variable non alpha num
 }
 
 static int		ft_parse_assign(t_maths_list *list)

@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 15:51:16 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/03 14:59:04 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/13 21:10:45 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@ int				ft_build_ast(t_maths_ast *ast, int flag)
 	list = ast->tokens;
 	if (!list && flag == MANDATORY_TOKEN)
 	{
-		//"syntax error: missing operand"
+//"syntax error: missing operand"
 		return (CONV_FAIL);
 	}
 	if (list && flag == NO_TOKEN)
 	{
-		//"syntax error: left argument to unary operation"
+//"syntax error: left argument to unary operation"
 		return (CONV_FAIL);
 	}
 	if (!list)
@@ -69,12 +69,12 @@ int				ft_build_ast(t_maths_ast *ast, int flag)
 	{
 		if (!(list->next))
 			return (CONV_SUCCESS);
-		//"syntax error: missing operator;"
-		while (list)
+//"syntax error: missing operator;"
+/*		while (list)
 		{
 			ft_putendl(((t_maths_token*)list->content)->token);
 			list = list->next;
-		}
+		}*/
 		return (CONV_FAIL);
 	}
 	ast->calc_func = ft_op_func(mid_op->content->token);

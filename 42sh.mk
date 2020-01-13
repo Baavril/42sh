@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/01/13 19:06:20 by tgouedar         ###   ########.fr        #
+#    Updated: 2020/01/13 20:58:41 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,8 @@ SOURCES			:=		main.c \
 						expansions/global_exp/bsharp_substitutions.c \
 						expansions/global_exp/percent_substitutions.c \
 						expansions/maths_exp/assign.c \
+						expansions/maths_exp/assign_bitwise.c \
+						expansions/maths_exp/assign_op.c \
 						expansions/maths_exp/addition.c \
 						expansions/maths_exp/ast_tools.c \
 						expansions/maths_exp/bitwise.c \

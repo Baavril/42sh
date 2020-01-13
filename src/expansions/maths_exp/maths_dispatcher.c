@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 13:08:40 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/03 18:24:48 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/13 21:00:30 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_maths_op		g_maths[] =
 	{NULL, NULL, 0, 0, 0}
 };
 
-int		ft_get_op_priority(char *op)
+int				ft_get_op_priority(char *op)
 {
 	size_t		i;
 
@@ -67,7 +67,7 @@ int		ft_get_op_priority(char *op)
 	return (0);
 }
 
-size_t		ft_op_len(char *word)
+size_t			ft_op_len(char *word)
 {
 	size_t		i;
 	size_t		len;
@@ -95,7 +95,6 @@ t_ft_maths		*ft_op_func(char *op)
 		i++;
 	}
 	return (NULL);
-
 }
 
 int				ft_get_flag(char side, char *op)

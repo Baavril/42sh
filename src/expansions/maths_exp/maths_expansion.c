@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 14:48:38 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/08 16:16:34 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/13 21:01:28 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 size_t		maths_len(char *token)
 {
 	size_t		i;
-	int		opar;
+	int			opar;
 
 	i = 3;
 	opar = 0;

@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 12:50:32 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/05 11:20:27 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/13 21:12:10 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int				ft_incr(void *left_cmd, void *right_cmd, int64_t *res)
 	&& ft_eval_ast(right_cmd, &right, MANDATORY_TOKEN) == CONV_SUCCESS)
 	{
 		*res = right + 1;
-		setshvar(((t_maths_ast*)(right_cmd))->tokens->content->token, right + 1);
+		setshvar(((t_maths_ast*)(right_cmd))->tokens->content->token, *res);
 		return (CONV_SUCCESS);
 	}
 	return (CONV_FAIL);
@@ -50,7 +50,7 @@ int				ft_decr(void *left_cmd, void *right_cmd, int64_t *res)
 	&& ft_eval_ast(right_cmd, &right, MANDATORY_TOKEN) == CONV_SUCCESS)
 	{
 		*res = right - 1;
-		setshvar(((t_maths_ast*)(right_cmd))->tokens->content->token, right - 1);
+		setshvar(((t_maths_ast*)(right_cmd))->tokens->content->token, *res);
 		return (CONV_SUCCESS);
 	}
 	return (CONV_FAIL);
