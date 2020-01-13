@@ -6,13 +6,13 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:03:51 by abarthel          #+#    #+#              #
-#    Updated: 2019/10/31 09:59:40 by abarthel         ###   ########.fr        #
+#    Updated: 2020/01/13 19:06:22 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 -include libft.mk
 
-.PHONY: all clean fclean re objects lib
+.PHONY: all clean fclean re lib
 
 all: $(NAME)
 
@@ -32,9 +32,7 @@ fclean:
 
 re: fclean $(NAME)
 
-objects: $(OBJECTS)
-
-lib	: $(OBJECTS)
+lib: $(OBJECTS)
 	@$(AR) $(ARFLAGS) $(NAME) $(OBJECTS)
 	@ranlib $(NAME)
 
