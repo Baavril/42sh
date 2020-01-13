@@ -33,14 +33,30 @@ SOURCES			:=		main.c \
 						lexer/grammar_symbols.c \
 						lexer/separators/unglue_metachr.c \
 						lexer/separators/pipeline_separators.c \
-						expansions/substitutions.c \
-						expansions/globing_substitutions.c \
+						globing/globing_substitutions.c \
+						globing/pattern_matching.c \
+						globing/pattern_matching_tools.c \
+						globing/pattern_why_matching.c \
+						globing/pattern_matching_deployement.c \
+						globing/pattern_deploy_launcher.c \
+						globing/pattern_deploy_maker.c \
+						globing/pattern_matching_core.c \
 						expansions/global_exp/expansions_main.c \
 						expansions/global_exp/expansions_split.c \
 						expansions/global_exp/expansions_bslash.c \
 						expansions/global_exp/expansions_checker.c \
 						expansions/global_exp/expansions_between.c \
 						expansions/global_exp/expansions_identifier.c \
+						expansions/global_exp/potential_libft_functions.c \
+						expansions/global_exp/direct_substitutions.c \
+						expansions/global_exp/simple_substitutions.c \
+						expansions/global_exp/why_substitutions.c \
+						expansions/global_exp/plus_substitutions.c \
+						expansions/global_exp/dash_substitutions.c \
+						expansions/global_exp/equal_substitutions.c \
+						expansions/global_exp/sharp_substitutions.c \
+						expansions/global_exp/bsharp_substitutions.c \
+						expansions/global_exp/percent_substitutions.c \
 						expansions/maths_exp/assign.c \
 						expansions/maths_exp/addition.c \
 						expansions/maths_exp/ast_tools.c \

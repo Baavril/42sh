@@ -48,7 +48,7 @@ char	**ft_globing(char **split)
 			{
 				if (*(filedata->d_name) != '.')
 				{
-					dir[j] = ft_starmatch(filedata->d_name, split[i], 3);
+					dir[j] = pattern_matching(filedata->d_name, split[i], 3);
 					if (!*(dir[j]))
 						free(dir[j]);
 					else
@@ -70,7 +70,7 @@ char	**ft_globing(char **split)
 					{
 						if (*(filedata->d_name) != '.')
 						{
-							dir[x] = ft_strjoin(ft_strjoin(tmp[j], "/"), ft_starmatch(filedata->d_name, split[i], 3));
+							dir[x] = ft_strjoin(ft_strjoin(tmp[j], "/"), pattern_matching(filedata->d_name, split[i], 3));
 							if (!(dir[x][ft_strpchr(dir[x], '/') + 1]))
 								free(dir[x]);
 							else
