@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 16:02:57 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/10 10:52:12 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/14 14:42:35 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ t_token	peek(void);
 void	debug_parser(char *input);
 
 int i_comp_list(t_elem left, t_elem right);
+int i_and_list(t_elem left, t_elem right);
 int i_pipe_sequence(t_elem left, t_elem right);
 int i_simple_command(t_elem left, t_elem right);
 int i_execnode(t_elem left, t_elem right);

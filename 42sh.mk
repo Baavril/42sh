@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/01/13 21:50:04 by tgouedar         ###   ########.fr        #
+#    Updated: 2020/01/14 15:54:32 by bprunevi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -194,4 +194,4 @@ CFLAGS += -Wall -Wextra -Werror -ansi -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200809
 
 #CFLAGS += -fno-builtin -O2
 
-#CDEBUG += -g -fsanitize=address -fno-optimize-sibling-calls
+CDEBUG += -g -fsanitize=address -fno-optimize-sibling-calls
