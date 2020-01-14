@@ -73,7 +73,7 @@ char	*ft_get_word(char **str)
 			{
 				break;
 			}
-			if ((*str)[i] == quote_type || ft_is_close_bracket((*str)[i]))
+			if ((*str)[i] != '{' && (*str)[i] != '(' && ((*str)[i] == quote_type || ft_is_close_bracket((*str)[i])))
 			{
 				++i;
 				open_quotes ^= 1;
