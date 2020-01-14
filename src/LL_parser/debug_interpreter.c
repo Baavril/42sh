@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:44:12 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/14 16:05:25 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/14 16:22:09 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,11 @@ t_node	*comp_list(t_token tok)
 		if (is_potential(peek(), N_AND))
 		{
 			gnt(NULL);
-			if ((tmp2 = comp_list(gnt(NULL))))
-			{
-				node = malloc(sizeof(t_node));
-				node->left.v = tmp1;
-				node->right.v = tmp2;
-				node->f = i_and_list;
-				return(node);
-			}
+			node = malloc(sizeof(t_node));
+			node->left.v = tmp1;
+			node->right.v = comp_list(gnt(NULL));
+			node->f = i_and_list;
+			return(node);
 		}
 		return(tmp1);
 	}
