@@ -26,7 +26,7 @@ static int
 	{
 		ft_strdel(token);
 		value = ft_strdup(g_svar->value);
-		*token = matching_ret(g_svar->value, word, flag);
+		*token = matching_ret(value, word, flag);
 		g_svar = tmp;
 		ft_strdel(&word);
 		return (SUCCESS);

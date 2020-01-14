@@ -53,8 +53,8 @@ static int	expansions_linker(t_expand *vars)
 	if (*(vars->tokens))
 	{
 		vars->ptm = vars->tmp;
-		vars->tmp = (vars->ptm == NULL) ? *(vars->tokens)
-		: ft_strjoin(vars->ptm, *(vars->tokens));
+		vars->tmp = (vars->ptm == NULL) ? ft_strdup(*(vars->tokens))
+		: ft_strjoin(vars->ptm, ft_strdup(*(vars->tokens)));
 		if (vars->tmp)
 			ft_strdel(&vars->ptm);
 	}
@@ -91,7 +91,7 @@ static int	expansions_launcher(t_expand *vars)
 			vars->j++;
 		}
 		if (vars->nb > 0)
-				ft_setbslash(vars->tokens, vars->nb);
+			ft_setbslash(vars->tokens, vars->nb);
 	}
 	return (SUCCESS);
 }
@@ -101,8 +101,7 @@ static char	*expansions_management(char **splitok)
 	t_expand	vars;
 
 	initexpvars(&vars);
-	vars.tokens = ft_tabcpy(splitok);
-	ft_free_tabs(splitok);
+	vars.tokens = splitok;
 	while (*(vars.tokens))
 	{
 		if (expansions_launcher(&vars) == ERROR)
@@ -113,6 +112,7 @@ static char	*expansions_management(char **splitok)
 		expansions_linker(&vars);
 		vars.tokens++;
 	}
+	ft_tabdel(&splitok);
 	return (vars.tmp);
 }
 
