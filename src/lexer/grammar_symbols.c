@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -22,17 +23,18 @@ struct s_token	g_grammar_symbols[] =
 {
 	{ AND_IF, "&&" },
 	{ OR_IF, "||" },
+	{ CLOBBER, ">|" },
+	{ DLESSDASH, "<<-" },
 	{ DLESS , "<<" },
 	{ DGREAT, ">>" },
 	{ LESSAND, "<&" },
 	{ GREATAND, ">&" },
 	{ LESSGREAT, "<>" },
-	{ DLESSDASH, "<<-" },
-	{ PIPE, "|" }, /* not shell grammar native */
-	{ GREAT, ">" }, /* not shell grammar native */
-	{ LESS, "<" }, /* not shell grammar native */
-	{ CLOBBER, ">|" }, /* not shell grammar native */
-	{ SEMI, ";" }, /* not shell grammar native */
+	{ PIPE, "|" },
+	{ AND, "&" },
+	{ GREAT, ">" },
+	{ LESS, "<" },
+	{ SEMI, ";" },
 	{ If, "if" },
 	{ Then, "then" },
 	{ Else, "else" },

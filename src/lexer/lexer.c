@@ -204,7 +204,7 @@ t_token	get_next_token(char *str)
 
 char	**lexer(char **input)
 {
-	return (input);
+
 	t_token	token;
 
 	token = get_next_token(*input);
@@ -219,7 +219,7 @@ char	**lexer(char **input)
 		ft_dprintf(2, "token.type : %d = %s\n", token.type, get_token_symbol(token.type));
 	}
 	ft_dprintf(2, "_______________________________________________\n");
-
+	return (input);
 /*	gnt(NULL);
 this should be a link between parser and lexer calling back and forth*/
 }

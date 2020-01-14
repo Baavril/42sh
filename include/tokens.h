@@ -30,6 +30,7 @@ enum e_tokens
 	IO_NUMBER,
 	AND_IF,
 	OR_IF,
+	AND,
 
 /* The following are the redirect operators */
 

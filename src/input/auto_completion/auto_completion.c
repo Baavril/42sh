@@ -325,13 +325,25 @@ static char	**ft_binary(t_tst *tst, char *input, int *ret)
 
 int 	ft_auto_completion(t_tst *tst, char *input, char ***words, int start)
 {
-	int ret;
+	int 	ret;
+	//char 	**tmp;
 
 	(void)start;
+	//if (!(tmp = ft_strsplit_whitespaces(input)))
+//		return (0);
 	if (((*words) = ft_binary(tst, input, &ret)) == NULL)
+	{
 		if (((*words) = ft_path(input, &ret)) == NULL)
+		{
+//			del_double_char(tmp);
 			return (0);
+		}
+	}
 	if ((*words) && (*words)[0] != NULL && (*words)[1] == NULL)
+	{
+//		del_double_char(tmp);
 		return (ret);
+	}
+//	del_double_char(tmp);
 	return (3);
 }
