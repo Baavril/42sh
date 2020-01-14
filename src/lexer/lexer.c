@@ -26,9 +26,12 @@ int		ft_is_quote(char c)
 	return (c == '\'' || c == '\"');
 }
 
-static int ft_is_op_bracket(char c)
+static int ft_is_op_bracket(char *c)
 {
-	return (c == '{' || c == '(');
+	if (c[0] == '$')
+		return (c[1] == '(' || c[1] == '{');
+	else
+		return (c[0] == '(');
 }
 
 static int ft_is_close_bracket(char c)
@@ -62,7 +65,7 @@ char	*ft_get_word(char **str)
 	open_quotes = 0;
 	while ((*str)[i])
 	{
-			if (!open_quotes && (ft_is_quote((*str)[i]) || ft_is_op_bracket((*str)[i])))
+			if (!open_quotes && (ft_is_quote((*str)[i]) || ft_is_op_bracket(&(*str)[i])))
 			{
 				open_quotes ^= 1;
 				quote_type = (*str)[i];
