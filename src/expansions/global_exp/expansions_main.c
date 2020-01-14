@@ -53,10 +53,13 @@ static int	expansions_linker(t_expand *vars)
 	if (*(vars->tokens))
 	{
 		vars->ptm = vars->tmp;
-		vars->tmp = (vars->ptm == NULL) ? ft_strdup(*(vars->tokens))
-		: ft_strjoin(vars->ptm, ft_strdup(*(vars->tokens)));
-		if (vars->tmp)
-			ft_strdel(&vars->ptm);
+		if (vars->ptm == NULL)
+			vars->tmp = ft_strdup(*(vars->tokens));
+		else
+		{
+			vars->tmp = ft_strjoin(vars->ptm, *(vars->tokens));
+			ft_strdel(&(vars->ptm));
+		}
 	}
 	if (vars->btw)
 	{
