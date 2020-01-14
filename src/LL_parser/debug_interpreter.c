@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:44:12 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/10 10:52:14 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/14 16:22:09 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,17 @@ t_node	*comp_list(t_token tok)
 				node->left.v = tmp1;
 				node->right.v = tmp2;
 				node->f = i_comp_list;
-//				ft_dprintf(2, "comp_list full with 2 elems was created\n");
 				return(node);
 			}
+		}
+		if (is_potential(peek(), N_AND))
+		{
+			gnt(NULL);
+			node = malloc(sizeof(t_node));
+			node->left.v = tmp1;
+			node->right.v = comp_list(gnt(NULL));
+			node->f = i_and_list;
+			return(node);
 		}
 		return(tmp1);
 	}
@@ -49,15 +57,11 @@ void	interpret(t_node *node)
 {
 	if (node)
 	{
-//		ft_dprintf(2, "_______________________________________________\n");
 		node->f(node->left, node->right);
 		ft_launch_job("plop", FOREGROUND);
 		astdel(node);
 		node = NULL;
 	}
-//	else
-//		ft_dprintf(2, "interpreting empty string..\n");
-//	ft_dprintf(2, "_______________________________________________\n");
 }
 
 void	debug_parser(char *input)

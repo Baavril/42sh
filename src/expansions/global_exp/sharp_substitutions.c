@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/08 13:58:54 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/14 16:18:20 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,14 @@
 static int
 	check_sharp_var(char **token, char *word, struct s_svar *tmp, int flag)
 {
+	char *value;
+
+	value = NULL;
 	if (ft_strncmp(g_svar->key, *token + 2, ft_strlen(g_svar->key) - 1) == 0
 	&& check_next_var(g_svar->key, token, 1) == SUCCESS)
 	{
 		ft_strdel(token);
+		value = ft_strdup(g_svar->value);
 		*token = matching_ret(g_svar->value, word, flag);
 		g_svar = tmp;
 		ft_strdel(&word);

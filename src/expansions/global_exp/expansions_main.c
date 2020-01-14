@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/08 18:31:11 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/14 16:20:25 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ static int	expansions_linker(t_expand *vars)
 			vars->tmp = (vars->ptm == NULL) ? ft_strdup(vars->btw)
 			: ft_strjoin(vars->ptm, vars->btw);
 			ft_strdel(&vars->btw);
-			if (vars->ptm)
-				ft_strdel(&vars->ptm);
 		}
 	}
 	return (SUCCESS);

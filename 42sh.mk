@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/01/13 21:50:04 by tgouedar         ###   ########.fr        #
+#    Updated: 2020/01/14 16:25:58 by baavril          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -186,7 +186,7 @@ TESTS_SCRIPT := launch_test.sh "launch from makefile"
 
 TEST := $(SH) $(TESTS_PATH)$(TESTS_SCRIPT)
 
-LDLIBS += -ltermcap
+LDLIBS += -ltermcap $(PATH_LIB)libft.a
 
 LDFLAGS += $(CDEBUG)
 
@@ -194,4 +194,4 @@ CFLAGS += -Wall -Wextra -Werror -ansi -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200809
 
 #CFLAGS += -fno-builtin -O2
 
-#CDEBUG += -g -fsanitize=address -fno-optimize-sibling-calls
+CDEBUG += -g -fsanitize=address -fno-optimize-sibling-calls
