@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/08 18:31:11 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/14 16:06:01 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,18 @@
 int		exp_limit(char *tokens)
 {
 	int i;
+	int flag;
 
 	i = 0;
+	flag = 0;
 	while (*tokens)
 	{
-		if (*tokens == BSLASH && *(tokens - 1) != BSLASH)
+		if (flag && *tokens == BSLASH && *(tokens - 1) != BSLASH)
 			i++;
-		else if (*tokens == DOLLAR && *(tokens - 1) != BSLASH)
+		else if (flag && *tokens == DOLLAR && *(tokens - 1) != BSLASH)
 			i++;
-		tokens++;
+		++tokens;
+		++flag;
 	}
 	return (i);
 }
