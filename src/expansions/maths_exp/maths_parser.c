@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 19:24:31 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/15 16:46:14 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/15 17:43:48 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,29 @@ int				ft_is_varname(const char *token)
 	return (1);
 }
 
+static int		ft_test_assign(int i, t_maths_list *var_tok, t_maths_list *list)
+{
+	if (i != 1)
+	{
+		psherror(e_assign_nonvar, g_exptok, e_maths_type);
+		return (CONV_FAIL);
+	}
+	if (!ft_is_varname(var_tok->content->token))
+	{
+		psherror(e_invalid_name, g_exptok, e_maths_type);
+		return (CONV_FAIL);
+	}
+	list = list->next;
+	while (list && list->content->prio < ASSIGN_PRIO)
+		list = list->next;
+	if (list && list->content->prio == ASSIGN_PRIO)
+	{
+		psherror(e_assign_nonvar, g_exptok, e_maths_type);
+		return (CONV_FAIL);
+	}
+	return (CONV_SUCCESS);
+}
+
 static int		ft_parse_assign(t_maths_list *list)
 {
 	t_maths_list	*tmp;
@@ -41,24 +64,8 @@ static int		ft_parse_assign(t_maths_list *list)
 			list = list->next;
 		if (list && list->content->prio == ASSIGN_PRIO)
 		{
-			if (i != 1)
-			{
-				psherror(e_assign_nonvar, g_exptok, e_maths_type);
+			if (ft_test_assign(i, tmp, list) == CONV_FAIL)
 				return (CONV_FAIL);
-			}
-			if (!ft_is_varname(tmp->content->token))
-			{
-				psherror(e_invalid_name, g_exptok, e_maths_type);
-				return (CONV_FAIL);
-			}
-			list = list->next;
-			while (list && list->content->prio < ASSIGN_PRIO)
-				list = list->next;
-			if (list && list->content->prio == ASSIGN_PRIO)
-			{
-				psherror(e_assign_nonvar, g_exptok, e_maths_type);
-				return (CONV_FAIL);
-			}
 			i = 0;
 		}
 	}
