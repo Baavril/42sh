@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:48:12 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/15 15:19:01 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/15 12:24:15 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static t_node	*pipe_sequence(t_token tok)
 	{
 		if (is_potential(peek(), N_PIPE))
 		{
-			gnt(NULL);
-			if (!(tmp2 = pipe_sequence(gnt(NULL))))
+			eat();
+			if (!(tmp2 = pipe_sequence(eat())))
 				exit(ft_printf("error in pipe_sequence\n"));
 			node = malloc(sizeof(t_node));
 			node->left.v = tmp1;
@@ -60,3 +60,39 @@ t_node	*and_or(t_token tok)
 	return(pipeline(tok));
 }
 
+/*
+ * comp_list	: and_or SEMI comp_list
+ */
+t_node	*comp_list(t_token tok)
+{
+	t_node	*node;
+	t_node	*tmp1;
+	t_node	*tmp2;
+
+	if ((tmp1 = and_or(tok)))
+	{
+		if (is_potential(peek(), N_SEMI))
+		{
+			eat();
+			if ((tmp2 = comp_list(eat())))
+			{
+				node = malloc(sizeof(t_node));
+				node->left.v = tmp1;
+				node->right.v = tmp2;
+				node->f = i_comp_list;
+				return(node);
+			}
+		}
+		if (is_potential(peek(), N_AND))
+		{
+			eat();
+			node = malloc(sizeof(t_node));
+			node->left.v = tmp1;
+			node->right.v = comp_list(eat());
+			node->f = i_and_list;
+			return(node);
+		}
+		return(tmp1);
+	}
+	return(NULL);
+}

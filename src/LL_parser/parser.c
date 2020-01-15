@@ -6,14 +6,29 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 14:29:21 by yberramd          #+#    #+#             */
-/*   Updated: 2019/11/26 16:33:19 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/15 12:27:43 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "jcont.h"
 
-void	parser_21sh(char *input)
+static void	interpret(t_node *node)
 {
-	debug_parser(input);
+	if (node)
+	{
+		node->f(node->left, node->right);
+		ft_launch_job("plop", FOREGROUND);
+		astdel(node);
+		node = NULL;
+	}
+}
+
+void	execute(char *input)
+{
+	t_node *AST;
+	AST = comp_list(gnt(input, 0));
+	eat();
+	interpret(AST);
 }
 

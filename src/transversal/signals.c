@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 22:47:47 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/05 17:52:53 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/15 12:31:53 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void			set_signals(int id)
 	signal = &(g_sigdispatcher[i]);
 	while ((signal->sig_nbr))
 	{
-		ft_bzero(&action, sizeof(sigaction));
+		ft_bzero(&action, sizeof(action));
 		sigemptyset(&action.sa_mask);
 		if (id == FATHER && signal->sig_nbr == SIGCHLD)
 		{

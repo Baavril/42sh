@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/01/14 16:25:58 by baavril          ###   ########.fr        #
+#    Updated: 2020/01/15 12:24:40 by bprunevi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -150,7 +150,6 @@ SOURCES			:=		main.c \
 						transversal/hash/string_routines.c \
 						transversal/shell_variables/shell_variables.c \
 						LL_parser/debug_gnt.c \
-						LL_parser/debug_interpreter.c \
 						LL_parser/io_redirect.c \
 						LL_parser/is_potential.c \
 						LL_parser/parser.c \
@@ -194,4 +193,4 @@ CFLAGS += -Wall -Wextra -Werror -ansi -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200809
 
 #CFLAGS += -fno-builtin -O2
 
-CDEBUG += -g -fsanitize=address -fno-optimize-sibling-calls
+CDEBUG += -g #-fsanitize=address -fno-optimize-sibling-calls
