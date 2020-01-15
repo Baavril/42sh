@@ -6,19 +6,26 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 19:24:31 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/13 21:03:58 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/15 16:46:14 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "maths_interne.h"
+#include "error.h"
 
-int				ft_is_varname(char *token)
+extern char		*g_exptok;
+
+int				ft_is_varname(const char *token)
 {
 	if (ft_isdigit(*token))
-		return (0);//non variable (r_value)
-	if (ft_isnumber_base(token, BASE))// pourquoi ? -> parce que BASE = les deux alphabets + les numbers + quelques chars  speciaux... (peut-il y avoir d'autres types de char dans un nom de variable ??)
-		return (1);
-	return (0);//variable non alpha num
+		return (0);
+	while (*token)
+	{
+		if (!(ft_isalnum(*token) || *token == '_'))
+			return (0);
+		token++;
+	}
+	return (1);
 }
 
 static int		ft_parse_assign(t_maths_list *list)
@@ -34,15 +41,24 @@ static int		ft_parse_assign(t_maths_list *list)
 			list = list->next;
 		if (list && list->content->prio == ASSIGN_PRIO)
 		{
-			if (!i)
-				return (CONV_FAIL); //assignation sans membre de gauche
-			if (i > 2 || !ft_is_varname(tmp->content->token))
-				return (CONV_FAIL); //assignation a une expression et non une variable
+			if (i != 1)
+			{
+				psherror(e_assign_nonvar, g_exptok, e_maths_type);
+				return (CONV_FAIL);
+			}
+			if (!ft_is_varname(tmp->content->token))
+			{
+				psherror(e_invalid_name, g_exptok, e_maths_type);
+				return (CONV_FAIL);
+			}
 			list = list->next;
 			while (list && list->content->prio < ASSIGN_PRIO)
 				list = list->next;
 			if (list && list->content->prio == ASSIGN_PRIO)
-				return (CONV_FAIL); // assignations imbriquees;
+			{
+				psherror(e_assign_nonvar, g_exptok, e_maths_type);
+				return (CONV_FAIL);
+			}
 			i = 0;
 		}
 	}

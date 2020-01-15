@@ -6,12 +6,15 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 15:51:16 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/13 21:10:45 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/15 15:15:38 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "maths_interne.h"
+#include "error.h"
+
+extern char		*g_exptok;
 
 t_maths_ast		*ft_new_mathast_node(t_maths_list *tokens)
 {
@@ -54,12 +57,12 @@ int				ft_build_ast(t_maths_ast *ast, int flag)
 	list = ast->tokens;
 	if (!list && flag == MANDATORY_TOKEN)
 	{
-//"syntax error: missing operand"
+		psherror(e_missing_operand, g_exptok, e_maths_type);
 		return (CONV_FAIL);
 	}
 	if (list && flag == NO_TOKEN)
 	{
-//"syntax error: left argument to unary operation"
+		psherror(e_arg_to_unary, g_exptok, e_maths_type);
 		return (CONV_FAIL);
 	}
 	if (!list)
@@ -69,12 +72,7 @@ int				ft_build_ast(t_maths_ast *ast, int flag)
 	{
 		if (!(list->next))
 			return (CONV_SUCCESS);
-//"syntax error: missing operator;"
-/*		while (list)
-		{
-			ft_putendl(((t_maths_token*)list->content)->token);
-			list = list->next;
-		}*/
+		psherror(e_missing_operator, g_exptok, e_maths_type);
 		return (CONV_FAIL);
 	}
 	ast->calc_func = ft_op_func(mid_op->content->token);

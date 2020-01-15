@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 11:33:24 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/13 21:13:52 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/15 15:19:12 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,5 @@ char	*ft_eval_inner_parentheses(char *expr)
 		return (res);
 	}
 	else
-		return (NULL); //erreur de parentheses
+		return (NULL);
 }

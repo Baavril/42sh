@@ -6,13 +6,16 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 20:58:02 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/13 20:58:24 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/15 15:11:57 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "maths_interne.h"
+#include "error.h"
 
-int		ft_add_assign(void *left_cmd, void *right_cmd, int64_t *res)
+extern char		*g_exptok;
+
+int				ft_add_assign(void *left_cmd, void *right_cmd, int64_t *res)
 {
 	char		*var_name;
 	int64_t		left;
@@ -29,7 +32,7 @@ int		ft_add_assign(void *left_cmd, void *right_cmd, int64_t *res)
 	return (CONV_FAIL);
 }
 
-int		ft_sub_assign(void *left_cmd, void *right_cmd, int64_t *res)
+int				ft_sub_assign(void *left_cmd, void *right_cmd, int64_t *res)
 {
 	char		*var_name;
 	int64_t		left;
@@ -46,7 +49,7 @@ int		ft_sub_assign(void *left_cmd, void *right_cmd, int64_t *res)
 	return (CONV_FAIL);
 }
 
-int		ft_mul_assign(void *left_cmd, void *right_cmd, int64_t *res)
+int				ft_mul_assign(void *left_cmd, void *right_cmd, int64_t *res)
 {
 	char		*var_name;
 	int64_t		left;
@@ -63,7 +66,7 @@ int		ft_mul_assign(void *left_cmd, void *right_cmd, int64_t *res)
 	return (CONV_FAIL);
 }
 
-int		ft_div_assign(void *left_cmd, void *right_cmd, int64_t *res)
+int				ft_div_assign(void *left_cmd, void *right_cmd, int64_t *res)
 {
 	char		*var_name;
 	int64_t		left;
@@ -73,7 +76,10 @@ int		ft_div_assign(void *left_cmd, void *right_cmd, int64_t *res)
 	&& ft_eval_ast(right_cmd, &right, MANDATORY_TOKEN) == CONV_SUCCESS)
 	{
 		if (!right)
-			return (CONV_FAIL); //div par zero
+		{
+			psherror(e_division_zero, g_exptok, e_maths_type);
+			return (CONV_FAIL);
+		}
 		var_name = ((t_maths_ast*)left_cmd)->tokens->content->token;
 		*res = left / right;
 		setshvar(var_name, left / right);
@@ -82,7 +88,7 @@ int		ft_div_assign(void *left_cmd, void *right_cmd, int64_t *res)
 	return (CONV_FAIL);
 }
 
-int		ft_mod_assign(void *left_cmd, void *right_cmd, int64_t *res)
+int				ft_mod_assign(void *left_cmd, void *right_cmd, int64_t *res)
 {
 	char		*var_name;
 	int64_t		left;
@@ -92,7 +98,10 @@ int		ft_mod_assign(void *left_cmd, void *right_cmd, int64_t *res)
 	&& ft_eval_ast(right_cmd, &right, MANDATORY_TOKEN) == CONV_SUCCESS)
 	{
 		if (!right)
-			return (CONV_FAIL); //div par zero
+		{
+			psherror(e_division_zero, g_exptok, e_maths_type);
+			return (CONV_FAIL);
+		}
 		var_name = ((t_maths_ast*)left_cmd)->tokens->content->token;
 		*res = left % right;
 		setshvar(var_name, left % right);

@@ -6,12 +6,15 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 13:30:02 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/08 17:11:30 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/15 15:40:54 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "maths_interne.h"
+#include "error.h"
+
+extern char		*g_exptok;
 
 static int64_t	ft_atoi64_base(char *nbr, const char *base)
 {
@@ -52,7 +55,7 @@ int				ft_int64_convert(int64_t *value, char *expr, char *base)
 		base = ft_get_base(&expr);
 	if (!(ft_isnumber_base(expr, base)))
 	{
-//		print_error("value too great for base");
+		psherror(e_base_error, g_exptok, e_maths_type);
 		return (CONV_FAIL);
 	}
 	*value = ft_atoi64_base(expr, base);

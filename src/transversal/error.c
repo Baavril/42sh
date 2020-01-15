@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:56:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/15 13:49:51 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/15 15:29:26 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,28 +49,18 @@ const struct s_error_desc	g_errordesc[] =
 void	psherror(int e_error, char *str, int e_message_type)
 {
 	if (e_message_type == e_parsing_type)
-	{
 		ft_dprintf(STDERR_FILENO, "%s: %s \'%s\'.\n", \
 				g_progname, g_errordesc[e_error].message, str);
-	}
 	else if (e_message_type == e_cmd_type)
-	{
 		ft_dprintf(STDERR_FILENO, "%s: %s: %s.\n", \
 				g_progname, str, g_errordesc[e_error].message);
-	}
 	else if (e_message_type == e_invalid_type)
-	{
 		ft_dprintf(STDERR_FILENO, "%s: %s.\n", \
 				g_progname, g_errordesc[e_error].message);
-	}
 	else if (e_message_type == e_builtin_type)
-	{
 		ft_dprintf(STDERR_FILENO, "%s: %s: %s.\n", \
 				g_progname, str, g_errordesc[e_error].message);
-	}
 	else if (e_message_type == e_maths_type)
-	{
 		ft_dprintf(STDERR_FILENO, "%s: %s: %s.\n", \
 				g_progname, str, g_errordesc[e_error].message);
-	}
 }

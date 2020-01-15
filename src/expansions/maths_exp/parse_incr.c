@@ -6,12 +6,15 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 09:16:12 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/10/13 09:29:19 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/15 15:40:01 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "maths_interne.h"
+#include "error.h"
+
+extern char		*g_exptok;
 
 static void		ft_unary_split(t_maths_list *list)
 {
@@ -57,7 +60,10 @@ int				ft_parse_incr(t_maths_list *list)
 		if (voyager->content->prio == INCR_PRIO && (tmp->content->prio))
 		{
 			if (!(tmp = voyager->next))
-				return (CONV_FAIL); // error missing operand
+			{
+				psherror(e_missing_operand, g_exptok, e_maths_type);
+				return (CONV_FAIL);
+			}
 			if ((tmp->content->prio))
 				ft_unary_split(voyager);
 		}

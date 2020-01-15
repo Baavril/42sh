@@ -6,11 +6,14 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:47:32 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/13 21:01:58 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/15 15:35:25 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "maths_interne.h"
+#include "error.h"
+
+extern char		*g_exptok;
 
 int				ft_mul(void *left_cmd, void *right_cmd, int64_t *res)
 {
@@ -36,7 +39,7 @@ int				ft_exp(void *left_cmd, void *right_cmd, int64_t *res)
 	{
 		if (right < 0)
 		{
-//print_error(exponent less than 0);
+			psherror(e_neg_exp, g_exptok, e_maths_type);
 			return (CONV_FAIL);
 		}
 		if (left == 0)
@@ -63,7 +66,7 @@ int				ft_div(void *left_cmd, void *right_cmd, int64_t *res)
 			*res = left / right;
 			return (CONV_SUCCESS);
 		}
-		//print_error("div by zero");
+		psherror(e_division_zero, g_exptok, e_maths_type);
 	}
 	return (CONV_FAIL);
 }
@@ -81,7 +84,7 @@ int				ft_mod(void *left_cmd, void *right_cmd, int64_t *res)
 			*res = left / right;
 			return (CONV_SUCCESS);
 		}
-		//print_error("div by zero");
+		psherror(e_division_zero, g_exptok, e_maths_type);
 	}
 	return (CONV_FAIL);
 }

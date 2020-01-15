@@ -6,12 +6,14 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 14:48:38 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/13 21:01:28 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/15 15:41:16 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "maths_interne.h"
 #include "expansions.h"
+
+char		*g_exptok = NULL;
 
 size_t		maths_len(char *token)
 {
@@ -39,10 +41,7 @@ int			ft_maths_expansion(char *to_expand, char **expansion)
 	int64_t			res;
 
 	if ((par = ft_parentheses_nbr(to_expand)) < 0)
-	{
-//		print_error(PARENTHES_NBR || BRACKET_NBR);
 		return (ERROR);
-	}
 	while (par > 0)
 	{
 		if (!(to_expand = ft_eval_inner_parentheses(to_expand)))
@@ -58,18 +57,17 @@ int			ft_maths_expansion(char *to_expand, char **expansion)
 int			maths_exp(char **token)
 {
 	size_t	end;
-	char	*to_expand;
 	char	*expansion;
 
 	expansion = NULL;
 	end = maths_len(*token);
-	to_expand = ft_strndup(*token + 3, end - 3);
-	if (ft_maths_expansion(to_expand, &expansion) == ERROR)
+	g_exptok = ft_strndup(*token + 3, end - 3);
+	if (ft_maths_expansion(g_exptok, &expansion) == ERROR)
 	{
-		free(to_expand);
+		ft_strdel(&g_exptok);
 		return (ERROR);
 	}
-	free(to_expand);
+	ft_strdel(&g_exptok);
 	free(*token);
 	*token = expansion;
 	return (SUCCESS);
