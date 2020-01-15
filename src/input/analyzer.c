@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 13:04:47 by baavril           #+#    #+#             */
-/*   Updated: 2019/11/19 13:11:14 by baavril          ###   ########.fr       */
+/*   Updated: 2020/01/15 12:42:48 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	update_buff(char **buff, t_cursor *cursor)
 
 int	set_reader(union u_tc *term, char **buff, t_cursor *cursor)
 {
-	(void)term;
 	if (cursor->ctrl_r)
 	{
 		ft_strdel(&(cursor->prompt));
@@ -106,6 +105,7 @@ int	get_stdin(t_cursor *cursor, char **buff)
 		return (1);
 	inside_history = NULL;
 	*buff = ft_strdup("");
+	ft_bzero(term.buff, COUNT_KEY);
 	set_reader(&term, buff, cursor);
 	while (read(STDIN_FILENO, term.buff, COUNT_KEY))
 	{

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 17:59:39 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/14 16:03:19 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/15 12:56:24 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*ft_get_word(char **str)
 			if (!open_quotes && (ft_is_quote((*str)[i]) || ft_is_op_bracket(&(*str)[i])))
 			{
 				open_quotes ^= 1;
-				quote_type = (*str)[i];
+				quote_type = (*str)[i]; //Initialisation optionelle, cree des erreurs !
 				++i;
 				continue;
 			}
@@ -215,7 +215,7 @@ t_token	get_next_token(char *str)
 ** ------------------------------------------------------
 */
 
-char	**lexer(char **input)
+char	**lexer_verbose(char **input)
 {
 	t_token	token;
 
@@ -232,6 +232,4 @@ char	**lexer(char **input)
 	}
 	ft_dprintf(2, "_______________________________________________\n");
 	return (input);
-/*	gnt(NULL);
-this should be a link between parser and lexer calling back and forth*/
 }
