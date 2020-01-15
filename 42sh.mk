@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/01/15 12:24:40 by bprunevi         ###   ########.fr        #
+#    Updated: 2020/01/15 13:55:25 by bprunevi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -149,7 +149,7 @@ SOURCES			:=		main.c \
 						transversal/hash/init_htable.c \
 						transversal/hash/string_routines.c \
 						transversal/shell_variables/shell_variables.c \
-						LL_parser/debug_gnt.c \
+						LL_parser/gnt.c \
 						LL_parser/io_redirect.c \
 						LL_parser/is_potential.c \
 						LL_parser/parser.c \
