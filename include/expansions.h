@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/08 18:23:48 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/15 16:36:15 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define BSLASH '\\'
 # define PERCENT '%'
 # define DQUOTES '"'
+# define SQUOTES '\''
 # define OP_BRACE '{'
 # define CL_BRACE '}'
 # define UNDERSCORE '_'
@@ -156,5 +157,5 @@ int get_deploy(char **match);
 char *ft_alpharange(char c, char x);
 char *ft_strneg(char *match);
 
-char			*ft_unset_quoted(char *tokens);
+char			*ft_unset_quoted(char *tokens, char c);
 #endif
