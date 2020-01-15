@@ -26,17 +26,41 @@ int		ft_is_quote(char c)
 	return (c == '\'' || c == '\"');
 }
 
-static int ft_is_op_bracket(char *c)
+static int ft_is_op_bracket(char c)
 {
-	if (c[0] == '$')
-		return (c[1] == '(' || c[1] == '{');
-	else
-		return (c[0] == '(');
+	return (c == '(' || c == '{');
 }
 
-static int ft_is_close_bracket(char c)
+static char val_quote_type(char *c)
 {
-	return (c == '}' || c == ')');
+	if (c[0] == '\'' || c[0] == '\"')
+		return (c[0]);
+	if (c[0] == '(')
+	{
+		if (c[1] == '(')
+			return (-1);
+		else
+			return (')');
+	}
+	if (c[0] == '{')
+	{
+		if (c[1] == '{')
+			return (-2);
+		else
+			return ('}');
+	}
+	return (-3);
+}
+
+static int check_close_bracket(char *str, char quote_type)
+{
+	if (quote_type == -1 && str[0] == ')' && str[1] == ')')
+		return (1);
+	if (quote_type == -2 && str[0] == '}' && str[1] == '}')
+		return (1);
+	if (str[0] == quote_type)
+		return (1);
+	return (0);
 }
 
 char		*advance(char *tmp, char **index)
@@ -63,29 +87,34 @@ char	*ft_get_word(char **str)
 
 	i = 0;
 	open_quotes = 0;
+	quote_type = -3;
 	while ((*str)[i])
 	{
-			if (!open_quotes && (ft_is_quote((*str)[i]) || ft_is_op_bracket(&(*str)[i])))
-			{
-				open_quotes ^= 1;
-				quote_type = (*str)[i]; //Initialisation optionelle, cree des erreurs !
-				++i;
-				continue;
-			}
-			if (!open_quotes && (ft_istoken(&(*str)[i]) || ft_isspace((*str)[i])))
-			{
-				break;
-			}
-			if ((*str)[i] != '{' && (*str)[i] != '(' && ((*str)[i] == quote_type || ft_is_close_bracket((*str)[i])))
-			{
-				++i;
-				open_quotes ^= 1;
-				continue;
-			}
-			if ((*str)[i] == '\\' &&
-				((open_quotes && quote_type != '\'') || !open_quotes))
-				++i;
+		if (!open_quotes && (ft_is_quote((*str)[i]) || ft_is_op_bracket((*str)[i])))
+		{
+			open_quotes ^= 1;
+			quote_type = val_quote_type(&(*str)[i]); //Initialisation optionelle, cree des erreurs !
 			++i;
+			if (quote_type == -1 || quote_type == -2)
+				i++;
+			continue;
+		}
+		if (!open_quotes && (ft_istoken(&(*str)[i]) || ft_isspace((*str)[i])))
+		{
+			break;
+		}
+		if (check_close_bracket(&(*str)[i], quote_type))
+		{
+			++i;
+			open_quotes ^= 1;
+			if (quote_type == -1 || quote_type == -2)
+				i++;
+			continue;
+		}
+		if ((*str)[i] == '\\' &&
+			((open_quotes && quote_type != '\'') || !open_quotes))
+			++i;
+		++i;
 	}
 	if (!(tmp = (char*)ft_memalloc(sizeof(char) * (i + 1))))
 		return (NULL);

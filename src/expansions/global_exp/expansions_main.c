@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/14 16:20:25 by baavril          ###   ########.fr       */
+/*   Updated: 2020/01/15 17:12:54 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,13 @@ static int	expansions_linker(t_expand *vars)
 static int	expansions_launcher(t_expand *vars)
 {
 	vars->j = 0;
-	if ((vars->nb = ft_back_slashed(vars->tokens)) >= 0)
+	if (((vars->nb = ft_back_slashed(vars->tokens)) >= 0)
+	&& !(ft_isin(SQUOTES, *vars->tokens) && ft_isin(DOLLAR, *vars->tokens)))
 	{
 		*(vars->tokens) = ft_set_slashed(vars->tokens);
-		*(vars->tokens) = ft_unset_quoted(*vars->tokens);
+		*(vars->tokens) = ft_isin(SQUOTES, *vars->tokens)
+		? ft_unset_quoted(*vars->tokens, SQUOTES)
+		: ft_unset_quoted(*vars->tokens, DQUOTES);
 		vars->type = identifier(*(vars->tokens));
 		vars->btw = ft_getbtw(*(vars->tokens), vars->type);
 		while (g_symexp[vars->j].expand)
@@ -103,7 +106,10 @@ static int	expansions_launcher(t_expand *vars)
 			*(vars->tokens) = ft_setbslash(*(vars->tokens), vars->nb);
 	}
 	else
+	{
 		*(vars->tokens) = ft_set_slashed(vars->tokens);
+		*(vars->tokens) = ft_unset_quoted(*vars->tokens, SQUOTES);
+	}
 	return (SUCCESS);
 }
 
