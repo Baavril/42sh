@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/01/15 13:55:25 by bprunevi         ###   ########.fr        #
+#    Updated: 2020/01/15 13:56:58 by bprunevi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,6 @@ SOURCES			:=		main.c \
 						expansions/maths_exp/assign_bitwise.c \
 						expansions/maths_exp/assign_op.c \
 						expansions/maths_exp/addition.c \
-						expansions/maths_exp/ast_tools.c \
 						expansions/maths_exp/bitwise.c \
 						expansions/maths_exp/bitwise_shifts.c \
 						expansions/maths_exp/comma.c \
@@ -183,7 +182,7 @@ TESTS_PATH := ./tools/
 
 TESTS_SCRIPT := launch_test.sh "launch from makefile"
 
-TEST := $(SH) $(TESTS_PATH)$(TESTS_SCRIPT)
+TEST := $(SH) $(TESTS_PATH) $(TESTS_SCRIPT)
 
 LDLIBS += -ltermcap $(PATH_LIB)libft.a
 
