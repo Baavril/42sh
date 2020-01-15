@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:56:23 by abarthel          #+#    #+#             */
-/*   Updated: 2019/11/06 14:51:49 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/01/15 13:49:51 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,17 @@ const struct s_error_desc	g_errordesc[] =
 	{ 126, "is a directory" },
 	{ 127, "command not found" },
 	{ 127, "no such file or directory" },
-	{ 128, "resource temporarily unavailable" }
+	{ 128, "resource temporarily unavailable" },
+	{ 1, "division by zero" },
+	{ 1, "attempted assignment to non-variable" },
+	{ 1, "operand expected" },
+	{ 1, "operator expected" },
+	{ 1, "two argumets to unary expression" },
+	{ 1, "value too great for base" },
+	{ 1, "invalid variable name" },
+	{ 1, "invalid number" },
+	{ 1, "invalid arithmetic base" },
+	{ 1, "exponent less than zero" }
 };
 
 void	psherror(int e_error, char *str, int e_message_type)
@@ -54,6 +64,11 @@ void	psherror(int e_error, char *str, int e_message_type)
 				g_progname, g_errordesc[e_error].message);
 	}
 	else if (e_message_type == e_builtin_type)
+	{
+		ft_dprintf(STDERR_FILENO, "%s: %s: %s.\n", \
+				g_progname, str, g_errordesc[e_error].message);
+	}
+	else if (e_message_type == e_maths_type)
 	{
 		ft_dprintf(STDERR_FILENO, "%s: %s: %s.\n", \
 				g_progname, str, g_errordesc[e_error].message);
