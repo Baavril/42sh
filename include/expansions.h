@@ -120,7 +120,7 @@ size_t			maths_len(char *token);
 char			*ft_starmatch(char *str, char *match, int flag);
 
 char			**ft_expsplit(char *str, char c);
-int				ft_setbslash(char **tokens, int nb);
+char			*ft_setbslash(char *tokens, int nb);
 int				ft_back_slashed(char **tokens);
 char			*ft_set_slashed(char **tokens);
 char			*ft_getbtw(char *tokens, int type);
@@ -156,4 +156,5 @@ int get_deploy(char **match);
 char *ft_alpharange(char c, char x);
 char *ft_strneg(char *match);
 
+char			*ft_unset_quoted(char *tokens);
 #endif

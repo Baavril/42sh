@@ -81,22 +81,58 @@ static char	*deploy(char *match)
 	return (var.keep);
 }
 
-int		get_deploy(char **match)
+static int	get_btw_square(char **match)
 {
+	int		i;
 	char	*tmp;
 
+	i = 0;
+	tmp = NULL;
+	if (*match[i] == CL_SQUAR)
+	{
+		free(*match);
+		if (!(*match = ft_strdup(EMPTY_STR)))
+			return (0);
+		return (SUCCESS);
+	}
+	if (!(tmp = (char*)ft_memalloc(sizeof(char) * (ft_strlen(*match)))))
+		return (0);
+	while ((*match)[i] && (*match)[i] != CL_SQUAR)
+	{
+		tmp[i] = (*match)[i];
+		i++;
+	}
+	tmp[i + 1] = '\0';
+	free(*match);
+	*match = tmp;
+	return (SUCCESS);
+}
+
+int		get_deploy(char **match)
+{
+	int		flag;
+	char	*tmp;
+
+	flag = 0;
 	tmp = NULL;
 	if (ft_isin(DASH, *match))
 	{
 		tmp = *match;
 		*match = deploy(tmp);
 		ft_strdel(&tmp);
+		flag += 1;
 	}
 	if (ft_isin(EXCLAM, *match) || ft_isin(CARET, *match))
 	{
 		tmp = *match;
 		*match = ft_strneg(tmp);
 		ft_strdel(&tmp);
+		flag += 1;
+	}
+	if (flag == 0)
+	{
+		ft_printf("OK\n");
+		get_btw_square(match);
 	}
 	return (SUCCESS);
 }

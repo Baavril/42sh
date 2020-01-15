@@ -52,11 +52,12 @@ static int	expansions_linker(t_expand *vars)
 {
 	if (*(vars->tokens))
 	{
-		vars->ptm = vars->tmp;
-		if (vars->ptm == NULL)
+		if (vars->tmp == NULL)
 			vars->tmp = ft_strdup(*(vars->tokens));
 		else
 		{
+			vars->ptm = ft_strdup(vars->tmp);
+			ft_strdel(&(vars->tmp));
 			vars->tmp = ft_strjoin(vars->ptm, *(vars->tokens));
 			ft_strdel(&(vars->ptm));
 		}
@@ -67,10 +68,16 @@ static int	expansions_linker(t_expand *vars)
 			ft_strdel(&vars->btw);
 		else
 		{
-			vars->ptm = vars->tmp;
-			vars->tmp = (vars->ptm == NULL) ? ft_strdup(vars->btw)
-			: ft_strjoin(vars->ptm, vars->btw);
-			ft_strdel(&vars->btw);
+			if (vars->tmp == NULL)
+				vars->tmp = vars->btw;
+			else
+			{
+				vars->ptm = ft_strdup(vars->tmp);
+				ft_strdel(&(vars->tmp));
+				vars->tmp = ft_strjoin(vars->ptm, vars->btw);
+				ft_strdel(&(vars->ptm));
+				ft_strdel(&vars->btw);
+			}
 		}
 	}
 	return (SUCCESS);
@@ -81,9 +88,8 @@ static int	expansions_launcher(t_expand *vars)
 	vars->j = 0;
 	if ((vars->nb = ft_back_slashed(vars->tokens)) >= 0)
 	{
-		vars->keep = *(vars->tokens);
-		*(vars->tokens) = ft_set_slashed(&vars->keep);
-		ft_strdel(&vars->keep);
+		*(vars->tokens) = ft_set_slashed(vars->tokens);
+		*(vars->tokens) = ft_unset_quoted(*vars->tokens);
 		vars->type = identifier(*(vars->tokens));
 		vars->btw = ft_getbtw(*(vars->tokens), vars->type);
 		while (g_symexp[vars->j].expand)
@@ -94,8 +100,10 @@ static int	expansions_launcher(t_expand *vars)
 			vars->j++;
 		}
 		if (vars->nb > 0)
-			ft_setbslash(vars->tokens, vars->nb);
+			*(vars->tokens) = ft_setbslash(*(vars->tokens), vars->nb);
 	}
+	else
+		*(vars->tokens) = ft_set_slashed(vars->tokens);
 	return (SUCCESS);
 }
 
@@ -115,7 +123,6 @@ static char	*expansions_management(char **splitok)
 		expansions_linker(&vars);
 		vars.tokens++;
 	}
-	ft_tabdel(&splitok);
 	return (vars.tmp);
 }
 
@@ -125,7 +132,8 @@ int		expansions_treatment(char **tokens)
 
 	if (!(splitok = ft_expsplit(*tokens, DOLLAR)))
 		return (ERROR);
-	free(*tokens);
+	ft_strdel(tokens);
 	*tokens = expansions_management(splitok);
+	ft_tabdel(&splitok);
 	return (SUCCESS);
 }

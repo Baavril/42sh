@@ -29,11 +29,11 @@ static char	*ft_dupslash(char **tokens, int j, int i, int ret)
 		if (!ret)
 		{
 			tmp = ft_strdup((*tokens) + i);
-			ret = j;
 		}
 		else
 			tmp = ft_strdup((*tokens) + j + 1);
 	}
+	ft_strdel(tokens);
 	return (tmp);
 }
 
@@ -68,7 +68,9 @@ int			ft_back_slashed(char **tokens)
 	j = 0;
 	ret = 0;
 	while (*((*tokens) + i) && *((*tokens) + i) == BSLASH)
+	{
 		++i;
+	}
 	j = i;
 	if (j % 2)
 	{
@@ -76,25 +78,28 @@ int			ft_back_slashed(char **tokens)
 		ret = -1;
 	}
 	j /= 2;
+	if (!ret && i)
+		ret = j;
 	return (ret);
 }
 
-int			ft_setbslash(char **tokens, int nb)
+char		*ft_setbslash(char *tokens, int nb)
 {
 	int		i;
 	char	*tmp;
+	char	*keep;
 
 	i = 0;
+	keep = NULL;
 	if (!(tmp = (char*)ft_memalloc(sizeof(char) * (nb + 1))))
-		return (0);
+		return (NULL);
 	while (nb > 0)
 	{
 		*(tmp + i++) = BSLASH;
 		--nb;
 	}
-	tmp = ft_strjoin(tmp, *tokens);
-	free(*tokens);
-	*tokens = ft_strdup(tmp);
+	keep = ft_strjoin(tmp, tokens);
 	ft_strdel(&tmp);
-	return (SUCCESS);
+	ft_strdel(&tokens);
+	return (keep);
 }

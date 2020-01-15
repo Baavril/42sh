@@ -22,18 +22,18 @@
 int		exp_limit(char *tokens)
 {
 	int i;
-	int flag;
 
 	i = 0;
-	flag = 0;
+	if (*tokens == BSLASH)
+		i++;
+	++tokens;
 	while (*tokens)
 	{
-		if (flag && *tokens == BSLASH && *(tokens - 1) != BSLASH)
+		if (*tokens == BSLASH && *(tokens - 1) != BSLASH)
 			i++;
-		else if (flag && *tokens == DOLLAR && *(tokens - 1) != BSLASH)
+		else if (*tokens == DOLLAR && *(tokens - 1) != BSLASH)
 			i++;
 		++tokens;
-		++flag;
 	}
 	return (i);
 }
@@ -81,4 +81,4 @@ char **ft_expsplit(char *str, char c)
 		tab[i++] = malexps(str, &len, c);
 	tab[nb] = 0;
 	return (tab);
-}
+ }
