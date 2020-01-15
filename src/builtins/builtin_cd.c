@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/09/25 16:32:34 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/01/15 18:50:47 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 #include "path.h"
 
 extern char	g_pwd[];
+extern int	g_optind;
+extern int	g_opterr;
+extern int	g_optopt;
 
 static int	set_oldpwd(void)
 {

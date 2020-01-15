@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/12/14 18:40:45 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/15 18:52:03 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@
 #include "libft.h"
 #include "error.h"
 #include "job.h"
+
+extern int		g_optind;
+extern int		g_opterr;
+extern int		g_optopt;
 
 static int	set_envcpy(char *arg, char ***env_cpy, char *pequal)
 {

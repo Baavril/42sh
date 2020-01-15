@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/05 11:55:05 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/15 18:53:19 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@
 
 extern int		g_retval;
 struct s_svar	*g_svar;
+extern int		g_optind;
+extern int		g_opterr;
+extern int		g_optopt;
 
-static int	part_sep(int argc, char **argv)
+static int		part_sep(int argc, char **argv)
 {
 	extern char	**environ;
 	unsigned char	status;
@@ -44,7 +47,7 @@ static int	part_sep(int argc, char **argv)
 	return (1);
 }
 
-static int	numarg_exit(int argc, char **argv, int i)
+static int		numarg_exit(int argc, char **argv, int i)
 {
 	extern char	**environ;
 	unsigned char	status;
@@ -64,7 +67,7 @@ static int	numarg_exit(int argc, char **argv, int i)
 	exit(status);
 }
 
-static void	nomatter_exit(char **argv, int i)
+static void		nomatter_exit(char **argv, int i)
 {
 	extern char	**environ;
 	
@@ -78,7 +81,7 @@ static void	nomatter_exit(char **argv, int i)
 	exit(2);
 }
 
-static void	ft_free_internvars(void)
+static void		ft_free_internvars(void)
 {
 	struct s_svar *tmp;
 
@@ -93,7 +96,7 @@ static void	ft_free_internvars(void)
 	}
 }
 
-int		cmd_exit(int argc, char **argv)
+int				cmd_exit(int argc, char **argv)
 {
 	extern char	**environ;
 	unsigned char	status;
