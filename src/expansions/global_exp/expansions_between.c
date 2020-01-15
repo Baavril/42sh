@@ -65,6 +65,28 @@ char		*ft_quoted(char *tokens)
 	return (ft_btwquotes(tokens, c, d));
 }
 
+char		*ft_unset_quoted(char *tokens)
+{
+	int	c;
+	int	i;
+	char *tmp;
+
+	c = 0;
+	i = 0;
+	tmp = NULL;
+	if (ft_isin(DOLLAR, tokens))
+		return (tokens);
+	while (tokens[c] == DQUOTES)
+		++c;
+	while (tokens[i + c] && tokens[i + c] != DQUOTES)
+		++i;
+	tmp = ft_strdup(tokens);
+	ft_strdel(&tokens);
+	tokens = ft_strndup(&tmp[c], i);
+	ft_strdel(&tmp);
+	return (tokens);
+}
+
 char	*ft_getbtw(char *tokens, int type)
 {
 	if (type == MATHS_EXP)
@@ -89,7 +111,5 @@ char	*ft_getbtw(char *tokens, int type)
 	}
 	if (*tokens == CL_BRACE)
 		++tokens;
-	//if (*tokens == BSLASH)
-	//	tokens++;
 	return (ft_strdup(tokens));
 }

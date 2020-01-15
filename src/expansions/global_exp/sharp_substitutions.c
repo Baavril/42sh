@@ -18,15 +18,11 @@
 static int
 	check_sharp_var(char **token, char *word, struct s_svar *tmp, int flag)
 {
-	char *value;
-
-	value = NULL;
 	if (ft_strncmp(g_svar->key, *token + 2, ft_strlen(g_svar->key) - 1) == 0
 	&& check_next_var(g_svar->key, token, 1) == SUCCESS)
 	{
 		ft_strdel(token);
-		value = ft_strdup(g_svar->value);
-		*token = matching_ret(value, word, flag);
+		*token = matching_ret(g_svar->value, word, flag);
 		g_svar = tmp;
 		ft_strdel(&word);
 		return (SUCCESS);
