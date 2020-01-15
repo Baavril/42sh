@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:43:35 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/14 14:27:37 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/15 16:27:45 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	i_exec(t_elem left, t_elem right)
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
 	if (eval_command(g_argv))
-		exit(ft_dprintf(1, "unknown command : %s\n", g_argv));
+		exit(ft_dprintf(1, "unknown command : %s\n", *g_argv));
 	else
 		return (execve(g_argv[0], g_argv, environ));
 }
@@ -82,11 +82,7 @@ int	i_suffix_word(t_elem left, t_elem right)
 
 int	i_suffix_redirect(t_elem left, t_elem right)
 {
-	int i;
-	
-	i = left.v->f(left.v->left, left.v->right);
-	if (i != -1)
-		ft_printf("Open %d!\n", i);
+	left.v->f(left.v->left, left.v->right);
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
 	return (0);
