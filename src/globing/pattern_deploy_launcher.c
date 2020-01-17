@@ -51,10 +51,13 @@ static int	neg_deploy_case(char *ptm, char **str)
 static int	deploy_case(char *tmp, int *ret, char **str, int flag)
 {
 	int i;
+	int j;
 	char c;
 
 	i = 0;
 	c = 0;
+	j = 0;
+
 	while (tmp[i] && ft_strlen(*str) > 0)
 	{
 		if (tmp[i] == **str && flag == 1)
@@ -63,12 +66,25 @@ static int	deploy_case(char *tmp, int *ret, char **str, int flag)
 				c++;
 			return (c);
 		}
-		else if (tmp[i] == **str && flag >= 2)
+		else if (tmp[i] == **str && flag == 2)
 		{
 			(*str)++;
 			c = tmp[i];
 			i = -1;
 			(*ret)++;
+		}
+		else if (flag > 2)
+		{
+			j = 0;
+			while (str[0][j])
+			{
+				if (str[0][j] == tmp[i])
+				{
+					c = tmp[i];
+					return (c);
+				}
+				++j;
+			}
 		}
 		++i;
 	}

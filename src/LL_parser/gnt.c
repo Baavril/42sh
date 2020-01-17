@@ -37,10 +37,10 @@ static void		fill_stack(t_list **stack, char *input)
 
 	tmp1 = NULL;
 	tok = get_next_token(input);
-	if (tok.type == WORD && !ft_strcmp("*", tok.symbol))
+	if (tok.type == WORD)
 	{
 		tmp1 = ft_strsplit(tok.symbol, "/");
-		tmp2 = ft_globing(tmp1);
+		tmp2 = ft_globing(tmp1, tok.symbol);
 		ft_tabdel(&tmp1);
 		tmp1 = tmp2;
 		while (*tmp1)

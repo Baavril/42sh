@@ -41,7 +41,7 @@ char	*pattern_matching(char *str, char *match, int flag)
 		++var.j;
 	}
 	if (flag == 2 && !var.diff)
-		return(&str[var.i]);
+		return (&str[var.i]);
 	else if (flag == 1 && !var.diff)
 		return ((var.n != 0) ? &str[var.n] : str);
 	else if (flag == 3)
