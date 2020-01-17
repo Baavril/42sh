@@ -116,11 +116,9 @@ static int	expansions_launcher(t_expand *vars)
 static char	*expansions_management(char **splitok)
 {
 	t_expand	vars;
-	char		**tmpdel;
 
 	initexpvars(&vars);
-	vars.tokens = ft_tabcpy(splitok);
-	tmpdel = vars.tokens;
+	vars.tokens = splitok;
 	while (*(vars.tokens))
 	{
 		if (expansions_launcher(&vars) == ERROR)
@@ -131,7 +129,7 @@ static char	*expansions_management(char **splitok)
 		expansions_linker(&vars);
 		vars.tokens++;
 	}
-	ft_tabdel(&tmpdel);
+	ft_tabdel(&splitok);
 	return (vars.tmp);
 }
 
@@ -143,6 +141,5 @@ int		expansions_treatment(char **tokens)
 		return (ERROR);
 	ft_strdel(tokens);
 	*tokens = expansions_management(splitok);
-	ft_tabdel(&splitok);
 	return (SUCCESS);
 }
