@@ -46,7 +46,7 @@ char	*pattern_matching(char *str, char *match, int flag)
 		return ((var.n != 0) ? &str[var.n] : str);
 	else if (flag == 3)
 		return ((((int)ft_strlen(str) != var.i)
-		|| var.diff) ? ft_strdup(EMPTY_STR) : str);
+		|| var.diff) ? EMPTY_STR : str);
 	return (str);
 }
 

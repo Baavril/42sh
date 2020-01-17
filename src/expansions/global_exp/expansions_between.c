@@ -123,7 +123,7 @@ char		*ft_unset_quoted(char *tokens, char c)
 		ft_strdel(&tokens);
 		tokens = ptm;
 	}
-	return (tokens);
+	return (ft_strdup(tokens));
 }
 
 char	*ft_getbtw(char *tokens, int type)

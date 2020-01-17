@@ -22,7 +22,7 @@ static int
 	&& check_next_var(g_svar->key, token, 1) == SUCCESS)
 	{
 		ft_strdel(token);
-		*token = matching_ret(g_svar->value, word, flag);
+		*token = ft_strdup(matching_ret(g_svar->value, word, flag));
 		g_svar = tmp;
 		ft_strdel(&word);
 		return (SUCCESS);

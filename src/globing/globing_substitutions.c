@@ -68,6 +68,7 @@ char	**ft_globing(char **split, char *token)
 	j = 0;
 	n = 0;
 	d = 0;
+	tmp = NULL;
 	filedata = NULL;
 	if (!(dir = (char **)malloc(sizeof(char *) * 8192)))
 		return (NULL);
@@ -82,7 +83,7 @@ char	**ft_globing(char **split, char *token)
 				{
 					if (*(filedata->d_name) != '.')
 					{
-						dir[j] = pattern_matching(filedata->d_name, split[i], 3);
+						dir[j] = ft_strdup(pattern_matching(filedata->d_name, split[i], 3));
 						if (!*(dir[j]))
 							free(dir[j]);
 						else
@@ -98,6 +99,8 @@ char	**ft_globing(char **split, char *token)
 		{
 			j = 0;
 			x = 0;
+			if (tmp && *tmp)
+				ft_tabdel(&tmp);
 			tmp = ft_tabcpy(dir);
 			while (tmp[j])
 			{
@@ -134,6 +137,8 @@ char	**ft_globing(char **split, char *token)
 		}
 		ptm[n] = 0;
 		sort_ascii_tab(ptm);
+		ft_tabdel(&dir);
+		closedir(dirhandle);
 		return (ptm);
 	}
 	else
@@ -142,6 +147,8 @@ char	**ft_globing(char **split, char *token)
 		ptm[0] = ft_strdup(token);
 		ptm[1] = 0;
 	}
+	closedir(dirhandle);
+	ft_tabdel(&dir);
 	return (ptm);
 }
 

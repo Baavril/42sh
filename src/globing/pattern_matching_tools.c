@@ -89,12 +89,14 @@ char		*ft_strneg(char *match)
 {
 	int		j;
 	int		c;
+	char	*tmp;
 	char	*strneg;
 	char	*strpos;
 
 	j = 0;
 	c = 32;
 	strpos = ft_struchr(match, ft_strlen(match));
+	tmp = strpos;
 	if (!(strneg = (char*)ft_memalloc(sizeof(char) * MAXCHR)))
 		return (NULL);
 	while (*strpos && c < 127)
@@ -109,5 +111,6 @@ char		*ft_strneg(char *match)
 	}
 	while (c < 127)
 		strneg[j++] = c++;
+	ft_strdel(&tmp);
 	return (strneg);
 }

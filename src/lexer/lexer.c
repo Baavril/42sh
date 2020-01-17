@@ -249,16 +249,16 @@ char	**lexer_verbose(char **input)
 	t_token	token;
 
 	token = get_next_token(*input);
-	ft_dprintf(2, "_______________________________________________\n");
+/*	ft_dprintf(2, "_______________________________________________\n");
 	ft_dprintf(2, "token.symbol : %s\n", token.symbol);
-	ft_dprintf(2, "token.type : %d = %s\n", token.type, get_token_symbol(token.type));
+	ft_dprintf(2, "token.type : %d = %s\n", token.type, get_token_symbol(token.type));*/
 	while (token.type != E_EOF && token.type != E_ERROR)
 	{
 		token = get_next_token(NULL);
-		ft_dprintf(2, "_______________________________________________\n");
+/*		ft_dprintf(2, "_______________________________________________\n");
 		ft_dprintf(2, "token.symbol : %s\n", token.symbol);
-		ft_dprintf(2, "token.type : %d = %s\n", token.type, get_token_symbol(token.type));
+		ft_dprintf(2, "token.type : %d = %s\n", token.type, get_token_symbol(token.type));*/
 	}
-	ft_dprintf(2, "_______________________________________________\n");
+//	ft_dprintf(2, "_______________________________________________\n");
 	return (input);
 }
