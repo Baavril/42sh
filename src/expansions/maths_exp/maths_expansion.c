@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 14:48:38 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/18 20:10:42 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/18 20:38:19 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,18 @@ int			ft_maths_expansion(char *to_expand, char **expansion)
 	while (par > 0)
 	{
 		if (!(to_expand = ft_eval_inner_parentheses(to_expand)))
+		{
+			ft_strdel(&to_expand);
 			return (ERROR);
+		}
 		par--;
 	}
 	if (ft_eval(to_expand, &res) == CONV_FAIL)
+	{
+		ft_strdel(&to_expand);
 		return (ERROR);
+	}
+	ft_strdel(&to_expand);
 	*expansion = ft_itoa64(res);
 	return (SUCCESS);
 }
@@ -63,7 +70,7 @@ int			maths_exp(char **token)
 	expansion = NULL;
 	end = maths_len(*token);
 	g_exptok = ft_strndup(*token + 3, end - 3);
-	if (ft_maths_expansion(g_exptok, &expansion) == ERROR)
+	if (ft_maths_expansion(ft_strdup(g_exptok), &expansion) == ERROR)
 	{
 		ft_strdel(&g_exptok);
 		return (ERROR);
