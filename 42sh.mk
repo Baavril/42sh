@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/01/15 15:06:55 by baavril          ###   ########.fr        #
+#    Updated: 2020/01/18 12:17:21 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -113,9 +113,10 @@ SOURCES			:=		main.c \
 						builtins/builtin_unsetenv.c \
 						builtins/builtin_truefalse.c \
 						builtins/builtin_fc.c \
-						builtins/builtin_fg.c \
-						builtins/builtin_bg.c \
-						builtins/builtin_jobs.c \
+						builtins/builtin_jcont/cmd_bg.c \
+						builtins/builtin_jcont/cmd_fg.c \
+						builtins/builtin_jcont/cmd_jobs.c \
+						builtins/builtin_jcont/resume_job.c \
 						builtins/builtin_test/test_free.c \
 						builtins/builtin_test/test_tools.c \
 						builtins/builtin_test/test_dispatchers.c \

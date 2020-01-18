@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:18:20 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/18 11:08:17 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/18 11:41:38 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ void				ft_save_term_fd(int std_redir[3], int save_fd[3]);
 void				ft_stdredir(int std_fd[3]);
 
 int					ft_resume_in_fg(t_job *job);
+int					ft_resume_in_bg(t_job *job);
 
 #endif
