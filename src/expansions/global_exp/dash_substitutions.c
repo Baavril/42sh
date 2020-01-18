@@ -32,7 +32,6 @@ static int		check_dash_var(char **token, char *word, struct s_svar *tmp)
 				return (ERROR);
 		}
 		g_svar = tmp;
-		ft_strdel(&word);
 		return (SUCCESS);
 	}
 	return (ERROR);
@@ -45,13 +44,17 @@ int				dash_exp(char **token)
 	struct s_svar	*tmp;
 
 	tmp = g_svar;
-	word = ft_strcdup(ft_strchr(*token, DASH) + 1, CL_BRACE);
 	if (!(var = ft_strcdup(*token + 2, COLON)))
 		return (ERROR);
+	word = ft_strcdup(ft_strchr(*token, DASH) + 1, CL_BRACE);
 	while (g_svar)
 	{
 		if (check_dash_var(token, word, tmp) == SUCCESS)
+		{
+			ft_strdel(&var);
+			ft_strdel(&word);
 			return (SUCCESS);
+		}
 		g_svar = g_svar->next;
 	}
 	ft_strdel(token);
@@ -59,5 +62,6 @@ int				dash_exp(char **token)
 		return (ERROR);
 	g_svar = tmp;
 	ft_strdel(&word);
+	ft_strdel(&var);
 	return (SUCCESS);
 }

@@ -124,6 +124,9 @@ static char	*expansions_management(char **splitok)
 		if (expansions_launcher(&vars) == ERROR)
 		{
 			ft_printf("42sh: %s: bad substitution\n", *vars.tokens);
+			ft_tabdel(&splitok);
+			ft_strdel(&vars.btw);
+			ft_strdel(&vars.tmp);
 			return (NULL);
 		}
 		expansions_linker(&vars);
