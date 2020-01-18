@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/18 14:51:18 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/18 14:59:18 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@
 #include "error.h"
 #include "jcont.h"
 
-extern char		**environ;
 extern int		g_retval;
 struct s_svar	*g_svar;
 
 static int		ft_clean_exit(char **av, int exit_status)
 {
-	struct s_svar *tmp;
+	struct s_svar	*tmp;
+	extern char		**environ;
 
 	if (ft_free_jcont())
 	{
@@ -47,7 +47,7 @@ static int		ft_clean_exit(char **av, int exit_status)
 	history(DELETE, NULL, NULL);
 	ft_free_bintable();
 	set_termcaps(TC_RESTORE);
-	//system("leaks 42sh");
+	system("leaks 42sh");
 	exit(exit_status);
 }
 
@@ -60,7 +60,7 @@ int				cmd_exit(int ac, char **av)
 	ft_dprintf(STDERR_FILENO, "exit\n");
 	if (ac > 1)
 	{
-		i = (!ft_strcmp("--", av[1]) && ac > 2) ? 1 : 2;
+		i = (!ft_strcmp("--", av[1]) && ac > 2) ? 2 : 1;
 		if (ft_isnumber(av[i]))
 		{
 			if (av[i + 1])
