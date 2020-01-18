@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 14:35:39 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/11/20 15:01:27 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/18 20:56:53 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,12 @@
 # define RIGHT				0
 
 typedef int				(t_ft_maths)(void *, void *, int64_t *);
+
+typedef struct			s_set_var
+{
+	char				*var_name;
+	int64_t				value;
+}						t_set_var;
 
 typedef struct			s_maths_op
 {

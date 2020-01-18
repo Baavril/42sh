@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 14:48:38 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/18 20:38:19 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/18 20:58:43 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "expansions.h"
 
 char		*g_exptok = NULL;
-//t_list		*g_post_incr = NULL;
+t_list		*g_post_incr = NULL;
 
 size_t		maths_len(char *token)
 {
@@ -76,7 +76,7 @@ int			maths_exp(char **token)
 		return (ERROR);
 	}
 	ft_strdel(&g_exptok);
-//	ft_lstdel(&g_post_incr, &ft_incr_and_pop)
+	ft_lstdel(&g_post_incr, &ft_set_and_pop);
 	free(*token);
 	*token = expansion;
 	return (SUCCESS);

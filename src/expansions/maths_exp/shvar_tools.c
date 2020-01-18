@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:43:12 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/08 18:19:18 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/18 21:05:11 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,5 @@ void					setshvar(char *var_name, int64_t value)
 	assig_word[name_len + 1 + val_len] = '\0';
 	if (checkvarlst(assig_word))
 		listadd_back(newnodshell(assig_word, 0));
+	ft_strdel(&assig_word);
 }
