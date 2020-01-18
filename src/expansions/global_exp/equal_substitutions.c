@@ -39,6 +39,7 @@ static int
 		}
 		g_svar = tmp;
 		ft_strdel(&word);
+		ft_strdel(&nod);
 		return (SUCCESS);
 	}
 	return (ERROR);
@@ -67,5 +68,6 @@ int
 	ft_strdel(&word);
 	g_svar = tmp;
 	listadd_back(newnodshell(nod, 0));
+	ft_strdel(&nod);
 	return (SUCCESS);
 }
