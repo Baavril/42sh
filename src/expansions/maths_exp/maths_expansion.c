@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "maths_interne.h"
+#include "maths_expansion.h"
 #include "expansions.h"
 
 char		*g_exptok = NULL;

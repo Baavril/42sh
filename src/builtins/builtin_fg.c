@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 11:17:51 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/13 22:20:24 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/18 11:05:41 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int					cmd_fg(int ac, char **av)
 			ft_dprintf(STDERR_FILENO, "%s: fg: no current job.\n", g_progname);
 		else if ((job = ft_get_job_nbr(g_jcont.active_jobs[0])))
 		{
-			if ((ISBACKGROUND(job->status) && ISRUNNING(job->status))
+			if (((job->status & BACKGROUND) && (job->status & RUNNING))
 			|| WIFSTOPPED(job->status))
 				ret = ft_resume_in_fg(job);
 			else if (WIFEXITED(job->status) && (++ret))
@@ -85,7 +85,7 @@ int					cmd_fg(int ac, char **av)
 	}
 	else if (ft_isnumber(av[1]) && (job = ft_get_job_nbr(ft_atoi(av[1]))))
 	{
-		if (WIFSTOPPED(job->status) || ISBACKGROUND(job->status))
+		if (WIFSTOPPED(job->status) || (job->status & BACKGROUND))
 			ret = ft_resume_in_fg(job);
 		else if (WIFEXITED(job->status) && (++ret))
 			ft_dprintf(STDERR_FILENO, "%s: fg: job has terminated.\n", g_progname);

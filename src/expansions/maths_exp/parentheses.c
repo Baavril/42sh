@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "maths_interne.h"
+#include "maths_expansion.h"
 
 int			ft_find_inner_expr(char *expr, size_t *inner_par, size_t *end_par)
 {

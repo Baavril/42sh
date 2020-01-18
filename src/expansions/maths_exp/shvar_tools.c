@@ -12,7 +12,7 @@
 
 #include <stdlib.h>
 #include "shell_variables.h"
-#include "maths_interne.h"
+#include "maths_expansion.h"
 #include "libft.h"
 
 //extern struct s_svar	*g_svar;

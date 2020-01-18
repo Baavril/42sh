@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "maths_interne.h"
+#include "maths_expansion.h"
 #include "error.h"
 
 extern char		*g_exptok;

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "maths_interne.h"
+#include "maths_expansion.h"
 
 static size_t	ft_arg_len(char *word)
 {

@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 10:57:05 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/18 15:24:48 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/18 11:07:02 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int					cmd_bg(int ac, char **av)
 			ft_dprintf(STDERR_FILENO, "%s: bg: no current job.\n", g_progname);
 		else if ((job = ft_get_job_nbr(g_jcont.active_jobs[0])))
 		{
-			if (ISBACKGROUND(job->status) && ISRUNNING(job->status))
+			if ((job->status & BACKGROUND) && (job->status & RUNNING))
 				ft_dprintf(STDERR_FILENO, "%s: bg: job %i is already in background.\n", g_progname, g_jcont.active_jobs[0]);
 			else if (!WIFSTOPPED(job->status) && (++ret))
 				ft_dprintf(STDERR_FILENO, "%s: bg: job has terminated.\n", g_progname);
@@ -62,7 +62,7 @@ int					cmd_bg(int ac, char **av)
 		{
 			if (WIFSTOPPED(job->status))
 				ret += ft_resume_in_bg(job);
-			else if (ISBACKGROUND(job->status) && ISRUNNING(job->status))
+			else if ((job->status & BACKGROUND) && (job->status & RUNNING))
 				ft_dprintf(STDERR_FILENO, "%s: bg: job %s is already in background.\n", g_progname, av[1]);
 			else if (++ret)
 				ft_dprintf(STDERR_FILENO, "%s: bg: job has terminated.\n", g_progname);

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "maths_interne.h"
+#include "maths_expansion.h"
 
 t_maths_token	*ft_init_maths_token(char *word, size_t token_len, char flag)
 {

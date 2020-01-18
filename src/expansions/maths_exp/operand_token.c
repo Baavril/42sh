@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "shell_variables.h"
-#include "maths_interne.h"
+#include "maths_expansion.h"
 #include "expansions.h"
 #include "error.h"
 #include "libft.h"

@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:56:52 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/02 19:45:03 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/18 10:59:08 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,10 @@ int			ft_launch_job(char *cmd, int status)
 
 	if (!(g_curjob.process))
 		return (0);
-//	ft_dprintf(2, "\n\n>>>> LAUNCH JOB <<<<\n");
 	job = ft_add_job(status, cmd); //may fail due to malloc
-	if (ISBACKGROUND(status))
+	if (status & BACKGROUND)
 		return (0);
 	ret_status = ft_wait_foreground(job);
-//	ft_dprintf(2, "END of WAIT\n");
 	if (!WIFSTOPPED(job->status))
 		ft_pop_job(job->nbr);
 	return (ret_status);

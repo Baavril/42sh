@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "maths_interne.h"
+#include "maths_expansion.h"
 #include "libft.h"
 
 int		ft_eval_ast(t_maths_ast *ast, int64_t *res, char flag)

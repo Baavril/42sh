@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   maths_interne.h                                    :+:      :+:    :+:   */
+/*   maths_expansion.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 15:01:05 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/08 14:04:10 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/18 11:26:09 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MATHS_INTERNE_H
-# define MATHS_INTERNE_H
+#ifndef MATHS_EXPANSION_H
+# define MATHS_EXPANSION_H
 
 # include "maths_def.h"
 
@@ -36,7 +36,7 @@ char			*ft_itoa64(int64_t nb);
 int				ft_build_ast(t_maths_ast *ast, int flag);
 int				ft_eval_ast(t_maths_ast *ast, int64_t *res, char flag);
 t_maths_ast		*ft_new_mathast_node(t_maths_list *tokens);
-int				eval_expression(t_maths_ast *, int64_t *);
+int				eval_expression(t_maths_ast *ast, int64_t *res);
 size_t			ft_ast_depth(const t_maths_ast *ast);
 int				ft_maths_parser(t_maths_list *list);
 int				ft_parse_incr(t_maths_list *list);

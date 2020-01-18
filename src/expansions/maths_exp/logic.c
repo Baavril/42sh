@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "maths_interne.h"
+#include "maths_expansion.h"
 
 int				ft_logic_neg(void *left_cmd, void *right_cmd, int64_t *res)
 {
