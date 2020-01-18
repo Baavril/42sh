@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/01/18 12:17:21 by tgouedar         ###   ########.fr        #
+#    Updated: 2020/01/18 12:41:11 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -104,13 +104,10 @@ SOURCES			:=		main.c \
 						builtins/builtin_cd.c \
 						builtins/builtin_echo.c \
 						builtins/builtin_type.c \
-						builtins/builtin_env.c \
 						builtins/builtin_exit.c \
 						builtins/builtin_pwd.c \
 						builtins/builtin_hash.c \
 						builtins/builtin_history.c \
-						builtins/builtin_setenv.c \
-						builtins/builtin_unsetenv.c \
 						builtins/builtin_truefalse.c \
 						builtins/builtin_fc.c \
 						builtins/builtin_jcont/cmd_bg.c \
@@ -131,7 +128,6 @@ SOURCES			:=		main.c \
 						builtins/builtin_test/test_precedence_mgt1.c \
 						builtins/builtin_test/test_precedence_mgt2.c \
 						builtins/builtins_dispatcher.c \
-						builtins/ft_putenv_table.c \
 						transversal/hash/bash_routines.c \
 						transversal/hash/corps_fini_tools.c \
 						transversal/hash/random_tools.c \
