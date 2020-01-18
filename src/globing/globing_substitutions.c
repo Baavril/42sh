@@ -70,7 +70,7 @@ char	**ft_globing(char **split, char *token)
 	d = 0;
 	tmp = NULL;
 	filedata = NULL;
-	if (!(dir = (char **)malloc(sizeof(char *) * 8192)))
+	if (!(dir = (char **)ft_memalloc(sizeof(char *) * 8192)))
 		return (NULL);
 	while (split[i])
 	{
@@ -91,6 +91,7 @@ char	**ft_globing(char **split, char *token)
 					}
 				}
 				dir[j] = 0;
+				closedir(dirhandle);
 			}
 			if (!ft_tablen(dir))
 				d++;
@@ -99,8 +100,6 @@ char	**ft_globing(char **split, char *token)
 		{
 			j = 0;
 			x = 0;
-			if (tmp && *tmp)
-				ft_tabdel(&tmp);
 			tmp = ft_tabcpy(dir);
 			while (tmp[j])
 			{
@@ -117,6 +116,7 @@ char	**ft_globing(char **split, char *token)
 								++x;
 						}
 					}
+					closedir(dirhandle);
 				}
 				dir[x] = 0;
 				++j;
@@ -127,7 +127,7 @@ char	**ft_globing(char **split, char *token)
 		++i;
 	}
 	n = 0;
-	if (!d)
+	if (!d && split[i])
 	{
 		ptm = (char**)malloc(sizeof(char*) * (ft_tablen(dir) + 1));
 		while (dir[n])
@@ -138,7 +138,8 @@ char	**ft_globing(char **split, char *token)
 		ptm[n] = 0;
 		sort_ascii_tab(ptm);
 		ft_tabdel(&dir);
-		closedir(dirhandle);
+		if (tmp)
+			ft_tabdel(&tmp);
 		return (ptm);
 	}
 	else
@@ -147,8 +148,9 @@ char	**ft_globing(char **split, char *token)
 		ptm[0] = ft_strdup(token);
 		ptm[1] = 0;
 	}
-	closedir(dirhandle);
 	ft_tabdel(&dir);
+	if (tmp)
+		ft_tabdel(&tmp);
 	return (ptm);
 }
 
