@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 15:51:16 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/15 17:42:35 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/18 20:09:08 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static int		ft_build_operation_nod(t_maths_ast *ast, t_maths_list *mid_op,
 	else
 		ast->left_cmd = ft_new_mathast_node(NULL);
 	mid_op->next = NULL;
+	ast->tokens = mid_op;
 	return (ft_build_ast(ast->left_cmd,
 				ft_get_flag(LEFT, mid_op->content->token)) == CONV_SUCCESS
 			&& ft_build_ast(ast->right_cmd,

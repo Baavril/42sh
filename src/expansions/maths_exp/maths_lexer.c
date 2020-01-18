@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 16:22:17 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/13 21:12:52 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/18 19:26:23 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,8 @@ void			ft_push_tokens(char *word, t_maths_list **token_list)
 {
 	size_t			i;
 	char			flag;
-	t_maths_token	*token;
+	t_maths_token	token;
 
-	token = NULL;
 	while (*word)
 	{
 		if (ft_isin(*word, OPERATOR))
@@ -43,7 +42,7 @@ void			ft_push_tokens(char *word, t_maths_list **token_list)
 		}
 		token = ft_init_maths_token(word, i, flag);
 		ft_lstadd_back((t_list**)token_list,
-				ft_lstnew(token, sizeof(t_maths_token)));
+				ft_lstnew(&token, sizeof(t_maths_token)));
 		word += i;
 	}
 	ft_putendl(NULL);
@@ -63,6 +62,6 @@ t_maths_list	*ft_maths_lexer(char *expr)
 		ft_push_tokens(words[i], &token_list);
 		i++;
 	}
-//	ft_tabfree(words);
+	ft_tabdel(&words);
 	return (token_list);
 }

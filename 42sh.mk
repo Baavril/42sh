@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/01/18 14:44:53 by tgouedar         ###   ########.fr        #
+#    Updated: 2020/01/18 20:14:16 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,7 @@ SOURCES			:=		main.c \
 						expansions/maths_exp/compare.c \
 						expansions/maths_exp/equality_test.c \
 						expansions/maths_exp/ft_build_ast.c \
+						expansions/maths_exp/ft_free_ast.c \
 						expansions/maths_exp/ft_eval.c \
 						expansions/maths_exp/ft_int64_convert.c \
 						expansions/maths_exp/ft_itoa64.c \

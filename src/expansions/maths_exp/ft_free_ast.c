@@ -1,35 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   maths_token.c                                      :+:      :+:    :+:   */
+/*   ft_free_ast.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/07 17:06:14 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/18 19:38:36 by tgouedar         ###   ########.fr       */
+/*   Created: 2020/01/18 19:38:58 by tgouedar          #+#    #+#             */
+/*   Updated: 2020/01/18 20:10:54 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "maths_expansion.h"
 
-t_maths_token	ft_init_maths_token(char *word, size_t token_len, char flag)
+void		ft_free_ast(t_maths_ast *ast)
 {
-	t_maths_token	new;
-
-	/*ft_check_memory(*/new.token = ft_strndup(word, token_len);
-	if (flag == IS_OP)
-		new.prio = ft_get_op_priority(new.token);
-	else
-		new.prio = 0;
-	return (new);
-}
-
-void			ft_free_token(void *content, size_t size)
-{
-	t_maths_token	*token;
-
-	(void)size;
-	token = (t_maths_token*)content;
-	ft_strdel(&(token->token));
+	if (!ast)
+		return ;
+	ft_free_ast(ast->left_cmd);
+	ft_free_ast(ast->right_cmd);
+	ft_lstdel((t_list**)(&(ast->tokens)), &ft_free_token);
+	ft_memdel((void**)&ast);
 }
