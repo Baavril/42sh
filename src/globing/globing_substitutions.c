@@ -91,6 +91,7 @@ char	**ft_globing(char **split, char *token)
 					}
 				}
 				dir[j] = 0;
+				closedir(dirhandle);
 			}
 			if (!ft_tablen(dir))
 				d++;
@@ -99,8 +100,6 @@ char	**ft_globing(char **split, char *token)
 		{
 			j = 0;
 			x = 0;
-			if (tmp && *tmp)
-				ft_tabdel(&tmp);
 			tmp = ft_tabcpy(dir);
 			while (tmp[j])
 			{
@@ -117,6 +116,7 @@ char	**ft_globing(char **split, char *token)
 								++x;
 						}
 					}
+					closedir(dirhandle);
 				}
 				dir[x] = 0;
 				++j;
@@ -125,7 +125,6 @@ char	**ft_globing(char **split, char *token)
 				d++;
 		}
 		++i;
-		closedir(dirhandle);
 	}
 	n = 0;
 	if (!d && split[i])
@@ -139,6 +138,8 @@ char	**ft_globing(char **split, char *token)
 		ptm[n] = 0;
 		sort_ascii_tab(ptm);
 		ft_tabdel(&dir);
+		if (tmp)
+			ft_tabdel(&tmp);
 		return (ptm);
 	}
 	else
@@ -148,6 +149,8 @@ char	**ft_globing(char **split, char *token)
 		ptm[1] = 0;
 	}
 	ft_tabdel(&dir);
+	if (tmp)
+		ft_tabdel(&tmp);
 	return (ptm);
 }
 
