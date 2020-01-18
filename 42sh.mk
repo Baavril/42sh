@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/01/18 12:41:11 by tgouedar         ###   ########.fr        #
+#    Updated: 2020/01/18 14:44:53 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,6 +84,7 @@ SOURCES			:=		main.c \
 						job_control/ft_launch_job.c \
 						job_control/ft_add_process.c \
 						job_control/ft_free_job.c \
+						job_control/ft_free_jcont.c \
 						job_control/ft_get_job.c \
 						job_control/ft_pop_job.c \
 						job_control/ft_get_process_pid.c \

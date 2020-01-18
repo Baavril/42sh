@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:03:51 by abarthel          #+#    #+#              #
-#    Updated: 2020/01/13 20:48:57 by tgouedar         ###   ########.fr        #
+#    Updated: 2020/01/18 14:46:06 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ $(NAME): $(LIBFT) $(OBJECTS)
 	@printf "\n\e[38;5;44m%4s [\e[1m$(NAME) built]\n\n\e[0m"
 
 try_lib:
-	@$(MAKE) lib -j -C $(PATH_LIB)
+	@$(MAKE) -j -C $(PATH_LIB)
 
 clean:
 	@$(RM) $(OBJECTS) $(DEPENDS)

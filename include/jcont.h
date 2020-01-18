@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:18:20 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/18 11:41:38 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/18 14:40:23 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ t_process			*ft_get_process_pid(pid_t pid);
 void				ft_print_jobs(t_list *job_list, int opt);
 void				ft_print_job(t_job *job, int opt);
 void				ft_free_job(void *content, size_t size);
+int					ft_free_jcont(void);
 t_job				*ft_add_job(int status, char *cmd);
 void				ft_set_prio(void);
 int					ft_pop_job(int nbr);

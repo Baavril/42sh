@@ -6,19 +6,19 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/21 18:09:12 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/21 18:09:13 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/01/18 14:51:57 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int	ft_str_is_numeric(char *s)
 {
 	if (!*s)
-		return (1);
+		return (0);
 	while (*s >= 48 && *s <= 57)
 	{
 		++s;
 		if (!*s)
-			return (1);
+			return (0);
 	}
-	return (0);
+	return (1);
 }

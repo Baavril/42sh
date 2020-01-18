@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isnumber.c                                      :+:      :+:    :+:   */
+/*   ft_free_jcont.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/14 11:42:37 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/18 14:51:56 by tgouedar         ###   ########.fr       */
+/*   Created: 2020/01/18 14:24:58 by tgouedar          #+#    #+#             */
+/*   Updated: 2020/01/18 14:38:28 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "jcont.h"
 
-int			ft_isnumber(char *str)
+extern t_jcont		g_jcont;
+
+int			ft_a_stopped_job(void)
 {
-	if (!*str)
-		return (0);
-	if (*str == '-' || *str == '+')
-		str++;
-	while (*str)
+	t_list		*voyager;
+
+	voyager = g_jcont.jobs;
+	while (voyager)
 	{
-		if (!ft_isdigit(*str))
-			return (0);
-		str++;
+		if (WIFSTOPPED(((t_job*)(voyager->content))->status))
+			return (1);
+		voyager = voyager->next;
 	}
-	return (1);
+	return (0);
+}
+
+int			ft_free_jcont(void)
+{
+	if (ft_a_stopped_job())
+		return (1);
+	ft_lstdel(&(g_jcont.jobs), &ft_free_job);
+	return (0);
 }
