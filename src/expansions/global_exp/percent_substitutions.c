@@ -27,10 +27,11 @@ static int
 		free(*token);
 		if (!(value = ft_strdup(g_svar->value)))
 			return (ERROR);
-		*token = matching_ret(ft_strrev(value), word, flag);
+		*token = ft_strdup(matching_ret(ft_strrev(value), word, flag));
 		*token = ft_strrev(*token);
 		g_svar = tmp;
 		ft_strdel(&word);
+		ft_strdel(&value);
 		return (SUCCESS);
 	}
 	return (ERROR);

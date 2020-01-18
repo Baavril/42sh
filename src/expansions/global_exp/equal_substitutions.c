@@ -53,9 +53,9 @@ int
 	struct s_svar	*tmp;
 
 	tmp = g_svar;
-	word = ft_strcdup(ft_strchr(*token, EQUAL) + 1, CL_BRACE);
 	if (!(nod = setasvar(*token)))
 		return (ERROR);
+	word = ft_strcdup(ft_strchr(*token, EQUAL) + 1, CL_BRACE);
 	while (g_svar)
 	{
 		if (check_equal_var(token, word, nod, tmp) == SUCCESS)
