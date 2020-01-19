@@ -50,9 +50,9 @@ int
 	struct s_svar	*tmp;
 
 	tmp = g_svar;
-	word = ft_strcdup(ft_strchr(*token, WHY) + 1, CL_BRACE);
 	if (!(var = ft_strcdup(*token + 2, COLON)))
 		return (ERROR);
+	word = ft_strcdup(ft_strchr(*token, WHY) + 1, CL_BRACE);
 	while (g_svar)
 	{
 		if (check_why_var(token, word, var, tmp) == SUCCESS)

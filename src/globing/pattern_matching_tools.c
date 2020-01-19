@@ -17,8 +17,8 @@
 
 int			check_next_var(char *var, char **token, int flag)
 {
-	if (!ft_isalnum(token[0][(int)ft_strlen(var) + flag])
-	|| token[0][(int)ft_strlen(var) + flag] == UNDERSCORE)
+	if (!(ft_isalnum(token[0][(int)ft_strlen(var) + flag])
+	|| token[0][(int)ft_strlen(var) + flag] == UNDERSCORE))
 		return (SUCCESS);
 	return (ERROR);
 }

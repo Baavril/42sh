@@ -100,6 +100,8 @@ char	**ft_globing(char **split, char *token)
 		{
 			j = 0;
 			x = 0;
+			if (tmp)
+				ft_tabdel(&tmp);
 			tmp = ft_tabcpy(dir);
 			while (tmp[j])
 			{
