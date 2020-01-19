@@ -21,14 +21,27 @@
 
 static char	*ft_dupslash(char **tokens, int j, int i, int ret)
 {
-	if (j >= 0)
+	char *tmp;
+
+	tmp = NULL;
+	if (i > 0)
 	{
 		if (!ret)
-			return ((*tokens) + i);
+		{
+			tmp = ft_strdup((*tokens) + i);
+			ft_strdel(tokens);
+			return (tmp);
+		}
 		else
-			return ((*tokens) + j + 1);
+		{
+			tmp = ft_strdup((*tokens) + j + 1);
+			ft_strdel(tokens);
+			return (tmp);
+		}
 	}
-	return (*tokens);
+	tmp = ft_strdup(*tokens);
+	ft_strdel(tokens);
+	return (tmp);
 }
 
 char		*ft_set_slashed(char **tokens)

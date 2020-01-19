@@ -21,7 +21,7 @@ static int				check_why_var(char **token, char *word, char *var,
 															struct s_svar *tmp)
 {
 	if (ft_strncmp(g_svar->key, *token + 2, ft_strlen(g_svar->key) - 1) == 0
-	&& check_next_var(g_svar->key, token, 1))
+	&& check_next_var(g_svar->key, token, 1) == SUCCESS)
 	{
 		ft_strdel(token);
 		if (g_svar->value && *(g_svar->value))
@@ -51,9 +51,9 @@ int						why_exp(char **token)
 	struct s_svar	*tmp;
 
 	tmp = g_svar;
-	word = ft_strcdup(ft_strchr(*token, WHY) + 1, CL_BRACE);
 	if (!(var = ft_strcdup(*token + 2, COLON)))
 		return (ERROR);
+	word = ft_strcdup(ft_strchr(*token, WHY) + 1, CL_BRACE);
 	while (g_svar)
 	{
 		if (check_why_var(token, word, var, tmp) == SUCCESS)

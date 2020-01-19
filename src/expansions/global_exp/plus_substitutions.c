@@ -35,6 +35,7 @@ static int				check_plus_var(char **token, char *word,
 				return (ERROR);
 		}
 		g_svar = tmp;
+		ft_strdel(&word);
 		return (SUCCESS);
 	}
 	return (ERROR);
@@ -47,18 +48,23 @@ int						plus_exp(char **token)
 	struct	s_svar	*tmp;
 
 	tmp = g_svar;
-	word = ft_strcdup(ft_strchr(*token, PLUS) + 1, CL_BRACE);
 	if (!(var = ft_strcdup(*token + 2, COLON)))
 		return (ERROR);
+	word = ft_strcdup(ft_strchr(*token, PLUS) + 1, CL_BRACE);
 	while (g_svar)
 	{
 		if (check_plus_var(token, word, tmp) == SUCCESS)
+		{
+			ft_strdel(&var);
 			return (SUCCESS);
+		}
 		g_svar = g_svar->next;
 	}
 	ft_strdel(token);
 	if (!(*token = ft_strdup(EMPTY_STR)))
 		return (ERROR);
 	g_svar = tmp;
+	ft_strdel(&word);
+	ft_strdel(&var);
 	return (SUCCESS);
 }

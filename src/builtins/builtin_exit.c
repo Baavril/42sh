@@ -47,7 +47,7 @@ static int		ft_clean_exit(char **av, int exit_status)
 	history(DELETE, NULL, NULL);
 	ft_free_bintable();
 	set_termcaps(TC_RESTORE);
-	system("leaks 42sh");
+	//system("leaks 42sh");
 	exit(exit_status);
 }
 
@@ -57,7 +57,7 @@ int				cmd_exit(int ac, char **av)
 	int		i;
 
 	exit_status = (unsigned char)g_retval;
-	ft_dprintf(STDERR_FILENO, "exit\n");
+	//ft_dprintf(STDERR_FILENO, "exit\n");
 	if (ac > 1)
 	{
 		i = (!ft_strcmp("--", av[1]) && ac > 2) ? 2 : 1;
