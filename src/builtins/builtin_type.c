@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/11/02 13:30:28 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/19 14:27:53 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include "error.h"
 #include "job.h"
 
-static const struct s_keywords	g_keywords[] =
+static const struct s_keywords		g_keywords[] =
 {
 	{ "{" },
 	{ "}" },
@@ -40,9 +40,9 @@ static const struct s_keywords	g_keywords[] =
 	{ NULL }
 };
 
-static _Bool	is_a_keyword(char *word)
+static _Bool						is_a_keyword(char *word)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	while (g_keywords[i].keyword)
@@ -55,9 +55,9 @@ static _Bool	is_a_keyword(char *word)
 	return (0);
 }
 
-static char		*getbinpath(char *bin)
+static char							*getbinpath(char *bin)
 {
-	char *cpy;
+	char	*cpy;
 
 	if (!(cpy = ft_strdup(bin)))
 		return (NULL);
@@ -70,36 +70,44 @@ static char		*getbinpath(char *bin)
 	}
 }
 
-int				cmd_type(int argc, char **argv)
+static int							ft_parse_type_arg(char *arg)
+{
+	int		found;
+	char	*str;
+
+	found = 0;
+	str = NULL;
+	if (is_a_builtin(arg))
+		ft_printf("%s is a shell builtin.\n", arg);
+	else if (is_a_keyword(arg))
+		ft_printf("%s is a shell keyword.\n", arg);
+	else if ((ft_inbintable(arg, &str, NO_HIT)))
+		ft_printf("%s is hashed (%s).\n", arg, str);
+	else if ((str = ft_get_alias(arg)))
+		ft_printf("%s is aliased to `%s'.\n", arg, str);
+	else if ((str = getbinpath(arg)))
+		ft_printf("%s is %s.\n", arg, str);
+	else
+		found = 1;
+	if ((str))
+		ft_memdel((void**)&str);
+	return (found);
+}
+
+int									cmd_type(int argc, char **argv)
 {
 	_Bool	error;
 	int		i;
-	char	*str;
 
-	error = 0;
 	i = 1;
+	error = 0;
 	while (i < argc)
 	{
-		if (is_a_builtin(argv[i]))
-			ft_printf("%s is a shell builtin\n", argv[i]);
-		else if (is_a_keyword(argv[i]))
-			ft_printf("%s is a shell keyword\n", argv[i]);
-		else if ((ft_inbintable(argv[i], &str, NO_HIT)))
+		if (ft_parse_type_arg(argv[i]))
 		{
-			ft_printf("%s is hashed (%s)\n", argv[i], str);
-			ft_memdel((void**)&str);
-		}
-/*		else if ((str = getalias(argv[i])))
-			ft_printf("%s is aliased to `%s'\n", argv[i], str);*/
-		else if ((str = getbinpath(argv[i])))
-		{
-			ft_printf("%s is %s\n", argv[i], str);
-			ft_memdel((void**)&str);
-		}
-		else
-		{
-			error |= 1;
-			ft_dprintf(STDERR_FILENO, "%s: %s: %s: not found\n", g_progname, *argv, argv[i]);
+			error = 1;
+			ft_dprintf(STDERR_FILENO,
+					"%s: type: %s: not found.\n", g_progname, argv[i]);
 		}
 		++i;
 	}
