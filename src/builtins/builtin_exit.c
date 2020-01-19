@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/18 14:59:18 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/19 13:30:29 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int				cmd_exit(int ac, char **av)
 	int		i;
 
 	exit_status = (unsigned char)g_retval;
-	//ft_dprintf(STDERR_FILENO, "exit\n");
+	ft_dprintf(STDERR_FILENO, "exit\n");
 	if (ac > 1)
 	{
 		i = (!ft_strcmp("--", av[1]) && ac > 2) ? 2 : 1;
