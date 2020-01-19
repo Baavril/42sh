@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/01/18 20:14:16 by tgouedar         ###   ########.fr        #
+#    Updated: 2020/01/19 13:19:38 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,30 +57,31 @@ SOURCES			:=		main.c \
 						expansions/global_exp/sharp_substitutions.c \
 						expansions/global_exp/bsharp_substitutions.c \
 						expansions/global_exp/percent_substitutions.c \
-						expansions/maths_exp/assign.c \
-						expansions/maths_exp/assign_bitwise.c \
-						expansions/maths_exp/assign_op.c \
-						expansions/maths_exp/addition.c \
-						expansions/maths_exp/bitwise.c \
-						expansions/maths_exp/bitwise_shifts.c \
-						expansions/maths_exp/comma.c \
-						expansions/maths_exp/compare.c \
-						expansions/maths_exp/equality_test.c \
+						expansions/maths_exp/operations/addition.c \
+						expansions/maths_exp/operations/assign.c \
+						expansions/maths_exp/operations/assign_bitwise.c \
+						expansions/maths_exp/operations/assign_op.c \
+						expansions/maths_exp/operations/bitwise.c \
+						expansions/maths_exp/operations/bitwise_shifts.c \
+						expansions/maths_exp/operations/comma.c \
+						expansions/maths_exp/operations/compare.c \
+						expansions/maths_exp/operations/equality_test.c \
+						expansions/maths_exp/operations/increment.c \
+						expansions/maths_exp/operations/logic.c \
+						expansions/maths_exp/operations/multiplication.c \
 						expansions/maths_exp/ft_build_ast.c \
-						expansions/maths_exp/ft_free_ast.c \
 						expansions/maths_exp/ft_eval.c \
+						expansions/maths_exp/ft_free_ast.c \
 						expansions/maths_exp/ft_int64_convert.c \
 						expansions/maths_exp/ft_itoa64.c \
-						expansions/maths_exp/increment.c \
-						expansions/maths_exp/logic.c \
 						expansions/maths_exp/maths_dispatcher.c \
 						expansions/maths_exp/maths_expansion.c \
 						expansions/maths_exp/maths_lexer.c \
 						expansions/maths_exp/maths_parser.c \
 						expansions/maths_exp/maths_token.c \
-						expansions/maths_exp/multiplication.c \
 						expansions/maths_exp/operand_token.c \
 						expansions/maths_exp/parentheses.c \
+						expansions/maths_exp/parse_incr.c \
 						expansions/maths_exp/shvar_tools.c \
 						job_control/ft_launch_job.c \
 						job_control/ft_add_process.c \

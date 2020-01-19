@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:21:48 by baavril           #+#    #+#             */
-/*   Updated: 2019/12/03 16:21:55 by baavril          ###   ########.fr       */
+/*   Updated: 2020/01/19 13:14:37 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,31 +17,32 @@
 #include "builtins.h"
 #include "shell_variables.h"
 
-int	unsetvarset(char *argv)
+extern struct s_svar	*g_svar;
+
+int						unsetvarset(char *argv)
 {
-	struct s_svar *tmp;
-	struct s_svar *relink;
+	struct s_svar	*tmp;
+	struct s_svar	*relink;
 
 	tmp = g_svar;
-	while (g_svar && g_svar->next)
+	while (tmp && tmp->next)
 	{
-		if (ft_strncmp(g_svar->next->key, argv, ft_strlen(g_svar->next->key) - 1) == 0)
+		if (!ft_strncmp(tmp->next->key, argv, ft_strlen(tmp->next->key) - 1))
 		{
-			relink = g_svar->next;
-			g_svar->next = g_svar->next->next;
+			relink = tmp->next;
+			tmp->next = tmp->next->next;
 			ft_strdel(&(relink->str));
 			ft_strdel(&(relink->key));
 			ft_strdel(&(relink->value));
-			g_svar = tmp;
 			return (0);
 			//free(relink);
 		}
-		g_svar = g_svar->next;
+		tmp = tmp->next;
 	}
-	g_svar = tmp;
-	if (ft_strncmp(tmp->key, argv, ft_strlen(tmp->key) - 1) == 0)
+	if (ft_strncmp(g_svar->key, argv, ft_strlen(g_svar->key) - 1) == 0)
 	{
-		g_svar = tmp->next;
+		tmp = g_svar;
+		g_svar = g_svar->next;
 		ft_strdel(&(tmp->str));
 		ft_strdel(&(tmp->key));
 		ft_strdel(&(tmp->value));
@@ -50,10 +51,10 @@ int	unsetvarset(char *argv)
 	return (1);
 }
 
-void	cpytabfrom(char **environ)
+void					cpytabfrom(char **environ)
 {
-	int i;
-	int len;
+	int		i;
+	int		len;
 
 	i = 0;
 	len = ft_tablen(environ);
@@ -67,11 +68,11 @@ void	cpytabfrom(char **environ)
 	free(environ[len - 1]);
 }
 
-int	unsetvarenv(char *argv)
+int						unsetvarenv(char *argv)
 {
-	int i;
-	char *key;
-	extern char **environ;
+	int				i;
+	char			*key;
+	extern char		**environ;
 
 	i = 0;
 	while (environ[i])
@@ -88,7 +89,7 @@ int	unsetvarenv(char *argv)
 	return (1);
 }
 
-int	cmd_unset(int argc, char **argv)
+int						cmd_unset(int argc, char **argv)
 {
 	int i;
 	(void)argc;

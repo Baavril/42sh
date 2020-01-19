@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/08 13:58:54 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/19 12:52:07 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "shell_variables.h"
 #include "builtins.h"
 #include "libft.h"
+
+extern struct s_svar	*g_svar;
 
 int		simple_exp(char **token)
 {

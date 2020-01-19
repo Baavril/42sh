@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:21:48 by baavril           #+#    #+#             */
-/*   Updated: 2019/12/03 16:21:55 by baavril          ###   ########.fr       */
+/*   Updated: 2020/01/19 13:18:48 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,9 @@
 #include "builtins.h"
 #include "libft.h"
 
-void	ft_lstadd_back(t_list **alst, t_list *new_back)
-{
-	t_list	*voyager;
+extern struct s_svar	*g_svar;
 
-	if (!alst)
-		return ;
-	if (!(*alst))
-		*alst = new_back;
-	else
-	{
-		voyager = *alst;
-		while (voyager->next)
-			voyager = voyager->next;
-		voyager->next = new_back;
-	}
-}
-
-void	ft_listadd_back(struct s_svar *new_back)
+void					ft_listadd_back(struct s_svar *new_back)
 {
 	struct s_svar	*voyager;
 
@@ -49,7 +34,7 @@ void	ft_listadd_back(struct s_svar *new_back)
 	}
 }
 
-char		*get_key(char *var)
+char					*get_key(char *var)
 {
 	int		i;
 	char	*rav;
@@ -63,7 +48,7 @@ char		*get_key(char *var)
 	return (rav);
 }
 
-void	ft_prtsrtlst(void)
+void					ft_prtsrtlst(void)
 {
 	struct s_svar *tmp;
 
@@ -77,7 +62,7 @@ void	ft_prtsrtlst(void)
 	g_svar = tmp;
 }
 
-int		checkvarlst(char *argv)
+int						checkvarlst(char *argv)
 {
 	char *key_name;
 	char *tmp_name;
@@ -111,10 +96,10 @@ int		checkvarlst(char *argv)
 	return (1);
 }
 
-char	**ft_realloc_environ(char **environ, char *str)
+char					**ft_realloc_environ(char **environ, char *str)
 {
-	int i;
-	char **cpy;
+	int		i;
+	char	**cpy;
 
 	i = 0;
 	cpy = ft_tabcpy(environ);
@@ -137,7 +122,7 @@ char	**ft_realloc_environ(char **environ, char *str)
 	return (environ);
 }
 
-char	**ft_check_ifset(char *to_check, char **environ)
+char					**ft_check_ifset(char *to_check, char **environ)
 {
 	char **keep;
 	struct s_svar *tmp;
@@ -157,7 +142,7 @@ char	**ft_check_ifset(char *to_check, char **environ)
 	return (environ);
 }
 
-int		export_opt(char *opt)
+int						export_opt(char *opt)
 {
 	if (ft_strcmp(opt, "-p") == 0
 	|| ft_strcmp(opt, "--") == 0)
@@ -170,7 +155,7 @@ int		export_opt(char *opt)
 	return (0);
 }
 
-int		cmd_export(int argc, char **argv)
+int						cmd_export(int argc, char **argv)
 {
 	int i;
 	int flag;

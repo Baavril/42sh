@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:43:12 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/18 21:05:11 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/19 12:29:41 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,20 @@
 #include "maths_expansion.h"
 #include "libft.h"
 
-//extern struct s_svar	*g_svar;
+extern struct s_svar	*g_svar;
+
+int				ft_is_varname(const char *token)
+{
+	if (ft_isdigit(*token))
+		return (0);
+	while (*token)
+	{
+		if (!(ft_isalnum(*token) || *token == '_'))
+			return (0);
+		token++;
+	}
+	return (1);
+}
 
 char					*getshvar(char *var_name)
 {

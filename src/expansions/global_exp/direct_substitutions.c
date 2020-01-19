@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/08 13:58:54 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/19 12:59:16 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 #include "builtins.h"
 #include "libft.h"
 
-int		direct_exp(char **token)
+extern struct s_svar	*g_svar;
+
+int						direct_exp(char **token)
+
 {
 	struct s_svar	*tmp;
 

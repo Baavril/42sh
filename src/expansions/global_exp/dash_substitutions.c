@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/08 13:58:54 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/19 12:54:30 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 #include "builtins.h"
 #include "libft.h"
 
-static int		check_dash_var(char **token, char *word, struct s_svar *tmp)
+extern struct s_svar	*g_svar;
+
+static int				check_dash_var(char **token, char *word,
+														struct s_svar *tmp)
 {
 	if (ft_strncmp(g_svar->key, *token + 2, ft_strlen(g_svar->key) - 1) == 0
 	&& check_next_var(g_svar->key, token, 1) == SUCCESS)
@@ -37,7 +40,7 @@ static int		check_dash_var(char **token, char *word, struct s_svar *tmp)
 	return (ERROR);
 }
 
-int				dash_exp(char **token)
+int						dash_exp(char **token)
 {
 	char			*var;
 	char			*word;

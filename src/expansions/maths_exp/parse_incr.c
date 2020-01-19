@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 09:16:12 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/18 19:30:34 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/19 11:20:50 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void		ft_unary_split(t_maths_list *list)
 {
 	t_maths_list		*sep;
 	t_maths_list		*relink;
-	t_maths_token		*token;
+	t_maths_token		token;
 
 	sep = NULL;
 	relink = list->next;
@@ -38,7 +38,7 @@ static void		ft_unary_split(t_maths_list *list)
 	}
 	else
 		return ;
-	list->next = (t_maths_list*)ft_lstnew(token, sizeof(t_maths_token));
+	list->next = (t_maths_list*)ft_lstnew(&token, sizeof(token));
 	list->next->next = relink;
 	list->content->prio = ADD_PRIO;
 }
@@ -50,7 +50,7 @@ int				ft_parse_incr(t_maths_list *list)
 
 	voyager = list;
 	if (!(tmp = voyager->next))
-		return (voyager->content->prio ? CONV_FAIL : CONV_SUCCESS);
+		return (voyager->content->prio ? CONV_FAIL : CONV_SUCCESS); //a quoi ca correspond?
 	if (voyager->content->prio == INCR_PRIO && (tmp->content->prio))
 		ft_unary_split(voyager);
 	while (voyager)
@@ -69,21 +69,4 @@ int				ft_parse_incr(t_maths_list *list)
 		}
 	}
 	return (CONV_SUCCESS);
-}
-
-void			ft_interpret_incr(t_maths_list *list)
-{
-	t_maths_list		*tmp;
-	t_maths_list		*voyager;
-
-	voyager = list;
-	tmp = voyager->next;
-	if (voyager->content->prio == INCR_PRIO && !(tmp->content->prio))
-		voyager->content->prio == PREINCR_PRIO;
-	while (voyager)
-	{
-		voyager = voyager->next;
-		if (voyager->content->prio == INCR_PRIO && !(tmp->content->prio))
-			voyager->content->prio == PREINCR_PRIO;
-	}
 }

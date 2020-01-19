@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 15:01:05 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/18 20:57:21 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/19 12:29:43 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int				ft_parse_incr(t_maths_list *list);
 void			ft_interpret_incr(t_maths_list *list);
 void			ft_set_and_pop(void *content, size_t size);
 
+int				ft_is_varname(const char *token);
 void			setshvar(char *var_name, int64_t value);
 char			*getshvar(char *var_name);
 int				ft_maths_expansion(char *to_expand, char **expansion);
