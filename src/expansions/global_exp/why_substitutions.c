@@ -19,7 +19,7 @@ static int
 	check_why_var(char **token, char *word, char *var, struct s_svar *tmp)
 {
 	if (ft_strncmp(g_svar->key, *token + 2, ft_strlen(g_svar->key) - 1) == 0
-	&& check_next_var(g_svar->key, token, 1))
+	&& check_next_var(g_svar->key, token, 1) == SUCCESS)
 	{
 		ft_strdel(token);
 		if (g_svar->value && *(g_svar->value))
