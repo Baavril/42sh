@@ -1,19 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   builtin_cd.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/19 17:37:35 by tgouedar         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/*
-** https://www.unix.com/man-page/posix/1posix/cd/
-*/
-
 #include <unistd.h>
 #include <sys/stat.h>
 
@@ -50,24 +34,28 @@ static int		ft_update_pwd(char *new_pwd, char flag)
 /*
 static int		ft_treat_path(char *new_pwd, int opt_p)
 {
+	if (!new_pwd)
+		return (ERROR);
 	if (*new_pwd != '/')
 	{
-		if ( "./"|| "../")
+		if (new_pwd[0] == '.'
+		&& (new_pwd[1] == '/' || (new_pwd[1] == '.' && new_pwd[2] == '/')))
 			concatenate(PWD, new_pwd);
-		else if (getenv(CD_PATH))
-		{
-			split = ft_str_split(CD_PATH);
-			while (split++)
-			{
-				if (concatenate(*split, new_pwd))
-					break ;
-			}
+//		else if (getenv(CD_PATH))
+//		{
+//			split = ft_str_split(CD_PATH);
+//			while (split++)
+//			{
+//				concatenate(*split, new_pwd)
+//				//if (is_valid_dir())
+//					break ;
+//			}
 		}
 	}
 	if (!opt_p)
 		simplify_path();
 	if (!have_acces_right(new_pwd))
-		Pemission denied;
+		Pemission denied/is file;
 	return (ft_update_pwd());
 }
 	*/
