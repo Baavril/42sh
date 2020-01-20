@@ -140,6 +140,8 @@ int		expansions_treatment(char **tokens)
 {
 	char **splitok;
 
+	if (**tokens == TILDE)
+		tilde_exp(tokens);
 	if (!(splitok = ft_expsplit(*tokens, DOLLAR)))
 		return (ERROR);
 	ft_strdel(tokens);

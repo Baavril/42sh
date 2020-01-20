@@ -27,10 +27,12 @@
 # define WHY '?'
 # define PLUS '+'
 # define DASH '-'
-# define SLASH '/'
 # define EQUAL '='
+# define MINUS '-'
+# define SLASH '/'
 # define CARET '^'
 # define SHARP '#'
+# define TILDE '~'
 # define AMPER '&'
 # define COLON ':'
 # define DOLLAR '$'
@@ -115,6 +117,7 @@ int				dsharp_exp(char **token);
 int				opercent_exp(char **token);
 int				dpercent_exp(char **token);
 int				maths_exp(char **token);
+int				tilde_exp(char **token);
 
 int				ft_strpchr(char *str, char c);
 size_t			maths_len(char *token);

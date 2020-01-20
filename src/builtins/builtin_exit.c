@@ -57,7 +57,7 @@ int				cmd_exit(int ac, char **av)
 	int		i;
 
 	exit_status = (unsigned char)g_retval;
-	ft_dprintf(STDERR_FILENO, "exit\n");
+	//ft_dprintf(STDERR_FILENO, "exit\n");
 	if (ac > 1)
 	{
 		i = (!ft_strcmp("--", av[1]) && ac > 2) ? 2 : 1;

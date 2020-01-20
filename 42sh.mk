@@ -48,6 +48,7 @@ SOURCES			:=		main.c \
 						expansions/global_exp/expansions_between.c \
 						expansions/global_exp/expansions_identifier.c \
 						expansions/global_exp/potential_libft_functions.c \
+						expansions/global_exp/tilde_substitutions.c \
 						expansions/global_exp/direct_substitutions.c \
 						expansions/global_exp/simple_substitutions.c \
 						expansions/global_exp/why_substitutions.c \
