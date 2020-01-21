@@ -16,12 +16,38 @@
 #include "libft.h"
 
 extern struct s_svar	*g_svar;
+extern struct s_pos		*g_pos;
 
-int		simple_exp(char **token)
+static int	simple_special_params(char **token)
+{
+	char			*tmp1;
+	struct s_pos	*ptr;
+
+	tmp1 = NULL;
+	ptr = g_pos;
+	while (g_pos)
+	{
+		if (ft_strncmp(g_pos->key, *token + 2, 2) == 0)
+		{
+			tmp1 = ft_strdup(g_pos->value);
+			break ;
+		}
+		g_pos = g_pos->next;
+	}
+	g_pos = ptr;
+	ft_strdel(token);
+	*token = ft_strdup(tmp1);
+	ft_strdel(&tmp1);
+	return (SUCCESS);
+}
+
+int			simple_exp(char **token)
 {
 	struct s_svar	*tmp;
 
 	tmp = g_svar;
+	if (simple_special_params(token) == SUCCESS)
+		return (SUCCESS);
 	while (g_svar)
 	{
 		if (ft_strncmp(g_svar->key, *token + 2, ft_strlen(g_svar->key) - 1) == 0

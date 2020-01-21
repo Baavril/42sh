@@ -81,12 +81,23 @@ static int				set_positional_parameters(char **tokens)
 	int				pos;
 	char			*tmp1;
 	char			*tmp2;
-	struct s_pos	*voyager;
+	char			*tmp3;
+	struct s_pos	*ptr;
 
 	i = 2;
-	pos = 0;
-	g_pos = newnodpos(tokens[1], 0);
-	voyager = g_pos;
+	pos = 1;
+	if (tokens[1])
+	{
+		tmp1 = ft_itoa(pos);
+		tmp2 = ft_strjoin(tmp1, "=");
+		tmp3 = ft_strjoin(tmp2, tokens[1]);
+		g_pos = newnodpos(tmp3, 0);
+		ft_strdel(&tmp1);
+		ft_strdel(&tmp2);
+		ft_strdel(&tmp3);
+		++pos;
+	}
+	ptr = g_pos;
 	while (tokens[i])
 	{
 		tmp1 = ft_itoa(pos);
@@ -98,13 +109,13 @@ static int				set_positional_parameters(char **tokens)
 		++pos;
 		++i;
 	}
-	g_pos = voyager;
+	g_pos = ptr;
 	while (g_pos)
 	{
 		printf("%s\n", ((char*)g_pos->str));
 		g_pos = g_pos->next;
 	}
-	g_pos = voyager;
+	g_pos = ptr;
 	return (0);
 }
 

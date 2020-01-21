@@ -137,7 +137,7 @@ char	*ft_getbtw(char *tokens, int type)
 		return (ft_strdup(tokens));
 	if (ft_isin(DQUOTES, tokens))
 		return (ft_quoted(tokens));
-	while (*tokens && (*tokens == DOLLAR || *tokens == OP_BRACE))
+	while (*tokens && (*tokens == DOLLAR || *tokens == OP_BRACE || *tokens == STAR || *tokens == AROB || *tokens == SHARP))
 		tokens++;
 	while (type == DIRECT_EXP && *tokens && (ft_isalpha(*tokens)
 	|| ft_isdigit(*tokens) || *tokens == AMPER || *tokens == UNDERSCORE))
