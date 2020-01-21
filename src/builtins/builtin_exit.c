@@ -21,11 +21,13 @@
 #include "jcont.h"
 
 extern int		g_retval;
-struct s_svar	*g_svar;
+extern struct s_svar	*g_svar;
+extern struct s_pos		*g_pos;
 
 static int		ft_clean_exit(char **av, int exit_status)
 {
-	struct s_svar	*tmp;
+	struct s_svar	*tmp1;
+	struct s_pos	*tmp2;
 	extern char		**environ;
 
 	if (ft_free_jcont())
@@ -35,12 +37,21 @@ static int		ft_clean_exit(char **av, int exit_status)
 	}
 	while (g_svar)
 	{
-		tmp = g_svar->next;
+		tmp1 = g_svar->next;
 		ft_strdel(&(g_svar->str));
 		ft_strdel(&(g_svar->key));
 		ft_strdel(&(g_svar->value));
 		free(g_svar);
-		g_svar = tmp;
+		g_svar = tmp1;
+	}
+	while (g_pos)
+	{
+		tmp2 = g_pos->next;
+		ft_strdel(&(g_pos->str));
+		ft_strdel(&(g_pos->key));
+		ft_strdel(&(g_pos->value));
+		free(g_pos);
+		g_pos = tmp2;
 	}
 	ft_tabdel(&av);
 	ft_tabdel(&environ);

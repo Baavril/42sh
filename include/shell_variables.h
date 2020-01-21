@@ -44,7 +44,17 @@ struct					s_svar
 	struct s_svar		*next;
 };
 
+struct					s_pos
+{
+	char				*str;
+	char				*key;
+	char				*value;
+	int					exp;
+	struct s_pos		*next;
+};
+
 int						init_shellvars(char **env);
+void					setenvvar(char *key, char *value);
 void					ft_listadd_back(struct s_svar *new_back);
 struct s_svar			*newnodshell(char *env, int exp);
 char					*get_key(char *var);

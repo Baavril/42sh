@@ -16,7 +16,8 @@
 #include "shell_variables.h"
 #include "libft.h"
 
-struct s_svar *g_svar;
+struct s_svar	*g_svar;
+struct s_pos	*g_pos;
 
 void	listadd_back(struct s_svar *new_back)
 {
@@ -132,7 +133,8 @@ void	setenvvar(char *key, char *value)
 	char	*set;
 
 	set = ft_strjoin(key, value);
-	listadd_back(newnodshell(set, 0));
+	if (checkvarlst(set))
+		listadd_back(newnodshell(set, 0));
 	ft_strdel(&set);
 }
 

@@ -169,7 +169,6 @@ int						cmd_export(int argc, char **argv)
 		(argv[i + 1]) ? i++ : ft_prtsrtlst();
 		flag = 1;
 	}
-	/* gerer les options */
 	while (argv[i])
 	{
 		if (flag == 1 && argv[i][0] == '-' && ft_tablen(argv) == 2)

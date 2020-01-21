@@ -17,16 +17,51 @@
 
 extern struct s_svar	*g_svar;
 
-int						direct_exp(char **token)
+static int	script_parameter(char **token)
+{
+	char	*tmp1;
+	char	*tmp2;
+	int		len;
 
+	tmp1 = NULL;
+	tmp2 = NULL;
+	len = ft_strlen(*token);
+	if (*(*token + 1) == '0')
+	{
+		if (ft_isin(SLASH, *token))
+			len = ft_strpchr(*token, SLASH);
+		tmp1 = ft_strdup("42sh");
+		tmp2 = ft_strndup(&(*token)[ft_strpchr(*token, '0') + 1], len - 2);
+		ft_strdel(token);
+		*token = ft_strjoin(tmp1, tmp2);
+		ft_strdel(&tmp1);
+		ft_strdel(&tmp2);
+		return (SUCCESS);
+	}
+	return (ERROR);
+}
+
+
+static int	special_parameters(char **token)
+{
+	if (script_parameter(token) == SUCCESS)
+		return (SUCCESS);
+//	if (positional_parameters(token) == SUCCESS)
+//		return (SUCCESS);
+	return (ERROR);
+}
+
+int						direct_exp(char **token)
 {
 	struct s_svar	*tmp;
 
 	tmp = g_svar;
+	if (special_parameters(token) == SUCCESS)
+		return (SUCCESS);
 	while (g_svar)
 	{
 		if (ft_strncmp(g_svar->key, *token + 1, ft_strlen(g_svar->key) - 1) == 0
-		&& check_next_var(g_svar->key, token, 0) == SUCCESS)
+				&& check_next_var(g_svar->key, token, 0) == SUCCESS)
 		{
 			ft_strdel(token);
 			if (!(*token = ft_strdup(g_svar->value)))
