@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/19 12:59:16 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/21 14:16:32 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 extern struct s_svar	*g_svar;
 extern struct s_pos		*g_pos;
+int			g_retval;
 
 static int	script_param(char **token)
 {
@@ -142,6 +143,13 @@ static int	reach_pos_params(char **token)
 	return (SUCCESS);
 }
 
+static int	ret_value(char **token)
+{
+	ft_strdel(token);
+	*token = ft_itoa(g_retval);
+	return (SUCCESS);
+}
+
 static int	positional_params(char **token)
 {
 	if (*(*token + 1) == STAR || *(*token + 1) == AROB)
@@ -157,6 +165,17 @@ static int	positional_params(char **token)
 	else if (ft_isdigit(*(*token + 1)))
 	{
 		reach_pos_params(token);
+		return (SUCCESS);
+	}
+	else if (*(*token + 1) == WHY)
+	{
+		ret_value(token);
+		return (SUCCESS);
+	}
+	else if (*(*token + 1) == DASH)
+	{
+		ft_strdel(token);
+		*token = ft_strdup("No options had been set");
 		return (SUCCESS);
 	}
 	return (ERROR);

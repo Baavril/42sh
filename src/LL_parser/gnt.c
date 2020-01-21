@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 12:58:25 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/15 12:58:48 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/21 14:55:10 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ static void		fill_stack(t_list **stack, char *input)
 
 	tmp1 = NULL;
 	tok = get_next_token(input);
-	if (tok.type == WORD)
+	if (tok.type == WORD && !(ft_isin(OP_BRACE, tok.symbol)
+	&& ft_isin(CL_BRACE, tok.symbol)))
 	{
 		tmp1 = ft_strsplit(tok.symbol, "/");
 		tmp2 = ft_globing(tmp1, tok.symbol);

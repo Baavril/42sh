@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/08 13:58:54 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/21 18:02:06 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int		fixing_star_flag(t_glob *var, char *match, char *str, int flag)
 {
 	while (match[var->j] && match[var->j] == STAR && match[var->j + 1] != '\0')
 	{
+		//ft_printf("herex \n");
 		if (match[var->j + 1] != STAR)
 		{
 			if (match[var->j + 1] != OP_SQUAR)
@@ -30,6 +31,7 @@ int		fixing_star_flag(t_glob *var, char *match, char *str, int flag)
 				star_deployement(var, match, str, flag);
 			}
 			var->n = var->i + 1;
+			//ft_printf("n2 = %d\n", var->n);
 			if (match[var->j + 1] == STAR && match[var->j + 2] == OP_SQUAR)
 				++var->i;
 		}
@@ -42,6 +44,7 @@ int		reach_next_star_flag(t_glob *var, char *match, char *str, int flag)
 {
 	while (match[var->j] && match[var->j] != STAR)
 	{
+		//ft_printf("here2\n");
 		if (var->i <= (int)ft_strlen(str) && match[var->j] != str[var->i])
 		{
 			if (match[var->j] == WHY && str[var->i] && ft_isprint(str[var->i]))
@@ -55,19 +58,23 @@ int		reach_next_star_flag(t_glob *var, char *match, char *str, int flag)
 					var->j += ft_strpchr(&match[var->i + var->x], CL_SQUAR);
 					var->x += ft_strpchr(&match[var->i + var->x], CL_SQUAR) - 1;
 					var->diff -= 1;
+					//ft_printf("diff18 = %d\n", var->diff);
 				}
 			}
 			var->diff += 1;
+			//ft_printf("diff19 = %d\n", var->diff);
 		}
 		++var->i;
 		if (match[var->j] != STAR)
 			++var->j;
 	}
+	//ft_printf("i1 %d\n", var->i);
 	return (SUCCESS);
 }
 
 int		positionning_star_flag(t_glob *var, char *str, char *match)
 {
+	//ft_printf("here3 \n");
 	while (var->i <= (int)ft_strlen(str) && str[var->i]
 	&& match[var->j] && match[var->j] == STAR
 	&& match[var->j + 1] == '\0' && !var->diff)

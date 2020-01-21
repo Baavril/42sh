@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/19 12:52:07 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/21 14:38:15 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 #include "builtins.h"
 #include "libft.h"
 
-extern struct s_svar	*g_svar;
-extern struct s_pos		*g_pos;
+extern struct s_svar		*g_svar;
+extern struct s_pos	*g_pos;
 
 static int	simple_special_params(char **token)
 {
@@ -36,7 +36,7 @@ static int	simple_special_params(char **token)
 	}
 	g_pos = ptr;
 	ft_strdel(token);
-	*token = ft_strdup(tmp1);
+	*token = (tmp1) ? ft_strdup(tmp1) : ft_strdup(EMPTY_STR); 
 	ft_strdel(&tmp1);
 	return (SUCCESS);
 }
