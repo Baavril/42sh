@@ -132,50 +132,63 @@ int backspace_key(char **buff, t_cursor *cursor)
 
 /***********************************************AUTOCOMPLETION*********************************************************/
 
-static int ft_last_back_slash(char *input, char **binary)
+static int pos_start(char *input, int start)
 {
-	int 	i;
-	char 	*point;
-	char 	*tmp;
-	char 	svg;
-
-	i = 0;
-	point = NULL;
-	while (input[i] != '\0')
+	if (ft_isspace(input[start]))
+		start--;
+	if (!ft_isspace(input[start]))
 	{
-		if (input[i] == '/')
-		{
-			point = &input[i + 1];
-			svg = input[i + 1];
-		}
-		i++;
+		while (start > 0 && !ft_isspace(input[start]) && input[start] != '/')
+			start--;
+		if (ft_isspace(input[start]) || input[start] == '/')
+			start++;
 	}
-	if (point)
-	{
-		*point = '\0';
-		if (!(tmp = ft_strjoin(input, *binary)))
-		{
-			*point = svg;
-			return (0);
-		}
-		ft_strdel(binary);
-		*binary = tmp;
-		*point = svg;
-	}
-	return (1);
+	return (start);
 }
 
-int 	d_len(char **binary)
+static int ft_add_string(char *input, char **binary, int start)
 {
-	int i;
+	char 	*tmp;
+	int 	len;
+	int 	i;
+	int 	y;
 
 	i = 0;
-	if (binary)
+	start = pos_start(input, start);
+	y = start;
+	while (input[y] != '\0' && input[y] == (*binary)[i])
 	{
-		while (binary[i])
-			i++;
+		y++;
+		i++;
 	}
-	return (i);
+	len = ft_strlen((*binary)) - i;
+	if (!(tmp = (char*)malloc(sizeof(char) * (len + ft_strlen(input) + 1))))
+		return (0);
+	len = i;
+	i = 0;
+	while (i < start)
+	{
+		tmp[i] = input[i];
+		i++;
+	}
+	y = 0;
+	while ((*binary)[y] != '\0')
+	{
+		tmp[i] = (*binary)[y];
+		i++;
+		y++;
+	}
+	start = start + len;
+	while (input[start] != '\0')
+	{
+		tmp[i] = input[start];
+		start++;
+		i++;
+	}
+	tmp[i] = '\0';
+	ft_strdel(binary);
+	*binary = tmp;
+	return (1);
 }
 
 int tab_key(char **buff, t_cursor *cursor)
@@ -189,14 +202,9 @@ int tab_key(char **buff, t_cursor *cursor)
 	tst = ft_tst();
 	if (!(ret = ft_auto_completion(tst, *buff, &binary, cursor->start)))// curseur !!!!!!
 		return (0);
-	else if (ret == 1)
+	if (ret == 2)
 	{
-		//printf("binary\n");
-		set_string(buff, cursor, binary[0]);
-	}
-	else if (ret == 2)
-	{
-		if (!(ft_last_back_slash(*buff, &binary[0])))
+		if (!(ft_add_string(*buff, &binary[0], cursor->start)))
 		{
 			del_tst(tst);
 			del_double_char(binary);
@@ -213,7 +221,7 @@ int tab_key(char **buff, t_cursor *cursor)
 	return (1);
 }
 
-/********************************************************************************************************/
+/**********************************************************************************************************************/
 
 int down_arrow(char **buff, t_cursor *cursor)
 {

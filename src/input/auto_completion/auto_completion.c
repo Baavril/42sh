@@ -78,7 +78,25 @@ static char *ft_last_back_slash(char *input)
 	return (point);
 }
 
-static char	**ft_path(char *input, int *ret)// FAIRE ATTENTION AUX FREE
+static int	ft_pointchr(char *str1, char *str2)
+{
+	int	i;
+
+	i = 0;
+	if (!str1 && !str2)
+		return (0);
+	while (str1[i] && str2[i] && !ft_isspace(str1[i]))
+	{
+		if (str1[i] != str2[i])
+			return (0);
+		i++;
+	}
+	if (str1[i] && str2 && !ft_isspace(str1[i]))
+		return (0);
+	return (1);
+}
+
+static char	**ft_path(char *input)// FAIRE ATTENTION AUX FREE
 {
 	int 			i;
 	char			**words;
@@ -87,7 +105,6 @@ static char	**ft_path(char *input, int *ret)// FAIRE ATTENTION AUX FREE
 	char 			*point;
 
 	i = 0;
-	*ret = 2;
 	dir = NULL;
 	if (!(words = (char**)malloc(sizeof(char*) * 64)))//realloc a voir !!!!!!!!!!!!!!!!!
 		return (NULL);
@@ -111,9 +128,9 @@ static char	**ft_path(char *input, int *ret)// FAIRE ATTENTION AUX FREE
 		ft_putchar('\n');
 		while ((dirent = readdir(dir)) != NULL)//realloc
 		{
-			if (ft_strfchr(point, dirent->d_name))// add point
+			if (ft_pointchr(point, dirent->d_name))// add point
 			{
-				if (*point == '\0')
+				if (*point == '\0' || ft_isspace(*point))
 				{
 					if (ft_strcmp("..", dirent->d_name) && ft_strcmp(".", dirent->d_name))
 					{
@@ -301,13 +318,12 @@ static int	assign_words(t_tst *tst, char **words, char *input, int len)
 	return (1);
 }
 
-static char	**ft_binary(t_tst *tst, char *input, int *ret)
+static char	**ft_binary(t_tst *tst, char *input)
 {
 	int		len;
 	char	**words;
 
 	//printf("\nBINARY\n");
-	*ret = 1;
 	words = NULL;
 	if ((len = nbr_words(tst, input)) == 0)
 		return (NULL);
@@ -323,27 +339,27 @@ static char	**ft_binary(t_tst *tst, char *input, int *ret)
 	return (words);
 }
 
+static int pos_start(char *input, int start)
+{
+	if (ft_isspace(input[start]))
+		start--;
+	if (!ft_isspace(input[start]))
+	{
+		while (start > 0 && !ft_isspace(input[start]))
+			start--;
+		if (ft_isspace(input[start]))
+			start++;
+	}
+	return (start);
+}
+
 int 	ft_auto_completion(t_tst *tst, char *input, char ***words, int start)
 {
-	int 	ret;
-	//char 	**tmp;
-
-	(void)start;
-	//if (!(tmp = ft_strsplit_whitespaces(input)))
-//		return (0);
-	if (((*words) = ft_binary(tst, input, &ret)) == NULL)
-	{
-		if (((*words) = ft_path(input, &ret)) == NULL)
-		{
-//			del_double_char(tmp);
+	start = pos_start(input, start);
+	if (((*words) = ft_binary(tst, &input[start])) == NULL)
+		if (((*words) = ft_path(&input[start])) == NULL)
 			return (0);
-		}
-	}
 	if ((*words) && (*words)[0] != NULL && (*words)[1] == NULL)
-	{
-//		del_double_char(tmp);
-		return (ret);
-	}
-//	del_double_char(tmp);
+		return (2);
 	return (3);
 }
