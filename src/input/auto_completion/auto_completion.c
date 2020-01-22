@@ -353,12 +353,32 @@ static int pos_start(char *input, int start)
 	return (start);
 }
 
+int 	ft_restart(char *input, int start)
+{
+	start--;
+	while (start >= 0 && ft_isspace(input[start]))
+		start--;
+	ft_printf("start[%d]\n", start);
+	if (start != -1 && (input[start] == '|' || input[start] == '&' || input[start] == ';'))
+		return (1);
+	else
+		return (0);
+}
+
 int 	ft_auto_completion(t_tst *tst, char *input, char ***words, int start)
 {
 	start = pos_start(input, start);
-	if (((*words) = ft_binary(tst, &input[start])) == NULL)
+	if (start == 0 || ft_restart(input, start))
+	{
+		if (((*words) = ft_binary(tst, &input[start])) == NULL)
+			if (((*words) = ft_path(&input[start])) == NULL)
+				return (0);
+	}
+	else
+	{
 		if (((*words) = ft_path(&input[start])) == NULL)
 			return (0);
+	}
 	if ((*words) && (*words)[0] != NULL && (*words)[1] == NULL)
 		return (2);
 	return (3);
