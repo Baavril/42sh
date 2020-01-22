@@ -29,6 +29,25 @@ static t_token *tokendup(t_token tok)
 }
 */
 
+static void	ft_free_token(t_token *token)
+{
+	if (token)
+		if (token->type == WORD || token->type == ASSIGNMENT_WORD || token->type == NAME || token->type == IO_NUMBER)
+			if (token->symbol)
+				free(token->symbol);
+}
+
+static void	ft_free_token_v2(t_token *token)
+{
+	if (token)
+		if (token->type == WORD || token->type == ASSIGNMENT_WORD || token->type == NAME || token->type == IO_NUMBER)
+			if (token->symbol)
+			{
+				free(token->symbol);
+				free(token);
+			}
+}
+
 static void		fill_stack(t_list **stack, char *input)
 {
 	char **tmp1;
@@ -46,6 +65,7 @@ static void		fill_stack(t_list **stack, char *input)
 		tmp1 = tmp2;
 		while (*tmp1)
 		{
+			ft_free_token(&tok);
 			tok.symbol = *tmp1;
 			tok.type = WORD;
 			ft_lstadd(stack, ft_lstnew(&tok, sizeof(t_token)));
@@ -54,7 +74,10 @@ static void		fill_stack(t_list **stack, char *input)
 		free(tmp2);
 	}
 	else
+	{
 		ft_lstadd(stack, ft_lstnew(&tok, sizeof(t_token)));
+		ft_free_token_v2(&tok);
+	}
 }
 
 t_token	gnt(char *input, int future)

@@ -19,6 +19,14 @@
 ** ------------------------------------------------------
 */
 
+static void	ft_free_token(t_token *token)
+{
+	if (token)
+		if (token->type == WORD || token->type == ASSIGNMENT_WORD || token->type == NAME || token->type == IO_NUMBER)
+			if (token->symbol)
+				free(token->symbol);
+}
+
 int	ft_istoken(char *str);
 
 int		ft_is_quote(char c)
@@ -254,11 +262,13 @@ char	**lexer_verbose(char **input)
 	ft_dprintf(2, "token.type : %d = %s\n", token.type, get_token_symbol(token.type));*/
 	while (token.type != E_EOF && token.type != E_ERROR)
 	{
+		ft_free_token(&token);
 		token = get_next_token(NULL);
 /*		ft_dprintf(2, "_______________________________________________\n");
 		ft_dprintf(2, "token.symbol : %s\n", token.symbol);
 		ft_dprintf(2, "token.type : %d = %s\n", token.type, get_token_symbol(token.type));*/
 	}
+	ft_free_token(&token);
 //	ft_dprintf(2, "_______________________________________________\n");
 	return (input);
 }
