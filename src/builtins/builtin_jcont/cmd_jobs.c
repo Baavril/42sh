@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 10:08:05 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/13 22:18:03 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/18 11:07:54 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void				ft_pop_done(void)
 	while (voyager)
 	{
 		job = voyager->content;
-		if (!WIFSTOPPED(job->status) && !ISRUNNING(job->status))
+		if (!WIFSTOPPED(job->status) && !(job->status & RUNNING))
 			job_topop[i++] = job->nbr;
 		voyager = voyager->next;
 	}

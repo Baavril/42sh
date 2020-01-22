@@ -17,8 +17,8 @@
 
 int			check_next_var(char *var, char **token, int flag)
 {
-	if (!ft_isalnum(token[0][(int)ft_strlen(var) + flag])
-	|| token[0][(int)ft_strlen(var) + flag] == UNDERSCORE)
+	if (!(ft_isalnum(token[0][(int)ft_strlen(var) + flag])
+	|| token[0][(int)ft_strlen(var) + flag] == UNDERSCORE))
 		return (SUCCESS);
 	return (ERROR);
 }
@@ -89,12 +89,14 @@ char		*ft_strneg(char *match)
 {
 	int		j;
 	int		c;
+	char	*tmp;
 	char	*strneg;
 	char	*strpos;
 
 	j = 0;
 	c = 32;
 	strpos = ft_struchr(match, ft_strlen(match));
+	tmp = strpos;
 	if (!(strneg = (char*)ft_memalloc(sizeof(char) * MAXCHR)))
 		return (NULL);
 	while (*strpos && c < 127)
@@ -109,5 +111,6 @@ char		*ft_strneg(char *match)
 	}
 	while (c < 127)
 		strneg[j++] = c++;
+	ft_strdel(&tmp);
 	return (strneg);
 }

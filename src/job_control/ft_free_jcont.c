@@ -1,27 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   comma.c                                            :+:      :+:    :+:   */
+/*   ft_free_jcont.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/12 14:24:45 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/10/12 14:31:23 by tgouedar         ###   ########.fr       */
+/*   Created: 2020/01/18 14:24:58 by tgouedar          #+#    #+#             */
+/*   Updated: 2020/01/18 14:38:28 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "maths_interne.h"
+#include "jcont.h"
 
-int				ft_comma(void *left_cmd, void *right_cmd, int64_t *res)
+extern t_jcont		g_jcont;
+
+int			ft_a_stopped_job(void)
 {
-	int64_t		left;
-	int64_t		right;
+	t_list		*voyager;
 
-	if (ft_eval_ast(left_cmd, &left, MANDATORY_TOKEN) == CONV_SUCCESS
-	&& ft_eval_ast(right_cmd, &right, MANDATORY_TOKEN) == CONV_SUCCESS)
+	voyager = g_jcont.jobs;
+	while (voyager)
 	{
-		*res = right;
-		return (CONV_SUCCESS);
+		if (WIFSTOPPED(((t_job*)(voyager->content))->status))
+			return (1);
+		voyager = voyager->next;
 	}
-	return (CONV_FAIL);
+	return (0);
+}
+
+int			ft_free_jcont(void)
+{
+	if (ft_a_stopped_job())
+		return (1);
+	ft_lstdel(&(g_jcont.jobs), &ft_free_job);
+	return (0);
 }

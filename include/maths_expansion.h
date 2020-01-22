@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   maths_interne.h                                    :+:      :+:    :+:   */
+/*   maths_expansion.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 15:01:05 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/08 14:04:10 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/19 12:29:43 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MATHS_INTERNE_H
-# define MATHS_INTERNE_H
+#ifndef MATHS_EXPANSION_H
+# define MATHS_EXPANSION_H
 
 # include "maths_def.h"
 
@@ -30,18 +30,22 @@ t_ft_maths		*ft_op_func(char *op);
 int				ft_get_flag(char side, char *op);
 void			ft_push_tokens(char *word, t_maths_list **token_list);
 t_maths_list	*ft_maths_lexer(char *expr);
-t_maths_token	*ft_init_maths_token(char *word, size_t token_len, char flag);
+t_maths_token	ft_init_maths_token(char *word, size_t token_len, char flag);
+void			ft_free_token(void *content, size_t size);
 int				ft_arg_value(char *token, int64_t *value);
 char			*ft_itoa64(int64_t nb);
 int				ft_build_ast(t_maths_ast *ast, int flag);
 int				ft_eval_ast(t_maths_ast *ast, int64_t *res, char flag);
 t_maths_ast		*ft_new_mathast_node(t_maths_list *tokens);
-int				eval_expression(t_maths_ast *, int64_t *);
+void			ft_free_ast(t_maths_ast *ast);
+int				eval_expression(t_maths_ast *ast, int64_t *res);
 size_t			ft_ast_depth(const t_maths_ast *ast);
 int				ft_maths_parser(t_maths_list *list);
 int				ft_parse_incr(t_maths_list *list);
 void			ft_interpret_incr(t_maths_list *list);
+void			ft_set_and_pop(void *content, size_t size);
 
+int				ft_is_varname(const char *token);
 void			setshvar(char *var_name, int64_t value);
 char			*getshvar(char *var_name);
 int				ft_maths_expansion(char *to_expand, char **expansion);

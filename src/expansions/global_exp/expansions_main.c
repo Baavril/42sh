@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/22 12:03:33 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/22 12:20:21 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,13 @@ static int	expansions_linker(t_expand *vars)
 static int	expansions_launcher(t_expand *vars)
 {
 	vars->j = 0;
-	if ((vars->nb = ft_back_slashed(vars->tokens)) >= 0)
+	if (((vars->nb = ft_back_slashed(vars->tokens)) >= 0)
+	&& !(ft_isin(SQUOTES, *vars->tokens) && ft_isin(DOLLAR, *vars->tokens)))
 	{
 		*(vars->tokens) = ft_set_slashed(vars->tokens);
-		*(vars->tokens) = ft_unset_quoted(*vars->tokens);
+		*(vars->tokens) = ft_isin(SQUOTES, *vars->tokens)
+		? ft_unset_quoted(*vars->tokens, SQUOTES)
+		: ft_unset_quoted(*vars->tokens, DQUOTES);
 		vars->type = identifier(*(vars->tokens));
 		vars->btw = ft_getbtw(*(vars->tokens), vars->type);
 		while (g_symexp[vars->j].expand)
@@ -103,7 +106,10 @@ static int	expansions_launcher(t_expand *vars)
 			*(vars->tokens) = ft_setbslash(*(vars->tokens), vars->nb);
 	}
 	else
+	{
 		*(vars->tokens) = ft_set_slashed(vars->tokens);
+		*(vars->tokens) = ft_unset_quoted(*vars->tokens, SQUOTES);
+	}
 	return (SUCCESS);
 }
 
@@ -118,11 +124,15 @@ static char	*expansions_management(char **splitok)
 		if (expansions_launcher(&vars) == ERROR)
 		{
 			ft_printf("42sh: %s: bad substitution\n", *vars.tokens);
+			ft_tabdel(&splitok);
+			ft_strdel(&vars.btw);
+			ft_strdel(&vars.tmp);
 			return (NULL);
 		}
 		expansions_linker(&vars);
 		vars.tokens++;
 	}
+	ft_tabdel(&splitok);
 	return (vars.tmp);
 }
 
@@ -130,10 +140,11 @@ int		expansions_treatment(char **tokens)
 {
 	char **splitok;
 
+	if (**tokens == TILDE)
+		tilde_exp(tokens);
 	if (!(splitok = ft_expsplit(*tokens, DOLLAR)))
 		return (ERROR);
 	ft_strdel(tokens);
 	*tokens = expansions_management(splitok);
-	ft_tabdel(&splitok);
 	return (SUCCESS);
 }

@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sig_handler.h                                      :+:      :+:    :+:   */
+/*   assign.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/16 22:36:47 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/18 10:54:09 by tgouedar         ###   ########.fr       */
+/*   Created: 2020/01/03 18:12:11 by tgouedar          #+#    #+#             */
+/*   Updated: 2020/01/13 20:58:24 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIG_HANDLER_H
-# define SIG_HANDLER_H
+#include "maths_expansion.h"
 
-# define FATHER			0
-# define CHILD			1
-
-typedef void			(*t_ft_handler)(int sig_nbr);
-typedef void			(*t_ft_sigact_handler)(int sig_nbr, siginfo_t *action,
-														void *handling_info);
-
-typedef struct			s_sig
+int		ft_assign(void *left_cmd, void *right_cmd, int64_t *res)
 {
-	int					sig_nbr;
-	t_ft_handler		handlers[2];
-}						t_sig;
+	int64_t		left;
+	int64_t		right;
 
-void					ft_sigchld_handler(int nbr);
-
-void					set_signals(int id);
-
-#endif
+	if (ft_eval_ast(left_cmd, &left, MANDATORY_TOKEN) == CONV_SUCCESS
+	&& ft_eval_ast(right_cmd, &right, MANDATORY_TOKEN) == CONV_SUCCESS)
+	{
+		*res = right;
+		setshvar(((t_maths_ast*)left_cmd)->tokens->content->token, right);
+		return (CONV_SUCCESS);
+	}
+	return (CONV_FAIL);
+}

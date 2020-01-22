@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_echo.c                                     :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/19 13:39:20 by tgouedar         ###   ########.fr       */
+/*   Created: 2020/01/19 13:16:16 by tgouedar          #+#    #+#             */
+/*   Updated: 2020/01/19 13:16:57 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		cmd_echo(int argc, char **argv)
+void		ft_lstadd_back(t_list **alst, t_list *new_back)
 {
-	int	i;
+	t_list	*voyager;
 
-	i = 1;
-	while (i < argc)
+	if (!alst)
+		return ;
+	if (!(*alst))
+		*alst = new_back;
+	else
 	{
-		ft_putstr(argv[i++]);
-		ft_putstr(i == argc ? "\n" : " ");
+		voyager = *alst;
+		while (voyager->next)
+			voyager = voyager->next;
+		voyager->next = new_back;
 	}
-	return (0);
 }

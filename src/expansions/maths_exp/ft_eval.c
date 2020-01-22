@@ -6,12 +6,12 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 11:33:24 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/13 21:13:52 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/18 20:37:16 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "maths_interne.h"
+#include "maths_expansion.h"
 #include "libft.h"
 
 int		ft_eval_ast(t_maths_ast *ast, int64_t *res, char flag)
@@ -49,6 +49,7 @@ char	*ft_construct_expansion(char *arg, char *expansion, size_t var_pos,
 
 int		ft_eval(char *expr, int64_t *res)
 {
+	int				ret;
 	t_maths_list	*list;
 	t_maths_ast		*ast;
 
@@ -60,15 +61,12 @@ int		ft_eval(char *expr, int64_t *res)
 	ast = ft_new_mathast_node(list);
 	if (ft_build_ast(ast, POSSIBLY_TOKEN) == CONV_FAIL)
 	{
-//		print_error(sig); syntax error, DIV par zero, error de var
+		ft_free_ast(ast);
 		return (CONV_FAIL);
 	}
-	if (ft_eval_ast(ast, res, NO_FLAG) == CONV_FAIL)
-	{
-//		print_error(sig); syntax error, DIV par zero, error de var
-		return (CONV_FAIL);
-	}
-	return (CONV_SUCCESS);
+	ret = ft_eval_ast(ast, res, NO_FLAG);
+	ft_free_ast(ast);
+	return (ret);
 }
 
 char	*ft_eval_inner_parentheses(char *expr)
@@ -93,9 +91,9 @@ char	*ft_eval_inner_parentheses(char *expr)
 		res = ft_itoa64(conv);
 		expr[end_par] = ')';
 		res = ft_construct_expansion(expr, res, inner_par, len + 1);
-//		ft_strdel(&expr);
+		ft_strdel(&expr);
 		return (res);
 	}
 	else
-		return (NULL); //erreur de parentheses
+		return (NULL);
 }

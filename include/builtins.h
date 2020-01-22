@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/05 17:39:28 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/19 14:25:50 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void			ft_insert_alias(char *alias_name, char *alias_value);
 void			ft_treat_alias(char **first_arg);
 int				ft_isvalid_aliasname(char *name);
 void			ft_free_aliastable(void);
+char			*ft_get_alias(char *alias_name);
 
 /*
 ** Functions in builtins.c

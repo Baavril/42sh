@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/01/21 11:58:21 by bprunevi         ###   ########.fr        #
+#    Updated: 2020/01/22 12:19:31 by bprunevi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,7 @@ SOURCES			:=		main.c \
 						expansions/global_exp/expansions_between.c \
 						expansions/global_exp/expansions_identifier.c \
 						expansions/global_exp/potential_libft_functions.c \
+						expansions/global_exp/tilde_substitutions.c \
 						expansions/global_exp/direct_substitutions.c \
 						expansions/global_exp/simple_substitutions.c \
 						expansions/global_exp/why_substitutions.c \
@@ -57,33 +58,36 @@ SOURCES			:=		main.c \
 						expansions/global_exp/sharp_substitutions.c \
 						expansions/global_exp/bsharp_substitutions.c \
 						expansions/global_exp/percent_substitutions.c \
-						expansions/maths_exp/assign.c \
-						expansions/maths_exp/assign_bitwise.c \
-						expansions/maths_exp/assign_op.c \
-						expansions/maths_exp/addition.c \
-						expansions/maths_exp/bitwise.c \
-						expansions/maths_exp/bitwise_shifts.c \
-						expansions/maths_exp/comma.c \
-						expansions/maths_exp/compare.c \
-						expansions/maths_exp/equality_test.c \
+						expansions/maths_exp/operations/addition.c \
+						expansions/maths_exp/operations/assign.c \
+						expansions/maths_exp/operations/assign_bitwise.c \
+						expansions/maths_exp/operations/assign_op.c \
+						expansions/maths_exp/operations/bitwise.c \
+						expansions/maths_exp/operations/bitwise_shifts.c \
+						expansions/maths_exp/operations/comma.c \
+						expansions/maths_exp/operations/compare.c \
+						expansions/maths_exp/operations/equality_test.c \
+						expansions/maths_exp/operations/increment.c \
+						expansions/maths_exp/operations/logic.c \
+						expansions/maths_exp/operations/multiplication.c \
 						expansions/maths_exp/ft_build_ast.c \
 						expansions/maths_exp/ft_eval.c \
+						expansions/maths_exp/ft_free_ast.c \
 						expansions/maths_exp/ft_int64_convert.c \
 						expansions/maths_exp/ft_itoa64.c \
-						expansions/maths_exp/increment.c \
-						expansions/maths_exp/logic.c \
 						expansions/maths_exp/maths_dispatcher.c \
 						expansions/maths_exp/maths_expansion.c \
 						expansions/maths_exp/maths_lexer.c \
 						expansions/maths_exp/maths_parser.c \
 						expansions/maths_exp/maths_token.c \
-						expansions/maths_exp/multiplication.c \
 						expansions/maths_exp/operand_token.c \
 						expansions/maths_exp/parentheses.c \
+						expansions/maths_exp/parse_incr.c \
 						expansions/maths_exp/shvar_tools.c \
 						job_control/ft_launch_job.c \
 						job_control/ft_add_process.c \
 						job_control/ft_free_job.c \
+						job_control/ft_free_jcont.c \
 						job_control/ft_get_job.c \
 						job_control/ft_pop_job.c \
 						job_control/ft_get_process_pid.c \
@@ -104,18 +108,16 @@ SOURCES			:=		main.c \
 						builtins/builtin_cd.c \
 						builtins/builtin_echo.c \
 						builtins/builtin_type.c \
-						builtins/builtin_env.c \
 						builtins/builtin_exit.c \
 						builtins/builtin_pwd.c \
 						builtins/builtin_hash.c \
 						builtins/builtin_history.c \
-						builtins/builtin_setenv.c \
-						builtins/builtin_unsetenv.c \
 						builtins/builtin_truefalse.c \
 						builtins/builtin_fc.c \
-						builtins/builtin_fg.c \
-						builtins/builtin_bg.c \
-						builtins/builtin_jobs.c \
+						builtins/builtin_jcont/cmd_bg.c \
+						builtins/builtin_jcont/cmd_fg.c \
+						builtins/builtin_jcont/cmd_jobs.c \
+						builtins/builtin_jcont/resume_job.c \
 						builtins/builtin_test/test_free.c \
 						builtins/builtin_test/test_tools.c \
 						builtins/builtin_test/test_dispatchers.c \
@@ -130,7 +132,6 @@ SOURCES			:=		main.c \
 						builtins/builtin_test/test_precedence_mgt1.c \
 						builtins/builtin_test/test_precedence_mgt2.c \
 						builtins/builtins_dispatcher.c \
-						builtins/ft_putenv_table.c \
 						transversal/hash/bash_routines.c \
 						transversal/hash/corps_fini_tools.c \
 						transversal/hash/random_tools.c \
@@ -192,4 +193,4 @@ CFLAGS += -Wall -Wextra -Werror -ansi -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200809
 
 #CFLAGS += -fno-builtin -O2
 
-CDEBUG += -g #-fsanitize=address -fno-optimize-sibling-calls
+CDEBUG += -g  -fsanitize=address -fno-optimize-sibling-calls

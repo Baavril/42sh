@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/08 13:58:54 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/22 10:03:15 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,17 @@ char	*pattern_matching(char *str, char *match, int flag)
 			break ;
 		++var.j;
 	}
+	//ft_printf("diff = %d\n", var.diff);
+	//ft_printf("flag = %d\n", flag);
+	//ft_printf("i = %d\n", var.i);
+	//ft_printf("n = %d\n", var.n);
 	if (flag == 2 && !var.diff)
-		return(&str[var.i]);
+		return (&str[var.i]);
 	else if (flag == 1 && !var.diff)
 		return ((var.n != 0) ? &str[var.n] : str);
 	else if (flag == 3)
 		return ((((int)ft_strlen(str) != var.i)
-		|| var.diff) ? ft_strdup(EMPTY_STR) : str);
+		|| var.diff) ? EMPTY_STR : str);
 	return (str);
 }
 

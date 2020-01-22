@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/08 13:58:54 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/21 14:35:00 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,24 +51,40 @@ static int	neg_deploy_case(char *ptm, char **str)
 static int	deploy_case(char *tmp, int *ret, char **str, int flag)
 {
 	int i;
+	int j;
 	char c;
+	int len;
 
 	i = 0;
 	c = 0;
-	while (tmp[i] && ft_strlen(*str) > 0)
+	len = ft_strlen(*str);
+	while (tmp[i] && len > 0)
 	{
-		if (tmp[i] == **str && flag == 1)
+		if (flag == 1 && tmp[i] == **str)
 		{
 			while (c != tmp[i])
 				c++;
 			return (c);
 		}
-		else if (tmp[i] == **str && flag >= 2)
+		else if (flag == 2 && tmp[i] == **str)
 		{
 			(*str)++;
 			c = tmp[i];
 			i = -1;
 			(*ret)++;
+		}
+		else if (flag > 2)
+		{
+			j = 0;
+			while (j < len && str[0][j])
+			{
+				if (str[0][j] == tmp[i])
+				{
+					c = tmp[i];
+					return (c);
+				}
+				++j;
+			}
 		}
 		++i;
 	}

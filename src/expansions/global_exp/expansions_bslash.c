@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/08 18:31:11 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/15 16:39:30 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,25 @@
 
 static char	*ft_dupslash(char **tokens, int j, int i, int ret)
 {
-	char	*tmp;
+	char *tmp;
 
 	tmp = NULL;
-	if (j >= 0)
+	if (i > 0)
 	{
 		if (!ret)
 		{
 			tmp = ft_strdup((*tokens) + i);
+			ft_strdel(tokens);
+			return (tmp);
 		}
 		else
+		{
 			tmp = ft_strdup((*tokens) + j + 1);
+			ft_strdel(tokens);
+			return (tmp);
+		}
 	}
+	tmp = ft_strdup(*tokens);
 	ft_strdel(tokens);
 	return (tmp);
 }

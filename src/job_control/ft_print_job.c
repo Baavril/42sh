@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 18:25:57 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/05 15:31:47 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/18 10:59:49 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void		ft_statestring(char mess[MAX_STATE_LEN], int status) //d'autres mes
 {
 	int		sig;
 
-	if (ISRUNNING(status))
+	if (status & RUNNING)
 		ft_memcpy(&(mess[0]), "Running\0", 8);
 	else if (WIFSTOPPED(status))
 	{

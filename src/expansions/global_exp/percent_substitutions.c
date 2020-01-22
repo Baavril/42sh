@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/08 13:58:54 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/19 12:56:55 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 #include "builtins.h"
 #include "libft.h"
 
-static int
-	check_percent_var(char **token, char *word, struct s_svar *tmp, int flag)
+extern struct s_svar	*g_svar;
+
+static int				check_percent_var(char **token, char *word,
+												struct s_svar *tmp, int flag)
 {
 	char	*value;
 
@@ -27,17 +29,17 @@ static int
 		free(*token);
 		if (!(value = ft_strdup(g_svar->value)))
 			return (ERROR);
-		*token = matching_ret(ft_strrev(value), word, flag);
+		*token = ft_strdup(matching_ret(ft_strrev(value), word, flag));
 		*token = ft_strrev(*token);
 		g_svar = tmp;
 		ft_strdel(&word);
+		ft_strdel(&value);
 		return (SUCCESS);
 	}
 	return (ERROR);
 }
 
-int
-	opercent_exp(char **token)
+int						opercent_exp(char **token)
 {
 	int				flag;
 	char			*word;

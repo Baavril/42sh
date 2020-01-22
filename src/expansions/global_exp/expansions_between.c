@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/08 18:31:11 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/21 14:35:06 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,25 +65,64 @@ char		*ft_quoted(char *tokens)
 	return (ft_btwquotes(tokens, c, d));
 }
 
-char		*ft_unset_quoted(char *tokens)
+static char	*inquotes(char *tokens, char d)
 {
 	int	c;
 	int	i;
-	char *tmp;
 
 	c = 0;
 	i = 0;
-	tmp = NULL;
-	if (ft_isin(DOLLAR, tokens))
-		return (tokens);
-	while (tokens[c] == DQUOTES)
+	while (tokens[i + c] == d)
 		++c;
-	while (tokens[i + c] && tokens[i + c] != DQUOTES)
+	while (tokens[i + c] && tokens[i + c] != d)
 		++i;
-	tmp = ft_strdup(tokens);
-	ft_strdel(&tokens);
-	tokens = ft_strndup(&tmp[c], i);
-	ft_strdel(&tmp);
+	return (ft_strndup(&tokens[c], i));
+}
+
+int		ft_strqchr(char *tokens, char c)
+{
+	int	i;
+
+	i = 0;
+	while (tokens[i])
+	{
+		if (tokens[i] == c && tokens[i + 1] != c)
+			return (i);
+		i++;
+	}
+	return (i);
+}
+
+char		*ft_unset_quoted(char *tokens, char c)
+{
+	int	n;
+	char	*tmp;
+	char	*ptm;
+	char	*keep;
+
+	n = 0;
+	tmp = NULL;
+	ptm = NULL;
+	keep = NULL;
+	if (ft_isin(DOLLAR, tokens) && c == DQUOTES)
+		return (tokens);
+	while (ft_isin(c, &tokens[n]))
+	{
+		tmp = inquotes(&tokens[n], c);
+		keep = ptm;
+		ptm = (keep == NULL) ? ft_strdup(tmp) : ft_strjoin(keep, tmp);
+		ft_strdel(&tmp);
+		ft_strdel(&keep);
+		n += 1;
+		n += ft_strqchr(&tokens[n], c);
+		if (n > (int)ft_strlen(tokens))
+			break ;
+	}
+	if (n)
+	{
+		ft_strdel(&tokens);
+		tokens = ptm;
+	}
 	return (tokens);
 }
 
@@ -98,7 +137,8 @@ char	*ft_getbtw(char *tokens, int type)
 		return (ft_strdup(tokens));
 	if (ft_isin(DQUOTES, tokens))
 		return (ft_quoted(tokens));
-	while (*tokens && (*tokens == DOLLAR || *tokens == OP_BRACE))
+	while (*tokens && (*tokens == DOLLAR || *tokens == OP_BRACE
+	|| *tokens == STAR || *tokens == AROB || *tokens == SHARP || *tokens == WHY))
 		tokens++;
 	while (type == DIRECT_EXP && *tokens && (ft_isalpha(*tokens)
 	|| ft_isdigit(*tokens) || *tokens == AMPER || *tokens == UNDERSCORE))

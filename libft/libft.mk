@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/01/13 13:53:23 by yberramd         ###   ########.fr        #
+#    Updated: 2020/01/19 13:17:26 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SOURCES	:=	ds_btree/btree_apply_infix.c \
 		ds_queue/queue_size.c \
 		ds_queue/queue_apply_to_each.c \
 		ds_singly_linked_list/ft_lstadd.c \
+		ds_singly_linked_list/ft_lstadd_back.c \
 		ds_singly_linked_list/ft_lstdel.c \
 		ds_singly_linked_list/ft_lstdelone.c \
 		ds_singly_linked_list/ft_lstiter.c \

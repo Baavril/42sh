@@ -130,9 +130,6 @@ int		get_deploy(char **match)
 		flag += 1;
 	}
 	if (flag == 0)
-	{
-		ft_printf("OK\n");
 		get_btw_square(match);
-	}
 	return (SUCCESS);
 }
