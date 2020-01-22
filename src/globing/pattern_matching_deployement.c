@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/21 18:25:40 by baavril          ###   ########.fr       */
+/*   Updated: 2020/01/22 10:06:34 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,19 +92,30 @@ int
 	star_deployement(t_glob *var, char *match, char *str, int flag)
 {
 	var->c = check_deploy(&str[var->i], &match[var->j + 1], flag, 1);
+	//ft_printf("m1 %s\n",&match[var->j]);
 	while (ft_isprint(var->c) && str[var->i] != var->c)
 		++var->i;
+	//ft_printf("see %c\n", var->c);
+	//ft_printf("e1 %s\n", &str[var->i]);
 //	while ((size_t)var->i < ft_strlen(str) && str[var->i]
 //	&& str[var->i] == str[var->i + 1] && (flag >= 2 || match[ft_strlen(match) - 1] == STAR))
 //			++var->i;
 	if (var->c == ERROR)
 	{
 		var->diff += 1;
-		//ft_printf("diff5 = %d\n", var->diff);
+	//	ft_printf("diff5 = %d\n", var->diff);
 	}
 	var->x += ft_strpchr(&match[var->i + var->x], CL_SQUAR) + 1;
 	var->j += ft_strpchr(&match[var->j], CL_SQUAR);
-	if (flag >= 2 && !match[var->j + 1])
+	//ft_printf("m21 %s\n",&match[var->j]);
+	if (flag == 1 && (size_t)var->i < ft_strlen(str) && ft_isin(OP_SQUAR, &match[var->j]) && str[var->i] == str[var->i + 1] && match[ft_strlen(match) - 1] == STAR)
 		++var->i;
+	if (flag >= 2 && !match[var->j + 1])
+	{
+		++var->i;
+		if ((size_t)var->i < ft_strlen(str) && str[var->i] == str[var->i - 1])
+			++var->i;
+	}
+	//ft_printf("e2 %s\n", &str[var->i]);
 	return (SUCCESS);
 }

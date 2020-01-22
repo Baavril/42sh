@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/21 18:02:06 by baavril          ###   ########.fr       */
+/*   Updated: 2020/01/22 10:03:56 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		reach_next_star_flag(t_glob *var, char *match, char *str, int flag)
 				}
 			}
 			var->diff += 1;
-			//ft_printf("diff19 = %d\n", var->diff);
+		//	ft_printf("diff19 = %d\n", var->diff);
 		}
 		++var->i;
 		if (match[var->j] != STAR)
