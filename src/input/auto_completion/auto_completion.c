@@ -358,7 +358,6 @@ int 	ft_restart(char *input, int start)
 	start--;
 	while (start >= 0 && ft_isspace(input[start]))
 		start--;
-	ft_printf("start[%d]\n", start);
 	if (start != -1 && (input[start] == '|' || input[start] == '&' || input[start] == ';'))
 		return (1);
 	else
