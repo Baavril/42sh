@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:43:12 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/19 12:29:41 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/22 14:50:49 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 extern struct s_svar	*g_svar;
 
-int				ft_is_varname(const char *token)
+int						ft_is_varname(const char *token)
 {
 	if (ft_isdigit(*token))
 		return (0);
@@ -71,4 +71,5 @@ void					setshvar(char *var_name, int64_t value)
 	if (checkvarlst(assig_word))
 		listadd_back(newnodshell(assig_word, 0));
 	ft_strdel(&assig_word);
+	ft_strdel(&var_value);
 }

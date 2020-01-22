@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 17:06:14 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/18 19:38:36 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/22 14:36:36 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,5 @@ void			ft_free_token(void *content, size_t size)
 	(void)size;
 	token = (t_maths_token*)content;
 	ft_strdel(&(token->token));
+	ft_memdel(&content);
 }
