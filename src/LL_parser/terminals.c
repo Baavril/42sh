@@ -6,12 +6,11 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 09:38:27 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/15 12:02:48 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/21 10:22:39 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokens.h"
-#include "expansions.h"
 #include "libft.h"
 
 char	*word(t_token tok)
@@ -20,7 +19,6 @@ char	*word(t_token tok)
 	{
 //		ft_dprintf(2, "tok.type of type WORD detected with value '%s' !\n", tok.symbol);
 //		ft_printf("HEREEEE = %s\n", tok.symbol);
-		expansions_treatment(&tok.symbol);
 		return(tok.symbol);
 	}
 	return(NULL);

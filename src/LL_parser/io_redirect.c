@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:33:42 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/15 12:01:43 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/21 12:56:23 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "parser.h"
 #include "libft.h"
 
-int		(*g_redirect[])(t_elem left, t_elem right) =
+int		(*g_redirect[])(t_elem *left, t_elem *right) =
 {
 	&i_less,
 	&i_dless,
