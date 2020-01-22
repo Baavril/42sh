@@ -31,34 +31,6 @@ static int		ft_update_pwd(char *new_pwd, char flag)
 	free(old_pwd);
 	return (EXEC_SUCCESS);
 }
-/*
-static int		ft_treat_path(char *new_pwd, int opt_p)
-{
-	if (!new_pwd)
-		return (ERROR);
-	if (*new_pwd != '/')
-	{
-		if (new_pwd[0] == '.'
-		&& (new_pwd[1] == '/' || (new_pwd[1] == '.' && new_pwd[2] == '/')))
-			concatenate(PWD, new_pwd);
-//		else if (getenv(CD_PATH))
-//		{
-//			split = ft_str_split(CD_PATH);
-//			while (split++)
-//			{
-//				concatenate(*split, new_pwd)
-//				//if (is_valid_dir())
-//					break ;
-//			}
-		}
-	}
-	if (!opt_p)
-		simplify_path();
-	if (!have_acces_right(new_pwd))
-		Pemission denied/is file;
-	return (ft_update_pwd());
-}
-	*/
 static int		ft_cd_exec(char *new_pwd, int opt_p)
 {
 	int		ret;
@@ -211,6 +183,34 @@ int				cmd_cd(int ac, char **av)
 //			*p |= 1;
 //		else if (opt == '?')
 //		{
+//			return (e_cannot_allocate_memory);
+//		if (!access(pathname, F_OK))
+//			break;
+//		ft_memdel((void**)&pathname);
+//	}
+//	ft_memdel((void**)&beg);
+//	if (dir)
+//	{
+//		ft_memdel((void**)path);
+//		*path = pathname;
+//		return (3);
+//	}
+//	return (e_success);
+//}
+//
+//static int		parse_opt(int argc, char **argv, _Bool *p)
+//{
+//	int		opt;
+//
+//	*p = 0;
+//	g_opterr = 1;
+//	g_optind = RESET_OPTIND;
+//	while ((opt = ft_getopt(argc, argv, "+LP")) != -1)
+//	{
+//		if (opt == 'P')
+//			*p |= 1;
+//		else if (opt == '?')
+//		{
 //			ft_dprintf(STDERR_FILENO, "%1$s: usage: %1$s [-L|-P] [dir]\n", argv[0]);
 //			return (2);
 //		}
@@ -309,31 +309,3 @@ int				cmd_cd(int ac, char **av)
 //		return (1);
 //	}
 //	if (access(path, F_OK))
-//	{
-//		ft_dprintf(STDERR_FILENO,
-//		"%s: %s: %s: Permission denied\n",
-//		g_progname, argv[0], argv[g_optind]);
-//		ft_memdel((void**)&path);
-//		return (1);
-//	}
-//
-//	/* Execute changedir */
-//	if ((ret = change_dir(path, p)))
-//	{
-//		if (ret != e_invalid_input)
-//		{
-//			psherror(ret, argv[0], e_cmd_type);
-//			ft_memdel((void**)&path);
-//			return (g_errordesc[ret].code);
-//		}
-//		else
-//		{
-//			ft_dprintf(STDERR_FILENO, "%s: %s: %s: %s\n",
-//			g_progname, argv[0], path, g_errordesc[e_no_such_file_or_directory].message);
-//			ft_memdel((void**)&path);
-//			return (e_invalid_input);
-//		}
-//	}
-//	ft_memdel((void**)&path);
-//	return (ret);
-//}
