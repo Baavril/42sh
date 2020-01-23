@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cmd_cd.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/23 17:14:44 by tgouedar          #+#    #+#             */
+/*   Updated: 2020/01/23 18:09:59 by tgouedar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <unistd.h>
 #include <sys/stat.h>
 
+#include "builtin_cd.h"
 #include "ft_getopt.h"
 #include "libft.h"
 #include "error.h"
@@ -11,56 +24,75 @@ extern int		g_optind;
 extern int		g_opterr;
 extern int		g_optopt;
 
-static int		ft_update_pwd(char *new_pwd, char flag)
+static int		ft_update_pwd(char *new_pwd)
 {
 	char	*old_pwd;
 	char	pwd[PATH_MAX];
 
-
 	if (chdir(new_pwd) == -1)
 	{
-		if (!(flag))
-			free(new_pwd);
+		free(new_pwd);
 		return (TARGET_NOT_FOUND);
 	}
-	old_pwd = ft_get_env_var("PWD");
-	ft_set_env_var("OLDPWD", old_pwd);
+	if ((old_pwd = ft_getenv("PWD")))
+	{
+		ft_setenv("OLDPWD", old_pwd);
+		free(old_pwd);
+	}
 	getcwd(pwd, PATH_MAX);
-	ft_set_env_var("PWD", pwd);
+	ft_setenv("PWD", pwd);
 	free(new_pwd);
-	free(old_pwd);
 	return (EXEC_SUCCESS);
 }
-static int		ft_cd_exec(char *new_pwd, int opt_p)
-{
-	int		ret;
-	char	*target;
 
-	if (!(new_pwd))
+static int		ft_get_path(char *rel_path, char **new_pwd)
+{
+	if (!(rel_path))
 	{
-		if (!(target = ft_get_env_var("HOME")))
+		if (!(*new_pwd = ft_getenv("HOME")))
 		{
 			ft_dprintf(STDERR_FILENO, "%s: cd: HOME not set.\n", g_progname);
 			return (UNSET_VAR);
 		}
-		ret = ft_check_target(target);
 	}
-	if (!(ft_strcmp(new_pwd, "-")))
+	else if (!(ft_strcmp(rel_path, "-")))
 	{
-		if (!(target = ft_get_env_var(env, "OLDPWD")))
+		if (!(*new_pwd = ft_getenv("OLDPWD")))
 		{
 			ft_dprintf(STDERR_FILENO, "%s: cd: OLDPWD not set.\n", g_progname);
 			return (UNSET_VAR);
 		}
-		if ((ret = ft_check_target(target)) == EXEC_SUCCESS)
-			ft_putendl(target);
 	}
-	else if (target = ft_strdup(new_pwd))
-		ret = ft_check_target(target);
+	else
+		*new_pwd = ft_strdup(rel_path); // ft_memcheck
+	return (EXEC_SUCCESS);
+}
+
+static int		ft_cd_exec(char *target, int opt_p)
+{
+	int		ret;
+	char	*new_pwd;
+
+	if ((ret = ft_get_path(target, &new_pwd)))
+		return (ret);
+	ft_dprintf(2, "CD_EXEC: targetted: %s\n", new_pwd);
+	ft_get_abspath(&new_pwd);
+	ft_dprintf(2, "CD_EXEC: absolute path: %s\n", new_pwd);
+	if (!opt_p && (ret = ft_simplify_path(&new_pwd)))
+	{
+		ft_dprintf(2, "CD_EXEC: simplifiy fail: %s\n", new_pwd);
+		return (ret);
+	}
+	ft_dprintf(2, "CD_EXEC: is simplified to: %s\n", new_pwd);
+//	if (!ft_have_acces_right(new_pwd))
+		//Pemission denied/is file;
+	ret = ft_update_pwd(new_pwd);
+	if (!(ft_strcmp(target, "-")))
+		ft_putendl(new_pwd);
 	return (ret);
 }
 
-static int		parse_opt(int argc, char **argv, int *p)
+static int		ft_parse_cd_opt(int argc, char **argv, int *p)
 {
 	int		opt;
 
@@ -82,230 +114,25 @@ static int		parse_opt(int argc, char **argv, int *p)
 
 int				cmd_cd(int ac, char **av)
 {
+	ft_dprintf(2, "CMD_CD: start\n");
 	int		opt_p;
 	int		ret;
 	char	*var_value;
 
 	if ((ret = ft_parse_cd_opt(ac, av, &opt_p)))
-		return (ret);
-	if (ret = ft_cd_exec(av[g_optind]) == EXEC_SUCCESS);
 	{
+		ft_dprintf(2, "CMD_CD: option parse: sucess\n");
+		return (ret);
+	}
+	ft_dprintf(2, "CMD_CD: options parsed: %s\n", av[g_optind]);
+	if ((ret = ft_cd_exec(av[g_optind], opt_p)) == EXEC_SUCCESS)
+	{
+		ft_dprintf(2, "CMD_CD: sucess\n");
 		if (!av[g_optind] || !ft_strcmp("-", av[g_optind]))
 			var_value = "cd";
 		else
-			var_value = av[g_optind]
-				ft_set_env_var("_", var_value);
+			var_value = av[g_optind];
+		ft_setenv("_", var_value);
 	}
 	return (ret);
 }
-
-
-
-
-
-//
-//static int		concatenable_operand(const char *str)
-//{
-//	if (*str == '.')
-//	{
-//		++str;
-//		if (*str == '.')
-//		{
-//			++str;
-//			while (*str)
-//			{
-//				if (*str != '/')
-//					return (1);
-//				++str;
-//			}
-//			return (0);
-//		}
-//		else
-//		{
-//			while (*str)
-//			{
-//				if (*str != '/')
-//					return (1);
-//				++str;
-//			}
-//			return (0);
-//		}
-//	}
-//	while (*str)
-//	{
-//		if (*str != '/')
-//			return (1);
-//		++str;
-//	}
-//	return (0);
-//}
-//
-//static int		cdpath_concat(char **path)
-//{
-//	char	*beg;
-//	char	*env;
-//	char	*dir;
-//	char	*pathname;
-//
-//	if (!(beg = ft_getenv("CDPATH")))
-//		return (e_success);
-//	if (!(env = ft_strdup(beg)))
-//		return (e_cannot_allocate_memory);
-//	beg = env;
-//	while ((dir = ft_strsep(&env, ":")))
-//	{
-//		if (!(pathname = ft_strnjoin(3, dir, "/", *path)))
-//			return (e_cannot_allocate_memory);
-//		if (!access(pathname, F_OK))
-//			break;
-//		ft_memdel((void**)&pathname);
-//	}
-//	ft_memdel((void**)&beg);
-//	if (dir)
-//	{
-//		ft_memdel((void**)path);
-//		*path = pathname;
-//		return (3);
-//	}
-//	return (e_success);
-//}
-//
-//static int		parse_opt(int argc, char **argv, _Bool *p)
-//{
-//	int		opt;
-//
-//	*p = 0;
-//	g_opterr = 1;
-//	g_optind = RESET_OPTIND;
-//	while ((opt = ft_getopt(argc, argv, "+LP")) != -1)
-//	{
-//		if (opt == 'P')
-//			*p |= 1;
-//		else if (opt == '?')
-//		{
-//			return (e_cannot_allocate_memory);
-//		if (!access(pathname, F_OK))
-//			break;
-//		ft_memdel((void**)&pathname);
-//	}
-//	ft_memdel((void**)&beg);
-//	if (dir)
-//	{
-//		ft_memdel((void**)path);
-//		*path = pathname;
-//		return (3);
-//	}
-//	return (e_success);
-//}
-//
-//static int		parse_opt(int argc, char **argv, _Bool *p)
-//{
-//	int		opt;
-//
-//	*p = 0;
-//	g_opterr = 1;
-//	g_optind = RESET_OPTIND;
-//	while ((opt = ft_getopt(argc, argv, "+LP")) != -1)
-//	{
-//		if (opt == 'P')
-//			*p |= 1;
-//		else if (opt == '?')
-//		{
-//			ft_dprintf(STDERR_FILENO, "%1$s: usage: %1$s [-L|-P] [dir]\n", argv[0]);
-//			return (2);
-//		}
-//	}
-//	return (e_success);
-//}
-//
-//int				cmd_cd(int argc, char **argv)
-//{
-//	struct stat		buf;
-//	char			*path;
-//	char			*oldpwd;
-//	char			*tmp;
-//	int				ret;
-//	_Bool			p;
-//
-//	path = NULL;
-//	/* Parse options */
-//	if ((ret = parse_opt(argc, argv, &p)))
-//		return (ret);
-//	/* Set full path for the changedir call  */
-//	if (!argv[g_optind])
-//	{
-//		if (!(path = ft_getenv("HOME")))
-//			if (!(path = ft_getenv("PWD")))
-//				return (1);
-//		if (p)
-//			path = ft_realpath(path, NULL);
-//		else
-//			path = ft_strdup(path);
-//	}
-//	else if (!ft_strcmp(argv[g_optind], "-"))
-//	{
-//		if (!(oldpwd = ft_getenv("OLDPWD")))
-//		{
-//			ft_dprintf(STDERR_FILENO, "%s: %s: OLDPWD not set\n", g_progname, argv[0]);
-//			g_optind = RESET_OPTIND;
-//			return (e_invalid_input);
-//		}
-//		if (p)
-//		{
-//			oldpwd = ft_realpath(oldpwd, NULL);
-//			path = oldpwd;
-//		}
-//		else
-//			path = ft_strdup(oldpwd);
-//		ft_printf("%s\n", path);
-//	}
-//	else if (*(argv[g_optind]) == '/')
-//		path = ft_strdup(argv[g_optind]);
-//	else if (concatenable_operand(argv[g_optind]))
-//	{
-//		path = ft_strdup(argv[g_optind]);
-//		if ((ret = cdpath_concat(&path)) == e_cannot_allocate_memory)
-//			return (g_errordesc[e_cannot_allocate_memory].code);
-//		else if (ret == 3)
-//			ft_printf("%s\n", path);
-//		else
-//		{
-//			tmp = path;
-//			path = ft_strnjoin(3, g_pwd, "/", tmp);
-//			ft_memdel((void**)&tmp);
-//		}
-//		ret = e_success;
-//	}
-//	else
-//	{
-//		path = ft_strdup(argv[g_optind]);
-//		tmp = path;
-//		path = ft_strnjoin(3, g_pwd, "/", tmp);
-//		ft_memdel((void**)&tmp);
-//	}
-//	
-//	/* Resolve path */
-//	if (!access(path, F_OK))
-//		path = ft_resolvepath(path);
-//	if (!path)
-//		return (1);
-//
-//	/* Control access */
-//	if (stat(path, &buf))
-//	{
-//		if (!argv[g_optind] || !*argv[g_optind])
-//		{
-//			ft_dprintf(STDERR_FILENO,
-//			"%s: %s: %s: No such file or directory\n",
-//			g_progname, argv[0], path);
-//		}
-//		else
-//		{
-//			ft_dprintf(STDERR_FILENO,
-//			"%s: %s: %s: No such file or directory\n",
-//			g_progname, argv[0], argv[g_optind]);
-//		}
-//		ft_memdel((void**)&path);
-//		return (1);
-//	}
-//	if (access(path, F_OK))

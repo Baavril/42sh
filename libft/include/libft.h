@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/15 18:40:03 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/23 16:24:21 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,8 +274,7 @@ size_t				ft_tablen(char **table) __attribute__((nonnull(1)));
 
 char				*ft_getenv(const char *name);
 
-int					ft_setenv(const char *name, const char *value,
-															int overwrite);
+int					ft_setenv(const char *name, const char *value);
 
 int					ft_unsetenv(const char *name);
 

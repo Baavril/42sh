@@ -6,9 +6,13 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 17:16:22 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/22 20:47:49 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/23 18:26:02 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <sys/stat.h>
+#include "builtin_cd.h"
+#include "libft.h"
 
 static int		ft_rebuild_path_substlink(char **target, char **path_split)
 {
@@ -17,34 +21,49 @@ static int		ft_rebuild_path_substlink(char **target, char **path_split)
 
 	while (*path_split)
 	{
+		ft_dprintf(2, "PATH_BUILDING:  in: %s    %s\n", *target, *path_split);
 		*target = ft_concatenate_path(*target, *path_split);
-		if (!(type = ft_get_type(*target)))
-			//NOSUCHFILE
-		if (type == SYYMBLINK)
+		ft_dprintf(2, "PATH_BUILDING: out: %s\n", *target);
+		if ((type = ft_gettype(*target)) == STAT_ERROR)
 		{
-			tmp = get_link_target(*target);
-			ft_strdel(target);
-			*target = tmp
-			if (!(type = ft_get_type(*target)))
-				//NOSUCHFILE
+			//NOSUCHFILE OR DIR
+			return (TARGET_NOT_FOUND);
 		}
-		if (type != DIR_)
-			//error_is not dir
-		if (!ft_have_acces_right(*target))
-			//error_Pemission_rights
+		if ((type & S_IFLNK))
+		{
+			ft_dprintf(2, "PATH_BUILDING: link-found\n");
+			tmp = ft_get_link_target(*target);
+			ft_strdel(target);
+			*target = tmp;
+			if (!(type = ft_gettype(*target)))
+			{
+				//NOSUCHFILE OR DIR
+				return (TARGET_NOT_FOUND);
+			}
+		}
+		if (!(type & S_IFDIR))
+		{
+			//%s: cd: %s: Not a directory. g_progname, av[g_optind]
+			return (NOT_DIR);
+		}
+		if (!ft_get_permission(*target))
+		{
+			//%s: cd: %s: Pemission denied.", g_progname, av[g_optind]
+			return (NO_PERM);
+		}
 		path_split++;
 	}
-	*target = tmp;
-	return (SUCCESS);
+	return (EXEC_SUCCESS);
 }
 
-int				ft_tab_linedel(char ***tab, size_t index, size_t nbr)
+int				ft_tab_linedel(char ***tab, int index, int nbr)
 {
 	int			j;
 	int			len;
 	char		**new;
 
-	if (!tab || !(*tab))
+	ft_
+	if (!tab || !(*tab) || index < 0 || nbr <= 0)
 		return (ERROR);
 	j = -1;
 	len = ft_tablen(*tab) - nbr;
@@ -64,11 +83,12 @@ int				ft_tab_linedel(char ***tab, size_t index, size_t nbr)
 	free(*tab);
 	new[len] = NULL;
 	*tab = new;
-	return (SUCESS);
+	return (EXEC_SUCCESS);
 }
 
 int				ft_simplify_path(char **path)
 {
+	int ret;
 	size_t	i;
 	char	**split;
 
@@ -88,12 +108,13 @@ int				ft_simplify_path(char **path)
 			if (i > 0)
 				ft_tab_linedel(&split, i--, 2);
 			else
-				ft_tab_linedel(&split, i, 1);
+				ft_tab_linedel(&split, 0, 1);
 			continue ;
 		}
 		i++;
 	}
-	ft_rebuild_path_substlink(path, split);
-	ft_tabfree(split);
-	return (ft_isvalid(*path));
+	ret = ft_rebuild_path_substlink(path, split);
+	ft_dprintf(2, "PATH_BUILDING: final simple: %s\n", *path);
+	ft_tabdel(&split);
+	return (ret);
 }

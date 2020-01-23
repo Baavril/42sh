@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 15:49:03 by abarthel          #+#    #+#             */
-/*   Updated: 2019/07/06 15:56:11 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/01/23 16:21:29 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static char	**getenvvar(const char *name)
 {
-	extern char **environ;
+	extern char	**environ;
 	int			i;
 	int			j;
 
@@ -65,29 +65,22 @@ static void	append_environ(const char *name, const char *value)
 	environ = new_env;
 }
 
-int			ft_setenv(const char *name, const char *value, int overwrite)
+int			ft_setenv(const char *name, const char *value)
 {
 	char		**env_var;
 	char		*tmp;
 	size_t		len;
 
-	if (overwrite)
+	len = ft_strlen(value) + ft_strlen(name) + 2;
+	if ((env_var = getenvvar(name)))
 	{
-		len = ft_strlen(value) + ft_strlen(name) + 2;
-		if ((env_var = getenvvar(name)))
-		{
-			free(*env_var);
-			*env_var = ft_memalloc(len);
-			tmp = ft_strendcpy(*env_var, name);
-			tmp = ft_strendcpy(tmp, "=");
-			tmp = ft_strendcpy(tmp, value);
-		}
-		else
-		{
-			append_environ(name, value);
-		}
-		return (0);
+		free(*env_var);
+		*env_var = ft_memalloc(len);
+		tmp = ft_strendcpy(*env_var, name);
+		tmp = ft_strendcpy(tmp, "=");
+		tmp = ft_strendcpy(tmp, value);
 	}
 	else
-		return (-1);
+		append_environ(name, value);
+	return (0);
 }

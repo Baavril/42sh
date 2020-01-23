@@ -6,57 +6,76 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 12:20:22 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/22 20:46:20 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/23 18:21:13 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_have_acces_right()
+#include "builtin_cd.h"
+#include "libft.h"
+
+char	*ft_concatenate_path(char *src, char *rel_dst)
 {
+	size_t		src_len;
+	size_t		dst_len;
+	char		*res_path;
 
-
+	if (!src && !rel_dst)
+		return (NULL);
+//	if (!src)
+//		return (rel_dst);
+	if (!rel_dst)
+		return (src);
+	src_len = ft_strlen(src);
+	dst_len = ft_strlen(rel_dst);
+	res_path = ft_memalloc(src_len + dst_len + 2); //ft_memcheck
+	ft_memcpy(res_path, src, src_len);
+	res_path[src_len] = '/';
+	ft_memcpy(res_path + src_len + 1, rel_dst, dst_len);
+	res_path[src_len + dst_len + 2] = '\0';
+	return (res_path);
 }
 
-int		ft_is_valid_path()
+static int		ft_test_cdpaths(char **rel_dst)
 {
+	size_t	i;
+	char	*cdpaths;
+	char	**split;
 
-}
-
-int		ft_concatenate(char *pwd, char *target)
-{
-
-
-}
-
-int		ft_treat_path(char *new_pwd, int opt_p)
-{
-	if (!new_pwd)
-		return (ERROR);
-	if (*new_pwd != '/')
+	if (!rel_dst || !(*rel_dst) || !(cdpaths = ft_getenv("CD_PATH")))
+		return (0);
+	i = 0;
+	split = ft_strsplit(cdpaths, ":");
+	ft_strdel(&cdpaths);
+	while (split[i])
 	{
-		if (new_pwd[0] == '.'
-		&& (new_pwd[1] == '/' || (new_pwd[1] == '.' && new_pwd[2] == '/')))
-			ft_concatenate(PWD, new_pwd);
-//		else if (getenv(CD_PATH))
-//		{
-//			split = ft_str_split(CD_PATH);
-//			while (split++)
-//			{
-//				tmp = concatenate(*split, new_pwd)
-//				if (is_valid_dir())
-//				{
-//					free(new_pwd);
-//					new_pwd = tmp;
-//					break ;
-//				}
-//			}
-//			ft_tabdel(&split);
-//		}
-		else
-			ft_concatenate(PWD, new_pwd);
+		cdpaths = ft_concatenate_path(split[i++], *rel_dst);
+		if (ft_is_valid_dir(cdpaths))
+		{
+			ft_strdel(rel_dst);
+			*rel_dst = cdpaths;
+			break ;
+		}
+		ft_strdel(&cdpaths);
 	}
-	if (!opt_p)
-		ft_simplify_path(&new_pwd);
-//	if (!ft_have_acces_right(new_pwd))
-		//Pemission denied/is file;
-	return (ft_update_pwd());
+	ft_tabdel(&split);
+	return ((cdpaths) ? 1 : 0);
+}
+
+int		ft_get_abspath(char **new_pwd)
+{
+	char	*pwd;
+
+	if (!new_pwd || !*(new_pwd))
+		return (ERROR);
+	if (**new_pwd != '/')
+	{
+		pwd = ft_getenv("PWD");
+		if ((*new_pwd)[0] == '.'
+		&& ((*new_pwd)[1] == '/' || ((*new_pwd)[1] == '.' && (*new_pwd)[2] == '/')))
+			*new_pwd = ft_concatenate_path(pwd, *new_pwd);
+		else if (!ft_test_cdpaths(new_pwd))
+			*new_pwd = ft_concatenate_path(pwd, *new_pwd);
+		ft_strdel(&pwd);
+	}
+	return (EXEC_SUCCESS);
 }
