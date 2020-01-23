@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/22 10:03:15 by baavril          ###   ########.fr       */
+/*   Updated: 2020/01/23 17:06:01 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,26 @@ void	init_glob_vars(t_glob *vars)
 char	*pattern_matching(char *str, char *match, int flag)
 {
 	t_glob	var;
+	size_t len;
 
 	init_glob_vars(&var);
-	while (match[var.j])
+	len = ft_strlen(match);
+	while ((size_t)var.j < ft_strlen(match) && match[var.j])
 	{
 		reach_star_flag(&var, match, str, flag);
 		fixing_star_flag(&var, match, str, flag);
 		reach_next_star_flag(&var, match, str, flag);
 		positionning_star_flag(&var, str, match);
-		if (!match[var.j])
+		if ((size_t)var.j < len && !match[var.j])
 			break ;
+		if ((size_t)var.j + 1 < len && match[var.j] == STAR && match[var.j + 1])
+			--var.j;
 		++var.j;
 	}
-	//ft_printf("diff = %d\n", var.diff);
-	//ft_printf("flag = %d\n", flag);
-	//ft_printf("i = %d\n", var.i);
-	//ft_printf("n = %d\n", var.n);
+//	ft_printf("diff = %d\n", var.diff);
+//	ft_printf("flag = %d\n", flag);
+//	ft_printf("i = %d\n", var.i);
+//	ft_printf("n = %d\n", var.n);
 	if (flag == 2 && !var.diff)
 		return (&str[var.i]);
 	else if (flag == 1 && !var.diff)

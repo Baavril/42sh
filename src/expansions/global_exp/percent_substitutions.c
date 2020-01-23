@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/19 12:56:55 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/23 11:25:42 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 
 extern struct s_svar	*g_svar;
 
-static int				check_percent_var(char **token, char *word,
-												struct s_svar *tmp, int flag)
+static int
+	check_percent_var(char **token, char *word, struct s_svar *tmp, int flag)
 {
 	char	*value;
 
@@ -39,7 +39,50 @@ static int				check_percent_var(char **token, char *word,
 	return (ERROR);
 }
 
-int						opercent_exp(char **token)
+char	*ft_revstar(char *word)
+{
+	int i;
+	int len;
+	char *tmp1;
+
+	i = 0;
+	tmp1 = NULL;
+	len = (int)ft_strlen(word) - 1;
+	if (!(tmp1 = (char*)ft_memalloc(sizeof(char) * (len + 2))))
+		return (NULL);
+	while (len - 1 >= -1)
+	{
+		if (word[len] == CL_SQUAR)
+		{
+			while (word[len] != OP_SQUAR)
+				--len;
+			while (word[len] != CL_SQUAR)
+			{
+				tmp1[i] = word[len];
+				++i;
+				++len;
+			}
+			tmp1[i] = word[len];
+			while (word[len] != OP_SQUAR)
+				--len;
+			if (len - 1 > -1)
+			{
+				--len;
+				++i;
+			}
+			else if (len == 0 && word[len] == OP_SQUAR)
+				break ;
+		}
+		tmp1[i] = word[len];
+		++i;
+		--len;
+	}
+//	ft_printf("tmp %s\n", tmp1);
+	return (tmp1);
+}
+
+int
+	opercent_exp(char **token)
 {
 	int				flag;
 	char			*word;
@@ -48,6 +91,10 @@ int						opercent_exp(char **token)
 	tmp = g_svar;
 	flag = (!(ft_spechrlen(*token))) ? 2 : 1;
 	word = ft_strcdup(ft_strchr(*token, PERCENT) + flag, CL_BRACE);
+	if (ft_isin(OP_SQUAR, word) && ft_isin(CL_SQUAR, word))
+		word = ft_revstar(word);
+	else
+		ft_strrev(word);
 	while (g_svar)
 	{
 		if (check_percent_var(token, word, tmp, flag) == SUCCESS)
