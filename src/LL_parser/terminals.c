@@ -6,17 +6,19 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 09:38:27 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/22 14:28:13 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/23 14:00:14 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokens.h"
+#include "expansions.h"
 #include "libft.h"
 
 char	*word(t_token tok)
 {
 	if (tok.type == WORD || tok.type == ASSIGNMENT_WORD)
 	{
+		expansions_treatment(&tok.symbol);
 		return(tok.symbol);
 	}
 	return(NULL);

@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 14:29:21 by yberramd          #+#    #+#             */
-/*   Updated: 2020/01/21 12:57:12 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/15 12:27:43 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	interpret(t_node *node)
 {
 	if (node)
 	{
-		node->f(&(node->left), &(node->right));
+		node->f(node->left, node->right);
 		ft_launch_job("plop", FOREGROUND);
 		astdel(node);
 		node = NULL;

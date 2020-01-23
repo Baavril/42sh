@@ -6,16 +6,16 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 15:51:32 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/22 11:22:56 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/05 15:34:23 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/types.h>
 #include <unistd.h>
 #include <signal.h>
-#include "parser.h"
 #include "sig_handler.h"
 #include "jcont.h"
+#include "parser.h"
 
 extern t_job	g_curjob;
 
@@ -54,7 +54,7 @@ void			ft_stdredir(int std_fd[3])
 	}
 }
 
-int				ft_add_process(t_elem *left, t_elem *right, int std_fd[3],
+int				ft_add_process(t_elem left, t_elem right, int std_fd[3],
 															int fd_to_close)
 {
 	pid_t		pid;
