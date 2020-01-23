@@ -19,6 +19,8 @@ les taches :
 #include "auto_completion.h"
 #include <stdio.h>
 
+int realloc_n;
+
 void	print_double_char(char **tab)
 {
 	int	i;
@@ -40,7 +42,7 @@ static char *ft_dirchr(char *input)
 
 	i = 0;
 	last_bslash = NULL;
-	while (input[i] != '\0')
+	while (input[i] != '\0' && !ft_isspace(input[i]))
 	{
 		if (input[i] == '/')
 		{
@@ -52,7 +54,10 @@ static char *ft_dirchr(char *input)
 	if (last_bslash != NULL)
 	{
 		*last_bslash = '\0';
-		cur_dir = ft_strdup(input);
+		if (input[0] == '\0')
+			cur_dir = ft_strdup("/");
+		else
+			cur_dir = ft_strdup(input);
 		*last_bslash = svg;
 	}
 	else
@@ -96,7 +101,27 @@ static int	ft_pointchr(char *str1, char *str2)
 	return (1);
 }
 
-static char	**ft_path(char *input)// FAIRE ATTENTION AUX FREE
+static char 	**ft_realloc(char **words)
+{
+	char 	**tmp;
+	int 	i;
+
+	i = 0;
+	realloc_n *= 2;
+	if (!(tmp = (char**)malloc(sizeof(char*) * realloc_n)))
+		return (NULL);
+	while (words[i] != NULL)
+	{
+		tmp[i] = words[i];
+		i++;
+	}
+	tmp[i] = NULL;
+	free(words);
+	words = tmp;
+	return (words);
+}
+
+static char		**ft_path(char *input)// FAIRE ATTENTION AUX FREE
 {
 	int 			i;
 	char			**words;
@@ -106,16 +131,12 @@ static char	**ft_path(char *input)// FAIRE ATTENTION AUX FREE
 
 	i = 0;
 	dir = NULL;
-	if (!(words = (char**)malloc(sizeof(char*) * 64)))//realloc a voir !!!!!!!!!!!!!!!!!
+	realloc_n = 64;
+	if (!(words = (char**)malloc(sizeof(char*) * realloc_n)))
 		return (NULL);
-	if (input && input[0] == '/')
-	{
-		printf("PATH\n");
-	}
-	else if (input)
+	if (input)
 	{
 		point = ft_dirchr(input);
-	//	ft_printf("before: point[%s]\n", point);
 		if ((dir = opendir(point)) == NULL)
 		{
 			ft_strdel(&point);
@@ -130,6 +151,11 @@ static char	**ft_path(char *input)// FAIRE ATTENTION AUX FREE
 		{
 			if (ft_pointchr(point, dirent->d_name))// add point
 			{
+				if (i == realloc_n - 1 && !(words = ft_realloc(words)))
+				{
+					del_double_char(words);
+					return (NULL);
+				}
 				if (*point == '\0' || ft_isspace(*point))
 				{
 					if (ft_strcmp("..", dirent->d_name) && ft_strcmp(".", dirent->d_name))
@@ -162,7 +188,7 @@ static char	**ft_path(char *input)// FAIRE ATTENTION AUX FREE
 					}
 					i++;
 				}
-				else
+				else if (dirent->d_type == 8)
 				{
 					if (!(words[i] = ft_strdup(dirent->d_name)))
 					{
@@ -172,12 +198,12 @@ static char	**ft_path(char *input)// FAIRE ATTENTION AUX FREE
 					i++;
 				}
 			}
+			words[i] = NULL;
 		}
 	//	printf("--PATH2\n");	
 	}
 	if (dir)
 		closedir(dir);
-	words[i] = NULL;
 	return (words);
 }
 

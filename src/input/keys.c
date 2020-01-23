@@ -146,7 +146,7 @@ static int pos_start(char *input, int start)
 	return (start);
 }
 
-static int ft_add_string(char *input, char **binary, int start)
+static char *ft_add_string(char *input, char **binary, int start)
 {
 	char 	*tmp;
 	int 	len;
@@ -163,7 +163,7 @@ static int ft_add_string(char *input, char **binary, int start)
 	}
 	len = ft_strlen((*binary)) - i;
 	if (!(tmp = (char*)malloc(sizeof(char) * (len + ft_strlen(input) + 1))))
-		return (0);
+		return (NULL);
 	len = i;
 	i = 0;
 	while (i < start)
@@ -186,9 +186,7 @@ static int ft_add_string(char *input, char **binary, int start)
 		i++;
 	}
 	tmp[i] = '\0';
-	ft_strdel(binary);
-	*binary = tmp;
-	return (1);
+	return (tmp);
 }
 
 int tab_key(char **buff, t_cursor *cursor)
@@ -196,6 +194,7 @@ int tab_key(char **buff, t_cursor *cursor)
 	int 	ret;
 	t_tst 	*tst;
 	char 	**binary;
+	char 	*input;
 
 	if (!cursor->end)
 		return(1);
@@ -204,14 +203,15 @@ int tab_key(char **buff, t_cursor *cursor)
 		return (0);
 	if (ret == 2)
 	{
-		if (!(ft_add_string(*buff, &binary[0], cursor->start)))
+		if (!(input = ft_add_string(*buff, &binary[0], cursor->start)))
 		{
 			del_tst(tst);
 			del_double_char(binary);
 			return (0);
 		}
-		printf("path = [%s]\n", binary[0]);
-		set_string(buff, cursor, binary[0]);
+		ft_printf("path = [%s]\n", binary[0]);
+		set_string(buff, cursor, input);
+		ft_strdel(&input);
 	}
 	else
 		print_double_char(binary);//FAIRE UN display

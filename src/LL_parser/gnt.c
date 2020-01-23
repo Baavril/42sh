@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 12:58:25 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/21 14:55:10 by baavril          ###   ########.fr       */
+/*   Updated: 2020/01/23 17:08:00 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,6 @@ static void	ft_free_token(t_token *token)
 				free(token->symbol);
 }
 
-static void	ft_free_token_v2(t_token *token)
-{
-	if (token)
-		if (token->type == WORD || token->type == ASSIGNMENT_WORD || token->type == NAME || token->type == IO_NUMBER)
-			if (token->symbol)
-			{
-				free(token->symbol);
-				free(token);
-			}
-}
-
 static void		fill_stack(t_list **stack, char *input)
 {
 	char **tmp1;
@@ -74,10 +63,7 @@ static void		fill_stack(t_list **stack, char *input)
 		free(tmp2);
 	}
 	else
-	{
 		ft_lstadd(stack, ft_lstnew(&tok, sizeof(t_token)));
-		ft_free_token_v2(&tok);
-	}
 }
 
 t_token	gnt(char *input, int future)
