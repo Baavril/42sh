@@ -41,7 +41,6 @@ static int		ft_update_pwd(char *new_pwd)
 	}
 	getcwd(pwd, PATH_MAX);
 	ft_setenv("PWD", pwd);
-	free(new_pwd);
 	return (EXEC_SUCCESS);
 }
 
@@ -89,6 +88,7 @@ static int		ft_cd_exec(char *target, int opt_p)
 	ret = ft_update_pwd(new_pwd);
 	if (!(ft_strcmp(target, "-")))
 		ft_putendl(new_pwd);
+	free(new_pwd);
 	return (ret);
 }
 
@@ -127,7 +127,7 @@ int				cmd_cd(int ac, char **av)
 	ft_dprintf(2, "CMD_CD: options parsed: %s\n", av[g_optind]);
 	if ((ret = ft_cd_exec(av[g_optind], opt_p)) == EXEC_SUCCESS)
 	{
-		ft_dprintf(2, "CMD_CD: sucess\n");
+//		ft_dprintf(2, "CMD_CD: sucess\n");
 		if (!av[g_optind] || !ft_strcmp("-", av[g_optind]))
 			var_value = "cd";
 		else

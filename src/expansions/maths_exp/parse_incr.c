@@ -18,11 +18,9 @@ extern char		*g_exptok;
 
 static void		ft_unary_split(t_maths_list *list)
 {
-	t_maths_list		*sep;
 	t_maths_list		*relink;
 	t_maths_token		token;
 
-	sep = NULL;
 	relink = list->next;
 	if (!ft_strcmp(list->content->token, "++"))
 	{

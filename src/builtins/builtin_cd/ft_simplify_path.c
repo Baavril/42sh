@@ -21,9 +21,9 @@ static int		ft_rebuild_path_substlink(char **target, char **path_split)
 
 	while (*path_split)
 	{
-		ft_dprintf(2, "PATH_BUILDING:  in: %s    %s\n", *target, *path_split);
+//		ft_dprintf(2, "PATH_BUILDING:  in: %s    %s\n", *target, *path_split);
 		*target = ft_concatenate_path(*target, *path_split);
-		ft_dprintf(2, "PATH_BUILDING: out: %s\n", *target);
+//		ft_dprintf(2, "PATH_BUILDING: out: %s\n", *target);
 		if ((type = ft_gettype(*target)) == STAT_ERROR)
 		{
 			//NOSUCHFILE OR DIR
@@ -31,7 +31,7 @@ static int		ft_rebuild_path_substlink(char **target, char **path_split)
 		}
 		if ((type & S_IFLNK))
 		{
-			ft_dprintf(2, "PATH_BUILDING: link-found\n");
+//			ft_dprintf(2, "PATH_BUILDING: link-found\n");
 			tmp = ft_get_link_target(*target);
 			ft_strdel(target);
 			*target = tmp;
@@ -62,7 +62,6 @@ int				ft_tab_linedel(char ***tab, int index, int nbr)
 	int			len;
 	char		**new;
 
-	ft_
 	if (!tab || !(*tab) || index < 0 || nbr <= 0)
 		return (ERROR);
 	j = -1;
@@ -77,9 +76,9 @@ int				ft_tab_linedel(char ***tab, int index, int nbr)
 		new[j] = (*tab)[j + nbr];
 		j++;
 	}
-	j = 0;
-	while (j < nbr)
-		free((*tab)[j++ + index]);
+	j = -1;
+	while (++j < nbr)
+		free((*tab)[j + index]);
 	free(*tab);
 	new[len] = NULL;
 	*tab = new;
@@ -106,7 +105,7 @@ int				ft_simplify_path(char **path)
 		if (!ft_strcmp(split[i], ".."))
 		{
 			if (i > 0)
-				ft_tab_linedel(&split, i--, 2);
+				ft_tab_linedel(&split, --i, 2);
 			else
 				ft_tab_linedel(&split, 0, 1);
 			continue ;
@@ -114,7 +113,7 @@ int				ft_simplify_path(char **path)
 		i++;
 	}
 	ret = ft_rebuild_path_substlink(path, split);
-	ft_dprintf(2, "PATH_BUILDING: final simple: %s\n", *path);
+//	ft_dprintf(2, "PATH_BUILDING: final simple: %s\n", *path);
 	ft_tabdel(&split);
 	return (ret);
 }
