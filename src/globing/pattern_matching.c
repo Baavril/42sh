@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/23 17:06:01 by baavril          ###   ########.fr       */
+/*   Updated: 2020/01/24 17:57:34 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*pattern_matching(char *str, char *match, int flag)
 			--var.j;
 		++var.j;
 	}
-//	ft_printf("diff = %d\n", var.diff);
+	ft_printf("diff = %d\n", var.diff);
 //	ft_printf("flag = %d\n", flag);
 //	ft_printf("i = %d\n", var.i);
 //	ft_printf("n = %d\n", var.n);

@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/23 16:24:06 by baavril          ###   ########.fr       */
+/*   Updated: 2020/01/24 15:32:40 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 
 int		fixing_star_flag(t_glob *var, char *match, char *str, int flag)
 {
-		//ft_printf("here12 %s\n", &match[var->j]);
-		//ft_printf("here23 %s\n", &str[var->i]);
+	//	ft_printf("here12 %s\n", &match[var->j]);
+	//	ft_printf("here23 %s\n", &str[var->i]);
 	while ((size_t)var->j < ft_strlen(match) && match[var->j] && match[var->j] == STAR && match[var->j + 1] != '\0')
 	{
 		if (match[var->j + 1] != STAR)
@@ -47,8 +47,8 @@ int		reach_next_star_flag(t_glob *var, char *match, char *str, int flag)
 	{
 		if ((size_t)var->i < ft_strlen(str) && str[var->i + 1] == match[var->j] && match[var->j - 1] == STAR && match[var->j + 1] != str[var->i + 1] && match[var->j + 1] != STAR)
 			++var->i;
-	//	ft_printf("here2 %s\n", &match[var->j]);
-	//	ft_printf("here3 %s\n", &str[var->i]);
+//		ft_printf("here2 %s\n", &match[var->j]);
+//		ft_printf("here3 %s\n", &str[var->i]);
 		if (var->i <= (int)ft_strlen(str) && match[var->j] != str[var->i])
 		{
 			if (match[var->j] == WHY && str[var->i] && ft_isprint(str[var->i]))
