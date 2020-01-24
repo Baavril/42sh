@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/01/08 13:16:10 by bprunevi         ###   ########.fr        #
+#    Updated: 2020/01/23 17:08:41 by yberramd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,36 +33,61 @@ SOURCES			:=		main.c \
 						lexer/grammar_symbols.c \
 						lexer/separators/unglue_metachr.c \
 						lexer/separators/pipeline_separators.c \
-						expansions/expansions.c \
-						expansions/substitutions.c \
-						expansions/expansions.c \
-						expansions/substitutions.c \
-						expansions/maths_exp/assign.c \
-						expansions/maths_exp/addition.c \
-						expansions/maths_exp/ast_tools.c \
-						expansions/maths_exp/bitwise.c \
-						expansions/maths_exp/bitwise_shifts.c \
-						expansions/maths_exp/comma.c \
-						expansions/maths_exp/compare.c \
-						expansions/maths_exp/equality_test.c \
+						globing/globing_substitutions.c \
+						globing/pattern_matching.c \
+						globing/pattern_matching_tools.c \
+						globing/pattern_why_matching.c \
+						globing/pattern_matching_deployement.c \
+						globing/pattern_deploy_launcher.c \
+						globing/pattern_deploy_maker.c \
+						globing/pattern_matching_core.c \
+						expansions/global_exp/expansions_main.c \
+						expansions/global_exp/expansions_split.c \
+						expansions/global_exp/expansions_bslash.c \
+						expansions/global_exp/expansions_checker.c \
+						expansions/global_exp/expansions_between.c \
+						expansions/global_exp/expansions_identifier.c \
+						expansions/global_exp/potential_libft_functions.c \
+						expansions/global_exp/tilde_substitutions.c \
+						expansions/global_exp/direct_substitutions.c \
+						expansions/global_exp/simple_substitutions.c \
+						expansions/global_exp/why_substitutions.c \
+						expansions/global_exp/plus_substitutions.c \
+						expansions/global_exp/dash_substitutions.c \
+						expansions/global_exp/equal_substitutions.c \
+						expansions/global_exp/sharp_substitutions.c \
+						expansions/global_exp/bsharp_substitutions.c \
+						expansions/global_exp/percent_substitutions.c \
+						expansions/maths_exp/operations/addition.c \
+						expansions/maths_exp/operations/assign.c \
+						expansions/maths_exp/operations/assign_bitwise.c \
+						expansions/maths_exp/operations/assign_op.c \
+						expansions/maths_exp/operations/bitwise.c \
+						expansions/maths_exp/operations/bitwise_shifts.c \
+						expansions/maths_exp/operations/comma.c \
+						expansions/maths_exp/operations/compare.c \
+						expansions/maths_exp/operations/equality_test.c \
+						expansions/maths_exp/operations/increment.c \
+						expansions/maths_exp/operations/logic.c \
+						expansions/maths_exp/operations/multiplication.c \
 						expansions/maths_exp/ft_build_ast.c \
 						expansions/maths_exp/ft_eval.c \
+						expansions/maths_exp/ft_free_ast.c \
 						expansions/maths_exp/ft_int64_convert.c \
 						expansions/maths_exp/ft_itoa64.c \
-						expansions/maths_exp/increment.c \
-						expansions/maths_exp/logic.c \
 						expansions/maths_exp/maths_dispatcher.c \
 						expansions/maths_exp/maths_expansion.c \
 						expansions/maths_exp/maths_lexer.c \
 						expansions/maths_exp/maths_parser.c \
 						expansions/maths_exp/maths_token.c \
-						expansions/maths_exp/multiplication.c \
 						expansions/maths_exp/operand_token.c \
 						expansions/maths_exp/parentheses.c \
+						expansions/maths_exp/parse_incr.c \
 						expansions/maths_exp/shvar_tools.c \
 						job_control/ft_launch_job.c \
 						job_control/ft_add_process.c \
 						job_control/ft_free_job.c \
+						job_control/ft_free_jcont.c \
 						job_control/ft_get_job.c \
 						job_control/ft_pop_job.c \
 						job_control/ft_get_process_pid.c \
@@ -83,18 +108,16 @@ SOURCES			:=		main.c \
 						builtins/builtin_cd.c \
 						builtins/builtin_echo.c \
 						builtins/builtin_type.c \
-						builtins/builtin_env.c \
 						builtins/builtin_exit.c \
 						builtins/builtin_pwd.c \
 						builtins/builtin_hash.c \
 						builtins/builtin_history.c \
-						builtins/builtin_setenv.c \
-						builtins/builtin_unsetenv.c \
 						builtins/builtin_truefalse.c \
 						builtins/builtin_fc.c \
-						builtins/builtin_fg.c \
-						builtins/builtin_bg.c \
-						builtins/builtin_jobs.c \
+						builtins/builtin_jcont/cmd_bg.c \
+						builtins/builtin_jcont/cmd_fg.c \
+						builtins/builtin_jcont/cmd_jobs.c \
+						builtins/builtin_jcont/resume_job.c \
 						builtins/builtin_test/test_free.c \
 						builtins/builtin_test/test_tools.c \
 						builtins/builtin_test/test_dispatchers.c \
@@ -109,9 +132,9 @@ SOURCES			:=		main.c \
 						builtins/builtin_test/test_precedence_mgt1.c \
 						builtins/builtin_test/test_precedence_mgt2.c \
 						builtins/builtins_dispatcher.c \
-						builtins/ft_putenv_table.c \
 						transversal/hash/bash_routines.c \
 						transversal/hash/corps_fini_tools.c \
+						transversal/hash/random_tools.c \
 						transversal/hash/ft_empty_htable.c \
 						transversal/hash/ft_free_htable.c \
 						transversal/hash/ft_get_entry.c \
@@ -126,8 +149,7 @@ SOURCES			:=		main.c \
 						transversal/hash/init_htable.c \
 						transversal/hash/string_routines.c \
 						transversal/shell_variables/shell_variables.c \
-						LL_parser/debug_gnt.c \
-						LL_parser/debug_interpreter.c \
+						LL_parser/gnt.c \
 						LL_parser/io_redirect.c \
 						LL_parser/is_potential.c \
 						LL_parser/parser.c \
@@ -149,6 +171,7 @@ SOURCES			:=		main.c \
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
 PATH_LIB := ./libft/
+LIBFT := $(PATH_LIB)libft.a
 
 INCLUDES := -I./include/ -I$(PATH_LIB)include/
 
@@ -160,9 +183,9 @@ TESTS_PATH := ./tools/
 
 TESTS_SCRIPT := launch_test.sh "launch from makefile"
 
-TEST := $(SH) $(TESTS_PATH)$(TESTS_SCRIPT)
+TEST := $(SH) $(TESTS_PATH) $(TESTS_SCRIPT)
 
-LDLIBS += -ltermcap  $(PATH_LIB)libft.a
+LDLIBS += -ltermcap $(PATH_LIB)libft.a
 
 LDFLAGS += $(CDEBUG)
 
@@ -170,4 +193,4 @@ CFLAGS += -Wall -Wextra -Werror -ansi -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200809
 
 #CFLAGS += -fno-builtin -O2
 
-CDEBUG += -g #-fsanitize=address -fno-optimize-sibling-calls
+CDEBUG += -g  -fsanitize=address -fno-optimize-sibling-calls

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 17:59:39 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/05 11:55:35 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/15 12:56:24 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,56 @@
 ** ------------------------------------------------------
 */
 
+static void	ft_free_token(t_token *token)
+{
+	if (token)
+		if (token->type == WORD || token->type == ASSIGNMENT_WORD || token->type == NAME || token->type == IO_NUMBER)
+			if (token->symbol)
+				free(token->symbol);
+}
+
 int	ft_istoken(char *str);
 
 int		ft_is_quote(char c)
 {
 	return (c == '\'' || c == '\"');
+}
+
+static int ft_is_op_bracket(char c)
+{
+	return (c == '(' || c == '{');
+}
+
+static char val_quote_type(char *c)
+{
+	if (c[0] == '\'' || c[0] == '\"')
+		return (c[0]);
+	if (c[0] == '(')
+	{
+		if (c[1] == '(')
+			return (-1);
+		else
+			return (')');
+	}
+	if (c[0] == '{')
+	{
+		if (c[1] == '{')
+			return (-2);
+		else
+			return ('}');
+	}
+	return (-3);
+}
+
+static int check_close_bracket(char *str, char quote_type)
+{
+	if (quote_type == -1 && str[0] == ')' && str[1] == ')')
+		return (1);
+	if (quote_type == -2 && str[0] == '}' && str[1] == '}')
+		return (1);
+	if (str[0] == quote_type)
+		return (1);
+	return (0);
 }
 
 char		*advance(char *tmp, char **index)
@@ -50,29 +95,34 @@ char	*ft_get_word(char **str)
 
 	i = 0;
 	open_quotes = 0;
+	quote_type = -3;
 	while ((*str)[i])
 	{
-			if (!open_quotes && ft_is_quote((*str)[i]))
-			{
-				open_quotes ^= 1;
-				quote_type = (*str)[i];
-				++i;
-				continue;
-			}
-			if (!open_quotes && (ft_istoken(&(*str)[i]) || ft_isspace((*str)[i])))
-			{
-				break;
-				}
-			if ((*str)[i] == quote_type)
-			{
-				++i;
-				open_quotes ^= 1;
-				continue;
-			}
-			if ((*str)[i] == '\\' &&
-				((open_quotes && quote_type != '\'') || !open_quotes))
-				++i;
+		if (!open_quotes && (ft_is_quote((*str)[i]) || ft_is_op_bracket((*str)[i])))
+		{
+			open_quotes ^= 1;
+			quote_type = val_quote_type(&(*str)[i]); //Initialisation optionelle, cree des erreurs !
 			++i;
+			if (quote_type == -1 || quote_type == -2)
+				i++;
+			continue;
+		}
+		if (!open_quotes && (ft_istoken(&(*str)[i]) || ft_isspace((*str)[i])))
+		{
+			break;
+		}
+		if (check_close_bracket(&(*str)[i], quote_type))
+		{
+			++i;
+			open_quotes ^= 1;
+			if (quote_type == -1 || quote_type == -2)
+				i++;
+			continue;
+		}
+		if ((*str)[i] == '\\' &&
+			((open_quotes && quote_type != '\'') || !open_quotes))
+			++i;
+		++i;
 	}
 	if (!(tmp = (char*)ft_memalloc(sizeof(char) * (i + 1))))
 		return (NULL);
@@ -202,24 +252,23 @@ t_token	get_next_token(char *str)
 ** ------------------------------------------------------
 */
 
-char	**lexer(char **input)
+char	**lexer_verbose(char **input)
 {
-	return (input);
 	t_token	token;
 
 	token = get_next_token(*input);
-	ft_dprintf(2, "_______________________________________________\n");
+/*	ft_dprintf(2, "_______________________________________________\n");
 	ft_dprintf(2, "token.symbol : %s\n", token.symbol);
-	ft_dprintf(2, "token.type : %d = %s\n", token.type, get_token_symbol(token.type));
+	ft_dprintf(2, "token.type : %d = %s\n", token.type, get_token_symbol(token.type));*/
 	while (token.type != E_EOF && token.type != E_ERROR)
 	{
+		ft_free_token(&token);
 		token = get_next_token(NULL);
-		ft_dprintf(2, "_______________________________________________\n");
+/*		ft_dprintf(2, "_______________________________________________\n");
 		ft_dprintf(2, "token.symbol : %s\n", token.symbol);
-		ft_dprintf(2, "token.type : %d = %s\n", token.type, get_token_symbol(token.type));
+		ft_dprintf(2, "token.type : %d = %s\n", token.type, get_token_symbol(token.type));*/
 	}
-	ft_dprintf(2, "_______________________________________________\n");
-
-/*	gnt(NULL);
-this should be a link between parser and lexer calling back and forth*/
+	ft_free_token(&token);
+//	ft_dprintf(2, "_______________________________________________\n");
+	return (input);
 }

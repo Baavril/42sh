@@ -6,14 +6,17 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 11:41:38 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/08 17:12:19 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/22 14:48:43 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell_variables.h"
-#include "maths_interne.h"
+#include "maths_expansion.h"
 #include "expansions.h"
+#include "error.h"
 #include "libft.h"
+
+extern char		*g_exptok;
 
 int				ft_isnumber(char *to_test)
 {
@@ -39,14 +42,14 @@ static int		ft_arg_value_base(char *base, char *nbr, int64_t *value)
 	base_len = 0;
 	if ((ft_strchr(nbr, '#')))
 	{
-//		print_error("invalid_number"));
+		psherror(e_invalid_number, g_exptok, e_maths_type);
 		return (CONV_FAIL);
 	}
 	if (ft_isnumber(base))
 		base_len = ft_atoi(base);
 	if (base_len < 2 || base_len > 64)
 	{
-//		print_error("invalid arithmetic base"));
+		psherror(e_invalid_base, g_exptok, e_maths_type);
 		return (CONV_FAIL);
 	}
 	ft_memcpy(conv_base, BASE, base_len);
@@ -58,6 +61,7 @@ static int		ft_arg_value_base(char *base, char *nbr, int64_t *value)
 
 int				ft_arg_value(char *token, int64_t *value)
 {
+	int		ret;
 	char	*expr;
 
 	*value = 0;
@@ -66,10 +70,13 @@ int				ft_arg_value(char *token, int64_t *value)
 	if (ft_isdigit(*token))
 		return (ft_int64_convert(value, token, NULL));
 	expr = getshvar(token);
-	if (ft_isnumber(expr))
-		return (ft_int64_convert(value, expr, DEF_BASE));
-	if (ft_maths_expansion(expr, &expr) == SUCCESS)
-		return (ft_int64_convert(value, expr, NULL));
+	if (ft_isnumber(expr) || ft_maths_expansion(expr, &expr) == SUCCESS)
+	{
+		ret = ft_int64_convert(value, expr, DEF_BASE);
+		ft_strdel(&expr);
+		return (ret);
+	}
+	ft_strdel(&expr);
 	*value = 0;
 	return (CONV_FAIL);
 }

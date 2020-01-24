@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 16:49:15 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/03 19:46:15 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/18 16:24:33 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <term.h>
 #include <curses.h>
 
-static struct termios input_termcaps(struct termios term)
+static struct termios	input_termcaps(struct termios term)
 {
 	term.c_cc[VMIN] = 1; 
 	term.c_cc[VTIME] = 0;
@@ -25,10 +25,10 @@ static struct termios input_termcaps(struct termios term)
 	return (term);
 }
 
-int set_termcaps(int arg)
+int						set_termcaps(int arg)
 {
-	static struct termios backup_term;
-	struct termios term;
+	static struct termios	backup_term;
+	struct termios			term;
 
 	if (tcgetattr(STDIN_FILENO, &term) < 0)
 		return (1);

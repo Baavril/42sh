@@ -10,15 +10,22 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+les taches :
+- l'affichage des binaires
+- les leaks
+- et le path affichage et prise en compte*/
+
 #include "auto_completion.h"
 #include <stdio.h>
+
+int realloc_n;
 
 void	print_double_char(char **tab)
 {
 	int	i;
 
 	i = 0;
-	ft_putchar('\n');
 	while (tab && tab[i] != NULL)
 	{
 		ft_putendl(tab[i]);
@@ -26,19 +33,177 @@ void	print_double_char(char **tab)
 	}
 }
 
-static char	**ft_path(char *input)
+static char *ft_dirchr(char *input)
 {
-	char	**words;
+	char 	*cur_dir;
+	char 	svg;
+	char 	*last_bslash;
+	int 	i;
 
-	words = NULL;
-	if (input && input[0] == '/')
+	i = 0;
+	last_bslash = NULL;
+	while (input[i] != '\0' && !ft_isspace(input[i]))
 	{
-		
+		if (input[i] == '/')
+		{
+			svg = input[i];
+			last_bslash = &input[i];
+		}
+		i++;
 	}
-	else if (input)
+	if (last_bslash != NULL)
 	{
+		*last_bslash = '\0';
+		if (input[0] == '\0')
+			cur_dir = ft_strdup("/");
+		else
+			cur_dir = ft_strdup(input);
+		*last_bslash = svg;
+	}
+	else
+		cur_dir = ft_strdup(getenv("PWD"));
+	return (cur_dir);
+}
 
+static char *ft_last_back_slash(char *input)
+{
+	int 	i;
+	char 	*point;
+
+	i = 0;
+	point = NULL;
+	while (input[i] != '\0')
+	{
+		if (input[i] == '/')
+			point = &input[i + 1];
+		i++;
 	}
+	if (point == NULL)
+		point = input;
+	return (point);
+}
+
+static int	ft_pointchr(char *str1, char *str2)
+{
+	int	i;
+
+	i = 0;
+	if (!str1 && !str2)
+		return (0);
+	while (str1[i] && str2[i] && !ft_isspace(str1[i]))
+	{
+		if (str1[i] != str2[i])
+			return (0);
+		i++;
+	}
+	if (str1[i] && str2 && !ft_isspace(str1[i]))
+		return (0);
+	return (1);
+}
+
+static char 	**ft_realloc(char **words)
+{
+	char 	**tmp;
+	int 	i;
+
+	i = 0;
+	realloc_n *= 2;
+	if (!(tmp = (char**)malloc(sizeof(char*) * realloc_n)))
+		return (NULL);
+	while (words[i] != NULL)
+	{
+		tmp[i] = words[i];
+		i++;
+	}
+	tmp[i] = NULL;
+	free(words);
+	words = tmp;
+	return (words);
+}
+
+static char		**ft_path(char *input)// FAIRE ATTENTION AUX FREE
+{
+	int 			i;
+	char			**words;
+	struct dirent 	*dirent;
+	DIR				*dir;
+	char 			*point;
+
+	i = 0;
+	dir = NULL;
+	realloc_n = 64;
+	if (!(words = (char**)malloc(sizeof(char*) * realloc_n)))
+		return (NULL);
+	if (input)
+	{
+		point = ft_dirchr(input);
+		if ((dir = opendir(point)) == NULL)
+		{
+			ft_strdel(&point);
+			ft_dprintf(2, "No such file or directory\n");
+			return (NULL);
+		}
+		ft_strdel(&point);
+		point = ft_last_back_slash(input);
+		//ft_printf("after: point[%s]", point);
+		ft_putchar('\n');
+		while ((dirent = readdir(dir)) != NULL)//realloc
+		{
+			if (ft_pointchr(point, dirent->d_name))// add point
+			{
+				if (i == realloc_n - 1 && !(words = ft_realloc(words)))
+				{
+					del_double_char(words);
+					return (NULL);
+				}
+				if (*point == '\0' || ft_isspace(*point))
+				{
+					if (ft_strcmp("..", dirent->d_name) && ft_strcmp(".", dirent->d_name))
+					{
+						if (dirent->d_type == 4)
+						{
+							if (!(words[i] = ft_strjoin(dirent->d_name, "/")))
+							{
+								del_double_char(words);
+								return (NULL);
+							}
+						}
+						else
+						{
+							if (!(words[i] = ft_strdup(dirent->d_name)))
+							{
+								del_double_char(words);
+								return (NULL);
+							}
+						}
+						i++;
+					}
+				}
+				else if (dirent->d_type == 4)
+				{
+					if (!(words[i] = ft_strjoin(dirent->d_name, "/")))
+					{
+						del_double_char(words);
+						return (NULL);
+					}
+					i++;
+				}
+				else if (dirent->d_type == 8)
+				{
+					if (!(words[i] = ft_strdup(dirent->d_name)))
+					{
+						del_double_char(words);
+						return (NULL);
+					}
+					i++;
+				}
+			}
+			words[i] = NULL;
+		}
+	//	printf("--PATH2\n");	
+	}
+	if (dir)
+		closedir(dir);
 	return (words);
 }
 
@@ -200,12 +365,46 @@ static char	**ft_binary(t_tst *tst, char *input)
 	return (words);
 }
 
-int 	ft_auto_completion(t_tst *tst, char *input, char ***words)
+static int pos_start(char *input, int start)
 {
-	if (((*words) = ft_binary(tst, input)) == NULL)
-		if (((*words) = ft_path(input)) == NULL)
-			return (0);
-	if ((*words) && (*words)[0] != NULL &&(*words)[1] == NULL)
+	if (ft_isspace(input[start]))
+		start--;
+	if (!ft_isspace(input[start]))
+	{
+		while (start > 0 && !ft_isspace(input[start]))
+			start--;
+		if (ft_isspace(input[start]))
+			start++;
+	}
+	return (start);
+}
+
+int 	ft_restart(char *input, int start)
+{
+	start--;
+	while (start >= 0 && ft_isspace(input[start]))
+		start--;
+	if (start != -1 && (input[start] == '|' || input[start] == '&' || input[start] == ';'))
 		return (1);
-	return (2);
+	else
+		return (0);
+}
+
+int 	ft_auto_completion(t_tst *tst, char *input, char ***words, int start)
+{
+	start = pos_start(input, start);
+	if (start == 0 || ft_restart(input, start))
+	{
+		if (((*words) = ft_binary(tst, &input[start])) == NULL)
+			if (((*words) = ft_path(&input[start])) == NULL)
+				return (0);
+	}
+	else
+	{
+		if (((*words) = ft_path(&input[start])) == NULL)
+			return (0);
+	}
+	if ((*words) && (*words)[0] != NULL && (*words)[1] == NULL)
+		return (2);
+	return (3);
 }

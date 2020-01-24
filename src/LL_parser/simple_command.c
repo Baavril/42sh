@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:36:39 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/05 09:40:52 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/22 11:48:58 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_node	*cmd_suffix(t_token tok)
 {
 	t_node	*node;
 	t_elem	tmp1;
-	int (*f)(t_elem left, t_elem right);
+	int (*f)(t_elem *left, t_elem *right);
 
 	if (((tmp1.v = io_redirect(tok)) && (f = i_suffix_redirect))
 	 || ((tmp1.c = word(tok)) && (f = i_suffix_word)))
@@ -35,7 +35,7 @@ t_node	*cmd_suffix(t_token tok)
 		node->left = tmp1;
 		node->right.v = NULL;
 		if (is_potential(peek(), N_SUFFIX))
-			node->right.v = cmd_suffix(gnt(NULL));
+			node->right.v = cmd_suffix(eat());
 		node->f	= f;
 		return(node);
 	}
@@ -59,7 +59,7 @@ t_node *exec(t_token tok)
 		node->left.c = tmp1;
 		node->right.v = NULL;
 		if (is_potential(peek(), N_SUFFIX))
-			node->right.v = cmd_suffix(gnt(NULL));
+			node->right.v = cmd_suffix(eat());
 		node->f	= is_a_builtin(tmp1) ? i_builtin : i_exec;
 		return(node);
 	}
@@ -77,15 +77,17 @@ t_node	*cmd_prefix(t_token tok)
 {
 	t_node	*node;
 	t_elem	tmp1;
+	int (*f)(t_elem *left, t_elem *right);
 
-	if (((tmp1.v = io_redirect(tok))) || (tmp1.c = assig_word(tok))) //ALED
+	if (((tmp1.v = io_redirect(tok)) && (f = i_suffix_redirect))
+	 || ((tmp1.c = assig_word(tok)) && (f = i_prefix)))
 	{
 		node = malloc(sizeof(t_node));
 		node->left = tmp1;
 		node->right.v = NULL;
 		if (is_potential(peek(), N_PREFIX))
-			node->right.v = cmd_prefix(gnt(NULL));
-		node->f	= i_prefix;
+			node->right.v = cmd_prefix(eat());
+		node->f	= f;
 		return(node);
 	}
 	return(NULL);
@@ -108,7 +110,7 @@ t_node	*simple_command(t_token tok)
 		{
 			node = malloc(sizeof(t_node));
 			node->left.v = tmp1;
-			node->right.v = exec(gnt(NULL));
+			node->right.v = exec(eat());
 			node->f = i_simple_command;
 			return(node);
 		}

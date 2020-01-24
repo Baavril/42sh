@@ -6,16 +6,29 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:43:12 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/08 18:19:18 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/22 14:50:49 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "shell_variables.h"
-#include "maths_interne.h"
+#include "maths_expansion.h"
 #include "libft.h"
 
-//extern struct s_svar	*g_svar;
+extern struct s_svar	*g_svar;
+
+int						ft_is_varname(const char *token)
+{
+	if (ft_isdigit(*token))
+		return (0);
+	while (*token)
+	{
+		if (!(ft_isalnum(*token) || *token == '_'))
+			return (0);
+		token++;
+	}
+	return (1);
+}
 
 char					*getshvar(char *var_name)
 {
@@ -57,4 +70,6 @@ void					setshvar(char *var_name, int64_t value)
 	assig_word[name_len + 1 + val_len] = '\0';
 	if (checkvarlst(assig_word))
 		listadd_back(newnodshell(assig_word, 0));
+	ft_strdel(&assig_word);
+	ft_strdel(&var_value);
 }

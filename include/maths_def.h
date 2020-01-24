@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 14:35:39 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/11/20 15:01:27 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/19 11:33:23 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,9 @@
 # define POSSIBLY_TOKEN		3
 
 # define INCR_PRIO			1
-# define POSTCR_PRIO		1
 # define PRECR_PRIO			2
 # define NEG_PRIO			3
-# define EXP_PRIO			3
+# define EXP_PRIO			4
 # define MUL_PRIO			5
 # define ADD_PRIO			6
 # define SH_PRIO			7
@@ -55,6 +54,12 @@
 # define RIGHT				0
 
 typedef int				(t_ft_maths)(void *, void *, int64_t *);
+
+typedef struct			s_set_var
+{
+	char				*var_name;
+	int64_t				value;
+}						t_set_var;
 
 typedef struct			s_maths_op
 {

@@ -6,116 +6,86 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/05 11:55:05 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/19 13:30:29 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
-#include "history.h"
-#include "builtins.h"
-#include "libft.h"
 #include "shell_variables.h"
+#include "termcaps.h"
+#include "builtins.h"
+#include "history.h"
+#include "libft.h"
 #include "error.h"
 #include "jcont.h"
-#include "termcaps.h"
 
 extern int		g_retval;
-struct s_svar	*g_svar;
+extern struct s_svar	*g_svar;
+extern struct s_pos		*g_pos;
 
-static int	part_sep(int argc, char **argv)
+static int		ft_clean_exit(char **av, int exit_status)
 {
-	extern char	**environ;
-	unsigned char	status;
-	
-	status = g_retval;
-	if (!ft_strcmp("--", argv[1]))
-	{
-		if (argc == 2)
-		{
-			ft_tabdel(&argv);
-			ft_tabdel(&environ);
-			ft_dprintf(STDERR_FILENO, "exit\n");
-			history(DELETE, NULL, NULL);
-			exit(status);
-		}
-		return (2);
-	}
-	return (1);
-}
+	struct s_svar	*tmp1;
+	struct s_pos	*tmp2;
+	extern char		**environ;
 
-static int	numarg_exit(int argc, char **argv, int i)
-{
-	extern char	**environ;
-	unsigned char	status;
-	
-	status = g_retval;
-	ft_dprintf(STDERR_FILENO, "exit\n");
-	if (argc > i + 1)
+	if (ft_free_jcont())
 	{
-		ft_dprintf(STDERR_FILENO,
-		"%s: %s: too many arguments\n",	g_progname, argv[0]);
+		ft_dprintf(STDERR_FILENO, "There are stopped jobs.\n");
 		return (1);
 	}
-	status = (unsigned char)ft_atoi(argv[i]);
-	history(DELETE, NULL, NULL);
-	ft_tabdel(&argv);
-	ft_tabdel(&environ);
-	exit(status);
-}
-
-static void	nomatter_exit(char **argv, int i)
-{
-	extern char	**environ;
-	
-	ft_dprintf(STDERR_FILENO, "exit\n");
-	ft_dprintf(STDERR_FILENO,
-	"%s: %s: %s: numeric argument required\n",
-			g_progname, argv[0], argv[i]);
-	history(DELETE, NULL, NULL);
-	ft_tabdel(&argv);
-	ft_tabdel(&environ);
-	exit(2);
-}
-
-static void	ft_free_internvars(void)
-{
-	struct s_svar *tmp;
-
 	while (g_svar)
 	{
-		tmp = g_svar->next;
+		tmp1 = g_svar->next;
 		ft_strdel(&(g_svar->str));
 		ft_strdel(&(g_svar->key));
 		ft_strdel(&(g_svar->value));
 		free(g_svar);
-		g_svar = tmp;
+		g_svar = tmp1;
 	}
-}
-
-int		cmd_exit(int argc, char **argv)
-{
-	extern char	**environ;
-	unsigned char	status;
-	int		i;
-
-	status = g_retval;
-	if (argc > 1)
+	while (g_pos)
 	{
-		i = part_sep(argc, argv);
-		if (*argv[i]
-			&& (((*argv[i] == '-' || *argv[i] == '+') && ft_str_is_numeric(&argv[i][i]))
-			|| ft_str_is_numeric(argv[i])) && ft_strcmp("--", argv[i]))
-			return (numarg_exit(argc, argv, i));
-		else
-			nomatter_exit(argv, i);
+		tmp2 = g_pos->next;
+		ft_strdel(&(g_pos->str));
+		ft_strdel(&(g_pos->key));
+		ft_strdel(&(g_pos->value));
+		free(g_pos);
+		g_pos = tmp2;
 	}
-	ft_tabdel(&argv);
+	ft_tabdel(&av);
 	ft_tabdel(&environ);
 	history(DELETE, NULL, NULL);
 	ft_free_bintable();
-	ft_free_internvars();
 	set_termcaps(TC_RESTORE);
 	//system("leaks 42sh");
-	exit(status);
+	exit(exit_status);
+}
+
+int				cmd_exit(int ac, char **av)
+{
+	int		exit_status;
+	int		i;
+
+	exit_status = (unsigned char)g_retval;
+	//ft_dprintf(STDERR_FILENO, "exit\n");
+	if (ac > 1)
+	{
+		i = (!ft_strcmp("--", av[1]) && ac > 2) ? 2 : 1;
+		if (ft_isnumber(av[i]))
+		{
+			if (av[i + 1])
+			{
+				ft_dprintf(STDERR_FILENO,
+						"%s: %s: too many arguments.\n", g_progname, av[0]);
+				return (1);
+			}
+			exit_status = (unsigned char)ft_atoi(av[i]);
+		}
+		else if (ft_strcmp("--", av[1]) && (exit_status = 2))
+			ft_dprintf(STDERR_FILENO,
+						"%s: exit: %s: numeric argument required.\n",
+						g_progname, av[i]);
+	}
+	return (ft_clean_exit(av, exit_status));
 }

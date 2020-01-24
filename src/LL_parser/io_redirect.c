@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:33:42 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/12/21 15:06:13 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/21 12:56:23 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "parser.h"
 #include "libft.h"
 
-int		(*g_redirect[])(t_elem left, t_elem right) =
+int		(*g_redirect[])(t_elem *left, t_elem *right) =
 {
 	&i_less,
 	&i_dless,
@@ -38,7 +38,7 @@ t_node	*io_redirect(t_token tok)
 	char	*tmp1;
 
 	if ((tmp1 = io_number(tok)))
-			tok = gnt(NULL);
+			tok = eat();
 	if (   tok.type >= LESS
 		&& tok.type <= CLOBBER)
 	{
@@ -47,9 +47,9 @@ t_node	*io_redirect(t_token tok)
 		node->f = g_redirect[tok.type - LESS];
 		if (tok.type == DLESS
 		 || tok.type == DLESSDASH)
-			node->right.c = here_end(gnt(NULL));
+			node->right.c = here_end(eat());
 		else
-			node->right.c = filename(gnt(NULL));
+			node->right.c = filename(eat());
 		if (!node->right.c)
 			exit(ft_printf("parsing error in io_redirect"));
 		return(node);

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/09/25 16:28:02 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/01/15 18:54:48 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,11 @@
 #include "error.h"
 #include "path.h"
 
-static int	parse_opt(int argc, char **argv, _Bool *p)
+extern int		g_optind;
+extern int		g_opterr;
+extern int		g_optopt;
+
+static int		parse_opt(int argc, char **argv, _Bool *p)
 {
 	int	opt;
 
@@ -38,7 +42,7 @@ static int	parse_opt(int argc, char **argv, _Bool *p)
 	return (e_success);
 }
 
-int	cmd_pwd(int argc, char **argv)
+int				cmd_pwd(int argc, char **argv)
 {
 	char	*cwd;
 	int	ret;

@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 16:12:54 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/05 17:44:44 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/19 14:26:01 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,15 @@ int					ft_isvalid_aliasname(char *name)
 		i++;
 	}
 	return ((i > 0));
+}
+
+char				*ft_get_alias(char *alias_name)
+{
+	char	*str;
+
+	if ((str = ft_get_entry(g_alias, alias_name)))
+		return (ft_strdup(str));
+	return (NULL);
 }
 
 void				ft_treat_alias(char **first_arg)

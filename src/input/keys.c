@@ -1,9 +1,9 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   keys->c                                             :+:      :+:    :+:   */
+/*   keys->c                                             :+:      :+:    :+:  */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprunevi <marvin@42->fr>                    +#+  +:+       +#+        */
+/*   By: bprunevi <marvin@42->fr>                    +#+  +:+       +#+       */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 18:02:02 by bprunevi          #+#    #+#             */
 /*   Updated: 2019/11/16 21:53:45 by yberramd         ###   ########.fr       */
@@ -130,29 +130,98 @@ int backspace_key(char **buff, t_cursor *cursor)
  * plus de leaks sur les tab keys -> fonctions a realiser pour prendre en charge autocompletion
  */
 
+/***********************************************AUTOCOMPLETION*********************************************************/
+
+static int pos_start(char *input, int start)
+{
+	if (ft_isspace(input[start]))
+		start--;
+	if (!ft_isspace(input[start]))
+	{
+		while (start > 0 && !ft_isspace(input[start]) && input[start] != '/')
+			start--;
+		if (ft_isspace(input[start]) || input[start] == '/')
+			start++;
+	}
+	return (start);
+}
+
+static char *ft_add_string(char *input, char **binary, int start)
+{
+	char 	*tmp;
+	int 	len;
+	int 	i;
+	int 	y;
+
+	i = 0;
+	start = pos_start(input, start);
+	y = start;
+	while (input[y] != '\0' && input[y] == (*binary)[i])
+	{
+		y++;
+		i++;
+	}
+	len = ft_strlen((*binary)) - i;
+	if (!(tmp = (char*)malloc(sizeof(char) * (len + ft_strlen(input) + 1))))
+		return (NULL);
+	len = i;
+	i = 0;
+	while (i < start)
+	{
+		tmp[i] = input[i];
+		i++;
+	}
+	y = 0;
+	while ((*binary)[y] != '\0')
+	{
+		tmp[i] = (*binary)[y];
+		i++;
+		y++;
+	}
+	start = start + len;
+	while (input[start] != '\0')
+	{
+		tmp[i] = input[start];
+		start++;
+		i++;
+	}
+	tmp[i] = '\0';
+	return (tmp);
+}
+
 int tab_key(char **buff, t_cursor *cursor)
 {
 	int 	ret;
 	t_tst 	*tst;
 	char 	**binary;
+	char 	*input;
 
 	if (!cursor->end)
 		return(1);
 	tst = ft_tst();
-	if (!(ret = ft_auto_completion(tst, *buff, &binary)))
+	if (!(ret = ft_auto_completion(tst, *buff, &binary, cursor->start)))// curseur !!!!!!
 		return (0);
-	else if (ret == 1)
+	if (ret == 2)
 	{
-		//printf("binary [%s]\n", binary[0]);
-		set_string(buff, cursor, binary[0]);
+		if (!(input = ft_add_string(*buff, &binary[0], cursor->start)))
+		{
+			del_tst(tst);
+			del_double_char(binary);
+			return (0);
+		}
+		ft_printf("path = [%s]\n", binary[0]);
+		set_string(buff, cursor, input);
+		ft_strdel(&input);
 	}
 	else
-		print_double_char(binary);
+		print_double_char(binary);//FAIRE UN display
 	//printf("ret = %d\n", ret);
 	del_tst(tst);
 	del_double_char(binary);
 	return (1);
 }
+
+/**********************************************************************************************************************/
 
 int down_arrow(char **buff, t_cursor *cursor)
 {

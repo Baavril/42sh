@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:31:39 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/12/11 18:17:16 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/18 11:01:23 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void		ft_set_prio(void)
 	while (voyager)
 	{
 		job = voyager->content;
-		if (i < 2 && ISFOREGROUND(job->status))
+		if (i < 2 && !(job->status & BACKGROUND))
 			g_jcont.active_jobs[i++] = job->nbr;
 		if (i > 1)
 			return ;
@@ -35,7 +35,7 @@ void		ft_set_prio(void)
 	while (voyager)
 	{
 		job = voyager->content;
-		if (i < 2 && ISBACKGROUND(job->status))
+		if (i < 2 && (job->status & BACKGROUND))
 			g_jcont.active_jobs[i++] = job->nbr;
 		if (i > 1)
 			return ;

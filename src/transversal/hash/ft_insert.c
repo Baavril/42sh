@@ -6,12 +6,9 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 12:52:54 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/11/06 18:23:33 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/13 22:02:24 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <stdio.h>
-
 
 #include <stdlib.h>
 #include "htable_type_dispatcher.h"
@@ -29,7 +26,7 @@ static void			ft_resize_htable(t_htable *htable)
 	htable->ran_a = ft_get_ran(htable->big_prime);
 	htable->ran_b = ft_get_ran(htable->big_prime);
 	free(htable->table);
-	/*ft_check_memory(*/htable->table = (t_hlist **)ft_memalloc(sizeof(t_hlist *)
+	/*ft_check_memory(*/htable->table = (t_hlist **)ft_memalloc(sizeof(t_hlist*)
 														* htable->table_size);
 	voyager = entries;
 	while (voyager)

@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -6,7 +7,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 15:52:12 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/27 15:53:58 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/14 15:03:05 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +23,18 @@ struct s_token	g_grammar_symbols[] =
 {
 	{ AND_IF, "&&" },
 	{ OR_IF, "||" },
+	{ CLOBBER, ">|" },
+	{ DLESSDASH, "<<-" },
 	{ DLESS , "<<" },
 	{ DGREAT, ">>" },
 	{ LESSAND, "<&" },
 	{ GREATAND, ">&" },
 	{ LESSGREAT, "<>" },
-	{ DLESSDASH, "<<-" },
-	{ PIPE, "|" }, /* not shell grammar native */
-	{ GREAT, ">" }, /* not shell grammar native */
-	{ LESS, "<" }, /* not shell grammar native */
-	{ CLOBBER, ">|" }, /* not shell grammar native */
-	{ SEMI, ";" }, /* not shell grammar native */
+	{ PIPE, "|" },
+	{ AND, "&" },
+	{ GREAT, ">" },
+	{ LESS, "<" },
+	{ SEMI, ";" },
 	{ If, "if" },
 	{ Then, "then" },
 	{ Else, "else" },

@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 17:13:25 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/11/06 18:11:39 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/18 12:24:38 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,38 +20,38 @@
 **                   <>>> ABSTRACT FROM POSIX MAN <<<>
 **
 **        hash -- remember or report utility locations
-** 
+**
 ** SYNOPSIS
-** 
+**
 **        hash [utility...]
-** 
+**
 **        hash -r
-** 
+**
 ** DESCRIPTION
-** 
+**
 **        The hash utility shall affect the way the current shell environment
-** remembers the locations of utilities found as described in Section 2.9.1.1, 
+** remembers the locations of utilities found as described in Section 2.9.1.1,
 ** Command Search and Execution. Depending on the arguments specified, it shall
 ** add utility locations to its list of remembered locations or it shall purge
 ** the contents of the list. When no arguments are specified, it shall report
 ** on the contents of the list.
-** 
+**
 **        Utilities provided as built-ins to the shell shall not be reported by
 ** hash.
-** 
+**
 ** OPTIONS
-** 
+**
 **        The hash utility shall conform to the Base Definitions volume of
 ** POSIX.1-2008, Section 12.2, Utility Syntax Guidelines.
-** 
+**
 **        The following option shall be supported:
-** 
+**
 **        -r : Forget all previously remembered utility locations.
-** 
+**
 ** OPERANDS
-** 
+**
 **        The following operand shall be supported:
-** 
+**
 **        [utility_name] : The name of a utility to be searched for and added
 ** to the list of remembered locations. If utility contains one or more <slash>
 ** characters, the results are unspecified.
@@ -134,9 +134,6 @@ int				cmd_hash(int ac, char **av)
 		ft_print_sortentries(g_bintable);
 	}
 	while (i < ac)
-	{
-		ret |= ft_find_and_hash(av[i]);
-		i++;
-	}
+		ret |= ft_find_and_hash(av[i++]);
 	return (ret);
 }
