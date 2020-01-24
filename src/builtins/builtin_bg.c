@@ -19,7 +19,7 @@ extern char			*g_progname;
 
 int					ft_resume_in_bg(t_job *job)
 {
-	if (!killpg(job->pgid, SIGCONT))
+	if (!kill(-job->pgid, SIGCONT))
 	{
 		job->status = RUNNING | BACKGROUND;
 		ft_set_prio();

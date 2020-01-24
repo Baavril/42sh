@@ -402,7 +402,6 @@ char	**ft_globing(char **split)
 	struct dirent *filedata;
 	DIR *dirhandle;
 	char **dir;
-	char *ret;
 	char **tmp;
 	char **ptm;
 	int i;
@@ -413,7 +412,6 @@ char	**ft_globing(char **split)
 	i = 0;
 	j = 0;
 	n = 0;
-	ret = NULL;
 	filedata = NULL;
 	if (!(dir = (char **)malloc(sizeof(char *) * 4096)))
 		return (NULL);
