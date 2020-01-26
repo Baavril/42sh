@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 17:54:14 by abarthel          #+#    #+#             */
-/*   Updated: 2019/07/06 15:43:07 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/01/23 16:23:55 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ char	*ft_getenv(const char *name)
 			if (environ[i][j] != '=' || name[j])
 				++i;
 			else
-			{
-				++j;
-				return (&environ[i][j]);
-			}
+				return (ft_strdup(&(environ[i][++j])));
 		}
 	}
 	return (NULL);

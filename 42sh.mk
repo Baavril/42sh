@@ -102,14 +102,16 @@ SOURCES			:=		main.c \
 						builtins/builtin_alias/cmd_alias.c \
 						builtins/builtin_alias/cmd_unalias.c \
 						builtins/builtin_alias/alias_tools.c \
+						builtins/builtin_cd/cmd_cd.c \
+						builtins/builtin_cd/file_stats.c \
+						builtins/builtin_cd/ft_simplify_path.c \
+						builtins/builtin_cd/path_tools.c \
 						builtins/builtin_set.c \
 						builtins/builtin_unset.c \
 						builtins/builtin_export.c \
-						builtins/builtin_cd.c \
 						builtins/builtin_echo.c \
 						builtins/builtin_type.c \
 						builtins/builtin_exit.c \
-						builtins/builtin_pwd.c \
 						builtins/builtin_hash.c \
 						builtins/builtin_history.c \
 						builtins/builtin_truefalse.c \
