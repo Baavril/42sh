@@ -16,10 +16,11 @@
 # define CD_OPT					"+LP"
 # define EXEC_SUCCESS			0
 # define ERROR					1
-# define UNSET_VAR				1
-# define NO_PERM				1 //to check
-# define NOT_DIR				1 //to check
-# define TARGET_NOT_FOUND		1
+# define UNSET_OLDPWD			1
+# define UNSET_HOME				2
+# define NO_PERM				3
+# define NOT_DIR				4
+# define TARGET_NOT_FOUND		5
 # define STAT_ERROR				-1
 
 int				ft_get_permission(char *path);
@@ -29,5 +30,6 @@ int				ft_is_valid_dir(char *path);
 int				ft_get_abspath(char **new_pwd);
 int				ft_simplify_path(char **path);
 char			*ft_concatenate_path(char *src, char *rel_dst);
+int				ft_pcderror(int error_type, char *arg);
 
 #endif

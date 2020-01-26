@@ -21,38 +21,23 @@ static int		ft_rebuild_path_substlink(char **target, char **path_split)
 
 	while (*path_split)
 	{
-//		ft_dprintf(2, "PATH_BUILDING:  in: %s    %s\n", *target, *path_split);
 		tmp = ft_concatenate_path(*target, *path_split);
 		ft_strdel(target);
 		*target = tmp;
-//		ft_dprintf(2, "PATH_BUILDING: out: %s\n", *target);
 		if ((type = ft_gettype(*target)) == STAT_ERROR)
-		{
-			//NOSUCHFILE OR DIR
 			return (TARGET_NOT_FOUND);
-		}
-		if ((type & S_IFLNK))
+		if ((type & S_IFMT) == S_IFLNK)
 		{
-//			ft_dprintf(2, "PATH_BUILDING: link-found\n");
 			tmp = ft_get_link_target(*target);
 			ft_strdel(target);
 			*target = tmp;
-			if (!(type = ft_gettype(*target)))
-			{
-				//NOSUCHFILE OR DIR
+			if ((type = ft_gettype(*target)) == STAT_ERROR)
 				return (TARGET_NOT_FOUND);
-			}
 		}
-		if (!(type & S_IFDIR))
-		{
-			//%s: cd: %s: Not a directory. g_progname, av[g_optind]
+		if ((type & S_IFMT) != S_IFDIR)
 			return (NOT_DIR);
-		}
 		if (!ft_get_permission(*target))
-		{
-			//%s: cd: %s: Pemission denied.", g_progname, av[g_optind]
 			return (NO_PERM);
-		}
 		path_split++;
 	}
 	return (EXEC_SUCCESS);
@@ -100,22 +85,18 @@ int				ft_simplify_path(char **path)
 	while (split[i])
 	{
 		if (!ft_strcmp(split[i], "."))
-		{
 			ft_tab_linedel(&split, i, 1);
-			continue ;
-		}
-		if (!ft_strcmp(split[i], ".."))
+		else if (!ft_strcmp(split[i], ".."))
 		{
 			if (i > 0)
 				ft_tab_linedel(&split, --i, 2);
 			else
 				ft_tab_linedel(&split, 0, 1);
-			continue ;
 		}
-		i++;
+		else
+			i++;
 	}
 	ret = ft_rebuild_path_substlink(path, split);
-//	ft_dprintf(2, "PATH_BUILDING: final simple: %s\n", *path);
 	ft_tabdel(&split);
 	return (ret);
 }
