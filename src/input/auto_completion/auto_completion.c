@@ -353,6 +353,7 @@ static char	**ft_binary(t_tst *tst, char *input)
 	words = NULL;
 	if ((len = nbr_words(tst, input)) == 0)
 		return (NULL);
+	ft_putchar('\n');
 	if (!(words = (char**)malloc(sizeof(char*) * (len + 1))))
 		return (NULL);
 	words[len] = NULL;

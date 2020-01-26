@@ -246,18 +246,21 @@ static	int	new_word(char *str, t_tst **tst, int i)/*a coriger jeu de pointeur*/
 
 static	int	last_char(t_tst **tst)/*a coriger jeu de pointeur*/
 {
+	t_tst	*cpy;
+
+	cpy = NULL;
 	if ((*tst)->middle)
 		(*tst)->end = true;
 	else
 	{
-		if (!((*tst)->middle = (t_tst*)malloc(sizeof(t_tst))))//ajout de la fonction DEL !!!
+		if (!(cpy = (t_tst*)malloc(sizeof(t_tst))))//ajout de la fonction DEL !!!
 			return (-1);
-		(*tst) = (*tst)->middle;
-		(*tst)->c = '\0';
-		(*tst)->end = true;
-		(*tst)->left = NULL;
-		(*tst)->middle = NULL;
-		(*tst)->right = NULL;
+		(*tst)->middle = cpy;
+		cpy->c = '\0';
+		cpy->end = true;
+		cpy->left = NULL;
+		cpy->middle = NULL;
+		cpy->right = NULL;
 	}
 	return (1);
 }
@@ -296,7 +299,9 @@ static	int	add_word(char *str, t_tst *tst)/*a coriger jeu de pointeur*/
 	}
 	if (str[i] != '\0')
 		return (new_word(str, &tst->middle, i));
-	return (last_char(&tst));
+	if (tst->c != '\0')
+		return (last_char(&tst));
+	return (1);
 }
 
 static	int		create_tst(char **binaires, t_tst **tst)
