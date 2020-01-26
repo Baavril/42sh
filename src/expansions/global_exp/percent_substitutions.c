@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/23 11:25:42 by baavril          ###   ########.fr       */
+/*   Updated: 2020/01/26 17:41:38 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,18 @@ char	*ft_revstar(char *word)
 {
 	int i;
 	int len;
+	int flag;
 	char *tmp1;
 
 	i = 0;
+	flag = 0;
 	tmp1 = NULL;
 	len = (int)ft_strlen(word) - 1;
 	if (!(tmp1 = (char*)ft_memalloc(sizeof(char) * (len + 2))))
 		return (NULL);
 	while (len - 1 >= -1)
 	{
-		if (word[len] == CL_SQUAR)
+		while (word[len] == CL_SQUAR)
 		{
 			while (word[len] != OP_SQUAR)
 				--len;
@@ -71,8 +73,10 @@ char	*ft_revstar(char *word)
 				++i;
 			}
 			else if (len == 0 && word[len] == OP_SQUAR)
-				break ;
+				flag++;
 		}
+		if (flag)
+			break;
 		tmp1[i] = word[len];
 		++i;
 		--len;
