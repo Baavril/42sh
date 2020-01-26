@@ -200,7 +200,10 @@ int tab_key(char **buff, t_cursor *cursor)
 		return(1);
 	tst = ft_tst();
 	if (!(ret = ft_auto_completion(tst, *buff, &binary, cursor->start)))// curseur !!!!!!
+	{
+		del_tst(tst);
 		return (0);
+	}
 	if (ret == 2)
 	{
 		if (!(input = ft_add_string(*buff, &binary[0], cursor->start)))
