@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/24 17:31:23 by baavril          ###   ########.fr       */
+/*   Updated: 2020/01/26 19:59:48 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,11 +109,6 @@ int		check_deploy(char *str, char *match, int flag, int star)
 	if (match[0] == OP_SQUAR)
 		launch_deploy(&tmp, match, OP_SQUAR);
 	neg_deploy_case(ptm, &str);
-//	if (!match[0] && match[ft_strpchr(match, CL_SQUAR) + 1] == STAR
-//	&& ft_isalpha(match[ft_strpchr(match, CL_SQUAR) + 2]))
-//		ret = match[ft_strpchr(match, CL_SQUAR) + 2];
-//	ft_printf("here1sdaf2 %s\n", match);
-//	ft_printf("here2asdf3 %s\n", str);
 	if ((c = deploy_case(tmp, &ret, &str, flag)))
 	{
 		free_tmp_vars(&tmp, &ptm);

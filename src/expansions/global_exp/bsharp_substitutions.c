@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/19 12:56:15 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/26 20:02:10 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 #include "libft.h"
 
 extern struct s_svar	*g_svar;
-
-/* still need to fix the management of positional parameters and arrays. see bash man p 28 */
 
 int						bsharp_exp(char **token)
 {

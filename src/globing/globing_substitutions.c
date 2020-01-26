@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/08 18:31:11 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/26 20:30:28 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ char	**ft_globing(char **split, char *token)
 	int d;
 
 	i = 0;
-	j = 0;
 	n = 0;
 	d = 0;
 	tmp = NULL;
@@ -129,9 +128,9 @@ char	**ft_globing(char **split, char *token)
 		++i;
 	}
 	n = 0;
-	if (!d && split[i])
+	if (!d && split[i - 1])
 	{
-		ptm = (char**)malloc(sizeof(char*) * (ft_tablen(dir) + 1));
+		ptm = (char**)ft_memalloc(sizeof(char*) * (ft_tablen(dir) + 1));
 		while (dir[n])
 		{
 			ptm[n] = ft_strdup(dir[n]);
