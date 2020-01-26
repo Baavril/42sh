@@ -29,6 +29,7 @@ int						set_termcaps(int arg)
 {
 	static struct termios	backup_term;
 	struct termios			term;
+	char					*tmp;
 
 	if (tcgetattr(STDIN_FILENO, &term) < 0)
 		return (1);
@@ -39,8 +40,13 @@ int						set_termcaps(int arg)
 	if (arg == TC_INPUT)
 	{
 		term = input_termcaps(term);
-		if (tgetent(NULL, ft_getenv("TERM")) != 1)
+		tmp = ft_getenv("TERM");
+		if (tgetent(NULL, tmp) != 1)
+		{
+			ft_strdel(&tmp);
 			return (1);
+		}
+		ft_strdel(&tmp);
 	}
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &term) < 0)
 		return (1);

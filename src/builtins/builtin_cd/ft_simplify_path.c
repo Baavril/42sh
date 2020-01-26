@@ -22,7 +22,9 @@ static int		ft_rebuild_path_substlink(char **target, char **path_split)
 	while (*path_split)
 	{
 //		ft_dprintf(2, "PATH_BUILDING:  in: %s    %s\n", *target, *path_split);
-		*target = ft_concatenate_path(*target, *path_split);
+		tmp = ft_concatenate_path(*target, *path_split);
+		ft_strdel(target);
+		*target = tmp;
 //		ft_dprintf(2, "PATH_BUILDING: out: %s\n", *target);
 		if ((type = ft_gettype(*target)) == STAT_ERROR)
 		{

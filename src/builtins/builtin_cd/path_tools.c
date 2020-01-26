@@ -13,7 +13,7 @@
 #include "builtin_cd.h"
 #include "libft.h"
 
-char	*ft_concatenate_path(char *src, char *rel_dst)
+char			*ft_concatenate_path(char *src, char *rel_dst)
 {
 	size_t		src_len;
 	size_t		dst_len;
@@ -31,39 +31,36 @@ char	*ft_concatenate_path(char *src, char *rel_dst)
 	ft_memcpy(res_path, src, src_len);
 	res_path[src_len] = '/';
 	ft_memcpy(res_path + src_len + 1, rel_dst, dst_len);
-	res_path[src_len + dst_len + 2] = '\0';
+	res_path[src_len + dst_len + 1] = '\0';
 	return (res_path);
 }
 
-static int		ft_test_cdpaths(char **rel_dst)
+static char		*ft_test_cdpaths(char *rel_dst)
 {
 	size_t	i;
 	char	*cdpaths;
 	char	**split;
 
-	if (!rel_dst || !(*rel_dst) || !(cdpaths = ft_getenv("CD_PATH")))
+	if (!rel_dst || !(cdpaths = ft_getenv("CD_PATH")))
 		return (0);
 	i = 0;
 	split = ft_strsplit(cdpaths, ":");
 	ft_strdel(&cdpaths);
 	while (split[i])
 	{
-		cdpaths = ft_concatenate_path(split[i++], *rel_dst);
+		cdpaths = ft_concatenate_path(split[i++], rel_dst);
 		if (ft_is_valid_dir(cdpaths))
-		{
-			ft_strdel(rel_dst);
-			*rel_dst = cdpaths;
 			break ;
-		}
 		ft_strdel(&cdpaths);
 	}
 	ft_tabdel(&split);
-	return ((cdpaths) ? 1 : 0);
+	return (cdpaths);
 }
 
-int		ft_get_abspath(char **new_pwd)
+int				ft_get_abspath(char **new_pwd)
 {
 	char	*pwd;
+	char	*tmp;
 
 	if (!new_pwd || !*(new_pwd))
 		return (ERROR);
@@ -71,11 +68,14 @@ int		ft_get_abspath(char **new_pwd)
 	{
 		pwd = ft_getenv("PWD");
 		if ((*new_pwd)[0] == '.'
-		&& ((*new_pwd)[1] == '/' || ((*new_pwd)[1] == '.' && (*new_pwd)[2] == '/')))
-			*new_pwd = ft_concatenate_path(pwd, *new_pwd);
-		else if (!ft_test_cdpaths(new_pwd))
-			*new_pwd = ft_concatenate_path(pwd, *new_pwd);
+		&& ((*new_pwd)[1] == '/' 
+		|| ((*new_pwd)[1] == '.' && (*new_pwd)[2] == '/')))
+			tmp = ft_concatenate_path(pwd, *new_pwd);
+		else if (!(tmp = ft_test_cdpaths(*new_pwd)))
+			tmp = ft_concatenate_path(pwd, *new_pwd);
 		ft_strdel(&pwd);
+		ft_strdel(new_pwd);
+		*new_pwd = tmp;
 	}
 	return (EXEC_SUCCESS);
 }

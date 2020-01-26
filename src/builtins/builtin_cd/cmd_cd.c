@@ -79,6 +79,7 @@ static int		ft_cd_exec(char *target, int opt_p)
 	ft_dprintf(2, "CD_EXEC: absolute path: %s\n", new_pwd);
 	if (!opt_p && (ret = ft_simplify_path(&new_pwd)))
 	{
+		ft_strdel(&new_pwd);
 		ft_dprintf(2, "CD_EXEC: simplifiy fail: %s\n", new_pwd);
 		return (ret);
 	}
@@ -86,9 +87,9 @@ static int		ft_cd_exec(char *target, int opt_p)
 //	if (!ft_have_acces_right(new_pwd))
 		//Pemission denied/is file;
 	ret = ft_update_pwd(new_pwd);
-	if (!(ft_strcmp(target, "-")))
+	if (target && !(ft_strcmp(target, "-")))
 		ft_putendl(new_pwd);
-	free(new_pwd);
+	ft_strdel(&new_pwd);
 	return (ret);
 }
 
