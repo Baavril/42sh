@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/18 12:44:03 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/23 17:53:35 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ const t_builtins	g_builtins[] =
 	{ "echo", &cmd_echo},
 	{ "hash", &cmd_hash},
 	{ "exit", &cmd_exit},
-	{ "pwd", &cmd_pwd},
 	{ "cd", &cmd_cd},
 	{ "true", &cmd_true},
 	{ "false", &cmd_false},
@@ -41,8 +40,8 @@ const t_builtins	g_builtins[] =
 _Bool				prior_builtin(char *str)
 {
 	const struct s_prior_builtin	pbuiltin_list[] =
-	{ {"alias"}, {"unalias"}, {"echo"}, {"exit"}, {"hash"}, {"pwd"}, {"cd"},
-		{"type"}, {"test"}, {"set"}, {"fc"}, {"fg"}, {"bg"}, {"jobs"}, {"\0"} };
+	{ {"alias"}, {"unalias"}, {"echo"}, {"exit"}, {"hash"}, {"cd"}, {"type"},
+		{"test"}, {"set"}, {"fc"}, {"fg"}, {"bg"}, {"jobs"}, {"\0"} };
 	int								i;
 
 	i = 0;
