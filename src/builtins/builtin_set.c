@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:21:48 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/19 12:59:15 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/26 20:09:39 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,12 +108,6 @@ static int				set_positional_parameters(char **tokens)
 		g_pos = g_pos->next;
 		++pos;
 		++i;
-	}
-	g_pos = ptr;
-	while (g_pos)
-	{
-		printf("%s\n", ((char*)g_pos->str));
-		g_pos = g_pos->next;
 	}
 	g_pos = ptr;
 	return (0);

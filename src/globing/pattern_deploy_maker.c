@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/08 13:58:54 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/22 11:21:15 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static int	get_btw_square(char **match)
 			return (0);
 		return (SUCCESS);
 	}
-	if (!(tmp = (char*)ft_memalloc(sizeof(char) * (ft_strlen(*match)))))
+	if (!(tmp = (char*)ft_memalloc(sizeof(char) * (ft_strlen(*match) + 1))))
 		return (0);
 	while ((*match)[i] && (*match)[i] != CL_SQUAR)
 	{

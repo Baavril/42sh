@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/01/23 13:59:11 by bprunevi         ###   ########.fr        #
+#    Updated: 2020/01/27 11:48:56 by bprunevi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,14 +102,17 @@ SOURCES			:=		main.c \
 						builtins/builtin_alias/cmd_alias.c \
 						builtins/builtin_alias/cmd_unalias.c \
 						builtins/builtin_alias/alias_tools.c \
+						builtins/builtin_cd/cmd_cd.c \
+						builtins/builtin_cd/file_stats.c \
+						builtins/builtin_cd/ft_pcderror.c \
+						builtins/builtin_cd/ft_simplify_path.c \
+						builtins/builtin_cd/path_tools.c \
 						builtins/builtin_set.c \
 						builtins/builtin_unset.c \
 						builtins/builtin_export.c \
-						builtins/builtin_cd.c \
 						builtins/builtin_echo.c \
 						builtins/builtin_type.c \
 						builtins/builtin_exit.c \
-						builtins/builtin_pwd.c \
 						builtins/builtin_hash.c \
 						builtins/builtin_history.c \
 						builtins/builtin_truefalse.c \
@@ -193,4 +196,4 @@ CFLAGS += -Wall -Wextra -Werror -ansi -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200809
 
 #CFLAGS += -fno-builtin -O2
 
-CDEBUG += -g # -fsanitize=address -fno-optimize-sibling-calls
+CDEBUG += -g  #-fsanitize=address -fno-optimize-sibling-calls

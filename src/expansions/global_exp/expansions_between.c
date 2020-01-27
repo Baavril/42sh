@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/21 14:35:06 by baavril          ###   ########.fr       */
+/*   Updated: 2020/01/26 20:08:00 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-static char	*ft_btwquotes(char *tokens, int c, int d)
+static char		*ft_btwquotes(char *tokens, int c, int d)
 {
 	char	*ret;
 

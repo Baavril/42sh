@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/21 14:35:00 by baavril          ###   ########.fr       */
+/*   Updated: 2020/01/26 19:59:48 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	deploy_case(char *tmp, int *ret, char **str, int flag)
 			(*str)++;
 			c = tmp[i];
 			i = -1;
-			(*ret)++;
+			++(*ret);
 		}
 		else if (flag > 2)
 		{

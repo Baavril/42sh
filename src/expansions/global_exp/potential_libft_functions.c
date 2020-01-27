@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/08 13:58:54 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/22 18:40:52 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,11 @@ char *ft_strcdup(char *token, char c)
 int	ft_strpchr(char *str, char c)
 {
 	int i;
+	int len;
 
 	i = 0;
-	while (str[i])
+	len = ft_strlen(str);
+	while (i < len && str[i])
 	{
 		if (str[i] - c == 0)
 			return (i);
@@ -102,11 +104,17 @@ char *ft_strrev(char *token)
 	len = ft_strlen(token) - 1;
 	while (i < len)
 	{
+		if (token[len] == CL_SQUAR)
+		{
+			while  (i != len && token[len] != OP_SQUAR)
+				len--;
+		}
 		tmp = token[len];
 		token[len] = token[i];
 		token[i] = tmp;
-		i++;
 		len--;
+		i++;
 	}
+	//ft_printf("loool %s\n", token);
 	return (token);
 }

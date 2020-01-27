@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/15 15:48:09 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/01/23 16:27:09 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@
 #include "path.h"
 
 int					g_retval;
-char				g_pwd[] = {0};
 struct termios		g_old_termios;
 
 static int	set_minimal_env(void)
@@ -43,27 +42,22 @@ static int	set_minimal_env(void)
 	int		shlvl;
 
 	tmp = getcwd(NULL, 0);
-	if (ft_setenv("PWD", tmp, 1))
+	if (ft_setenv("PWD", tmp))
 		return (e_cannot_allocate_memory);
 	ft_memdel((void**)&tmp);
 	if (!(tmp = ft_getenv("SHLVL")))
 	{
-		if (ft_setenv("SHLVL", "1", 1))
+		if (ft_setenv("SHLVL", "1"))
 			return (e_cannot_allocate_memory);
 	}
 	else
 	{
 		shlvl = ft_atoi(tmp) + 1;
+		ft_strdel(&tmp);
 		tmp = ft_itoa(shlvl);
-		if (ft_setenv("SHLVL", tmp, 1))
+		if (ft_setenv("SHLVL", tmp))
 			return (e_cannot_allocate_memory);
 		ft_memdel((void**)&tmp);
-	}
-	if (PATH_MAX > 0)
-	{
-		tmp = ft_getenv("PWD");
-		if (ft_strlen(tmp) <= PATH_MAX)
-			ft_strcpy(g_pwd, ft_getenv("PWD"));
 	}
 	return (e_success);
 }
