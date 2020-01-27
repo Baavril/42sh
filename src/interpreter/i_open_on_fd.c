@@ -6,10 +6,11 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 13:20:56 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/22 14:33:52 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/27 12:51:43 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <unistd.h>
 #include <fcntl.h>
 

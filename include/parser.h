@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 16:02:57 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/15 12:27:44 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/23 14:13:59 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,5 @@ int eval_command(char **arg);
 int val_command(char **arg);
 int	open_on_fd(const char *path, int o_flags, mode_t mode, int final_fd);
 int	astdel(t_node *node);
+int	expand_tree(t_node *node);
 #endif

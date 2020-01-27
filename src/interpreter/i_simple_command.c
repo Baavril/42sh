@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:43:35 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/15 16:27:45 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/27 13:10:31 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	i_prefix(t_elem left, t_elem right)
 {
 	if (checkvarlst(left.c))
 		listadd_back(newnodshell(left.c, 0));
-	cmd_set(0, NULL);
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
 	return (0);
