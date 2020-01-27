@@ -19,6 +19,8 @@ static int		ft_rebuild_path_substlink(char **target, char **path_split)
 	int		type;
 	char	*tmp;
 
+	if (!(*path_split))
+		*target = ft_strdup("/");
 	while (*path_split)
 	{
 		tmp = ft_concatenate_path(*target, *path_split);
@@ -74,7 +76,7 @@ int				ft_tab_linedel(char ***tab, int index, int nbr)
 
 int				ft_simplify_path(char **path)
 {
-	int ret;
+	int		ret;
 	size_t	i;
 	char	**split;
 
