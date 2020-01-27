@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:48:12 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/15 12:24:15 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/27 15:17:15 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,37 +62,29 @@ t_node	*and_or(t_token tok)
 
 /*
  * comp_list	: and_or SEMI comp_list
+ 				| and_or SEMI (null) 
+ 				| and_or AND  comp_list
+ 				| and_or AND (null) 
  */
 t_node	*comp_list(t_token tok)
 {
 	t_node	*node;
 	t_node	*tmp1;
-	t_node	*tmp2;
 
 	if ((tmp1 = and_or(tok)))
 	{
+		node = malloc(sizeof(t_node));
+		node->left.v = tmp1;
+		node->f = i_comp_list;
 		if (is_potential(peek(), N_SEMI))
-		{
 			eat();
-			if ((tmp2 = comp_list(eat())))
-			{
-				node = malloc(sizeof(t_node));
-				node->left.v = tmp1;
-				node->right.v = tmp2;
-				node->f = i_comp_list;
-				return(node);
-			}
-		}
 		if (is_potential(peek(), N_AND))
 		{
 			eat();
-			node = malloc(sizeof(t_node));
-			node->left.v = tmp1;
-			node->right.v = comp_list(eat());
 			node->f = i_and_list;
-			return(node);
 		}
-		return(tmp1);
+		node->right.v = comp_list(eat());
+		return(node);
 	}
 	return(NULL);
 }

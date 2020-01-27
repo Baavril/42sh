@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 08:40:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/27 13:20:32 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/27 15:16:19 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int				expand_tree(t_node *node)
 	{
 		if (node_type & 0b10)
 		{
-			ft_printf("expanding left [%s]\n", node->left.c);
+			//ft_printf("expanding left [%s]\n", node->left.c);
 			expansions_treatment(&(node->left.c));
 		}
 		else
@@ -83,7 +83,7 @@ int				expand_tree(t_node *node)
 	{
 		if (node_type & 0b01)
 		{
-			ft_printf("expanding right [%s]\n", node->right.c);
+			//ft_printf("expanding right [%s]\n", node->right.c);
 			expansions_treatment(&(node->right.c));
 		}
 		else
