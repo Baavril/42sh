@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 08:40:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/27 15:16:19 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/27 20:41:30 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,11 @@ int				astdel(t_node *node)
 	if (node->left.c || node->left.v)
 	{
 		if (node_type & 0b10)
+		{
+			//ft_printf("free left [%p]\n", node->left.c);
+			//ft_printf("free left [%s]\n", node->left.c);
 			free(node->left.c);
+		}
 		else
 			astdel(node->left.v);
 		node->left.c = NULL;
@@ -53,7 +57,11 @@ int				astdel(t_node *node)
 	if (node->right.c || node->right.v)
 	{
 		if (node_type & 0b01)
+		{
+			//ft_printf("free left [%p]\n", node->right.c);
+			//ft_printf("free left [%s]\n", node->right.c);
 			free(node->right.c);
+		}
 		else
 			astdel(node->right.v);
 		node->right.c = NULL;
