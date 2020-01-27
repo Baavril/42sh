@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:13:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/27 15:17:39 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/27 15:56:43 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int				g_fclose = -1;
 
 int				i_comp_list(t_elem left, t_elem right)
 {
+	expand_tree(left.v);
 	left.v->f(left.v->left, left.v->right);
 	ft_launch_job("plop", FOREGROUND);
 	if (right.v)
@@ -34,6 +35,7 @@ int				i_comp_list(t_elem left, t_elem right)
 
 int				i_and_list(t_elem left, t_elem right)
 {
+	expand_tree(left.v);
 	left.v->f(left.v->left, left.v->right);
 	ft_launch_job("plop", BACKGROUND);
 	if (right.v)

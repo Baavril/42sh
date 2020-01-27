@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 14:29:21 by yberramd          #+#    #+#             */
-/*   Updated: 2020/01/27 14:22:09 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/27 15:56:42 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	execute(char *input)
 	t_node *AST;
 	AST = comp_list(gnt(input, 0));
 	eat();
-	expand_tree(AST);
 	interpret(AST);
 }
 
