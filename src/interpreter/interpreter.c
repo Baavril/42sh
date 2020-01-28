@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:13:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/28 20:26:53 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/28 20:33:39 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int				i_comp_list(t_elem left, t_elem right)
 	g_retval = left.v->f(left.v->left, left.v->right);
 	if (g_retval < 0)
 		g_retval = ft_launch_job("plop", FOREGROUND);
-	ft_printf("RTN %d\n", g_retval);
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
 	return (0);
