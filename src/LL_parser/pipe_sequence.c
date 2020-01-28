@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:48:12 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/27 15:17:15 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/28 16:23:22 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static t_node	*pipe_sequence(t_token tok)
 			node = malloc(sizeof(t_node));
 			node->left.v = tmp1;
 			node->right.v = tmp2;
-			ft_dprintf(2, "pipeseq with 2 elems was created\n");
 			node->f = i_pipe_sequence;
 			return(node);
 		}
@@ -57,7 +56,28 @@ static t_node	*pipeline(t_token tok)
  */
 t_node	*and_or(t_token tok)
 {
-	return(pipeline(tok));
+	t_node *node;
+	t_node *tmp1;
+	t_node *tmp2;
+	int (*f)(t_elem left, t_elem right);
+
+	if ((tmp1 = pipeline(tok)))
+	{
+		if ((is_potential(peek(), N_AND_IF) && (f = i_and_op))
+		 || (is_potential(peek(), N_OR_IF) && (f = i_or_op)))
+		{
+			eat();
+			if (!(tmp2 = and_or(eat())))
+				exit(ft_printf("error in and_or\n"));
+			node = malloc(sizeof(t_node));
+			node->left.v = tmp1;
+			node->right.v = tmp2;
+			node->f = f;
+			return(node);
+		}
+		return(tmp1);
+	}
+	return(NULL);
 }
 
 /*

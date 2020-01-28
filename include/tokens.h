@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 15:51:38 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/14 16:05:04 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/28 16:20:13 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ enum e_nodes
 	N_PIPE,
 	N_SEMI,
 	N_AND,
+	N_AND_IF,
+	N_OR_IF,
 };
 
 struct s_token

@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 16:02:57 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/23 14:13:59 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/28 16:21:31 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int		is_potential(t_token tok, int i);
 //io_redirect.c
 t_node	*io_redirect(t_token tok);
 //pipe_sequence.c
-t_node	*and_or(t_token tok);
 t_node	*comp_list(t_token tok);
 //simple_command.c
 t_node	*command(t_token tok);
@@ -78,6 +77,8 @@ int	i_greatand(t_elem left, t_elem right);
 int	i_lessgreat(t_elem left, t_elem right);
 int	i_dlessdash(t_elem left, t_elem right);
 int	i_clobber(t_elem left, t_elem right);
+int	i_and_op(t_elem left, t_elem right);
+int	i_or_op(t_elem left, t_elem right);
 
 int is_regfile(const char *arg);
 int eval_command(char **arg);
