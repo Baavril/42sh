@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:43:35 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/27 13:10:31 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/28 12:47:42 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,7 @@ int	i_exec(t_elem left, t_elem right)
 	g_argv[1] = NULL;
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
-	if (eval_command(g_argv))
-		exit(ft_dprintf(1, "unknown command : %s\n", *g_argv));
-	else
-		return (execve(g_argv[0], g_argv, environ));
+	return (execve(g_argv[0], g_argv, environ));
 }
 
 char **realloc_argv(char **argv, size_t i)
