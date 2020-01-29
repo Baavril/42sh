@@ -81,7 +81,7 @@ char	*ft_revstar(char *word)
 		++i;
 		--len;
 	}
-//	ft_printf("tmp %s\n", tmp1);
+	ft_strdel(&word);
 	return (tmp1);
 }
 
@@ -109,5 +109,6 @@ int
 	if (!(*token = ft_strdup(EMPTY_STR)))
 		return (ERROR);
 	g_svar = tmp;
+	ft_strdel(&word);
 	return (SUCCESS);
 }

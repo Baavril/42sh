@@ -37,10 +37,8 @@ SOURCES			:=		main.c \
 						globing/pattern_matching.c \
 						globing/pattern_matching_tools.c \
 						globing/pattern_why_matching.c \
-						globing/pattern_matching_deployement.c \
 						globing/pattern_deploy_launcher.c \
 						globing/pattern_deploy_maker.c \
-						globing/pattern_matching_core.c \
 						expansions/global_exp/expansions_main.c \
 						expansions/global_exp/expansions_split.c \
 						expansions/global_exp/expansions_bslash.c \
@@ -196,4 +194,4 @@ CFLAGS += -Wall -Wextra -Werror -ansi -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200809
 
 #CFLAGS += -fno-builtin -O2
 
-CDEBUG += -g  #-fsanitize=address -fno-optimize-sibling-calls
+CDEBUG += -g # -fsanitize=address -fno-optimize-sibling-calls
