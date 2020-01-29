@@ -138,9 +138,9 @@ static int pos_start(char *input, int start)
 		start--;
 	if (!ft_isspace(input[start]))
 	{
-		while (start > 0 && !ft_isspace(input[start]) && input[start] != '/')
+		while (start > 0 && !ft_isspace(input[start]) && input[start] != '/' && !(input[start] == '|' || input[start] == '&' || input[start] == ';'))
 			start--;
-		if (ft_isspace(input[start]) || input[start] == '/')
+		if (ft_isspace(input[start]) || input[start] == '/' || input[start] == '|' || input[start] == '&' || input[start] == ';')
 			start++;
 	}
 	return (start);

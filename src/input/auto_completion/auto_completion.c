@@ -372,9 +372,9 @@ static int pos_start(char *input, int start)
 		start--;
 	if (!ft_isspace(input[start]))
 	{
-		while (start > 0 && !ft_isspace(input[start]))
+		while (start > 0 && !ft_isspace(input[start]) && !(input[start] == '|' || input[start] == '&' || input[start] == ';'))
 			start--;
-		if (ft_isspace(input[start]))
+		if (ft_isspace(input[start]) || input[start] == '|' || input[start] == '&' || input[start] == ';')
 			start++;
 	}
 	return (start);
@@ -383,6 +383,10 @@ static int pos_start(char *input, int start)
 int 	ft_restart(char *input, int start)
 {
 	start--;
+	while (start >= 0 && !ft_isspace(input[start]) && !(input[start] == '|' || input[start] == '&' || input[start] == ';'))
+		start--;
+	if (start != -1 && (input[start] == '|' || input[start] == '&' || input[start] == ';'))
+		return (1);
 	while (start >= 0 && ft_isspace(input[start]))
 		start--;
 	if (start != -1 && (input[start] == '|' || input[start] == '&' || input[start] == ';'))
@@ -393,8 +397,16 @@ int 	ft_restart(char *input, int start)
 
 int 	ft_auto_completion(t_tst *tst, char *input, char ***words, int start)
 {
+	int 	tmp_start;
+
+	tmp_start = start;
 	start = pos_start(input, start);
-	if (start == 0 || ft_restart(input, start))
+	if (input[start] == '$')
+	{
+		ft_printf("DOLLARS\n");
+		(*words) = NULL;
+	}
+	else if (start == 0 || ft_restart(input, tmp_start))
 	{
 		if (((*words) = ft_binary(tst, &input[start])) == NULL)
 			if (((*words) = ft_path(&input[start])) == NULL)
