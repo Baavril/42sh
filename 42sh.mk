@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/01/29 16:16:08 by yberramd         ###   ########.fr        #
+#    Updated: 2020/01/29 16:18:16 by yberramd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,10 +37,8 @@ SOURCES			:=		main.c \
 						globing/pattern_matching.c \
 						globing/pattern_matching_tools.c \
 						globing/pattern_why_matching.c \
-						globing/pattern_matching_deployement.c \
 						globing/pattern_deploy_launcher.c \
 						globing/pattern_deploy_maker.c \
-						globing/pattern_matching_core.c \
 						expansions/global_exp/expansions_main.c \
 						expansions/global_exp/expansions_split.c \
 						expansions/global_exp/expansions_bslash.c \
@@ -104,6 +102,7 @@ SOURCES			:=		main.c \
 						builtins/builtin_alias/alias_tools.c \
 						builtins/builtin_cd/cmd_cd.c \
 						builtins/builtin_cd/file_stats.c \
+						builtins/builtin_cd/ft_pcderror.c \
 						builtins/builtin_cd/ft_simplify_path.c \
 						builtins/builtin_cd/path_tools.c \
 						builtins/builtin_set.c \
@@ -195,4 +194,4 @@ CFLAGS += -Wall -Wextra -Werror -ansi -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200809
 
 #CFLAGS += -fno-builtin -O2
 
-CDEBUG += -g  -fsanitize=address -fno-optimize-sibling-calls
+CDEBUG += -g -fsanitize=address -fno-optimize-sibling-calls

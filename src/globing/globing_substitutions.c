@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/08 18:31:11 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/26 20:30:28 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,40 @@ void	ft_str_swap(char **a, char **b)
 	*b = i;
 }
 
+int		ft_isspec(char c)
+{
+	return (!ft_isalnum(c) && ft_isprint(c));
+}
+
+int		ft_strspecasecmp(char *s1, char *s2)
+{
+	size_t	i;
+	size_t	j;
+	int		ret;
+
+	i = 0;
+	j = 0;
+	ret = 0;
+	while (s1[i] && s2[j])
+	{
+		if (ft_isspec(s1[i]))
+				++i;
+		if (ft_isspec(s2[j]))
+				++j;
+		if (ft_tolower(s1[i]) == ft_tolower(s2[j]) || s1[i] == s2[j])
+		{
+			++i;
+			++j;
+		}
+		else
+			break ;
+	}
+	ret = (unsigned char)ft_tolower(s1[i]) - (unsigned char)ft_tolower(s2[j]);
+	if (ret == 0)
+		ret = ft_strlen(s2) - ft_strlen(s1);
+	return (ret);
+}
+
 int		sort_ascii_tab(char **tab)
 {
 	int i;
@@ -41,7 +75,7 @@ int		sort_ascii_tab(char **tab)
 	{
 		while (j < len)
 		{
-			if (ft_strcasecmp(tab[i], tab[j]) < 0)
+			if (ft_strspecasecmp(tab[i], tab[j]) < 0)
 				ft_str_swap(&tab[i], &tab[j]);
 			++j;
 		}
@@ -65,7 +99,6 @@ char	**ft_globing(char **split, char *token)
 	int d;
 
 	i = 0;
-	j = 0;
 	n = 0;
 	d = 0;
 	tmp = NULL;
@@ -129,9 +162,9 @@ char	**ft_globing(char **split, char *token)
 		++i;
 	}
 	n = 0;
-	if (!d && split[i])
+	if (!d)
 	{
-		ptm = (char**)malloc(sizeof(char*) * (ft_tablen(dir) + 1));
+		ptm = (char**)ft_memalloc(sizeof(char*) * (ft_tablen(dir) + 1));
 		while (dir[n])
 		{
 			ptm[n] = ft_strdup(dir[n]);

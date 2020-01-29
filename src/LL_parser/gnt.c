@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 12:58:25 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/23 17:08:00 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/01/27 18:49:29 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,6 @@
 #include "tokens.h"
 #include "libft.h"
 #include "expansions.h"
-
-/*
-static t_token *tokendup(t_token tok)
-{
-	t_token *rtn;
-
-	rtn = malloc(sizeof(t_token));
-	ft_printf("alloc %p\n", rtn);
-	rtn->symbol = tok.symbol;
-	ft_printf("\t\t%s\n", rtn->symbol);
-	rtn->type = tok.type;
-	return(rtn);
-}
-*/
-
-static void	ft_free_token(t_token *token)
-{
-	if (token)
-		if (token->type == WORD || token->type == ASSIGNMENT_WORD || token->type == NAME || token->type == IO_NUMBER)
-			if (token->symbol)
-				free(token->symbol);
-}
 
 static void		fill_stack(t_list **stack, char *input)
 {
@@ -52,9 +30,9 @@ static void		fill_stack(t_list **stack, char *input)
 		tmp2 = ft_globing(tmp1, tok.symbol);
 		ft_tabdel(&tmp1);
 		tmp1 = tmp2;
+		ft_strdel(&(tok.symbol));
 		while (*tmp1)
 		{
-			ft_free_token(&tok);
 			tok.symbol = *tmp1;
 			tok.type = WORD;
 			ft_lstadd(stack, ft_lstnew(&tok, sizeof(t_token)));

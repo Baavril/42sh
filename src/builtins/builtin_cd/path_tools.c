@@ -62,7 +62,7 @@ int				ft_get_abspath(char **new_pwd)
 	char	*pwd;
 	char	*tmp;
 
-	if (!new_pwd || !*(new_pwd))
+	if (!new_pwd || !(*new_pwd))
 		return (ERROR);
 	if (**new_pwd != '/')
 	{

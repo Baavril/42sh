@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/24 17:31:23 by baavril          ###   ########.fr       */
+/*   Updated: 2020/01/26 19:59:48 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	free_tmp_vars(char **tmp, char **ptm)
 		ft_strdel(ptm);
 }
 
-static int	neg_deploy_case(char *ptm, char **str)
+static int	neg_deploy_case(t_glob *var, char *ptm, char **str)
 {
 	int	i;
 
@@ -40,6 +40,7 @@ static int	neg_deploy_case(char *ptm, char **str)
 	{
 		if (ptm[i] == **str)
 		{
+			var->i++;
 			++(*str);
 			i = -1;
 		}
@@ -48,7 +49,7 @@ static int	neg_deploy_case(char *ptm, char **str)
 	return (SUCCESS);
 }
 
-static int	deploy_case(char *tmp, int *ret, char **str, int flag)
+static int	deploy_case(t_glob *var, char *tmp, char **str, int flag)
 {
 	int i;
 	int j;
@@ -57,68 +58,61 @@ static int	deploy_case(char *tmp, int *ret, char **str, int flag)
 
 	i = 0;
 	c = 0;
+	j = 0;
 	len = ft_strlen(*str);
 	while (tmp[i] && len > 0)
 	{
 		if (flag == 1 && tmp[i] == **str)
 		{
-			while (c != tmp[i])
-				c++;
+			c = tmp[i];
 			return (c);
 		}
-		else if (flag == 2 && tmp[i] == **str)
+		else if (flag == 2 && tmp[i] == str[0][j])
 		{
-			(*str)++;
 			c = tmp[i];
 			i = -1;
-			++(*ret);
+			++j;
 		}
-		else if (flag > 2)
+		else if (flag > 2 && j < len && str[0][j] && (str[0][j] == tmp[i] || str[0][j] == tmp[i] - 32))
 		{
-			j = 0;
-			while (j < len && str[0][j])
-			{
-				if (str[0][j] == tmp[i])
-				{
-					c = tmp[i];
-					return (c);
-				}
-				++j;
-			}
+			c = (str[0][j] == tmp[i]) ? tmp[i] : tmp[i] - 32;
+			i = -1;
+			++j;
 		}
+		else if (flag > 2 && !ft_isalpha(str[0][j]))
+		{
+			if (j < len && ((ft_isprint(str[0][j]) && !ft_isalnum(str[0][j]))
+			|| (ft_isdigit(str[0][j]) && var->x == 4)))
+				++j;
+		}
+		if (j == len)
+			break ;
 		++i;
 	}
 	return (c);
 }
 
-int		check_deploy(char *str, char *match, int flag, int star)
+int		check_deploy(char *str, char *match, int flag, t_glob *var)
 {
 	char	c;
-	int		ret;
 	char	*tmp;
 	char	*ptm;
 
 	c = 0;
-	ret = 0;
 	tmp = NULL;
 	ptm = NULL;
 	if ((int)ft_strlen(str) <= 0)
-		return (ret);
-	if (star && (match[0] == CARET || match[1] == CARET))
+		return (0);
+	if (var->x == 4 && (match[0] == CARET || match[1] == CARET))
 		launch_deploy(&ptm, match, CARET);
 	if (match[0] == OP_SQUAR)
 		launch_deploy(&tmp, match, OP_SQUAR);
-	neg_deploy_case(ptm, &str);
-//	if (!match[0] && match[ft_strpchr(match, CL_SQUAR) + 1] == STAR
-//	&& ft_isalpha(match[ft_strpchr(match, CL_SQUAR) + 2]))
-//		ret = match[ft_strpchr(match, CL_SQUAR) + 2];
-//	ft_printf("here1sdaf2 %s\n", match);
-//	ft_printf("here2asdf3 %s\n", str);
-	if ((c = deploy_case(tmp, &ret, &str, flag)))
+	neg_deploy_case(var, ptm, &str);
+	if ((c = deploy_case(var, tmp, &str, flag)))
 	{
 		free_tmp_vars(&tmp, &ptm);
 		return (c);
 	}
 	free_tmp_vars(&tmp, &ptm);
-	return ((ret) ? c : ERROR);
+	return (ERROR);
 }

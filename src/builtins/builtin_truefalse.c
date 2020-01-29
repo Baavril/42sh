@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_truefalse.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/07/21 19:13:09 by abarthel         ###   ########.fr       */
+/*   Created: 2020/01/28 20:32:59 by bprunevi          #+#    #+#             */
+/*   Updated: 2020/01/28 20:33:10 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@ int	cmd_true(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
-	return (1);
+	return (0);
 }
 
 int	cmd_false(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
-	return (0);
+	return (1);
 }

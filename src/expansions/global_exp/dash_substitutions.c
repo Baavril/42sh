@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/19 12:54:30 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/01/26 20:07:00 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static int				check_dash_var(char **token, char *word,
 		}
 		else
 		{
-			if (!(*token = (word && *word) ? ft_strdup(word) : ft_strdup(EMPTY_STR)))
+			if (!(*token = (word && *word) ? ft_strdup(word)
+			: ft_strdup(EMPTY_STR)))
 				return (ERROR);
 		}
 		g_svar = tmp;

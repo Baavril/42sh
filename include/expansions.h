@@ -99,8 +99,10 @@ typedef struct	s_glob
 	int			x;
 	int			n;
 	int			j;
-	int			diff;
+	int			w;
+	int			s;
 	char		c;
+	int			diff;
 }				t_glob;
 
 int				expansions_treatment(char **tokens);
@@ -147,14 +149,8 @@ char			*ft_strrev(char *token);
 char			*matching_ret(char *token, char *match, int flag);
 char			*pattern_matching(char *token, char *match, int flag);
 int				ft_spechrlen(char *token);
-int				check_deploy(char *str, char *match, int flag, int star);
+int				check_deploy(char *str, char *match, int flag, t_glob *var);
 
-int				star_deployement(t_glob *var, char *match, char *str, int flag);
-int				star_no_deployement(t_glob *var, char *match, char *str, int flag);
-int				reach_star_flag(t_glob *var, char *match, char *str, int flag);
-int				fixing_star_flag(t_glob *var, char *match, char *str, int flag);
-int				reach_next_star_flag(t_glob *var, char *match, char *str, int flag);
-int				positionning_star_flag(t_glob *var, char *match, char *str);
 int				get_deploy(char **match);
 
 char			*ft_alpharange(char c, char x);

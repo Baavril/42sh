@@ -6,12 +6,13 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 08:40:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/22 12:00:23 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/28 12:47:40 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "parser.h"
+#include "expansions.h"
 
 int				shape(t_node *node)
 {
@@ -27,7 +28,6 @@ int				shape(t_node *node)
 		return(0b11);
 	if (node->f == i_prefix
 	||  node->f == i_suffix_word
-	||  node->f == i_suffix_redirect
 	||  node->f == i_builtin
 	||  node->f == i_exec)
 		return(0b10);
@@ -45,7 +45,11 @@ int				astdel(t_node *node)
 	if (node->left.c || node->left.v)
 	{
 		if (node_type & 0b10)
+		{
+			//ft_printf("free left [%p]\n", node->left.c);
+			//ft_printf("free left [%s]\n", node->left.c);
 			free(node->left.c);
+		}
 		else
 			astdel(node->left.v);
 		node->left.c = NULL;
@@ -53,11 +57,52 @@ int				astdel(t_node *node)
 	if (node->right.c || node->right.v)
 	{
 		if (node_type & 0b01)
+		{
+			//ft_printf("free left [%p]\n", node->right.c);
+			//ft_printf("free left [%s]\n", node->right.c);
 			free(node->right.c);
+		}
 		else
 			astdel(node->right.v);
 		node->right.c = NULL;
 	}
 	free(node);
+	return (0);
+}
+
+int				expand_tree(t_node *node)
+{
+	int node_type;
+
+	if (!node)
+		return(1);
+	node_type = shape(node);
+	if (node->left.c || node->left.v)
+	{
+		if (node_type & 0b10)
+		{
+			//ft_printf("expanding left [%s]\n", node->left.c);
+			expansions_treatment(&(node->left.c));
+		}
+		else
+			expand_tree(node->left.v);
+	}
+	if (node->right.c || node->right.v)
+	{
+		if (node_type & 0b01)
+		{
+			//ft_printf("expanding right [%s]\n", node->right.c);
+			expansions_treatment(&(node->right.c));
+		}
+		else
+			expand_tree(node->right.v);
+	}
+	if (node->f == i_exec)
+		if (eval_command(&node->left.c))
+		{
+			ft_printf("unknown command : %s\n", node->left.c);
+			ft_strdel(&node->left.c);
+			node->left.c = ft_strdup("false");
+		}
 	return (0);
 }

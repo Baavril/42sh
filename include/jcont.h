@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:18:20 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/22 12:22:16 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/01/23 13:59:47 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void				ft_update_job_status(void);
 int					ft_wait_foreground(t_job *job);
 int					ft_isready(t_job *job);
 
-int					ft_add_process(t_elem *left, t_elem *right, int std_fd[3],
+int					ft_add_process(t_elem left, t_elem right, int std_fd[3],
 															int fd_to_close);
 int					ft_launch_job(char *cmd, int status);
 t_job				*ft_add_job(int status, char *cmd);

@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/21 14:38:15 by baavril          ###   ########.fr       */
+/*   Updated: 2020/01/26 20:14:33 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,14 @@ static int	simple_special_params(char **token)
 		g_pos = g_pos->next;
 	}
 	g_pos = ptr;
-	ft_strdel(token);
-	*token = (tmp1) ? ft_strdup(tmp1) : ft_strdup(EMPTY_STR); 
-	ft_strdel(&tmp1);
-	return (SUCCESS);
+	if (tmp1)
+	{
+		ft_strdel(token);
+		*token = (tmp1) ? ft_strdup(tmp1) : ft_strdup(EMPTY_STR); 
+		ft_strdel(&tmp1);
+		return (SUCCESS);
+	}
+	return (ERROR);
 }
 
 int			simple_exp(char **token)
