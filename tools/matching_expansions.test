@@ -139,7 +139,7 @@ echo 137${USER##[a-z][^v-z][z-n][^a-d][d-m]}
 echo 138${USER#[a-z][^v-z][a-s-o][^a-d][d-m]}
 echo 139${USER##[a-z][^v-z][a-s-o][^a-d][d-m]}
 echo 140${USER#[a-z][^v-z][a-sm-op-z][^a-dr-z][d-m]}
-echo 141${USER##[a-z][^v-z][a-sm-o-z][^a-dr-z][d-m]}
+echo 141${USER##[a-z][^v-z][a-sm-op-z][^a-dr-z][d-m]}
 
 echo 142${USER#a[^v-z]}
 echo 143${USER##a[^v-z]}

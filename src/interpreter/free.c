@@ -81,7 +81,7 @@ int				expand_tree(t_node *node)
 	{
 		if (node_type & 0b10)
 		{
-			//ft_printf("expanding left [%s]\n", node->left.c);
+		//	ft_printf("expanding left [%s]\n", node->left.c);
 			expansions_treatment(&(node->left.c));
 		}
 		else
@@ -91,7 +91,7 @@ int				expand_tree(t_node *node)
 	{
 		if (node_type & 0b01)
 		{
-			//ft_printf("expanding right [%s]\n", node->right.c);
+		//	ft_printf("expanding right [%s]\n", node->right.c);
 			expansions_treatment(&(node->right.c));
 		}
 		else

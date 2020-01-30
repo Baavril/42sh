@@ -1,4 +1,5 @@
 U=baavril
+echo 1${U}
 echo 1${U#*}
 echo 2${U#*******}
 echo 3${U#*******}/dsfsd

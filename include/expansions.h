@@ -101,6 +101,8 @@ typedef struct	s_glob
 	int			j;
 	int			w;
 	int			s;
+	int			len_s;
+	int			len_m;
 	char		c;
 	int			diff;
 }				t_glob;

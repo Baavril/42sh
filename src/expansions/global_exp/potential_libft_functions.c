@@ -44,11 +44,18 @@ int	ft_strpchr(char *str, char c)
 	int len;
 
 	i = 0;
+//	ft_printf("check %s\n", str);
+//	ft_printf("here  %c\n", c);
 	len = ft_strlen(str);
+//	ft_printf("len  %d\n", len);
 	while (i < len && str[i])
 	{
 		if (str[i] - c == 0)
+		{
+//		ft_printf("X %s\n", &str[i]);
+//		ft_printf("X %d\n", i);
 			return (i);
+		}
 		i++;
 	}
 	return (0);

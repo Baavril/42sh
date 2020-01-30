@@ -30,24 +30,33 @@ int	i_prefix(t_elem left, t_elem right)
 
 int	i_builtin(t_elem left, t_elem right)
 {
+	int	ret;
+
+	ret = 0;
 	g_argv = malloc(sizeof(char *) * TAB_SIZE);
 	g_argv[0] = left.c;
 	g_argv[1] = NULL;
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
-	return (builtins_dispatcher(g_argv));
+	ret = builtins_dispatcher(g_argv);
+	free(g_argv);
+	return (ret);
 }
 
 int	i_exec(t_elem left, t_elem right)
 {
-	extern char **environ;
+	int			ret;
+	extern char	**environ;
 
+	ret = 0;
 	g_argv = malloc(sizeof(char *) * TAB_SIZE);
 	g_argv[0] = left.c;
 	g_argv[1] = NULL;
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
-	return (execve(g_argv[0], g_argv, environ));
+	ret = execve(g_argv[0], g_argv, environ);
+	free(g_argv);
+	return (ret);
 }
 
 char **realloc_argv(char **argv, size_t i)
