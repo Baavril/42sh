@@ -15,7 +15,7 @@
 #include "builtins.h"
 #include "libft.h"
 
-static void	init_deploy_vars(t_deploy *vars)
+static void		init_deploy_vars(t_deploy *vars)
 {
 	vars->i = 0;
 	vars->j = 0;

@@ -34,11 +34,15 @@ SOURCES			:=		main.c \
 						lexer/separators/unglue_metachr.c \
 						lexer/separators/pipeline_separators.c \
 						globing/globing_substitutions.c \
-						globing/pattern_matching.c \
-						globing/pattern_matching_tools.c \
-						globing/pattern_why_matching.c \
-						globing/pattern_deploy_launcher.c \
-						globing/pattern_deploy_maker.c \
+						globing/deploy_pattern_matching.c \
+						globing/complex_pattern_matching.c \
+						globing/simple_pattern_matching.c \
+						globing/recursive_pattern_matching.c \
+						globing/identify_pattern_matching.c \
+						globing/main_pattern_matching.c \
+						globing/tools_pattern_matching.c \
+						globing/deployement_launcher.c \
+						globing/deployement_program.c \
 						expansions/global_exp/expansions_main.c \
 						expansions/global_exp/expansions_split.c \
 						expansions/global_exp/expansions_bslash.c \
@@ -194,4 +198,4 @@ CFLAGS += -Wall -Wextra -Werror -ansi -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200809
 
 #CFLAGS += -fno-builtin -O2
 
-CDEBUG += -g -fsanitize=address -fno-optimize-sibling-calls
+CDEBUG += #-g -fsanitize=address -fno-optimize-sibling-calls

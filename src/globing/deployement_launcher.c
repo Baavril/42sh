@@ -15,7 +15,7 @@
 #include "builtins.h"
 #include "libft.h"
 
-static int		launch_deploy(char **str, char *match, char flag)
+static int	launch_deploy(char **str, char *match, char flag)
 {
 	if (!(*str = ft_strdupto(match + (ft_strpchr(match, flag) + 1), CL_SQUAR)))
 		return (ERROR);
@@ -89,14 +89,6 @@ static int	deploy_case(t_glob *var, char *tmp, char **str, int flag)
 			break ;
 		++i;
 	}
-/*	if (!ft_isprint(c) && flag == 2 && var->x == 4)
-	{
-		if (var->i > 0)
-			var->i--;
-		else
-		return (ERROR);
-		deploy_case(var, tmp, str, flag);
-	}*/
 	return (c);
 }
 
@@ -109,8 +101,6 @@ int		check_deploy(char *str, char *match, int flag, t_glob *var)
 	c = 0;
 	tmp = NULL;
 	ptm = NULL;
-//	ft_printf("match0 %s\n", match);
-//	ft_printf("str0 %s\n", str);
 	if ((int)ft_strlen(str) <= 0)
 		return (0);
 	if (var->x == 4 && (match[0] == CARET || match[1] == CARET))
@@ -118,7 +108,6 @@ int		check_deploy(char *str, char *match, int flag, t_glob *var)
 	if (match[0] == OP_SQUAR)
 		launch_deploy(&tmp, match, OP_SQUAR);
 	neg_deploy_case(var, ptm, &str);
-//	ft_printf("tmp %s\n", tmp);
 	if ((c = deploy_case(var, tmp, &str, flag)))
 	{
 		free_tmp_vars(&tmp, &ptm);
