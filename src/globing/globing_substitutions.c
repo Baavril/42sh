@@ -105,6 +105,13 @@ char	**ft_globing(char **split, char *token)
 	tmp = NULL;
 	tmp1 = NULL;
 	filedata = NULL;
+	if (!split[i])
+	{
+		ptm = (char**)malloc(sizeof(char*) * 2);
+		ptm[0] = ft_strdup(token);
+		ptm[1] = 0;
+		return (ptm);
+	}
 	if (!(dir = (char **)ft_memalloc(sizeof(char *) * 8192)))
 		return (NULL);
 	while (split[i])
