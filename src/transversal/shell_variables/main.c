@@ -19,7 +19,7 @@
 struct s_svar	*g_svar;
 struct s_pos	*g_pos;
 
-void	setenvnod(struct s_svar *new_back)
+void			setenvnod(struct s_svar *new_back)
 {
 	struct s_svar	*voyager;
 
@@ -52,7 +52,7 @@ struct s_svar	*newnodshell(char *env, int exp)
 	return (svar_lst);
 }
 
-int		setenvvar(char *key, char *value)
+int				setenvvar(char *key, char *value)
 {
 	char	*set;
 
@@ -64,7 +64,7 @@ int		setenvvar(char *key, char *value)
 	return (0);
 }
 
-static void	init_intern_vars()
+static void		init_intern_vars()
 {
 	setenvvar(PS1, PS1V);
 	setenvvar(PS2, PS2V);
@@ -73,7 +73,7 @@ static void	init_intern_vars()
 	setenvvar(HISTSIZE, HISTSIZEV);
 }
 
-int			init_shell_vars(char **env)
+int				init_shell_vars(char **env)
 {
 	int				i;
 	int				len;

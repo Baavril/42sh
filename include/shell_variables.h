@@ -59,12 +59,10 @@ struct					s_pos
 
 int						setenvvar(char *key, char *value);
 int						init_shell_vars(char **env);
-void					ft_listadd_back(struct s_svar *new_back);
 char					*get_key(char *var);
 char					*ft_strdupto(char *str, char c);
 char					*ft_strdupfm(char *str, char c);
 
-void					ft_lstadd_back(t_list **alst, t_list *new_back);
 void					setenvnod(struct s_svar *new_back);
 
 int						checkvarlst(char *argv);
@@ -72,5 +70,7 @@ struct s_svar			*newnodshell(char *env, int exp);
 
 char					*ft_strdupfm(char *str, char c);
 char					*ft_strdupto(char *str, char c);
+
+int						set_positional_params(char **tokens);
 
 #endif

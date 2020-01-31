@@ -129,9 +129,9 @@ SOURCES			:=		transversal/program/main.c \
 						builtins/builtin_cd/ft_pcderror.c \
 						builtins/builtin_cd/ft_simplify_path.c \
 						builtins/builtin_cd/path_tools.c \
-						builtins/builtin_set.c \
+						builtins/builtin_set/main.c \
+						builtins/builtin_set/positional_parameters.c \
 						builtins/builtin_unset.c \
-						builtins/builtin_export.c \
 						builtins/builtin_echo.c \
 						builtins/builtin_type.c \
 						builtins/builtin_exit.c \
@@ -139,6 +139,9 @@ SOURCES			:=		transversal/program/main.c \
 						builtins/builtin_history.c \
 						builtins/builtin_truefalse.c \
 						builtins/builtin_fc.c \
+						builtins/builtin_export/main.c \
+						builtins/builtin_export/tools.c \
+						builtins/builtin_export/var_checker.c \
 						builtins/builtin_jcont/cmd_bg.c \
 						builtins/builtin_jcont/cmd_fg.c \
 						builtins/builtin_jcont/cmd_jobs.c \
@@ -201,4 +204,4 @@ CFLAGS += -Wall -Wextra -Werror -ansi -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200809
 
 #CFLAGS += -fno-builtin -O2
 
-CDEBUG += #-g -fsanitize=address -fno-optimize-sibling-calls
+CDEBUG += -g -fsanitize=address -fno-optimize-sibling-calls

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_set.c                                      :+:      :+:    :+:   */
+/*   positional_parameters.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -19,20 +19,7 @@
 extern struct s_svar	*g_svar;
 extern struct s_pos		*g_pos;
 
-void					prtlist()
-{
-	struct s_svar *voyager;
-
-	voyager = g_svar;
-	while (g_svar)
-	{
-		printf("%s\n", ((char*)g_svar->str));
-		g_svar = g_svar->next;
-	}
-	g_svar = voyager;
-}
-
-void	listpos_back(struct s_pos *new_back)
+static void				listpos_back(struct s_pos *new_back)
 {
 	struct s_pos	*voyager;
 
@@ -47,9 +34,9 @@ void	listpos_back(struct s_pos *new_back)
 	}
 }
 
-struct s_pos	*newnodpos(char *env, int exp)
+static struct s_pos		*newnodpos(char *env, int exp)
 {
-	struct s_pos *pos_lst;
+	struct s_pos	*pos_lst;
 
 	pos_lst = NULL;
 	if (*env)
@@ -65,7 +52,7 @@ struct s_pos	*newnodpos(char *env, int exp)
 	return (pos_lst);
 }
 
-void	setposvar(char *key, char *value)
+static void				setposvar(char *key, char *value)
 {
 	char	*set;
 
@@ -74,18 +61,12 @@ void	setposvar(char *key, char *value)
 	ft_strdel(&set);
 }
 
-
-static int				set_positional_parameters(char **tokens)
+static int				set_first_positional_param(char **tokens, int pos)
 {
-	int				i;
-	int				pos;
-	char			*tmp1;
-	char			*tmp2;
-	char			*tmp3;
-	struct s_pos	*ptr;
+	char	*tmp1;
+	char	*tmp2;
+	char	*tmp3;
 
-	i = 2;
-	pos = 1;
 	if (tokens[1])
 	{
 		tmp1 = ft_itoa(pos);
@@ -97,6 +78,20 @@ static int				set_positional_parameters(char **tokens)
 		ft_strdel(&tmp3);
 		++pos;
 	}
+	return (SUCCESS);
+}
+
+int						set_positional_params(char **tokens)
+{
+	int				i;
+	int				pos;
+	char			*tmp1;
+	char			*tmp2;
+	struct s_pos	*ptr;
+
+	i = 1;
+	pos = 1;
+	set_first_positional_param(tokens, pos);
 	ptr = g_pos;
 	while (tokens[i])
 	{
@@ -110,35 +105,5 @@ static int				set_positional_parameters(char **tokens)
 		++i;
 	}
 	g_pos = ptr;
-	return (0);
-}
-
-static void	free_pos_list(void)
-{
-	struct s_pos	*tmp1;
-
-	while (g_pos)
-	{
-		tmp1 = g_pos->next;
-		ft_strdel(&(g_pos->str));
-		ft_strdel(&(g_pos->key));
-		ft_strdel(&(g_pos->value));
-		free(g_pos);
-		g_pos = tmp1;
-	}
-}
-
-int						cmd_set(int argc, char **argv)
-{
-	(void)argc;
-	(void)argv;
-
-	if (argc == 1)
-		prtlist();
-	else
-	{
-		free_pos_list();
-		set_positional_parameters(argv);
-	}
 	return (0);
 }

@@ -31,6 +31,7 @@ static int
 			ft_strdel(&(relink->str));
 			ft_strdel(&(relink->key));
 			ft_strdel(&(relink->value));
+			free(relink);
 			return (SUCCESS);
 		}
 		tmp = tmp->next;
@@ -75,10 +76,10 @@ static int
 		free(environ[i]);
 		if (!(environ[i] = ft_strdup(environ[i + 1])))
 			return (ERROR);
-		i++;
+		++i;
 	}
-	environ[i] = 0;
 	free(environ[len - 1]);
+	environ[i] = 0;
 	return (SUCCESS);
 }
 
@@ -95,9 +96,11 @@ static int
 		key = get_key(environ[i]);
 		if (!(ft_strcmp(key, argv)))
 		{
-			if (!(cpytabfrom(&environ[i])))
-				return (ERROR);
-			return (SUCCESS);
+			if (cpytabfrom(&environ[i]) == SUCCESS)
+			{
+				ft_strdel(&key);
+				return (SUCCESS);
+			}
 		}
 		++i;
 		ft_strdel(&key);
@@ -117,7 +120,7 @@ int
 	{
 		if (unsetvarset(argv[i]) == SUCCESS)
 		{
-			if (!(unsetvarenv(argv[i])))
+			if (unsetvarenv(argv[i]) == ERROR)
 				return (ERROR);
 		}
 		else
