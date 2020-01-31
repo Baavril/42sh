@@ -24,8 +24,10 @@ static void		fill_stack(t_list **stack, char *input)
 
 	tmp1 = NULL;
 	tok = get_next_token(input);
-	if (tok.type == WORD && !(ft_isin(OP_BRACE, tok.symbol)
+	if (tok.type == WORD && (!(ft_isin(OP_BRACE, tok.symbol)
 	&& ft_isin(CL_BRACE, tok.symbol)))
+	&& ((ft_isin('/', tok.symbol) && ft_isin(STAR, tok.symbol))
+	|| ft_isin(STAR, tok.symbol))) 
 	{
 		tmp1 = ft_strsplit(tok.symbol, "/");
 		tmp2 = globing(tmp1, tok.symbol);
