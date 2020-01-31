@@ -11,11 +11,12 @@
 /* ************************************************************************** */
 
 #include "expansions.h"
+#include "globing.h"
 #include "shell_variables.h"
 #include "builtins.h"
 #include "libft.h"
 
-static int	pattern_id(t_glob *var, char *match)
+static int	pattern_id(t_pattern *var, char *match)
 {
 	if (var->j == 0 && ft_isalnum(match[var->j]))
 		var->x = 1;
@@ -35,7 +36,7 @@ static int	pattern_id(t_glob *var, char *match)
 	return (SUCCESS);
 }
 
-int			complex_pattern_matching(t_glob *var, char *match, char *str)
+int			complex_pattern_matching(t_pattern *var, char *match, char *str)
 {
 	while (var->j < var->len_m && match[var->j])
 	{

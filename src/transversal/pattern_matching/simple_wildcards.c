@@ -11,12 +11,13 @@
 /* ************************************************************************** */
 
 #include "expansions.h"
+#include "globing.h"
 #include "shell_variables.h"
 #include "builtins.h"
 #include "libft.h"
 
 int
-	match_cmp(t_glob *var, char *match, char *str)
+	match_cmp(t_pattern *var, char *match, char *str)
 {
 	if ((var->i < var->len_s && match[var->j] != str[var->i]) || var->i >= var->len_s)
 	{
@@ -60,7 +61,7 @@ int
 }
 
 int
-	simple_pattern_matching(t_glob *var, char *match, char *str)
+	simple_pattern_matching(t_pattern *var, char *match, char *str)
 {
 	while (var->j < var->len_m && match[var->j])
 	{

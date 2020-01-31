@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "expansions.h"
+#include "globing.h"
 #include "shell_variables.h"
 #include "builtins.h"
 #include "libft.h"

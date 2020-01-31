@@ -11,12 +11,13 @@
 /* ************************************************************************** */
 
 #include "expansions.h"
+#include "globing.h"
 #include "shell_variables.h"
 #include "builtins.h"
 #include "libft.h"
 
 static int
-	matching_simple_pattern(t_glob *var, char *match, char *str)
+	matching_simple_pattern(t_pattern *var, char *match, char *str)
 {
 	while (var->i < var->len_s && str[var->i] != match[var->j])
 	{
@@ -43,7 +44,7 @@ static int
 }
 
 static int
-	matching_tracker(t_glob *var, char *match, char *str)
+	matching_tracker(t_pattern *var, char *match, char *str)
 {
 	while (match[var->j] && match[var->j] == STAR)
 		++var->j;
@@ -57,7 +58,7 @@ static int
 }
 
 static int
-	matching_first_pattern(t_glob *var, char *match, char *str)
+	matching_first_pattern(t_pattern *var, char *match, char *str)
 {
 	if (match[var->j] == str[var->i])
 		++var->i;
@@ -70,7 +71,7 @@ static int
 }
 
 int
-	matching_patterns(t_glob *var, char *match, char *str)
+	matching_patterns(t_pattern *var, char *match, char *str)
 {
 	if (var->x == 1)
 		matching_first_pattern(var, match, str);

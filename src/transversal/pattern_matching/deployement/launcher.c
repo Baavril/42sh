@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "expansions.h"
+#include "globing.h"
 #include "shell_variables.h"
 #include "builtins.h"
 #include "libft.h"
@@ -31,7 +32,7 @@ static void	free_tmp_vars(char **tmp, char **ptm)
 		ft_strdel(ptm);
 }
 
-static int	neg_deploy_case(t_glob *var, char *ptm, char **str)
+static int	neg_deploy_case(t_pattern *var, char *ptm, char **str)
 {
 	int	i;
 
@@ -49,12 +50,12 @@ static int	neg_deploy_case(t_glob *var, char *ptm, char **str)
 	return (SUCCESS);
 }
 
-static int	deploy_case(t_glob *var, char *tmp, char **str, int flag)
+static int	deploy_case(t_pattern *var, char *tmp, char **str, int flag)
 {
-	int i;
-	int j;
-	char c;
-	int len;
+	int		i;
+	int		j;
+	char	c;
+	int		len;
 
 	i = 0;
 	c = 0;
@@ -92,7 +93,7 @@ static int	deploy_case(t_glob *var, char *tmp, char **str, int flag)
 	return (c);
 }
 
-int		check_deploy(char *str, char *match, int flag, t_glob *var)
+int		check_deploy(char *str, char *match, int flag, t_pattern *var)
 {
 	char	c;
 	char	*tmp;

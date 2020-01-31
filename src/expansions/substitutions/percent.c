@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "globing.h"
 #include "expansions.h"
 #include "shell_variables.h"
 #include "builtins.h"

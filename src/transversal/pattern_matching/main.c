@@ -11,11 +11,12 @@
 /* ************************************************************************** */
 
 #include "expansions.h"
+#include "globing.h"
 #include "shell_variables.h"
 #include "builtins.h"
 #include "libft.h"
 
-static void	init_glob_vars(t_glob *vars)
+static void	init_pattern_vars(t_pattern *vars)
 {
 	vars->i = 0;
 	vars->j = 0;
@@ -32,9 +33,9 @@ static void	init_glob_vars(t_glob *vars)
 
 char		*pattern_matching(char *str, char *match, int flag)
 {
-	t_glob	var;
+	t_pattern	var;
 
-	init_glob_vars(&var);
+	init_pattern_vars(&var);
 	var.len_s = ft_strlen(str);
 	var.len_m = ft_strlen(match);
 	var.flag = flag;

@@ -11,12 +11,13 @@
 /* ************************************************************************** */
 
 #include "expansions.h"
+#include "globing.h"
 #include "shell_variables.h"
 #include "builtins.h"
 #include "libft.h"
 
 static int
-	reach_limit(t_glob *var, char *str)
+	reach_limit(t_pattern *var, char *str)
 {
 	while (ft_isprint(var->c) && str[var->i] != var->c)
 	{
@@ -28,7 +29,7 @@ static int
 }
 
 static int
-	recursive_searcher(t_glob *var, char *match, char *str, int flag)
+	recursive_searcher(t_pattern *var, char *match, char *str, int flag)
 {
 	if ((var->c = check_deploy(&str[var->i], &match[var->j], 1, var)) > SUCCESS)
 	{
@@ -56,7 +57,7 @@ static int
 }
 
 int
-	recursive_matching(t_glob *var, char *match, char *str)
+	recursive_matching(t_pattern *var, char *match, char *str)
 {
 	var->k = var->i;
 	if (match[var->j + ft_strpchr(&match[var->j], CL_SQUAR) + 1] == OP_SQUAR)

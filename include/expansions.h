@@ -81,34 +81,6 @@ typedef struct	s_expand
 	char		**tokens;
 }				t_expand;
 
-typedef struct	s_deploy
-{
-	int			i;
-	int			j;
-	int			flag;
-	int			dash;
-	char		*keep;
-	char		*tmp;
-	char		*ptm;
-	char		*range;
-}				t_deploy;
-
-typedef struct	s_glob
-{
-	int			i;
-	int			x;
-	int			n;
-	int			j;
-	int			w;
-	int			s;
-	int			k;
-	int			flag;
-	int			len_s;
-	int			len_m;
-	char		c;
-	int			diff;
-}				t_glob;
-
 int				expansions_treatment(char **tokens);
 
 int				direct_exp(char **token);
@@ -138,8 +110,6 @@ char			*ft_unset_quoted(char *tokens, char c);
 
 int				identifier(char *token);
 
-char			**ft_globing(char **split, char *token);
-
 int				check_braces(char *token);
 int				check_colon(char *token);
 int				check_colon_symbol(char *token);
@@ -149,24 +119,5 @@ int				check_maths(char *token);
 int				check_next_var(char *var, char **token, int flag);
 char			*ft_strcdup(char *token, char c);
 char			*setasvar(char *token);
-char			*ft_strrev(char *token);
-char			*matching_ret(char *token, char *match, int flag);
-int				ft_spechrlen(char *token);
-int				check_deploy(char *str, char *match, int flag, t_glob *var);
-int				get_deploy(char **match);
-char			*ft_alpharange(char c, char x);
-char			*ft_strneg(char *match);
-
-
-char			*pattern_matching(char *token, char *match, int flag);
-int				complex_pattern_matching(t_glob *var, char *match, char *str);
-int				simple_pattern_matching(t_glob *var, char *match, char *str);
-int				matching_patterns(t_glob *var, char *match, char *str);
-int				matching_patterns(t_glob *var, char *match, char *str);
-int				recursive_matching(t_glob *var, char *match, char *str);
-int				deployement_limit(t_glob *var, char *match, char *str);
-int				match_cmp(t_glob *var, char *match, char *str);
-int				deployement_support(t_glob *var, char *match, char *str);
-int				islast(t_glob *var, char *str, char c);
 
 #endif

@@ -14,9 +14,35 @@ NAME			= 42sh
 
 SOURCES_PATH	:= ./src/
 
-SOURCES			:=		main.c \
+SOURCES			:=		transversal/main.c \
 						transversal/error.c \
 						transversal/signals.c \
+						transversal/hash/bash_routines.c \
+						transversal/hash/corps_fini_tools.c \
+						transversal/hash/random_tools.c \
+						transversal/hash/ft_empty_htable.c \
+						transversal/hash/ft_free_htable.c \
+						transversal/hash/ft_get_entry.c \
+						transversal/hash/ft_del_entry.c \
+						transversal/hash/ft_hash.c \
+						transversal/hash/ft_hash_path.c \
+						transversal/hash/ft_insert.c \
+						transversal/hash/ft_iter_htable.c \
+						transversal/hash/ft_lst_entries.c \
+						transversal/hash/ft_print_entries.c \
+						transversal/hash/htable_type_dispatcher.c \
+						transversal/hash/init_htable.c \
+						transversal/hash/string_routines.c \
+						transversal/shell_variables/shell_variables.c \
+						transversal/pattern_matching/main.c \
+						transversal/pattern_matching/tools.c \
+						transversal/pattern_matching/recursion.c \
+						transversal/pattern_matching/identifier.c \
+						transversal/pattern_matching/simple_wildcards.c \
+						transversal/pattern_matching/complex_wildcards.c \
+						transversal/pattern_matching/deployement/main.c \
+						transversal/pattern_matching/deployement/launcher.c \
+						transversal/pattern_matching/deployement/maker.c \
 						input/input.c \
 						input/history.c \
 						input/keys.c \
@@ -33,33 +59,26 @@ SOURCES			:=		main.c \
 						lexer/grammar_symbols.c \
 						lexer/separators/unglue_metachr.c \
 						lexer/separators/pipeline_separators.c \
-						globing/globing_substitutions.c \
-						globing/deploy_pattern_matching.c \
-						globing/complex_pattern_matching.c \
-						globing/simple_pattern_matching.c \
-						globing/recursive_pattern_matching.c \
-						globing/identify_pattern_matching.c \
-						globing/main_pattern_matching.c \
-						globing/tools_pattern_matching.c \
-						globing/deployement_launcher.c \
-						globing/deployement_program.c \
-						expansions/global_exp/expansions_main.c \
-						expansions/global_exp/expansions_split.c \
-						expansions/global_exp/expansions_bslash.c \
-						expansions/global_exp/expansions_checker.c \
-						expansions/global_exp/expansions_between.c \
-						expansions/global_exp/expansions_identifier.c \
-						expansions/global_exp/potential_libft_functions.c \
-						expansions/global_exp/tilde_substitutions.c \
-						expansions/global_exp/direct_substitutions.c \
-						expansions/global_exp/simple_substitutions.c \
-						expansions/global_exp/why_substitutions.c \
-						expansions/global_exp/plus_substitutions.c \
-						expansions/global_exp/dash_substitutions.c \
-						expansions/global_exp/equal_substitutions.c \
-						expansions/global_exp/sharp_substitutions.c \
-						expansions/global_exp/bsharp_substitutions.c \
-						expansions/global_exp/percent_substitutions.c \
+						globing/main.c \
+						globing/tools.c \
+						globing/scanner.c \
+						expansions/global_exp/main.c \
+						expansions/global_exp/tools.c \
+						expansions/global_exp/split.c \
+						expansions/global_exp/checker.c \
+						expansions/global_exp/inbetween.c \
+						expansions/global_exp/identifier.c \
+						expansions/global_exp/backslash.c \
+						expansions/substitutions/tilde.c \
+						expansions/substitutions/direct.c \
+						expansions/substitutions/simple.c \
+						expansions/substitutions/plus.c \
+						expansions/substitutions/dash.c \
+						expansions/substitutions/equal.c \
+						expansions/substitutions/sharp.c \
+						expansions/substitutions/percent.c \
+						expansions/substitutions/begin_sharp.c \
+						expansions/substitutions/question_mark.c \
 						expansions/maths_exp/operations/addition.c \
 						expansions/maths_exp/operations/assign.c \
 						expansions/maths_exp/operations/assign_bitwise.c \
@@ -137,23 +156,6 @@ SOURCES			:=		main.c \
 						builtins/builtin_test/test_precedence_mgt1.c \
 						builtins/builtin_test/test_precedence_mgt2.c \
 						builtins/builtins_dispatcher.c \
-						transversal/hash/bash_routines.c \
-						transversal/hash/corps_fini_tools.c \
-						transversal/hash/random_tools.c \
-						transversal/hash/ft_empty_htable.c \
-						transversal/hash/ft_free_htable.c \
-						transversal/hash/ft_get_entry.c \
-						transversal/hash/ft_del_entry.c \
-						transversal/hash/ft_hash.c \
-						transversal/hash/ft_hash_path.c \
-						transversal/hash/ft_insert.c \
-						transversal/hash/ft_iter_htable.c \
-						transversal/hash/ft_lst_entries.c \
-						transversal/hash/ft_print_entries.c \
-						transversal/hash/htable_type_dispatcher.c \
-						transversal/hash/init_htable.c \
-						transversal/hash/string_routines.c \
-						transversal/shell_variables/shell_variables.c \
 						LL_parser/gnt.c \
 						LL_parser/io_redirect.c \
 						LL_parser/is_potential.c \

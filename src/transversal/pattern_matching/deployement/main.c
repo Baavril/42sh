@@ -11,11 +11,12 @@
 /* ************************************************************************** */
 
 #include "expansions.h"
+#include "globing.h"
 #include "shell_variables.h"
 #include "builtins.h"
 #include "libft.h"
 
-int	islast(t_glob *var, char *str, char c)
+int	islast(t_pattern *var, char *str, char c)
 {
 	if (ft_isprint(c))
 	{
@@ -28,7 +29,7 @@ int	islast(t_glob *var, char *str, char c)
 	return (SUCCESS);
 }
 
-int	deployement_support(t_glob *var, char *str, char *match)
+int	deployement_support(t_pattern *var, char *str, char *match)
 {
 	if (ft_strpchr(&match[var->j], CL_SQUAR) > 0
 	&& check_deploy(&str[var->i]
@@ -52,7 +53,7 @@ int	deployement_support(t_glob *var, char *str, char *match)
 	return (ERROR);
 }
 
-int	deployement_limit(t_glob *var, char *match, char *str)
+int	deployement_limit(t_pattern *var, char *match, char *str)
 {
 	int	tmp;
 
