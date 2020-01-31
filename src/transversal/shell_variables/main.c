@@ -19,7 +19,7 @@
 struct s_svar	*g_svar;
 struct s_pos	*g_pos;
 
-void	listadd_back(struct s_svar *new_back)
+void	setenvnod(struct s_svar *new_back)
 {
 	struct s_svar	*voyager;
 
@@ -32,82 +32,6 @@ void	listadd_back(struct s_svar *new_back)
 			voyager = voyager->next;
 		voyager->next = new_back;
 	}
-}
-
-int	ft_retinstr(char *str, char c)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] - c == 0)
-			return (i);
-		i++;
-	}
-	return (1);
-}
-
-char	*ft_strdupfm(char *str, char c)
-{
-	int i;
-	int	lim;
-	int	len;
-	char *ret;
-
-	i = 0;
-	len = ft_strlen(str);
-	lim = ft_retinstr(str, c) + 1;
-	if (len - lim)
-	{
-		if (!(ret = (char*)malloc(sizeof(char) * (len - lim) + 1)))
-			return (NULL);
-		len = len - lim;
-	}
-	else if (!(len - lim))
-	{
-		if (!(ret = (char*)malloc(sizeof(char) * (lim - len) + 1)))
-			return (NULL);
-		len = lim - len;
-	}
-	while (len)
-	{
-		ret[i] = str[lim];
-		len--;
-		i++;
-		lim++;
-	}
-	ret[i] = '\0';
-	return (ret);
-}
-
-char	*ft_strdupto(char *str, char c)
-{
-	int	i;
-	int	lim;
-	char *ret;
-
-	i = 0;
-	lim = ft_retinstr(str, c) + 1;
-	if (!(ret = (char*)malloc(sizeof(char) * (lim + 1))))
-		return (NULL);
-	while (i < lim)
-	{
-		ret[i] = str[i];
-		i++;
-	}
-	ret[i] = '\0';
-	return (ret);
-}
-
-int	tablen(char **env)
-{
-	int	i;
-
-	i = 0;
-	while (env[i])
-		++i;
-	return (i);
 }
 
 struct s_svar	*newnodshell(char *env, int exp)
@@ -128,17 +52,19 @@ struct s_svar	*newnodshell(char *env, int exp)
 	return (svar_lst);
 }
 
-void	setenvvar(char *key, char *value)
+int		setenvvar(char *key, char *value)
 {
 	char	*set;
 
-	set = ft_strjoin(key, value);
+	if (!(set = ft_strjoin(key, value)))
+		return (0);
 	if (checkvarlst(set))
-		listadd_back(newnodshell(set, 0));
+		setenvnod(newnodshell(set, 0));
 	ft_strdel(&set);
+	return (0);
 }
 
-void init_intvars()
+static void	init_intern_vars()
 {
 	setenvvar(PS1, PS1V);
 	setenvvar(PS2, PS2V);
@@ -147,22 +73,23 @@ void init_intvars()
 	setenvvar(HISTSIZE, HISTSIZEV);
 }
 
-int	init_shellvars(char **env)
+int			init_shell_vars(char **env)
 {
-	int i;
-	int len;
-	struct s_svar *voyager;
+	int				i;
+	int				len;
+	struct s_svar	*voyager;
 
 	i = 1;
-	len = tablen(env);
-	g_svar = newnodshell(env[0], 1);
+	len = ft_tablen(env);
+	if (!(g_svar = newnodshell(env[0], 1)))
+		return (0);
 	voyager = g_svar;
 	while (i < len)
 	{
-		listadd_back(newnodshell(env[i++], 1));
+		setenvnod(newnodshell(env[i++], 1));
 		g_svar = g_svar->next;
 	}
-	init_intvars();
+	init_intern_vars();
 	g_svar = voyager;
 	return (1);
 }

@@ -15,6 +15,10 @@
 
 # include "libft.h"
 
+# define SUCCESS		0
+# define ERROR			-1
+# define EQUAL			'='
+
 /*
 ** Keys of internal variables
 */
@@ -53,18 +57,20 @@ struct					s_pos
 	struct s_pos		*next;
 };
 
-int						init_shellvars(char **env);
-void					setenvvar(char *key, char *value);
+int						setenvvar(char *key, char *value);
+int						init_shell_vars(char **env);
 void					ft_listadd_back(struct s_svar *new_back);
-struct s_svar			*newnodshell(char *env, int exp);
 char					*get_key(char *var);
 char					*ft_strdupto(char *str, char c);
 char					*ft_strdupfm(char *str, char c);
 
 void					ft_lstadd_back(t_list **alst, t_list *new_back);
-void					listadd_back(struct s_svar *new_back);
+void					setenvnod(struct s_svar *new_back);
 
-int						unsetvarset(char *argv);
 int						checkvarlst(char *argv);
+struct s_svar			*newnodshell(char *env, int exp);
+
+char					*ft_strdupfm(char *str, char c);
+char					*ft_strdupto(char *str, char c);
 
 #endif

@@ -188,7 +188,7 @@ int						cmd_export(int argc, char **argv)
 	}
 	/* in order to check the environ settings */
 	ft_printf("\nInternvars\n");
-	cmd_set(0, NULL);
+	cmd_set(1, NULL);
 	ft_printf("\nEnviron\n");
 	while (*environ)
 		ft_putendl(*environ++); 

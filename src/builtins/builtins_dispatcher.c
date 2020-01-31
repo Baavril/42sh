@@ -34,6 +34,8 @@ const t_builtins	g_builtins[] =
 	{ "bg", &cmd_bg},
 	{ "jobs", &cmd_jobs},
 	{ "set", &cmd_set},
+	{ "unset", &cmd_unset},
+	{ "export", &cmd_export},
 	{ "\0", NULL}
 };
 
@@ -41,7 +43,8 @@ _Bool				prior_builtin(char *str)
 {
 	const struct s_prior_builtin	pbuiltin_list[] =
 	{ {"alias"}, {"unalias"}, {"echo"}, {"exit"}, {"hash"}, {"cd"}, {"type"},
-		{"test"}, {"set"}, {"fc"}, {"fg"}, {"bg"}, {"jobs"}, {"\0"} };
+		{"test"}, {"set"}, {"fc"}, {"fg"}, {"bg"}, {"jobs"}, {"export"},
+		{"unset"}, {"\0"} };
 	int								i;
 
 	i = 0;

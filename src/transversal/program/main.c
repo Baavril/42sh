@@ -75,7 +75,7 @@ int		main(int argc, char **argv)
 	copybuff = NULL;
 	input = NULL;
 	g_progname = argv[0];
-	init_shellvars(environ);
+	init_shell_vars(environ);
 	/* cmd_set(argc, argv); to show the list of internvars */
 	if (!(history(INIT, NULL, NULL)))
 		return (1);

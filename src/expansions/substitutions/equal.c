@@ -15,10 +15,11 @@
 #include "builtins.h"
 #include "libft.h"
 
-extern struct s_svar	*g_svar;
+extern struct s_svar
+	*g_svar;
 
-static int				check_equal_var(char **token, char *word, char *nod,
-															struct s_svar *tmp)
+static int
+	check_equal_var(char **token, char *word, char *nod, struct s_svar *tmp)
 {
 	if (ft_strncmp(g_svar->key, *token + 2, ft_strlen(g_svar->key) - 1) == 0
 	&& check_next_var(g_svar->key, token, 1) == SUCCESS)
@@ -36,7 +37,7 @@ static int				check_equal_var(char **token, char *word, char *nod,
 				return (ERROR);
 			g_svar = tmp;
 			if (checkvarlst(nod))
-				listadd_back(newnodshell(nod, 0));
+				setenvnod(newnodshell(nod, 0));
 		}
 		g_svar = tmp;
 		ft_strdel(&word);
@@ -46,7 +47,8 @@ static int				check_equal_var(char **token, char *word, char *nod,
 	return (ERROR);
 }
 
-int						equal_exp(char **token)
+int
+	equal_exp(char **token)
 {
 	char			*nod;
 	char			*word;
@@ -67,7 +69,7 @@ int						equal_exp(char **token)
 		return (ERROR);
 	ft_strdel(&word);
 	g_svar = tmp;
-	listadd_back(newnodshell(nod, 0));
+	setenvnod(newnodshell(nod, 0));
 	ft_strdel(&nod);
 	return (SUCCESS);
 }

@@ -14,9 +14,11 @@ NAME			= 42sh
 
 SOURCES_PATH	:= ./src/
 
-SOURCES			:=		transversal/main.c \
-						transversal/error.c \
-						transversal/signals.c \
+SOURCES			:=		transversal/program/main.c \
+						transversal/program/error.c \
+						transversal/program/signals.c \
+						transversal/shell_variables/main.c \
+						transversal/shell_variables/tools.c \
 						transversal/hash/bash_routines.c \
 						transversal/hash/corps_fini_tools.c \
 						transversal/hash/random_tools.c \
@@ -33,7 +35,6 @@ SOURCES			:=		transversal/main.c \
 						transversal/hash/htable_type_dispatcher.c \
 						transversal/hash/init_htable.c \
 						transversal/hash/string_routines.c \
-						transversal/shell_variables/shell_variables.c \
 						transversal/pattern_matching/main.c \
 						transversal/pattern_matching/tools.c \
 						transversal/pattern_matching/recursion.c \

@@ -69,7 +69,7 @@ void					setshvar(char *var_name, int64_t value)
 	ft_memcpy(assig_word + name_len + 1, var_value, val_len);
 	assig_word[name_len + 1 + val_len] = '\0';
 	if (checkvarlst(assig_word))
-		listadd_back(newnodshell(assig_word, 0));
+		setenvnod(newnodshell(assig_word, 0));
 	ft_strdel(&assig_word);
 	ft_strdel(&var_value);
 }

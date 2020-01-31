@@ -22,7 +22,7 @@ char **g_argv;
 int	i_prefix(t_elem left, t_elem right)
 {
 	if (checkvarlst(left.c))
-		listadd_back(newnodshell(left.c, 0));
+		setenvnod(newnodshell(left.c, 0));
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
 	return (0);

@@ -13,18 +13,15 @@
 #include <unistd.h>
 #include <stdio.h>
 
-#include "libft.h"
 #include "builtins.h"
 #include "shell_variables.h"
 
-extern struct s_svar	*g_svar;
+extern struct s_svar
+	*g_svar;
 
-int						unsetvarset(char *argv)
+static int
+	varinlst(struct s_svar *tmp, char *argv, struct s_svar *relink)
 {
-	struct s_svar	*tmp;
-	struct s_svar	*relink;
-
-	tmp = g_svar;
 	while (tmp && tmp->next)
 	{
 		if (!ft_strncmp(tmp->next->key, argv, ft_strlen(tmp->next->key) - 1))
@@ -34,11 +31,25 @@ int						unsetvarset(char *argv)
 			ft_strdel(&(relink->str));
 			ft_strdel(&(relink->key));
 			ft_strdel(&(relink->value));
-			return (0);
-			//free(relink);
+			return (SUCCESS);
 		}
 		tmp = tmp->next;
 	}
+	return (ERROR);
+}
+
+static int
+	unsetvarset(char *argv)
+{
+	struct s_svar	*tmp;
+	struct s_svar	*relink;
+
+	relink = NULL;
+	tmp = g_svar;
+	if (ft_isin(EQUAL, argv))
+		return (ERROR);
+	if (varinlst(tmp, argv, relink) == SUCCESS)
+		return (SUCCESS);
 	if (ft_strncmp(g_svar->key, argv, ft_strlen(g_svar->key) - 1) == 0)
 	{
 		tmp = g_svar;
@@ -46,12 +57,13 @@ int						unsetvarset(char *argv)
 		ft_strdel(&(tmp->str));
 		ft_strdel(&(tmp->key));
 		ft_strdel(&(tmp->value));
-		return (0);
+		return (SUCCESS);
 	}
-	return (1);
+	return (ERROR);
 }
 
-void					cpytabfrom(char **environ)
+static int
+	cpytabfrom(char **environ)
 {
 	int		i;
 	int		len;
@@ -61,14 +73,17 @@ void					cpytabfrom(char **environ)
 	while (environ[i + 1])
 	{
 		free(environ[i]);
-		environ[i] = ft_strdup(environ[i + 1]);
+		if (!(environ[i] = ft_strdup(environ[i + 1])))
+			return (ERROR);
 		i++;
 	}
 	environ[i] = 0;
 	free(environ[len - 1]);
+	return (SUCCESS);
 }
 
-int						unsetvarenv(char *argv)
+static int
+	unsetvarenv(char *argv)
 {
 	int				i;
 	char			*key;
@@ -78,37 +93,36 @@ int						unsetvarenv(char *argv)
 	while (environ[i])
 	{
 		key = get_key(environ[i]);
-		if (ft_strcmp(key, argv) == 0)
+		if (!(ft_strcmp(key, argv)))
 		{
-			cpytabfrom(&environ[i]);
-			return (0);
+			if (!(cpytabfrom(&environ[i])))
+				return (ERROR);
+			return (SUCCESS);
 		}
 		++i;
 		ft_strdel(&key);
 	}
-	return (1);
+	return (ERROR);
 }
 
-int						cmd_unset(int argc, char **argv)
+int
+	cmd_unset(int argc, char **argv)
 {
-	int i;
-	(void)argc;
-	extern char **environ;
+	int			i;
+	extern char	**environ;
 
 	i = 1;
+	(void)argc;
 	while (argv[i])
 	{
-		if (unsetvarset(argv[i]) == 0)
-			unsetvarenv(argv[i]);
+		if (unsetvarset(argv[i]) == SUCCESS)
+		{
+			if (!(unsetvarenv(argv[i])))
+				return (ERROR);
+		}
 		else
 			ft_printf("42sh: unset: `%s' is not a valid identifier\n", argv[i]);
 		++i;
 	}
-	cmd_set(0, NULL);
-	while (*environ)
-	{
-		ft_putendl(*environ);
-		environ++;
-	}
-	return (0);
+	return (SUCCESS);
 }
