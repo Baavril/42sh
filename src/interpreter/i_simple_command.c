@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:43:35 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/28 20:23:40 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/01 17:38:18 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ int	i_exec(t_elem left, t_elem right)
 		right.v->f(right.v->left, right.v->right);
 	ret = execve(g_argv[0], g_argv, environ);
 	free(g_argv);
-	return (ret);
+	exit (ret);
+	return (0);
 }
 
 char **realloc_argv(char **argv, size_t i)
