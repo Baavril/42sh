@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 22:47:47 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/15 12:31:53 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/01 17:30:30 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ t_sig			g_sigdispatcher[] =
 	{SIGINT, {SIG_IGN, SIG_DFL}},
 	{SIGQUIT, {SIG_IGN, SIG_DFL}},
 	{SIGILL, {SIG_IGN, SIG_DFL}},
+	{SIGTRAP, {SIG_IGN, SIG_DFL}},
 	{SIGABRT, {SIG_IGN, SIG_DFL}},
 	{SIGFPE, {SIG_IGN, SIG_DFL}},
-	{SIGKILL, {SIG_IGN, SIG_DFL}},
 	{SIGBUS, {SIG_IGN, SIG_DFL}},
 	{SIGSEGV, {SIG_IGN, SIG_DFL}},
 	{SIGSYS, {SIG_IGN, SIG_DFL}},
@@ -34,7 +34,6 @@ t_sig			g_sigdispatcher[] =
 	{SIGALRM, {SIG_IGN, SIG_DFL}},
 	{SIGTERM, {SIG_IGN, SIG_DFL}},
 	{SIGURG, {SIG_IGN, SIG_DFL}},
-	{SIGSTOP, {SIG_IGN, SIG_DFL}},
 	{SIGTSTP, {SIG_IGN, SIG_DFL}},
 	{SIGCONT, {SIG_IGN, SIG_DFL}},
 	{SIGCHLD, {&ft_sigchld_handler, SIG_DFL}},
