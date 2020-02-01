@@ -92,7 +92,6 @@ int		main(int argc, char **argv)
 	}
 	while (!read_command(&input) || get_next_line(0, &input))
 	{
-//		update_intern_vars();
 		if (!(status = history(ADD_CMD, &input, NULL)))
 		{
 			psherror(e_cannot_allocate_memory, argv[0], e_cmd_type);
@@ -104,6 +103,7 @@ int		main(int argc, char **argv)
 			execute(input);
 		}
 		ft_strdel(&input);
+		update_intern_vars();
 	}
 	cmd_exit(0, NULL);
 	return(0);

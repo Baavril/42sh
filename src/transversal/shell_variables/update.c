@@ -41,7 +41,27 @@ int				update_intern_vars(void)
 					if (ft_strcmp(environ[i], voyager->str))
 					{
 						ft_strdel(&voyager->value);
+						ft_strdel(&voyager->str);
 						voyager->value = ft_strdupfm(environ[i], '=');
+						voyager->str = ft_strdup(environ[i]);
+					}
+				}
+				voyager = voyager->next;
+			}
+			voyager = g_svar;
+		}
+		else if (!ft_strncmp(environ[i], "OLDPWD=", 7))
+		{
+			while (voyager)
+			{
+				if (!ft_strncmp(environ[i], voyager->key, 4))
+				{
+					if (ft_strcmp(environ[i], voyager->str))
+					{
+						ft_strdel(&voyager->value);
+						ft_strdel(&voyager->str);
+						voyager->value = ft_strdupfm(environ[i], '=');
+						voyager->str = ft_strdup(environ[i]);
 					}
 				}
 				voyager = voyager->next;
@@ -67,7 +87,8 @@ char				*get_prompt_value()
 	{
 		if (!(ft_strcmp(voyager->key, PS1)))
 		{
-			if (!(ret = (char*)ft_memalloc(sizeof(char) * (ft_strplen(voyager->value) + 1))))
+			if (!(ret = (char*)ft_memalloc(sizeof(char)
+			* (ft_strplen(voyager->value) + 1))))
 				return (0);
 			while (voyager->value[i])
 			{
