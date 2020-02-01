@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tools.c                                            :+:      :+:    :+:   */
+/*   update.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -15,68 +15,28 @@
 
 #include "shell_variables.h"
 #include "libft.h"
+#include "prompt.h"
 
 struct s_svar	*g_svar;
-struct s_pos	*g_pos;
 
-static int		ft_retinstr(char *str, char c)
+int				update_prompt_var(void)
 {
-	int	i;
+	char			*tmp;
+	struct s_svar	*voyager;
 
-	i = 0;
-	while (str[i])
+	mkprompt(&tmp);
+	voyager = g_svar;
+	while (voyager)
 	{
-		if (str[i] - c == 0)
-			return (i);
-		i++;
+		if (!(ft_strcmp(voyager->key, PS1)))
+		{
+			ft_strdel(&voyager->value);
+			voyager->value = ft_strdup(tmp);
+			ft_strdel(&tmp);
+			return (0);
+		}
+		voyager = voyager->next;
 	}
-	return (1);
-}
-
-char			*ft_strdupfm(char *str, char c)
-{
-	int		i;
-	int		lim;
-	int		len;
-	char	*ret;
-
-	i = 0;
-	len = ft_strlen(str);
-	lim = ft_retinstr(str, c) + 1;
-	if (len - lim >= 0)
-	{
-		if (!(ret = (char*)ft_memalloc(sizeof(char) * (len - lim) + 1)))
-			return (NULL);
-		len = len - lim;
-	}
-	else
-		return (NULL);
-	while (len)
-	{
-		ret[i] = str[lim];
-		len--;
-		i++;
-		lim++;
-	}
-	ret[i] = '\0';
-	return (ret);
-}
-
-char			*ft_strdupto(char *str, char c)
-{
-	int		i;
-	int		lim;
-	char	*ret;
-
-	i = 0;
-	lim = ft_retinstr(str, c) + 1;
-	if (!(ret = (char*)malloc(sizeof(char) * (lim + 1))))
-		return (NULL);
-	while (i < lim)
-	{
-		ret[i] = str[i];
-		i++;
-	}
-	ret[i] = '\0';
-	return (ret);
+	ft_strdel(&tmp);
+	return (0);
 }

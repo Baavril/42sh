@@ -19,6 +19,7 @@ SOURCES			:=		transversal/program/main.c \
 						transversal/program/signals.c \
 						transversal/shell_variables/main.c \
 						transversal/shell_variables/tools.c \
+						transversal/shell_variables/update.c \
 						transversal/hash/bash_routines.c \
 						transversal/hash/corps_fini_tools.c \
 						transversal/hash/random_tools.c \
