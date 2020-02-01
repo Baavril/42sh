@@ -76,7 +76,6 @@ int		main(int argc, char **argv)
 	input = NULL;
 	g_progname = argv[0];
 	init_shell_vars(environ);
-	/* cmd_set(argc, argv); to show the list of internvars */
 	if (!(history(INIT, NULL, NULL)))
 		return (1);
 	if (!(environ = ft_tabcpy(environ)))
@@ -93,6 +92,7 @@ int		main(int argc, char **argv)
 	}
 	while (!read_command(&input) || get_next_line(0, &input))
 	{
+//		update_intern_vars();
 		if (!(status = history(ADD_CMD, &input, NULL)))
 		{
 			psherror(e_cannot_allocate_memory, argv[0], e_cmd_type);

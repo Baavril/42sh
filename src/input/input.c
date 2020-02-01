@@ -71,12 +71,12 @@ int	init_prompt(t_cursor *cursor)
 		{
 			cursor->prompt_len = ft_strplen(voyager->value);
 			cursor->prompt = ft_strdup(voyager->value);
-			return(0);
+			return (0);
 		}
 		voyager = voyager->next;
 	}
 	cursor->prompt_len = 0;
-	return(0);
+	return (0);
 }
 
 int	read_command(char **buff)

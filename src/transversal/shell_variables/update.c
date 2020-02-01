@@ -14,29 +14,127 @@
 #include <stdio.h>
 
 #include "shell_variables.h"
+#include "expansions.h"
 #include "libft.h"
 #include "prompt.h"
 
 struct s_svar	*g_svar;
 
-int				update_prompt_var(void)
+int				update_intern_vars(void)
 {
-	char			*tmp;
+	int				i;
+	int				len;
+	extern char		**environ;
 	struct s_svar	*voyager;
 
-	mkprompt(&tmp);
+	i = 0;
+	voyager = g_svar;
+	len = ft_tablen(environ);
+	while (i < len)
+	{
+		if (!ft_strncmp(environ[i], "PWD=", 4))
+		{
+			while (voyager)
+			{
+				if (!ft_strncmp(environ[i], voyager->key, 4))
+				{
+					if (ft_strcmp(environ[i], voyager->str))
+					{
+						ft_strdel(&voyager->value);
+						voyager->value = ft_strdupfm(environ[i], '=');
+					}
+				}
+				voyager = voyager->next;
+			}
+			voyager = g_svar;
+		}
+		++i;
+	}
+	return (0);
+}
+
+char				*get_prompt_value()
+{
+	int				i;
+	int				j;
+	char			*ret;
+	struct s_svar	*voyager;
+
+	i = 0;
+	j = 0;
+	voyager = g_svar;
+	while (voyager)
+	{
+		if (!(ft_strcmp(voyager->key, PS1)))
+		{
+			if (!(ret = (char*)ft_memalloc(sizeof(char) * (ft_strplen(voyager->value) + 1))))
+				return (0);
+			while (voyager->value[i])
+			{
+				if (voyager->value[i] == '\033')
+				{
+					while (voyager->value[i] != 'm')
+						++i;
+					++i;
+				}
+				if (ft_isprint(voyager->value[i]))
+					ret[j++] = voyager->value[i];
+				++i;
+				if (voyager->value[i] == ' ')
+					break;
+			}
+			return(ret);
+		}
+		voyager = voyager->next;
+	}
+	return (NULL);
+}
+
+int				set_new_prompt_var(char *new)
+{
+	struct s_svar	*voyager;
+
 	voyager = g_svar;
 	while (voyager)
 	{
 		if (!(ft_strcmp(voyager->key, PS1)))
 		{
 			ft_strdel(&voyager->value);
-			voyager->value = ft_strdup(tmp);
-			ft_strdel(&tmp);
+			voyager->value = ft_strdup(new);
 			return (0);
 		}
 		voyager = voyager->next;
 	}
-	ft_strdel(&tmp);
+	return (0);
+}
+
+int				update_prompt_var(void)
+{
+	int				i;
+	char			*tmp1;
+	char			*tmp2;
+	extern char		**environ;
+
+	i = 0;
+	mkprompt(&tmp1);
+	if (!(tmp2 = get_prompt_value()))
+	{
+		ft_strdel(&tmp1);
+		return (0);
+	}
+	while (environ[i])
+	{
+		if (!ft_strncmp(environ[i], "OLDPWD=", 7))
+		{
+			if (!(ft_strcmp(tmp2, &environ[i][ft_strpchr(environ[i], '=') + 1])))
+				set_new_prompt_var(tmp1);
+			ft_strdel(&tmp1);
+			ft_strdel(&tmp2);
+			return (0);
+		}
+		++i;
+	}
+	ft_strdel(&tmp1);
+	ft_strdel(&tmp2);
 	return (0);
 }

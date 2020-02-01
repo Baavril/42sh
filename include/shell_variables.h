@@ -74,5 +74,7 @@ char					*ft_strdupto(char *str, char c);
 int						set_positional_params(char **tokens);
 
 int						update_prompt_var(void);
+int						update_intern_vars(void);
+int						ft_strplen(char *str);
 
 #endif
