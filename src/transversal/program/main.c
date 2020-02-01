@@ -75,7 +75,6 @@ int		main(int argc, char **argv)
 	copybuff = NULL;
 	input = NULL;
 	g_progname = argv[0];
-	init_shell_vars(environ);
 	if (!(history(INIT, NULL, NULL)))
 		return (1);
 	if (!(environ = ft_tabcpy(environ)))
@@ -90,6 +89,7 @@ int		main(int argc, char **argv)
 		ft_tabdel(&environ);
 		return (1);
 	}
+	init_shell_vars(environ);
 	while (!read_command(&input) || get_next_line(0, &input))
 	{
 		if (!(status = history(ADD_CMD, &input, NULL)))
