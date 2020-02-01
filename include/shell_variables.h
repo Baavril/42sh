@@ -73,4 +73,6 @@ char					*ft_strdupto(char *str, char c);
 
 int						set_positional_params(char **tokens);
 
+int						update_prompt_var(void);
+
 #endif

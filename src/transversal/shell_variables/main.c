@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell_variables.c                                  :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -15,6 +15,7 @@
 
 #include "shell_variables.h"
 #include "libft.h"
+#include "prompt.h"
 
 struct s_svar	*g_svar;
 struct s_pos	*g_pos;
@@ -58,6 +59,8 @@ int				setenvvar(char *key, char *value)
 
 	if (!(set = ft_strjoin(key, value)))
 		return (0);
+	ft_strdel(&key);
+	ft_strdel(&value);
 	if (checkvarlst(set))
 		setenvnod(newnodshell(set, 0));
 	ft_strdel(&set);
@@ -66,11 +69,14 @@ int				setenvvar(char *key, char *value)
 
 static void		init_intern_vars()
 {
-	setenvvar(PS1, PS1V);
-	setenvvar(PS2, PS2V);
-	setenvvar(PS3, PS3V);
-	setenvvar(PS4, PS4V);
-	setenvvar(HISTSIZE, HISTSIZEV);
+	char *tmp;
+
+	mkprompt(&tmp);
+	setenvvar(ft_strdup(PS1), tmp);
+	setenvvar(ft_strdup(PS2), ft_strdup(PS2V));
+	setenvvar(ft_strdup(PS3), ft_strdup(PS3V));
+	setenvvar(ft_strdup(PS4), ft_strdup(PS4V));
+	setenvvar(ft_strdup(HISTSIZE), ft_strdup(HISTSIZEV));
 }
 
 int				init_shell_vars(char **env)
