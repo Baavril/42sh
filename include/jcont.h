@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:18:20 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/23 13:59:47 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/01 17:10:34 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define L_OPT					1
 # define P_OPT					2
 
+# define WHARD_EXIT				0x80
 # define WSTPED					0x1f
 # define RUNNING				0x20000
 # define BACKGROUND				0x10000

@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:13:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/28 20:33:39 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/01 17:19:19 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,21 @@
 #define STDERR 2
 
 extern char		**environ;
-extern int		g_retval;
 int				g_fd[3] = {STDIN, STDOUT, STDERR};
 int				g_fclose = -1;
 
 int				i_comp_list(t_elem left, t_elem right)
 {
+	int		retval; // the global is set in the job control function ft_wait_foreground
+// If yo want the exit status you must use the macros of sys/wait.h accordingly
+// launch job returns some informations that you should not assume to be the return status
+// this modif should not be definitiv: it is just to check the return value
+// in job control is right ; as it was overwritten by this function. 
+
 	expand_tree(left.v);
-	g_retval = left.v->f(left.v->left, left.v->right);
-	if (g_retval < 0)
-		g_retval = ft_launch_job("plop", FOREGROUND);
+	retval = left.v->f(left.v->left, left.v->right);
+	if (retval < 0)
+		retval = ft_launch_job("plop", FOREGROUND);
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 20:40:42 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/18 11:03:32 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/01 17:17:13 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 #include <unistd.h>
 #include <signal.h>
 
-int		ft_wait_foreground(t_job *job)
+extern int		g_retval;
+
+int				ft_wait_foreground(t_job *job)
 {
+	int			ret_status;
 	sigset_t	wakeup_sig;
 
 	tcsetpgrp(STDIN_FILENO, job->pgid);
@@ -26,6 +29,17 @@ int		ft_wait_foreground(t_job *job)
 		sigsuspend(&wakeup_sig);
 	tcsetpgrp(STDIN_FILENO, getpid());
 	if (WIFSTOPPED(job->status))
-		return (job->status);
-	return (((t_process*)(job->process->content))->status);
+	{
+		ret_status = job->status;
+		g_retval = WHARD_EXIT | WSTOPSIG(ret_status);
+	}
+	else
+	{
+		ret_status = ((t_process*)(job->process->content))->status;
+		if (WIFEXITED(ret_status))
+			g_retval = WEXITSTATUS(ret_status);
+		else
+			g_retval = WHARD_EXIT | WTERMSIG(ret_status);
+	}
+	return (ret_status);
 }
