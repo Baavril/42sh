@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/15 17:12:54 by baavril          ###   ########.fr       */
+/*   Updated: 2020/02/01 16:02:01 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static int		tilde_int_exp(char **token, char *end, int flag)
 		tmp = ft_getenv("PWD");
 		ft_strdel(token);
 		*token = ft_strjoin(tmp, end);
+		ft_strdel(&tmp);
 		return (SUCCESS);
 	}
 	return (ERROR);
@@ -44,6 +45,7 @@ static int		tilde_nude_exp(char **token, char *end, int flag)
 		tmp = ft_getenv("HOME");
 		ft_strdel(token);
 		*token = ft_strjoin(tmp, end);
+		ft_strdel(&tmp);
 		return (SUCCESS);
 	}
 	return (ERROR);
@@ -59,6 +61,7 @@ static int		tilde_minus_exp(char **token, char *end)
 		tmp = ft_getenv("OLDPWD");
 		ft_strdel(token);
 		*token = ft_strjoin(tmp, end);
+		ft_strdel(&tmp);
 		return (SUCCESS);
 	}
 	return (ERROR);
@@ -74,6 +77,7 @@ static int		tilde_plus_exp(char **token, char *end)
 		tmp = ft_getenv("PWD");
 		ft_strdel(token);
 		*token = ft_strjoin(tmp, end);
+		ft_strdel(&tmp);
 		return (SUCCESS);
 	}
 	return (ERROR);
@@ -100,5 +104,6 @@ int		tilde_exp(char **token)
 	tilde_nude_exp(token, end, flag);
 	tilde_int_exp(token, end, flag);
 	ft_strdel(&end);
+	ft_strdel(&user);
 	return (SUCCESS);
 }
