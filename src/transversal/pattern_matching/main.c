@@ -43,6 +43,9 @@ char		*pattern_matching(char *str, char *match, int flag)
 		simple_pattern_matching(&var, match, str);
 	else
 		complex_pattern_matching(&var, match, str);
+//	ft_printf("%d\n", var.len_s);
+//	ft_printf("%d\n", var.i);
+//	ft_printf("%d\n", var.diff);
 	if (var.flag == 2 && !var.diff)
 		return (&str[var.i]);
 	else if (var.flag == 1 && !var.diff)
