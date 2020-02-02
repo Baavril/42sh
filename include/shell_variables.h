@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 09:48:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/19 12:51:15 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/02 14:33:08 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define PS4			"PS4="
 # define SH				"42sh="
 # define PPID			"PPID="
+# define PID			"PID="
 # define OPTERR			"OPTERR="
 # define OPTIND			"OPTIND="
 # define HISTSIZE		"HISTSIZE="

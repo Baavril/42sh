@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/26 20:08:00 by baavril          ###   ########.fr       */
+/*   Updated: 2020/02/02 15:40:42 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,8 @@ char	*ft_getbtw(char *tokens, int type)
 	if (ft_isin(DQUOTES, tokens))
 		return (ft_quoted(tokens));
 	while (*tokens && (*tokens == DOLLAR || *tokens == OP_BRACE
-	|| *tokens == STAR || *tokens == AROB || *tokens == SHARP || *tokens == WHY))
+	|| *tokens == STAR || *tokens == AROB || *tokens == SHARP
+	|| *tokens == WHY || *tokens == DASH || *tokens == EXCLAM))
 		tokens++;
 	while (type == DIRECT_EXP && *tokens && (ft_isalpha(*tokens)
 	|| ft_isdigit(*tokens) || *tokens == AMPER || *tokens == UNDERSCORE))

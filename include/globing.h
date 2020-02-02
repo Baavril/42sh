@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/15 16:36:15 by baavril          ###   ########.fr       */
+/*   Updated: 2020/02/02 15:13:24 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int					check_deploy(char *str, char *match, int flag, t_pattern *var);
 int					get_deploy(char **match);
 char				*ft_alpharange(char c, char x);
 char				*ft_strneg(char *match);
+int					ft_strlchr(char *str, char c);
 
 char				*pattern_matching(char *token, char *match, int flag);
 int					complex_pattern_matching(t_pattern *var, char *match, char *str);

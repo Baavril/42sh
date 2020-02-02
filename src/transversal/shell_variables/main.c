@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:21:48 by baavril           #+#    #+#             */
-/*   Updated: 2019/12/03 16:21:55 by baavril          ###   ########.fr       */
+/*   Updated: 2020/02/02 14:44:14 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void		init_intern_vars()
 	char *tmp;
 
 	tmp = NULL;
-	g_svar = newnodshell("IFS='_'", 0);
+	g_svar = newnodshell("IFS=_", 0);
 	mkprompt(&tmp);
 	setenvvar(ft_strdup(PS1), tmp);
 	setenvvar(ft_strdup(PS2), ft_strdup(PS2V));
@@ -82,6 +82,7 @@ static void		init_intern_vars()
 	setenvvar(ft_strdup(SH), ft_strdup(tmp));
 	ft_strdel(&tmp);
 	setenvvar(ft_strdup(PPID), ft_itoa(getppid()));
+	setenvvar(ft_strdup(PID), ft_itoa(getpid()));
 	setenvvar(ft_strdup(OPTERR), ft_strdup(OPTERRV));
 	setenvvar(ft_strdup(OPTIND), ft_strdup(OPTINDV));
 	setenvvar(ft_strdup(HISTSIZE), ft_strdup(HISTSIZEV));
