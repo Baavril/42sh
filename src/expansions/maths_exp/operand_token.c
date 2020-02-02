@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 11:41:38 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/02/02 14:41:11 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/02 16:56:48 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int				ft_isnumber(char *to_test)
 {
 	size_t	i;
 
-	i = 0;
+	i = (*to_test == '-' || *to_test == '+') ? 1 : 0;
 	while (to_test[i])
 	{
 		if (!(ft_isdigit(to_test[i])))
