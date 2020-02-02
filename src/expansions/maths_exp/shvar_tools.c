@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:43:12 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/02/02 14:41:10 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/02 15:03:58 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ char					*getshvar(char *var_name)
 		}
 		tmp = tmp->next;
 	}
-	if (!var_value)
-		return (NULL);
 	return (var_value);
 }
 
