@@ -17,6 +17,18 @@
 #include "expansions.h"
 #include "libft.h"
 
+int			ft_strlchr(char *str, char c)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		++i;
+	while (str[i] != c)
+		--i;
+	return (i);
+}
+
 int			scan_current_dir(t_glob *var, char **indepth)
 {
 	if ((var->dirhandle = opendir(CURRENT_DIR)))
@@ -44,14 +56,21 @@ static int	dir_paths_constructor(t_glob *var, char **indepth)
 {
 	if (*(var->filedata->d_name) != HIDEN_FILE)
 	{
-		free(var->dir[var->x]);
 		var->tmp_file = ft_strjoin(var->tmp_dir[var->j], PATH_DIR);
 		var->dir[var->x]
 		= ft_strjoin(var->tmp_file, pattern_matching(var->filedata->d_name,
 		indepth[var->i], GLOBING));
 		ft_strdel(&var->tmp_file);
-		(!(var->dir[var->x][ft_strpchr(var->dir[var->x], NEXT_DIR) + 1]))
-		? free(var->dir[var->x]) : ++var->x;
+		if (!(var->dir[var->x][ft_strlchr(var->dir[var->x], NEXT_DIR) + 1]))
+		{
+			free(var->dir[var->x]);
+			var->f = 1;
+		}
+		else
+		{
+			++var->x;
+			var->f = 0;
+		}
 	}
 	return (SUCCESS);
 }
@@ -59,9 +78,11 @@ static int	dir_paths_constructor(t_glob *var, char **indepth)
 int			scan_indepth_dirs(t_glob *var, char **indepth)
 {
 	var->j = 0;
+	var->n = 0;
 	var->x = 0;
 	ft_tabdel(&var->tmp_dir);
 	var->tmp_dir = ft_tabcpy(var->dir);
+	ft_freeintab(var->dir);
 	while (var->tmp_dir[var->j])
 	{
 		if ((var->dirhandle = opendir(var->tmp_dir[var->j])))
@@ -70,7 +91,10 @@ int			scan_indepth_dirs(t_glob *var, char **indepth)
 				dir_paths_constructor(var, indepth);
 			closedir(var->dirhandle);
 		}
-		free(var->dir[var->x]);
+		if (var->dir[var->x] && !var->f)
+		{
+			free(var->dir[var->x]);
+			}
 		var->dir[var->x] = 0;
 		++var->j;
 	}
