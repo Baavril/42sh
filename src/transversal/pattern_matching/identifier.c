@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/02/02 16:44:33 by baavril          ###   ########.fr       */
+/*   Updated: 2020/02/02 18:41:47 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 static int
 	matching_simple_pattern(t_pattern *var, char *match, char *str)
 {
-	while (var->i < var->len_s && str[var->i] != match[var->j])
+	while (var->i < var->len_s && var->i >= 0 && str[var->i] != match[var->j])
 	{
 		++var->i;
 		if (str[var->i] == match[var->j])

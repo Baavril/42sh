@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/02/02 16:55:30 by baavril          ###   ########.fr       */
+/*   Updated: 2020/02/02 18:50:15 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int
 int
 	match_cmp(t_pattern *var, char *match, char *str)
 {
-	if ((var->i < var->len_s && match[var->j] != str[var->i])
+	if ((var->i < var->len_s && var->i != -1 && match[var->j] != str[var->i])
 		|| var->i >= var->len_s)
 	{
 		if (match[var->j] == WHY
