@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 11:41:38 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/22 14:48:43 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/02 14:41:11 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ int				ft_arg_value(char *token, int64_t *value)
 		return (ft_arg_value_base(token, expr, value));
 	if (ft_isdigit(*token))
 		return (ft_int64_convert(value, token, NULL));
-	expr = getshvar(token);
+	if (!(expr = getshvar(token)))
+		expr = ft_strdup("0");
 	if (ft_isnumber(expr) || ft_maths_expansion(expr, &expr) == SUCCESS)
 	{
 		ret = ft_int64_convert(value, expr, DEF_BASE);
