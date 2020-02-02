@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/19 13:30:29 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/02 15:18:08 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,16 @@
 #include "error.h"
 #include "jcont.h"
 
-extern int		g_retval;
+extern int				g_retval;
+extern char				*g_bgpid;
 extern struct s_svar	*g_svar;
 extern struct s_pos		*g_pos;
 
-static int		ft_clean_exit(char **av, int exit_status)
+static void		ft_free_shvar(void)
 {
 	struct s_svar	*tmp1;
 	struct s_pos	*tmp2;
-	extern char		**environ;
 
-	if (ft_free_jcont())
-	{
-		ft_dprintf(STDERR_FILENO, "There are stopped jobs.\n");
-		return (1);
-	}
 	while (g_svar)
 	{
 		tmp1 = g_svar->next;
@@ -53,11 +48,24 @@ static int		ft_clean_exit(char **av, int exit_status)
 		free(g_pos);
 		g_pos = tmp2;
 	}
+}
+
+static int		ft_clean_exit(char **av, int exit_status)
+{
+	extern char		**environ;
+
+	if (ft_free_jcont())
+	{
+		ft_dprintf(STDERR_FILENO, "There are stopped jobs.\n");
+		return (1);
+	}
+	ft_free_shvar();
 	ft_tabdel(&av);
 	ft_tabdel(&environ);
 	history(DELETE, NULL, NULL);
 	ft_free_bintable();
 	set_termcaps(TC_RESTORE);
+	ft_strdel(&g_bgpid);
 	//system("leaks 42sh");
 	exit(exit_status);
 }
@@ -68,7 +76,6 @@ int				cmd_exit(int ac, char **av)
 	int		i;
 
 	exit_status = (unsigned char)g_retval;
-	//ft_dprintf(STDERR_FILENO, "exit\n");
 	if (ac > 1)
 	{
 		i = (!ft_strcmp("--", av[1]) && ac > 2) ? 2 : 1;
