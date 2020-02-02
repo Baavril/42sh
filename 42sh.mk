@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/01/29 16:18:16 by yberramd         ###   ########.fr        #
+#    Updated: 2020/02/02 18:33:30 by bavril           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,8 @@ SOURCES			:=		transversal/program/main.c \
 						transversal/pattern_matching/simple_wildcards.c \
 						transversal/pattern_matching/complex_wildcards.c \
 						transversal/pattern_matching/deployement/main.c \
+						transversal/pattern_matching/deployement/find.c \
+						transversal/pattern_matching/deployement/tools.c \
 						transversal/pattern_matching/deployement/launcher.c \
 						transversal/pattern_matching/deployement/maker.c \
 						input/input.c \

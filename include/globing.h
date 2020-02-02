@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/02/02 15:13:24 by baavril          ###   ########.fr       */
+/*   Updated: 2020/02/02 18:32:02 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,17 @@
 # define PATH_DIR "/"
 # define NEXT_DIR '/'
 # define GLOBING 3
+
+typedef struct		s_checker
+{
+	int				i;
+	int				j;
+	int				flag;
+	char			c;
+	char			len;
+	char			*tmp;
+	char			*ptm;
+}					t_checker;
 
 typedef struct		s_deploy
 {
@@ -94,6 +105,8 @@ int					deployement_limit(t_pattern *var, char *match, char *str);
 int					match_cmp(t_pattern *var, char *match, char *str);
 int					deployement_support(t_pattern *var, char *match, char *str);
 int					islast(t_pattern *var, char *str, char c);
+int					deploy_case(t_pattern *var, char **str, t_checker *elem);
 void				ft_freeintab(char **tab);
+int					get_btw_square(char **match);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/22 11:21:15 by baavril          ###   ########.fr       */
+/*   Updated: 2020/02/02 18:32:34 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ static int		spread(char *match, t_deploy *var)
 	return (SUCCESS);
 }
 
-static char	*deploy(char *match)
+static char		*deploy(char *match)
 {
 	t_deploy	var;
 
 	init_deploy_vars(&var);
 	if (!(var.keep = (char*)malloc(sizeof(char) * (ft_strlen(match)))))
-		return(0);
+		return (0);
 	spread(match, &var);
 	if (var.range)
 	{
@@ -82,34 +82,7 @@ static char	*deploy(char *match)
 	return (var.keep);
 }
 
-static int	get_btw_square(char **match)
-{
-	int		i;
-	char	*tmp;
-
-	i = 0;
-	tmp = NULL;
-	if (*match[i] == CL_SQUAR)
-	{
-		free(*match);
-		if (!(*match = ft_strdup(EMPTY_STR)))
-			return (0);
-		return (SUCCESS);
-	}
-	if (!(tmp = (char*)ft_memalloc(sizeof(char) * (ft_strlen(*match) + 1))))
-		return (0);
-	while ((*match)[i] && (*match)[i] != CL_SQUAR)
-	{
-		tmp[i] = (*match)[i];
-		i++;
-	}
-	tmp[i + 1] = '\0';
-	free(*match);
-	*match = tmp;
-	return (SUCCESS);
-}
-
-int		get_deploy(char **match)
+int				get_deploy(char **match)
 {
 	int		flag;
 	char	*tmp;

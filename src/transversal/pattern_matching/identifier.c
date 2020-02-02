@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/26 20:00:26 by baavril          ###   ########.fr       */
+/*   Updated: 2020/02/02 16:44:33 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ static int
 			--var->i;
 		var->s = 0;
 	}
-	if (var->i < var->len_s && match[var->j] == str[var->i])
+	if (var->i >= 0 && var->i < (int)var->len_s
+	&& match[var->j] == str[var->i])
 		++var->i;
 	else
 		var->diff += 1;

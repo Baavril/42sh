@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/08 13:58:54 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/02 18:03:24 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ char		*ft_alpharange(char c, char x)
 
 static char	*ft_struchr(char *match, int len)
 {
-	int i;
-	int j;
-	char *ret;
+	int		i;
+	int		j;
+	char	*ret;
 
 	j = 0;
 	i = 1;
@@ -76,7 +76,7 @@ static char	*ft_struchr(char *match, int len)
 		while (ret[j])
 		{
 			if ((ret[j] - match[i]) == 0)
-				break;
+				break ;
 			if (ret[j + 1] == '\0')
 				ret[j + 1] = match[i];
 			++j;
@@ -104,8 +104,8 @@ char		*ft_strneg(char *match)
 	{
 		if ((*strpos - c) == 0)
 		{
-			++strpos;
 			++c;
+			++strpos;
 		}
 		else
 			strneg[j++] = c++;

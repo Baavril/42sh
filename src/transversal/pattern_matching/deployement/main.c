@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/26 20:00:26 by baavril          ###   ########.fr       */
+/*   Updated: 2020/02/02 18:11:15 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	deployement_limit(t_pattern *var, char *match, char *str)
 	var->j += ft_strpchr(&match[var->j], CL_SQUAR) + 1;
 	tmp = var->j;
 	if (var->j < var->len_m && match[var->j] == STAR)
-			++tmp;
+		++tmp;
 	while (var->j < var->len_m && ft_isalnum(match[tmp])
 	&& match[tmp] != str[var->i] && var->i > 0)
 		--var->i;
