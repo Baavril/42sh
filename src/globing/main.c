@@ -23,10 +23,12 @@ static void	init_glob_var(t_glob *var)
 	var->j = 0;
 	var->x = 0;
 	var->n = 0;
+	var->f = 0;
 	var->nul = 0;
 	var->dir = NULL;
 	var->ret = NULL;
 	var->tmp_dir = NULL;
+	var->free_dir = NULL;
 	var->tmp_file = NULL;
 	var->filedata = NULL;
 	var->dirhandle = NULL;

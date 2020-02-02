@@ -27,7 +27,12 @@
 # define PS2			"PS2="
 # define PS3			"PS3="
 # define PS4			"PS4="
+# define SH				"42sh="
+# define PPID			"PPID="
+# define OPTERR			"OPTERR="
+# define OPTIND			"OPTIND="
 # define HISTSIZE		"HISTSIZE="
+# define HISTFILE		"HISTFILE="
 
 /*
 ** Values of internal variables
@@ -37,7 +42,10 @@
 # define PS2V			"quote> "
 # define PS3V			"script> "
 # define PS4V			"heredoc> "
+# define OPTERRV		"1"
+# define OPTINDV		"1"
 # define HISTSIZEV		"1000"
+# define HISTFILEV		"/.42sh_history"
 
 struct					s_svar
 {

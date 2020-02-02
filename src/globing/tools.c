@@ -17,6 +17,15 @@
 #include "expansions.h"
 #include "libft.h"
 
+void		ft_freeintab(char **tab)
+{
+	int i;
+
+	i = 0;
+	while (tab[i])
+		ft_strdel(&tab[i++]);
+}
+
 void	ft_str_swap(char **a, char **b)
 {
 	char	*i;

@@ -42,8 +42,10 @@ typedef struct		s_glob
 	int				j;
 	int				x;
 	int				n;
+	int				f;
 	int				nul;
 	char			*tmp_file;
+	char			**free_dir;
 	char			**dir;
 	char			**tmp_dir;
 	char			**ret;
@@ -91,5 +93,6 @@ int					deployement_limit(t_pattern *var, char *match, char *str);
 int					match_cmp(t_pattern *var, char *match, char *str);
 int					deployement_support(t_pattern *var, char *match, char *str);
 int					islast(t_pattern *var, char *str, char c);
+void				ft_freeintab(char **tab);
 
 #endif

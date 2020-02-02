@@ -104,6 +104,11 @@ int		check_deploy(char *str, char *match, int flag, t_pattern *var)
 	ptm = NULL;
 	if ((int)ft_strlen(str) <= 0)
 		return (0);
+	if (!ft_isin(DASH, match) && ft_strlen(match) == 3)
+	{
+		c = match[1];
+		return (c);
+	}
 	if (var->x == 4 && (match[0] == CARET || match[1] == CARET))
 		launch_deploy(&ptm, match, CARET);
 	if (match[0] == OP_SQUAR)
