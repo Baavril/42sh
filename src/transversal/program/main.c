@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/27 14:37:42 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/02 16:23:13 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,18 @@
 #include <unistd.h>
 #include <signal.h>
 
-#include "libft.h"
 #include "shell_variables.h"
-#include "history.h"
 #include "sig_handler.h"
 #include "expansions.h"
-#include "builtins.h"
-#include "prompt.h"
-#include "input.h"
 #include "termcaps.h"
+#include "builtins.h"
+#include "history.h"
+#include "prompt.h"
+#include "parser.h"
+#include "input.h"
+#include "libft.h"
 #include "error.h"
 #include "lexer.h"
-#include "parser.h"
 #include "jcont.h"
 #include "synt.h"
 #include "path.h"
@@ -101,6 +101,7 @@ int		main(int argc, char **argv)
 		{
 			lexer_verbose(&input);
 			execute(input);
+			ft_check_bgstatus();
 		}
 		ft_strdel(&input);
 		update_intern_vars();

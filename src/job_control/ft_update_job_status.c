@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:01:09 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/18 11:02:39 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/02 16:24:56 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void				ft_check_bgstatus(void)
 	while (voyager)
 	{
 		job = voyager->content;
-		if ((job->status & BACKGROUND) && WIFEXITED(job->status))
+		if ((job->status & BACKGROUND) && !(job->status & RUNNING))
 			job_topop[i++] = job->nbr;
 		voyager = voyager->next;
 	}

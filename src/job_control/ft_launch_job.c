@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:56:52 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/02/02 15:11:53 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/02 16:15:28 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int			ft_launch_job(char *cmd, int status)
 	job = ft_add_job(status, cmd); //may fail due to malloc
 	if (status & BACKGROUND)
 	{
+		ft_dprintf(STDERR_FILENO, "[%i] %i\n", job->nbr, job->pgid);
 		g_bgpid = ft_itoa(job->pgid);
 		return (0);
 	}
