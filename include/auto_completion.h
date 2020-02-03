@@ -16,6 +16,7 @@
 # include <dirent.h>
 # include <stdbool.h>
 # include "libft.h"
+# include "expansions.h"
 
 typedef struct		s_tst
 {

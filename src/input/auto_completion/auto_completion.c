@@ -254,6 +254,8 @@ static int	nbr_words(t_tst *tst, char *input)
 	return (count_words(tst, 0));
 }
 
+// A VOIR PB LSM LSMP....
+
 static int	malloc_words(t_tst *tst, int len, int index, char **words)
 {
 	if (tst->right && tst->c != '\0')
@@ -279,60 +281,63 @@ static int	malloc_words(t_tst *tst, int len, int index, char **words)
 	return (index);
 }
 
-/*static int	ft_words_back(t_tst *tst, int len, int index, char **words)
-{
-	t_tst *head;
-
-	head = tst;
-	while (tst->middle && tst->c != '\0')
-	{
-		if (tst->end == true)
-		{
-		}
-	}
-	return (index);
-}*/
-
-/*static int	ft_nbr_words(t_tst *tst)
-{
-	int	i;
-
-	i = 0;
-	return (i);
-}*/
-
-static int	ft_words(t_tst *tst, int len, int index, char **words)
+static int	ft_words(t_tst *tst, int len, int index, char **words, char *str)
 {
 	if (tst->right && tst->c != '\0')
-		index = ft_words(tst->right, len, index, words);
+		index = ft_words(tst->right, len, index, words, str);
 	if (tst->left && tst->c != '\0')
-		index = ft_words(tst->left, len, index, words);
+		index = ft_words(tst->left, len, index, words, str);
 	if (tst->middle && tst->c != '\0')
 	{
 		//printf("len [%d]\n", len);
 		//printf("tst-> [%c]\n", tst->c);
-		words[index][len] = tst->c;
+		str[len] = tst->c;
 		len++;
-		index = ft_words(tst->middle, len, index, words);
+		index = ft_words(tst->middle, len, index, words, str);
 	}
-	if (tst->end == true)
+	if (tst->middle && tst->middle->end == true)
 	{
-		words[index][len] = '\0';
+		str[len] = '\0';
+		ft_strcat(words[index], str);
 		index++;
 	}
 	return (index);
 }
 
+static int 	malloc_str(t_tst *tst, int len, int max_len)
+{
+	if (tst->right && tst->c != '\0')
+		max_len = malloc_str(tst->right, len, max_len);
+	if (tst->left && tst->c != '\0')
+		max_len = malloc_str(tst->left, len, max_len);
+	if (tst->middle && tst->c != '\0')
+	{
+		len++;
+		max_len = malloc_str(tst->middle, len, max_len);
+	}
+	if (tst->end == true)
+	{
+		if (len > max_len)
+			max_len = len;
+	}
+	return (max_len);
+}
+
 static int	assign_words(t_tst *tst, char **words, char *input, int len)
 {
-	int i;
+	int 	i;
+	char 	*str;
 
 	i = 0;
 	if (go_to_char(&tst, input) == 0)
 		return (-1);
-	//printf("HEAD: [%c]\n", tst->c);
-	if (malloc_words(tst, ft_strlen(input), 0, words) == -1)
+	if ((str = (char*)malloc(sizeof(char) * (malloc_str(tst, 0, 0) + ft_strlen(input) + 1))) == NULL)
 		return (-1);
+	if (malloc_words(tst, ft_strlen(input), 0, words) == -1)
+	{
+		ft_strdel(&str);
+		return (-1);
+	}
 	//ASSIG
 	while (i < len)
 	{
@@ -340,7 +345,8 @@ static int	assign_words(t_tst *tst, char **words, char *input, int len)
 		i++;
 	}
 	//printf("HEAD: [%c]\n", tst->c);
-	ft_words(tst, ft_strlen(input), 0, words);
+	ft_words(tst, 0, 0, words, str);
+	ft_strdel(&str);
 	return (1);
 }
 
@@ -395,29 +401,53 @@ int 	ft_restart(char *input, int start)
 		return (0);
 }
 
+/*static char 	**ft_env_var()
+{
+	return (NULL);
+}*/
+
 int 	ft_auto_completion(t_tst *tst, char *input, char ***words, int start)
 {
-	int 	tmp_start;
+	int 	cursor;
+	char 	tmp;
+	char 	**tmp1;
 
-	tmp_start = start;
+	tmp1 = NULL;
+	cursor = start;
 	start = pos_start(input, start);
+	tmp = input[cursor];
+	input[cursor] = '\0';
+	/*c'est la structure externe g_svar qui t'interesse -> dedans tu trouveras char *str qui contient 
+	"key=value" ainsi que char *key qui contient "key=" ou "key" je sais plus et char *var qui contient "var"
+	Sinon, j'ai ecrit deux fonctions getshvar et setshvar dans mon module de maths si tu veux : dans expansion/maths_expansion/shvar_tools.c
+	*/
 	if (input[start] == '$')
 	{
 		ft_printf("DOLLARS\n");
 		(*words) = NULL;
 	}
-	else if (start == 0 || ft_restart(input, tmp_start))
+	else if (start == 0 || ft_restart(input, cursor))
 	{
 		if (((*words) = ft_binary(tst, &input[start])) == NULL)
 			if (((*words) = ft_path(&input[start])) == NULL)
+			{
+				input[cursor] = tmp;
 				return (0);
+			}
 	}
 	else
 	{
 		if (((*words) = ft_path(&input[start])) == NULL)
+		{
+			input[cursor] = tmp;
 			return (0);
+		}
 	}
 	if ((*words) && (*words)[0] != NULL && (*words)[1] == NULL)
+	{
+		input[cursor] = tmp;
 		return (2);
+	}
+	input[cursor] = tmp;
 	return (3);
 }
