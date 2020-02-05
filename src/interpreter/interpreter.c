@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:13:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/01 17:19:19 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/05 15:00:27 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int				i_simple_command(t_elem left, t_elem right)
 	if (right.v->f == i_builtin)
 	{
 		save_env = NULL;
-		ft_save_term_fd(g_fd, save_stdfd);
+		ft_save_term_fd(save_stdfd);
 		ft_stdredir(g_fd);
 		if (left.v)
 		{

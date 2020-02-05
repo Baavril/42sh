@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:18:20 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/02/02 16:19:53 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/05 15:00:27 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@
 # define BACKGROUND				0x10000
 # define FOREGROUND				0x0
 # define MAJOR_FAILLURE			0x40000
+
+# define RESERVED_INFD			10
+# define RESERVED_OUTFD			11
+# define RESERVED_ERRFD			12
 
 typedef struct		s_process
 {
@@ -77,7 +81,7 @@ int					ft_add_process(t_elem left, t_elem right, int std_fd[3],
 int					ft_launch_job(char *cmd, int status);
 t_job				*ft_add_job(int status, char *cmd);
 
-void				ft_save_term_fd(int std_redir[3], int save_fd[3]);
+void				ft_save_term_fd(int save_fd[3]);
 void				ft_stdredir(int std_fd[3]);
 
 int					ft_resume_in_fg(t_job *job);
