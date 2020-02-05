@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/27 11:49:23 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/02 17:13:33 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ static char	*expansions_management(char **splitok)
 	{
 		if (expansions_launcher(&vars) == ERROR)
 		{
-			ft_printf("42sh: %s: bad substitution\n", *vars.tokens);
+			ft_dprintf(2, "42sh: %s: bad substitution\n", *vars.tokens);
 			ft_tabdel(&splitok);
 			ft_strdel(&vars.btw);
 			ft_strdel(&vars.tmp);
