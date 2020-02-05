@@ -189,6 +189,77 @@ static char *ft_add_string(char *input, char **binary, int start)
 	return (tmp);
 }
 
+static int 	cmp_binary(char *str1, char *str2, int y, char *input)
+{
+	int i;
+	int tmp_y;
+
+	tmp_y = y;
+	i = 0;
+	y = 0;
+	while (str1[i] != '\0' && input[i] != '\0' && str1[i] == input[i])
+		i++;
+	while (str1[i] !='\0' && str2[i] != '\0' &&str1[i] == str2[i])
+	{
+		i++;
+		y++;
+	}
+	if (tmp_y != -1)
+		return ((tmp_y < y) ? tmp_y : y);
+	else
+		return (y);
+}
+
+static void assign_tmp(char *tmp, char *binary, char *input, int y)
+{
+	int i;
+
+	i = 0;
+	while (input[i] == binary[i])
+	{
+		tmp[i] = binary[i];
+		i++;
+	}
+	while (i < y)
+	{
+		tmp[i] = binary[i];
+		i++;
+	}
+	tmp[i] = '\0';
+}
+
+static int 	dynamic_completion(char **binary, char *input, char **equal, int start)
+{
+	int 	i;
+	int 	y;
+	int 	tmp_start;
+	char 	*tmp;
+
+	tmp_start = pos_start(input, start);
+	y = -1;
+	i = 1;
+	tmp = binary[0];
+	while (binary[i] != NULL && y != 0)
+	{
+		y = cmp_binary(binary[i], tmp, y, &input[tmp_start]);
+		tmp = binary[i];
+		i++;
+	}
+	if (y == 0)
+		return (2);
+	y += ft_strlen(&input[tmp_start]);
+	if (!(tmp = (char*)malloc(sizeof(char) * (y + 1))))
+		return (0);
+	assign_tmp(tmp, binary[0], &input[tmp_start], y);
+	if (!((*equal) = ft_add_string(input, &tmp, start)))	
+	{
+		ft_strdel(&tmp);
+		return (0);
+	}
+	ft_strdel(&tmp);
+	return (1);
+}
+
 int tab_key(char **buff, t_cursor *cursor)
 {
 	int 	ret;
@@ -196,6 +267,7 @@ int tab_key(char **buff, t_cursor *cursor)
 	char 	**binary;
 	char 	*input;
 
+	input = NULL;
 	if (!cursor->end)
 		return(1);
 	tst = ft_tst();
@@ -217,7 +289,20 @@ int tab_key(char **buff, t_cursor *cursor)
 		ft_strdel(&input);
 	}
 	else
+	{
+		if ((ret = dynamic_completion(binary, *buff, &input, cursor->start)) == 1)
+		{
+			set_string(buff, cursor, input);
+			ft_strdel(&input);
+		}
+		else if (ret == 0)
+		{
+			del_tst(tst);
+			del_double_char(binary);
+			return (0);
+		}
 		print_double_char(binary);//FAIRE UN display
+	}
 	//printf("ret = %d\n", ret);
 	del_tst(tst);
 	del_double_char(binary);
