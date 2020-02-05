@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/23 17:53:35 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/05 21:19:04 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "libft.h"
 #include "builtins.h"
 #include "error.h"
+#define EXIT_STATUS 127 // source : https://www.gnu.org/software/bash/manual/html_node/Exit-Status.html
 
 const t_builtins	g_builtins[] =
 {
@@ -85,7 +86,7 @@ int					builtins_dispatcher(char **argv)
 	int			argc;
 
 	argc = 0;
-	ret = e_command_not_found;
+	ret = EXIT_STATUS;
 	if ((f = dispatcher(*argv)))
 	{
 		while (argv[argc])
