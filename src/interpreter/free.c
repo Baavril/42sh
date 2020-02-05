@@ -6,13 +6,14 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 08:40:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/28 12:47:40 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/05 16:22:08 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "parser.h"
 #include "expansions.h"
+#include "builtins.h"
 
 int				shape(t_node *node)
 {
@@ -98,11 +99,18 @@ int				expand_tree(t_node *node)
 			expand_tree(node->right.v);
 	}
 	if (node->f == i_exec)
-		if (eval_command(&node->left.c))
+	{
+		if (is_a_builtin(node->left.c))
+		{
+			node->f = i_builtin;
+		}
+		else if (eval_command(&node->left.c))
 		{
 			ft_printf("unknown command : %s\n", node->left.c);
 			ft_strdel(&node->left.c);
 			node->left.c = ft_strdup("false");
+			node->f = i_builtin;
 		}
+	}
 	return (0);
 }

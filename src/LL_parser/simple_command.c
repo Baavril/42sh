@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:36:39 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/15 15:29:45 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/05 16:17:04 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_node *exec(t_token tok)
 		node->right.v = NULL;
 		if (is_potential(peek(), N_SUFFIX))
 			node->right.v = cmd_suffix(eat());
-		node->f	= is_a_builtin(tmp1) ? i_builtin : i_exec;
+		node->f	= i_exec;
 		return(node);
 	}
 	return(NULL);

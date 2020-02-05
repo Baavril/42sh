@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 15:51:32 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/02/05 14:59:13 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/05 18:34:41 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,17 @@ void			ft_save_term_fd(int save_fd[3])
 
 void			ft_stdredir(int std_fd[3])
 {
-	if (std_fd[0] != STDIN_FILENO)
+	if (std_fd[0] != STDIN_FILENO && std_fd[0] >= 0)
 	{
 		dup2(std_fd[0], STDIN_FILENO);
 		close(std_fd[0]);
 	}
-	if (std_fd[1] != STDOUT_FILENO)
+	if (std_fd[1] != STDOUT_FILENO && std_fd[1] >= 0)
 	{
 		dup2(std_fd[1], STDOUT_FILENO);
 		close(std_fd[1]);
 	}
-	if (std_fd[2] != STDERR_FILENO)
+	if (std_fd[2] != STDERR_FILENO && std_fd[2] >= 0)
 	{
 		dup2(std_fd[2], STDERR_FILENO);
 		close(std_fd[2]);
