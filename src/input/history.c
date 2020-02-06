@@ -13,6 +13,8 @@
 #include <stdio.h>
 #include "history.h"
 
+extern struct s_svar	*g_svar;
+
 static int	delete_history(t_history *history)
 {
 	t_history	*tmp;
@@ -437,14 +439,20 @@ static int		history_cmd(char **line, t_history *history)
 {
 	int 	ret;
 	int 	i;
+	int 	a;
 	char	*cmd;
 
 	ret = 1;
 	i = 0;
+	a = 0;
 	cmd = NULL; 
 	while ((*line)[i] != '\0')
 	{
-		if ((*line)[i] == '!' && (*line)[i + 1] != '\0' && !ft_isseparator(&(*line)[i + 1]))
+		if ((*line)[i] == '[')
+			a = 2;
+		else if (a > 0 && (*line)[i] == '!')
+			a -= 1;
+		if ((*line)[i] == '!' && (*line)[i + 1] != '\0' && !ft_isseparator(&(*line)[i + 1]) && a == 0)
 		{
 			if ((ret = exclamation_point(&line[0][i], history, &cmd)) != -1)//seg quand la commande est exit
 			{

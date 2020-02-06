@@ -26,6 +26,7 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include "shell_variables.h"
 # include "libft.h"
 
 enum {

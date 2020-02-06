@@ -249,13 +249,13 @@ static int 	dynamic_completion(char **binary, char *input, char **equal, int sta
 	y = -1;
 	i = 1;
 	tmp = binary[0];
-	while (binary[i] != NULL && y != 0)
+	while (binary[i] != NULL && y != 0 && binary[0])
 	{
 		y = cmp_binary(binary[i], tmp, y, &input[tmp_start]);
 		tmp = binary[i];
 		i++;
 	}
-	if (y == 0)
+	if (y == 0 || y == -1)
 		return (2);
 	y += ft_strlen_modif(&input[tmp_start]);
 	if (!(tmp = (char*)malloc(sizeof(char) * (y + 1))))
