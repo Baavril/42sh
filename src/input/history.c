@@ -435,6 +435,20 @@ static int 		exclamation_point(char *line, t_history *history, char **cmd)
 	return (ret);
 }
 
+static int 		close_bracket(char *line)
+{
+	int i;
+
+	i = 0;
+	while (line[i] != '\0')
+	{
+		if (line[i] == ']')
+			return (2);
+		i++;
+	}
+	return (0);
+}
+
 static int		history_cmd(char **line, t_history *history)
 {
 	int 	ret;
@@ -449,9 +463,11 @@ static int		history_cmd(char **line, t_history *history)
 	while ((*line)[i] != '\0')
 	{
 		if ((*line)[i] == '[')
-			a = 2;
+			a = close_bracket(&(*line)[i]);
 		else if (a > 0 && (*line)[i] == '!')
 			a -= 1;
+		else if (a > 0 && (*line)[i] == ']')
+			a = 0;
 		if ((*line)[i] == '!' && (*line)[i + 1] != '\0' && !ft_isseparator(&(*line)[i + 1]) && a == 0)
 		{
 			if ((ret = exclamation_point(&line[0][i], history, &cmd)) != -1)//seg quand la commande est exit
@@ -468,7 +484,7 @@ static int		history_cmd(char **line, t_history *history)
 			}
 			else
 			{
-				ft_dprintf(2, "42sh: %s: event not found\n", *line);
+				ft_dprintf(2, "42sh: %s: event not found\n", &(*line)[i]);
 				break;
 			}
 		}
