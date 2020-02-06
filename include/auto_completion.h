@@ -15,6 +15,8 @@
 # include <stdlib.h>
 # include <dirent.h>
 # include <stdbool.h>
+# include <stdlib.h>
+# include "shell_variables.h"
 # include "libft.h"
 # include "expansions.h"
 

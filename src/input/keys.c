@@ -134,7 +134,7 @@ int backspace_key(char **buff, t_cursor *cursor)
 
 static int pos_start(char *input, int start)
 {
-	if (ft_isspace(input[start]))
+	if (ft_isspace(input[start]) || input[start] == '/' || input[start] == '|' || input[start] == '&' || input[start] == ';')
 		start--;
 	if (!ft_isspace(input[start]))
 	{
@@ -228,6 +228,16 @@ static void assign_tmp(char *tmp, char *binary, char *input, int y)
 	tmp[i] = '\0';
 }
 
+static int ft_strlen_modif(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str && str[i] != '\0' && !ft_isspace(str[i]) && str[i] != '/' && str[i] != '|' && str[i] != '&' && str[i] != ';')
+		i++;
+	return (i);
+}
+
 static int 	dynamic_completion(char **binary, char *input, char **equal, int start)
 {
 	int 	i;
@@ -247,7 +257,7 @@ static int 	dynamic_completion(char **binary, char *input, char **equal, int sta
 	}
 	if (y == 0)
 		return (2);
-	y += ft_strlen(&input[tmp_start]);
+	y += ft_strlen_modif(&input[tmp_start]);
 	if (!(tmp = (char*)malloc(sizeof(char) * (y + 1))))
 		return (0);
 	assign_tmp(tmp, binary[0], &input[tmp_start], y);
@@ -288,7 +298,7 @@ int tab_key(char **buff, t_cursor *cursor)
 		set_string(buff, cursor, input);
 		ft_strdel(&input);
 	}
-	else
+	else if (binary)
 	{
 		if ((ret = dynamic_completion(binary, *buff, &input, cursor->start)) == 1)
 		{
@@ -305,7 +315,8 @@ int tab_key(char **buff, t_cursor *cursor)
 	}
 	//printf("ret = %d\n", ret);
 	del_tst(tst);
-	del_double_char(binary);
+	if (binary)
+		del_double_char(binary);
 	return (1);
 }
 

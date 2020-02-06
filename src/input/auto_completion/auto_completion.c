@@ -19,6 +19,8 @@ les taches :
 #include "auto_completion.h"
 #include <stdio.h>
 
+extern struct s_svar	*g_svar;
+
 int realloc_n;
 
 void	print_double_char(char **tab)
@@ -374,7 +376,7 @@ static char	**ft_binary(t_tst *tst, char *input)
 
 static int pos_start(char *input, int start)
 {
-	if (ft_isspace(input[start]))
+	if (ft_isspace(input[start]) || input[start] == '|' || input[start] == '&' || input[start] == ';')
 		start--;
 	if (!ft_isspace(input[start]))
 	{
@@ -401,14 +403,114 @@ int 	ft_restart(char *input, int start)
 		return (0);
 }
 
-/*static char 	**ft_env_var()
+static char 	*ft_assign_words(char *str, int dollar)
 {
-	return (NULL);
-}*/
+	int 	i;
+	int 	y;
+	char 	*tmp;
+
+	i = 0;
+	y = 0;
+	if (dollar == 1)
+	{
+		if (!(tmp = (char*)malloc(sizeof(char) * (ft_strlen(str) + 1))))
+			return (NULL);
+		tmp[y] = '$';
+		y++;
+		while (str[i + 1] != '\0')
+		{
+			tmp[y] = str[i];
+			i++;
+			y++;
+		}
+	}
+	else
+	{
+		if (!(tmp = (char*)malloc(sizeof(char) * (ft_strlen(str) + 3))))
+			return (NULL);
+		tmp[0] = '$';
+		tmp[1] = '{';
+		y += 2;
+		while (str[i + 1] != '\0')
+		{
+			tmp[y] = str[i];
+			i++;
+			y++;
+		}
+		tmp[y] = '}';
+		y++;
+	}
+	tmp[y] = '\0';
+	return (tmp);
+}
+
+static int	ft_cmp_str(char *str1, char *str2)
+{
+	int	i;
+
+	i = 0;
+	if (!str1 && !str2)
+		return (0);
+	while (str1[i] && str2[i] && !ft_isspace(str1[i]))
+	{
+		if (str1[i] != str2[i])
+			return (0);
+		i++;
+	}
+	if (str1[i] && str2 && !ft_isspace(str1[i]))
+		return (0);
+	return (1);
+}
+
+static int		ft_env_var(char *input, int dollar, char ***words)
+{
+	int 			i;
+	int 			y;
+	struct s_svar	*tmp;
+	struct s_svar	*tmp2;
+
+	i = 0;
+	y = 0;
+	tmp = g_svar;
+	tmp2 = g_svar;
+	while (tmp2)
+	{
+		if (ft_cmp_str(input, tmp2->key))
+			i++;
+		tmp2 = tmp2->next;
+	}
+	if (i == 0)
+	{
+		(*words) = NULL;
+		return (1);
+	}
+	if (!((*words) = (char**)malloc(sizeof(char*) * (i + 1))))
+	{
+		(*words) = NULL;
+		return (0);
+	}
+	while (tmp)
+	{
+		if (ft_cmp_str(input, tmp->key))
+		{
+			if (!((*words)[y] = ft_assign_words(tmp->key, dollar)))
+			{
+				(*words) = NULL;
+				del_double_char((*words));
+				return (0);
+			}
+			y++;
+			(*words)[y] = NULL;
+		}
+		tmp = tmp->next;
+	}
+	return (1);
+}
 
 int 	ft_auto_completion(t_tst *tst, char *input, char ***words, int start)
 {
 	int 	cursor;
+	int 	ret;
 	char 	tmp;
 	char 	**tmp1;
 
@@ -423,8 +525,15 @@ int 	ft_auto_completion(t_tst *tst, char *input, char ***words, int start)
 	*/
 	if (input[start] == '$')
 	{
-		ft_printf("DOLLARS\n");
-		(*words) = NULL;
+		ret = 1;
+		ft_putchar('\n');
+		if (input[start + 1] == '{')// a voir
+			ret = 2;
+		if (ft_env_var(&input[start + ret], ret, words) == 0)
+		{
+			input[cursor] = tmp;
+			return (0);
+		}
 	}
 	else if (start == 0 || ft_restart(input, cursor))
 	{
