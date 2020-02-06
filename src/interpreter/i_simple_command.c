@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:43:35 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/05 18:41:09 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/06 11:29:57 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #define TAB_SIZE 16
 
 char **g_argv;
+extern int g_retval;
 
 int	i_prefix(t_elem left, t_elem right)
 {
@@ -30,17 +31,14 @@ int	i_prefix(t_elem left, t_elem right)
 
 int	i_builtin(t_elem left, t_elem right)
 {
-	int	ret;
-
-	ret = 0;
 	g_argv = malloc(sizeof(char *) * TAB_SIZE);
 	g_argv[0] = left.c;
 	g_argv[1] = NULL;
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
-	ret = builtins_dispatcher(g_argv);
+	g_retval = builtins_dispatcher(g_argv);
 	free(g_argv);
-	return (ret);
+	return (0);
 }
 
 int	i_exec(t_elem left, t_elem right)

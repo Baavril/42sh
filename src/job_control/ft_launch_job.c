@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:56:52 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/02/02 16:15:28 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/06 11:18:26 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 t_jcont			g_jcont = {NULL, 1, {0, 0}};
 t_job			g_curjob = {NULL, 0, 0, NULL, 0};
-extern int		g_retval;
 char			*g_bgpid = NULL;
 
 int			ft_launch_job(char *cmd, int status)

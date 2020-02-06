@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:13:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/05 15:00:27 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/06 11:38:25 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,17 @@
 #define STDERR 2
 
 extern char		**environ;
+extern const int g_retval;
 int				g_fd[3] = {STDIN, STDOUT, STDERR};
 int				g_fclose = -1;
+int				g_mode;
 
 int				i_comp_list(t_elem left, t_elem right)
 {
-	int		retval; // the global is set in the job control function ft_wait_foreground
-// If yo want the exit status you must use the macros of sys/wait.h accordingly
-// launch job returns some informations that you should not assume to be the return status
-// this modif should not be definitiv: it is just to check the return value
-// in job control is right ; as it was overwritten by this function. 
-
 	expand_tree(left.v);
-	retval = left.v->f(left.v->left, left.v->right);
-	if (retval < 0)
-		retval = ft_launch_job("plop", FOREGROUND);
+	g_mode = FOREGROUND;
+	left.v->f(left.v->left, left.v->right);
+	ft_launch_job("plop", g_mode);
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
 	return (0);
@@ -43,8 +39,9 @@ int				i_comp_list(t_elem left, t_elem right)
 int				i_and_list(t_elem left, t_elem right)
 {
 	expand_tree(left.v);
+	g_mode = BACKGROUND;
 	left.v->f(left.v->left, left.v->right);
-	ft_launch_job("plop", BACKGROUND);
+	ft_launch_job("plop", g_mode);
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
 	return (0);
@@ -54,7 +51,8 @@ int				i_and_op(t_elem left, t_elem right)
 {
 	expand_tree(left.v);
 	left.v->f(left.v->left, left.v->right);
-	if (!ft_launch_job("plop", FOREGROUND))
+	ft_launch_job("plop", g_mode);
+	if (!g_retval)
 		right.v->f(right.v->left, right.v->right);
 	return (0);
 }
@@ -63,7 +61,8 @@ int				i_or_op(t_elem left, t_elem right)
 {
 	expand_tree(left.v);
 	left.v->f(left.v->left, left.v->right);
-	if (ft_launch_job("plop", FOREGROUND))
+	ft_launch_job("plop", g_mode);
+	if (g_retval)
 		right.v->f(right.v->left, right.v->right);
 	return (0);
 }
