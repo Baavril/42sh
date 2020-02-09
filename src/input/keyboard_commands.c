@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 12:41:28 by baavril           #+#    #+#             */
-/*   Updated: 2019/11/19 13:02:01 by baavril          ###   ########.fr       */
+/*   Updated: 2020/02/09 19:04:04 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 #include <curses.h>
 #include <stdint.h>
 
-int keyboard_normal_char(union u_tc *term, char **buff, t_cursor *cursor)
+int	keyboard_normal_char(union u_tc *term, char **buff, t_cursor *cursor)
 {
 	if (ft_isprint(term->key))
 	{
@@ -40,7 +40,7 @@ int keyboard_normal_char(union u_tc *term, char **buff, t_cursor *cursor)
 	return (1);
 }
 
-int keyboard_tabulation(union u_tc *term, char **buff, t_cursor *cursor)
+int	keyboard_tabulation(union u_tc *term, char **buff, t_cursor *cursor)
 {
 	if (term->key == TABULATION)
 	{
@@ -59,7 +59,7 @@ int keyboard_tabulation(union u_tc *term, char **buff, t_cursor *cursor)
 	return (1);
 }
 
-int keyboard_enter(union u_tc *term, char **buff, t_cursor *cursor)
+int	keyboard_enter(union u_tc *term, char **buff, t_cursor *cursor)
 {
 	if (term->key == ENTER)
 	{
@@ -74,7 +74,7 @@ int keyboard_enter(union u_tc *term, char **buff, t_cursor *cursor)
 	return (1);
 }
 
-int keyboard_backspace(union u_tc *term, char **buff, t_cursor *cursor)
+int	keyboard_backspace(union u_tc *term, char **buff, t_cursor *cursor)
 {
 	if (term->key == BACKSPACE)
 	{
@@ -97,7 +97,7 @@ int keyboard_backspace(union u_tc *term, char **buff, t_cursor *cursor)
 	return (1);
 }
 
-int keyboard_ctrl_l(union u_tc *term, char **buff, t_cursor *cursor)
+int	keyboard_ctrl_l(union u_tc *term, char **buff, t_cursor *cursor)
 {
 	if (term->key == CTRL_L)
 	{
@@ -114,3 +114,35 @@ int keyboard_ctrl_l(union u_tc *term, char **buff, t_cursor *cursor)
 	}
 	return (1);
 }
+/*Work in progress
+int	keyboard_ctrl_c(union u_tc *term, char **buff, t_cursor *cursor)
+{
+	char	*tmp;
+
+	if (term->key == CTRL_C)
+	{
+		ft_strdel(buff);
+		tmp = cursor->prompt;
+		ft_init_cursor(cursor);
+		cursor->prompt = tmp;
+		ft_putstr("\n");
+	}
+	return (1);
+}
+int	keyboard_ctrl_d(union u_tc *term, char **buff, t_cursor *cursor)
+{
+	if (term->key == CTRL_L)
+	{
+		if (cursor->ctrl_r)
+		{
+			update_buff(buff, cursor);
+			ft_strdel(&(cursor->prompt));
+			cursor->prompt_len = mkprompt(&(cursor->prompt));
+			cursor->start = ft_strlen(*buff);
+			ft_putstr(tgetstr("ho", NULL));
+			return (0);
+		}
+		ft_putstr(tgetstr("ho", NULL));
+	}
+	return (1);
+ }*/

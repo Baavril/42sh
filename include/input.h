@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 12:11:17 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/09 14:09:12 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/09 19:03:47 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void				ft_reader(union u_tc *term, t_cursor *cursor, char ***buff);
 void				ft_init_cursor(t_cursor *cursor);
 
 int					keyboard_dispatcher(union u_tc *term, char **buff, t_cursor *cursor);
+//int					keyboard_ctrl_c(union u_tc *term, char **buff, t_cursor *cursor);
 int					keyboard_ctrl_l(union u_tc *term, char **buff, t_cursor *cursor);
 int					keyboard_normal_char(union u_tc *term, char **buff, t_cursor *cursor);
 int					keyboard_backspace(union u_tc *term, char **buff, t_cursor *cursor);
