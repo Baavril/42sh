@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/02 16:23:13 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/09 18:53:43 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,34 +62,39 @@ static int	set_minimal_env(void)
 	return (e_success);
 }
 
-int		main(int argc, char **argv)
+static int	ft_shell_init(void)
 {
 	extern char		**environ;
+
+	set_termcaps(TC_SAVE);
+	tcsetpgrp(STDIN_FILENO, getpid());
+	set_signals(FATHER);
+	if (!(history(INIT, NULL, NULL)))
+		return (1);
+	if (!(environ = ft_tabcpy(environ)))
+		return (e_cannot_allocate_memory);
+	g_retval = e_success;
+	if ((set_minimal_env()))
+	{
+		ft_tabdel(&environ);
+		return (e_cannot_allocate_memory);
+	}
+	init_shell_vars(environ);
+	return (0);
+}
+
+int			main(int argc, char **argv)
+{
 	char			*input;
 	int				status;
 
 	(void) argc;
-	set_termcaps(TC_SAVE);
-	tcsetpgrp(STDIN_FILENO, getpid()); //Control the terminal
-	set_signals(FATHER);
-	copybuff = NULL;
-	input = NULL;
 	g_progname = argv[0];
-	if (!(history(INIT, NULL, NULL)))
-		return (1);
-	if (!(environ = ft_tabcpy(environ)))
+	if (ft_shell_init() == e_cannot_allocate_memory)
 	{
 		psherror(e_cannot_allocate_memory, argv[0], e_cmd_type);
 		return (1);
 	}
-	g_retval = e_success;
-	if ((g_retval = set_minimal_env()))
-	{
-		psherror(g_retval, argv[0], e_cmd_type);
-		ft_tabdel(&environ);
-		return (1);
-	}
-	init_shell_vars(environ);
 	while (!read_command(&input) || get_next_line(0, &input))
 	{
 		if (!(status = history(ADD_CMD, &input, NULL)))
@@ -107,5 +112,5 @@ int		main(int argc, char **argv)
 		update_intern_vars();
 	}
 	cmd_exit(0, NULL);
-	return(0);
+	return (0);
 }
