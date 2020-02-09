@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 12:08:47 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/27 13:19:43 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/09 13:16:39 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,22 @@ int	i_less(t_elem left, t_elem right)
 
 int	i_great(t_elem left, t_elem right)
 {
-	int fd1;
+	int		fd1;
+	int		resfd;
 
 	fd1 = left.c ? *left.c - '0' : 1;
 	if (!access(right.c, W_OK))
 	{
 		if (is_regfile(right.c))
-			return (open_on_fd(right.c, O_WRONLY, 0, fd1));
+			return (open_on_fd(right.c, O_WRONLY | O_TRUNC, 0, fd1));
 		ft_printf("%s exists and is not a regular file\n", right.c);
 	}
 	else if (!access(right.c, F_OK))
 		ft_printf("%s exists but is not a writeable file\n", right.c);
+	else if ((resfd = open_on_fd(right.c, O_WRONLY | O_CREAT | O_TRUNC, CREATE_RIGHTS, fd1)) != -1)
+		return (resfd);
 	else
-		return (open_on_fd(right.c, O_WRONLY | O_CREAT, CREATE_RIGHTS, fd1));
+		ft_dprintf(STDERR_FILENO, "%s: Premission denied.\n", right.c);
 	return (-1);
 }
 
