@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 16:26:31 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/15 16:27:06 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/09 11:59:31 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int				is_regfile(const char *path)
 	struct stat	path_stat;
 
 	stat(path, &path_stat);
-	return (S_ISREG(path_stat.st_mode));
+	return (S_ISREG(path_stat.st_mode) || S_ISCHR(path_stat.st_mode));
 }
 
 char			*path_join(char *str1, char *str2)
