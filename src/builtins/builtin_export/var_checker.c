@@ -6,18 +6,20 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:21:48 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/19 13:18:48 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/09 18:20:36 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
 #include "shell_variables.h"
-#include "builtins.h"
 #include "builtin_export.h"
+#include "hash_module.h"
+#include "builtins.h"
 #include "libft.h"
 
 extern struct s_svar	*g_svar;
+extern t_htable			*g_bintable;
 
 static int				testvarenv(char *tmp_cmp, char *argv)
 {
@@ -33,6 +35,8 @@ static int				testvarenv(char *tmp_cmp, char *argv)
 			return (ERROR);
 		if (ft_strcmp(key_cmp, tmp_cmp) == SUCCESS)
 		{
+			if (!(ft_strcmp("PATH", key_cmp)) && (g_bintable))
+				ft_empty_htable(g_bintable);
 			free(environ[i]);
 			if (!(environ[i] = ft_strdup(argv)))
 				return (ERROR);
@@ -40,8 +44,7 @@ static int				testvarenv(char *tmp_cmp, char *argv)
 			ft_strdel(&tmp_cmp);
 			return (SUCCESS);
 		}
-		else
-			ft_strdel(&key_cmp);
+		ft_strdel(&key_cmp);
 		++i;
 	}
 	return (ERROR);
