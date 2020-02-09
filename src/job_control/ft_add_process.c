@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 15:51:32 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/02/05 18:34:41 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/09 12:49:03 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ extern t_job	g_curjob;
 
 void			ft_save_term_fd(int save_fd[3])
 {
-	save_fd[0] = dup2(RESERVED_INFD, STDIN_FILENO);
-	save_fd[1] = dup2(RESERVED_OUTFD, STDOUT_FILENO);
-	save_fd[2] = dup2(RESERVED_ERRFD, STDERR_FILENO);
+	save_fd[0] = dup2(STDIN_FILENO, RESERVED_INFD);
+	save_fd[1] = dup2(STDOUT_FILENO, RESERVED_OUTFD);
+	save_fd[2] = dup2(STDERR_FILENO, RESERVED_ERRFD);
 }
 
 void			ft_stdredir(int std_fd[3])
