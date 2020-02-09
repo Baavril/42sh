@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:56:52 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/02/06 11:18:26 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/09 11:18:12 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int			ft_launch_job(char *cmd, int status)
 	if (status & BACKGROUND)
 	{
 		ft_dprintf(STDERR_FILENO, "[%i] %i\n", job->nbr, job->pgid);
+		ft_strdel(&g_bgpid);
 		g_bgpid = ft_itoa(job->pgid);
 		return (0);
 	}
