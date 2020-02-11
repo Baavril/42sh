@@ -15,6 +15,7 @@
 
 # include <stddef.h>
 
+# define DOT '.'
 # define STAR '*'
 # define AROB '@'
 # define EXCLAM '!'
