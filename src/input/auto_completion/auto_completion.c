@@ -512,9 +512,7 @@ int 	ft_auto_completion(t_tst *tst, char *input, char ***words, int start)
 	int 	cursor;
 	int 	ret;
 	char 	tmp;
-	char 	**tmp1;
 
-	tmp1 = NULL;
 	cursor = start;
 	start = pos_start(input, start);
 	tmp = input[cursor];
