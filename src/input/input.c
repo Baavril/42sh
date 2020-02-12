@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/03 17:33:00 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/12 14:38:17 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@
 #include <unistd.h>
 #include <stdint.h>
 
-struct s_svar	*g_svar;
+extern struct s_svar	*g_svar;
 
-void	ft_init_cursor(t_cursor *cursor)
+void					ft_init_cursor(t_cursor *cursor)
 {
 	cursor->prompt = NULL;
 	cursor->match = NULL;
@@ -37,7 +37,7 @@ void	ft_init_cursor(t_cursor *cursor)
 	cursor->on = 0;
 }
 
-int	ft_strplen(char *str)
+int					ft_strplen(char *str)
 {
 	int	i;
 	int	j;
@@ -59,7 +59,7 @@ int	ft_strplen(char *str)
 	return (j);
 }
 
-int	init_prompt(t_cursor *cursor)
+int					init_prompt(t_cursor *cursor)
 {
 	struct s_svar	*voyager;
 
@@ -79,7 +79,7 @@ int	init_prompt(t_cursor *cursor)
 	return (0);
 }
 
-int	read_command(char **buff)
+int					read_command(char **buff)
 {
 	char		*tmp;
 	t_cursor	cursor;

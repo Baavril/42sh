@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 13:04:47 by baavril           #+#    #+#             */
-/*   Updated: 2020/02/09 19:03:55 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/12 14:38:38 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	set_reader(union u_tc *term, char **buff, t_cursor *cursor)
 
 int	standard_analyzer(union u_tc *term, char **buff, t_cursor *cursor)
 {
-	//keyboard_ctrl_c(term, buff, cursor);
+	keyboard_ctrl_c(term, buff, cursor);
 	keyboard_ctrl_l(term, buff, cursor);
 	keyboard_normal_char(term, buff, cursor);
 	keyboard_backspace(term, buff, cursor);
@@ -125,9 +125,9 @@ int	get_stdin(t_cursor *cursor, char **buff)
 			{
 				ft_strdel(&inside_history);
 				ft_strdel(&cursor->prompt);
-				return(0);
+				return (0);
 			}
 		}
 	}
-	return(1);
+	return (1);
 }
