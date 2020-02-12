@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/02/03 18:00:29 by yberramd         ###   ########.fr        #
+#    Updated: 2020/02/12 13:43:49 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -108,6 +108,7 @@ SOURCES			:=		transversal/program/main.c \
 						expansions/maths_exp/operand_token.c \
 						expansions/maths_exp/parentheses.c \
 						expansions/maths_exp/parse_incr.c \
+						expansions/maths_exp/parse_sign.c \
 						expansions/maths_exp/shvar_tools.c \
 						job_control/ft_launch_job.c \
 						job_control/ft_add_process.c \
@@ -207,4 +208,4 @@ CFLAGS += -Wall -Wextra -Werror -ansi -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200809
 
 #CFLAGS += -fno-builtin -O2
 
-CDEBUG += -g -fsanitize=address -fno-optimize-sibling-calls
+#CDEBUG += -g -fsanitize=address -fno-optimize-sibling-calls
