@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/02/12 13:43:49 by tgouedar         ###   ########.fr        #
+#    Updated: 2020/02/12 15:27:41 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,6 @@ SOURCES			:=		transversal/program/main.c \
 						transversal/hash/ft_get_entry.c \
 						transversal/hash/ft_del_entry.c \
 						transversal/hash/ft_hash.c \
-						transversal/hash/ft_hash_path.c \
 						transversal/hash/ft_insert.c \
 						transversal/hash/ft_iter_htable.c \
 						transversal/hash/ft_lst_entries.c \
