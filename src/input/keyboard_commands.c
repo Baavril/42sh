@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 12:41:28 by baavril           #+#    #+#             */
-/*   Updated: 2020/02/12 14:38:49 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/12 14:48:56 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ int			keyboard_backspace(union u_tc *term, char **buff, t_cursor *cursor)
 		{
 			cursor->start = ft_strlen(*buff);
 			backspace_key(buff, cursor);
-			ft_putstr("\n");
 			if (**buff)
 				cursor->match = get_history(buff, cursor);
 			else
@@ -151,7 +150,7 @@ int			keyboard_ctrl_d(union u_tc *term, char **buff, t_cursor *cursor)
 			ft_putstr(tgetstr("ho", NULL));
 			return (0);
 		}
-		ft_putstr(tgetstr("ho", NULL));
+		ft_putstr(tgetstr("ho", NULL)); 
 	}
 	return (1);
  }*/
