@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_export.c                                   :+:      :+:    :+:   */
+/*   vqr_checker.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -108,6 +108,22 @@ int						checkvarlst(char *argv)
 	return (ERROR);
 }
 
+static int				check_if_done(char *str, char **environ)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = ft_tablen(environ);
+	while (i < len)
+	{
+		if (ft_strcmp(str, environ[i]) == 0)
+			return (ERROR);
+		++i;
+	}
+	return (SUCCESS);
+}
+
 char					**ft_check_ifset(char *to_check, char **environ)
 {
 	char			**keep;
@@ -118,8 +134,13 @@ char					**ft_check_ifset(char *to_check, char **environ)
 	{
 		if (ft_strncmp(to_check, g_svar->str, ft_strlen(to_check)) == 0)
 		{
-			if (!(keep = realloc_environ(environ, g_svar->str)))
-				return (NULL);
+			if (check_if_done(g_svar->str, environ) == SUCCESS)
+			{
+				if (!(keep = realloc_environ(environ, g_svar->str)))
+					return (NULL);
+			}
+			else
+				break ;
 			g_svar->exp = 1;
 			g_svar = tmp;
 			return (keep);

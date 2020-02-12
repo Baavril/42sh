@@ -26,6 +26,8 @@ static int
 		{
 			if (ft_isin(match[var->j], &str[var->i + 1]))
 				++var->i;
+			if (match[var->j] == DOT)
+				var->j++;
 		}
 	}
 	if (var->s)
@@ -51,7 +53,7 @@ static int
 		++var->j;
 	if (match[var->j] == OP_SQUAR)
 		recursive_matching(var, match, str);
-	else if (ft_isalnum(match[var->j]))
+	else if (ft_isalnum(match[var->j]) || match[var->j] == DOT)
 		matching_simple_pattern(var, match, str);
 	else if (!match[var->j] && match[var->j - 1] == STAR && var->flag >= 2)
 		var->i = var->len_s;
