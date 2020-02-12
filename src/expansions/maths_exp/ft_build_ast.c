@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 15:51:16 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/18 20:09:08 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/12 12:16:27 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_maths_ast		*ft_new_mathast_node(t_maths_list *tokens)
 {
 	t_maths_ast		*new_node;
 
-	/*ft_memcheck*/new_node = (t_maths_ast*)malloc(sizeof(*new_node));
+	new_node = (t_maths_ast*)malloc(sizeof(*new_node));
 	new_node->tokens = tokens;
 	new_node->calc_func = NULL;
 	new_node->left_cmd = NULL;
