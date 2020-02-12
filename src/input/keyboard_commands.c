@@ -6,13 +6,14 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 12:41:28 by baavril           #+#    #+#             */
-/*   Updated: 2020/02/12 14:48:56 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/12 15:10:56 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "keys.h"
 #include "libft.h"
 #include "input.h"
-#include "keys.h"
+#include "error.h"
 #include "prompt.h"
 #include "display.h"
 #include "history.h"
@@ -136,12 +137,12 @@ int			keyboard_ctrl_c(union u_tc *term, char **buff, t_cursor *cursor)
 	}
 	return (1);
 }
-/*
+
 int			keyboard_ctrl_d(union u_tc *term, char **buff, t_cursor *cursor)
 {
 	if (term->key == CTRL_D)
 	{
-		if (cursor->ctrl_r)
+/*		if (cursor->ctrl_r)
 		{
 			update_buft(buff, cursor);
 			ft_strdel(&(cursor->prompt));
@@ -149,8 +150,15 @@ int			keyboard_ctrl_d(union u_tc *term, char **buff, t_cursor *cursor)
 			cursor->start = ft_strlen(*buff);
 			ft_putstr(tgetstr("ho", NULL));
 			return (0);
+		}*/
+		if (*buff && **buff)
+			delete_key(buff, cursor);
+		else
+		{
+			ft_putendl("exit");
+			if (ft_clean_exit(NULL, g_retval))
+				g_retval = 146;
 		}
-		ft_putstr(tgetstr("ho", NULL)); 
 	}
 	return (1);
- }*/
+ }

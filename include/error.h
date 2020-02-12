@@ -6,14 +6,14 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:51:41 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/15 13:48:46 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/12 15:11:52 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERROR_H
 # define ERROR_H
 
-enum	e_minishell_error
+enum							e_minishell_error
 {
 	e_success,
 	e_invalid_input,
@@ -42,7 +42,7 @@ enum	e_minishell_error
 	e_neg_exp
 };
 
-enum	e_error_message_types
+enum							e_error_message_types
 {
 	e_invalid_type,
 	e_parsing_type,
@@ -53,15 +53,16 @@ enum	e_error_message_types
 
 typedef enum e_minishell_error	t_error;
 
-struct	s_error_desc
+struct							s_error_desc
 {
 	int		code;
 	char	*message;
 };
 
-extern const struct s_error_desc	g_errordesc[];
-extern char	*g_progname;
+extern char						*g_progname;
 
-void	psherror(int e_error, char *str, int e_message_type);
+int								ft_clean_exit(char **av, int exit_status);
+void							psherror(int e_error, char *str,
+														int e_message_type);
 
 #endif
