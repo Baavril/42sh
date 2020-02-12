@@ -6,10 +6,11 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:56:52 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/02/09 11:18:12 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/12 13:18:31 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "error.h"
 #include "jcont.h"
 #include <sys/types.h>
 #include <unistd.h>
@@ -26,7 +27,8 @@ int			ft_launch_job(char *cmd, int status)
 
 	if (!(g_curjob.process))
 		return (0);
-	job = ft_add_job(status, cmd); //may fail due to malloc
+	if (!(job = ft_add_job(status, cmd)))
+		return (e_cannot_allocate_memory);
 	if (status & BACKGROUND)
 	{
 		ft_dprintf(STDERR_FILENO, "[%i] %i\n", job->nbr, job->pgid);

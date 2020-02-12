@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 18:25:57 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/18 10:59:49 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/12 13:16:29 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern t_jcont	g_jcont;
 
-static void		ft_statestring(char mess[MAX_STATE_LEN], int status) //d'autres messages ?
+static void		ft_statestring(char mess[MAX_STATE_LEN], int status)
 {
 	int		sig;
 
