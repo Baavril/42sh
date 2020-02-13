@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 17:59:39 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/15 12:56:24 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/12 17:19:39 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,25 @@
 static void	ft_free_token(t_token *token)
 {
 	if (token)
-		if (token->type == WORD || token->type == ASSIGNMENT_WORD || token->type == NAME || token->type == IO_NUMBER)
+		if (token->type == WORD || token->type == ASSIGNMENT_WORD
+		|| token->type == NAME || token->type == IO_NUMBER)
 			if (token->symbol)
 				free(token->symbol);
 }
 
-int	ft_istoken(char *str);
+int			ft_istoken(char *str);
 
-int		ft_is_quote(char c)
+int			ft_is_quote(char c)
 {
 	return (c == '\'' || c == '\"');
 }
 
-static int ft_is_op_bracket(char c)
+static int	ft_is_op_bracket(char c)
 {
 	return (c == '(' || c == '{');
 }
 
-static char val_quote_type(char *c)
+static char	val_quote_type(char *c)
 {
 	if (c[0] == '\'' || c[0] == '\"')
 		return (c[0]);
@@ -60,7 +61,7 @@ static char val_quote_type(char *c)
 	return (-3);
 }
 
-static int check_close_bracket(char *str, char quote_type)
+static int	check_close_bracket(char *str, char quote_type)
 {
 	if (quote_type == -1 && str[0] == ')' && str[1] == ')')
 		return (1);
@@ -86,10 +87,10 @@ char		*advance(char *tmp, char **index)
 	return (tmp);
 }
 
-char	*ft_get_word(char **str)
+char		*ft_get_word(char **str)
 {
 	char	*tmp;
-	int	i;
+	int		i;
 	char	quote_type;
 	_Bool	open_quotes;
 
@@ -131,7 +132,7 @@ char	*ft_get_word(char **str)
 	return (tmp);
 }
 
-char	*ft_check_nbr(char **nbr)
+char				*ft_check_nbr(char **nbr)
 {
 	char	*tmp;
 
@@ -148,7 +149,7 @@ char	*ft_check_nbr(char **nbr)
 ** ------------------------------------------------------
 */
 
-static int	get_token_type(char *str)
+static int			get_token_type(char *str)
 {
 	int	i;
 
@@ -162,7 +163,7 @@ static int	get_token_type(char *str)
 	return (-1);
 }
 
-int	ft_istoken(char *str)
+int					ft_istoken(char *str)
 {
 	int	tok_type;
 
@@ -172,7 +173,7 @@ int	ft_istoken(char *str)
 	return (tok_type);
 }
 
-static int		ft_assignment_word(char *str)
+static int			ft_assignment_word(char *str)
 {
 	if (*str == '=')
 		return (WORD);
@@ -185,7 +186,7 @@ static int		ft_assignment_word(char *str)
 	return (WORD);
 }
 
-static char	*get_token_symbol(int token)
+static char			*get_token_symbol(int token)
 {
 	int	i;
 
@@ -200,7 +201,7 @@ static char	*get_token_symbol(int token)
 }
 
 
-static t_token	tokenization(char type, char *value)
+static t_token		tokenization(char type, char *value)
 {
 	t_token	token;
 
@@ -215,11 +216,11 @@ static t_token	tokenization(char type, char *value)
 	return (token);
 }
 
-t_token	get_next_token(char *str)
+t_token				get_next_token(char *str)
 {
-	static char	*index;
-	int		token;
-	char		*tmp;
+	static char		*index;
+	int				token;
+	char			*tmp;
 
 	if (str)
 		index = str;
@@ -252,7 +253,7 @@ t_token	get_next_token(char *str)
 ** ------------------------------------------------------
 */
 
-char	**lexer_verbose(char **input)
+char				**lexer_verbose(char **input)
 {
 	t_token	token;
 
