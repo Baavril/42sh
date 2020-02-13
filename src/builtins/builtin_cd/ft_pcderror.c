@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_pcderror.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/13 17:26:37 by tgouedar          #+#    #+#             */
+/*   Updated: 2020/02/13 17:26:53 by tgouedar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <unistd.h>
 #include "builtin_cd.h"
 #include "libft.h"
@@ -13,7 +25,7 @@ int				ft_pcderror(int error_type, char *arg)
 	else if (error_type == NO_PERM)
 		ft_dprintf(STDERR_FILENO,
 				"%s: cd: %s: Pemission denied.\n", g_progname, arg);
-	else if(error_type == NOT_DIR)
+	else if (error_type == NOT_DIR)
 		ft_dprintf(STDERR_FILENO,
 				"%s: cd: %s: Not a directory.\n", g_progname, arg);
 	else if (error_type == TARGET_NOT_FOUND)

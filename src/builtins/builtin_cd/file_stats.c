@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 14:39:14 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/23 17:43:17 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/13 17:36:12 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,13 @@ char			*ft_get_link_target(char *link_name)
 	if ((nbytes = readlink(link_name, buf, PATH_MAX)) == -1)
 		return (NULL);
 	buf[nbytes] = '\0';
-	link_target = ft_strnew(nbytes); //ft_memcheck
+	if (!(link_target = ft_strnew(nbytes)))
+		return (NULL);
 	ft_memcpy(link_target, buf, nbytes + 1);
 	return (link_target);
 }
 
-int			ft_is_valid_dir(char *path)
+int				ft_is_valid_dir(char *path)
 {
 	struct stat		file_stat;
 

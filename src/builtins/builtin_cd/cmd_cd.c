@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:14:44 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/23 18:09:59 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/13 16:38:23 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,10 @@ static int		ft_update_pwd(char *new_pwd)
 	char	*old_pwd;
 	char	pwd[PATH_MAX];
 
+	if (!ft_get_permission(new_pwd))
+		return (NO_PERM);
 	if (chdir(new_pwd) == -1)
-	{
-		free(new_pwd);
 		return (TARGET_NOT_FOUND);
-	}
 	if ((old_pwd = ft_getenv("PWD")))
 	{
 		ft_setenv("OLDPWD", old_pwd);
@@ -55,8 +54,8 @@ static int		ft_get_path(char *rel_path, char **new_pwd)
 		if (!(*new_pwd = ft_getenv("OLDPWD")))
 			return (UNSET_OLDPWD);
 	}
-	else
-		*new_pwd = ft_strdup(rel_path); // ft_memcheck
+	else if (!(*new_pwd = ft_strdup(rel_path)))
+		return (ERROR);
 	return (EXEC_SUCCESS);
 }
 
@@ -73,10 +72,8 @@ static int		ft_cd_exec(char *target, int opt_p)
 		ft_strdel(&new_pwd);
 		return (ret);
 	}
-//	if (!ft_have_acces_right(new_pwd))
-		//Pemission denied/is file;
 	ret = ft_update_pwd(new_pwd);
-	if (target && !(ft_strcmp(target, "-")))
+	if (ret == EXEC_SUCCESS && (target) && !(ft_strcmp(target, "-")))
 		ft_putendl(new_pwd);
 	ft_strdel(&new_pwd);
 	return (ret);
