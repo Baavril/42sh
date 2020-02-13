@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 12:20:22 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/23 18:21:13 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/13 16:19:46 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,12 @@ char			*ft_concatenate_path(char *src, char *rel_dst)
 
 	if (!src && !rel_dst)
 		return (NULL);
-//	if (!src)
-//		return (rel_dst);
 	if (!rel_dst)
 		return (src);
 	src_len = ft_strlen(src);
 	dst_len = ft_strlen(rel_dst);
-	res_path = ft_memalloc(src_len + dst_len + 2); //ft_memcheck
+	if (!(res_path = ft_memalloc(src_len + dst_len + 2)))
+		return (NULL);
 	ft_memcpy(res_path, src, src_len);
 	res_path[src_len] = '/';
 	ft_memcpy(res_path + src_len + 1, rel_dst, dst_len);

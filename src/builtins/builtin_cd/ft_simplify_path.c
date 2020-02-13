@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 17:16:22 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/23 18:26:02 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/13 16:23:04 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ int				ft_tab_linedel(char ***tab, int index, int nbr)
 		return (ERROR);
 	j = -1;
 	len = ft_tablen(*tab) - nbr;
-	if (len < 0 || index > len)
+	if (len < 0 || index > len
+	|| !(new = (char **)ft_memalloc((len + 1) * sizeof(*new))))
 		return (ERROR);
-	new = (char **)ft_memalloc((len + 1) * sizeof(*new)); //ft_memcheck;
 	while (++j < index)
 		new[j] = (*tab)[j];
 	while (j < len)
