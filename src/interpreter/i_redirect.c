@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 12:08:47 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/09 13:16:39 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/17 16:51:46 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ int	i_less(t_elem left, t_elem right)
 	{
 		if (is_regfile(right.c))
 			return (open_on_fd(right.c, O_RDONLY, 0, fd1));
-		ft_printf("%s exists and is not a regular file\n", right.c);
+		ft_dprintf(STDERR_FILENO, "42sh: %s: not a valid file\n", right.c);
 	}
 	else if (!access(right.c, F_OK))
-		ft_printf("%s exists but is not a readable file\n", right.c);
+		ft_dprintf(STDERR_FILENO, "42sh: %s: Premission denied\n", right.c);
 	else
-		ft_printf("%s does not exist\n", right.c);
+		ft_dprintf(STDERR_FILENO, "42sh: %s: No such file or directory\n", right.c);
 	return (-1);
 }
 
@@ -43,14 +43,14 @@ int	i_great(t_elem left, t_elem right)
 	{
 		if (is_regfile(right.c))
 			return (open_on_fd(right.c, O_WRONLY | O_TRUNC, 0, fd1));
-		ft_printf("%s exists and is not a regular file\n", right.c);
+		ft_dprintf(STDERR_FILENO, "42sh: %s: not a valid file\n", right.c);
 	}
 	else if (!access(right.c, F_OK))
-		ft_printf("%s exists but is not a writeable file\n", right.c);
+		ft_dprintf(STDERR_FILENO, "42sh: %s: Premission denied\n", right.c);
 	else if ((resfd = open_on_fd(right.c, O_WRONLY | O_CREAT | O_TRUNC, CREATE_RIGHTS, fd1)) != -1)
 		return (resfd);
 	else
-		ft_dprintf(STDERR_FILENO, "%s: Premission denied.\n", right.c);
+		ft_dprintf(STDERR_FILENO, "42sh: %s: Premission denied\n", right.c);
 	return (-1);
 }
 
@@ -63,10 +63,10 @@ int	i_dgreat(t_elem left, t_elem right)
 	{
 		if (is_regfile(right.c))
 			return (open_on_fd(right.c, O_WRONLY | O_APPEND, 0, fd1));
-		ft_printf("%s exists and is not a regular file\n", right.c);
+		ft_dprintf(STDERR_FILENO, "42sh: %s: not a valid file\n", right.c);
 	}
 	else if (!access(right.c, F_OK))
-		ft_printf("%s exists but is not a writeable file\n", right.c);
+		ft_dprintf(STDERR_FILENO, "42sh: %s: forbidden acess\n", right.c);
 	else
 	{
 		return (open_on_fd(right.c,
@@ -82,7 +82,7 @@ int	i_lessgreat(t_elem left, t_elem right)
 	fd1 = left.c ? *left.c - '0' : 0;
 	if (open_on_fd(right.c, O_RDWR | O_CREAT, CREATE_RIGHTS, fd1) != -1)
 		return (fd1);
-	ft_printf("error : could not open %s\n", right.c);
+	ft_dprintf(STDERR_FILENO, "42sh: %s: Premission denied\n", right.c);
 	return (-1);
 }
 
