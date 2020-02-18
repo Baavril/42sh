@@ -18,7 +18,6 @@
 
 static int	globing_case(t_pattern *var, char **str, t_checker *elem)
 {
-(void)c;
 	if (elem->flag > 2 && elem->j < elem->len && str[0][elem->j]
 	&& (str[0][elem->j] == elem->tmp[elem->i]
 	|| str[0][elem->j] == elem->tmp[elem->i] - 32))
