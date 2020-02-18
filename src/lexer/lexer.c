@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 17:59:39 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/12 17:19:39 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/18 11:39:05 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,18 +258,18 @@ char				**lexer_verbose(char **input)
 	t_token	token;
 
 	token = get_next_token(*input);
-/*	ft_dprintf(2, "_______________________________________________\n");
+	ft_dprintf(2, "_______________________________________________\n");
 	ft_dprintf(2, "token.symbol : %s\n", token.symbol);
-	ft_dprintf(2, "token.type : %d = %s\n", token.type, get_token_symbol(token.type));*/
+	ft_dprintf(2, "token.type : %d = %s\n", token.type, get_token_symbol(token.type));
 	while (token.type != E_EOF && token.type != E_ERROR)
 	{
 		ft_free_token(&token);
 		token = get_next_token(NULL);
-/*		ft_dprintf(2, "_______________________________________________\n");
+		ft_dprintf(2, "_______________________________________________\n");
 		ft_dprintf(2, "token.symbol : %s\n", token.symbol);
-		ft_dprintf(2, "token.type : %d = %s\n", token.type, get_token_symbol(token.type));*/
+		ft_dprintf(2, "token.type : %d = %s\n", token.type, get_token_symbol(token.type));
 	}
 	ft_free_token(&token);
-//	ft_dprintf(2, "_______________________________________________\n");
+	ft_dprintf(2, "_______________________________________________\n");
 	return (input);
 }
