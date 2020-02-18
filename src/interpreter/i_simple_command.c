@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:43:35 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/06 11:29:57 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/17 18:10:41 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,27 +34,24 @@ int	i_builtin(t_elem left, t_elem right)
 	g_argv = malloc(sizeof(char *) * TAB_SIZE);
 	g_argv[0] = left.c;
 	g_argv[1] = NULL;
-	if (right.v)
-		right.v->f(right.v->left, right.v->right);
-	g_retval = builtins_dispatcher(g_argv);
+	if (!right.v || right.v->f(right.v->left, right.v->right) != -1)
+		if ((g_retval = builtins_dispatcher(g_argv)) == 127)
+			ft_printf("unknown command : %s\n", g_argv[0]);
 	free(g_argv);
-	return (0);
+	return (g_retval);
 }
 
 int	i_exec(t_elem left, t_elem right)
 {
-	int			ret;
 	extern char	**environ;
 
-	ret = 0;
 	g_argv = malloc(sizeof(char *) * TAB_SIZE);
 	g_argv[0] = left.c;
 	g_argv[1] = NULL;
-	if (right.v)
-		right.v->f(right.v->left, right.v->right);
-	ret = execve(g_argv[0], g_argv, environ);
+	if (!right.v || right.v->f(right.v->left, right.v->right) != -1)
+		execve(g_argv[0], g_argv, environ);
 	free(g_argv);
-	return (ret);
+	return (-1);
 }
 
 char **realloc_argv(char **argv, size_t i)
@@ -79,14 +76,15 @@ int	i_suffix_word(t_elem left, t_elem right)
 	g_argv[i] = left.c;
 	g_argv[++i] = NULL;
 	if (right.v)
-		right.v->f(right.v->left, right.v->right);
+		return (right.v->f(right.v->left, right.v->right));
 	return (0);
 }
 
 int	i_suffix_redirect(t_elem left, t_elem right)
 {
-	left.v->f(left.v->left, left.v->right);
+	if (left.v->f(left.v->left, left.v->right) == -1)
+		return (-1);
 	if (right.v)
-		right.v->f(right.v->left, right.v->right);
+		return (right.v->f(right.v->left, right.v->right));
 	return (0);
 }

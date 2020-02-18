@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 08:40:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/05 21:01:33 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/17 14:43:09 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,16 +99,7 @@ int				expand_tree(t_node *node)
 			expand_tree(node->right.v);
 	}
 	if (node->f == i_exec)
-	{
-		if (is_a_builtin(node->left.c))
-		{
+		if (is_a_builtin(node->left.c) || eval_command(&node->left.c))
 			node->f = i_builtin;
-		}
-		else if (eval_command(&node->left.c))
-		{
-			ft_printf("unknown command : %s\n", node->left.c);
-			node->f = i_builtin;
-		}
-	}
 	return (0);
 }

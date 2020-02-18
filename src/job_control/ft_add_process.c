@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 15:51:32 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/02/09 12:49:03 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/12 13:16:45 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int				ft_add_process(t_elem left, t_elem right, int std_fd[3],
 		setpgid(pid, g_curjob.pgid);
 		process.pid = pid;
 		process.status = RUNNING;
-		ft_lstadd(&(g_curjob.process), ft_lstnew(&process, sizeof(t_process))); //a memcheck ?
+		ft_lstadd(&(g_curjob.process), ft_lstnew(&process, sizeof(t_process)));
 		return (0);
 	}
 }

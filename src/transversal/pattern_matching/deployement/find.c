@@ -16,14 +16,14 @@
 #include "builtins.h"
 #include "libft.h"
 
-static int	globing_case(t_pattern *var, char **str, t_checker *elem, char c)
+static int	globing_case(t_pattern *var, char **str, t_checker *elem)
 {
 (void)c;
 	if (elem->flag > 2 && elem->j < elem->len && str[0][elem->j]
 	&& (str[0][elem->j] == elem->tmp[elem->i]
 	|| str[0][elem->j] == elem->tmp[elem->i] - 32))
 	{
-		c = (str[0][elem->j] == elem->tmp[elem->i])
+		var->c = (str[0][elem->j] == elem->tmp[elem->i])
 		? elem->tmp[elem->i] : elem->tmp[elem->i] - 32;
 		elem->i = -1;
 		++elem->j;
@@ -57,7 +57,7 @@ int			deploy_case(t_pattern *var, char **str, t_checker *elem)
 			++elem->j;
 		}
 		else
-			globing_case(var, str, elem, c);
+			globing_case(var, str, elem);
 		++elem->i;
 	}
 	return (c);

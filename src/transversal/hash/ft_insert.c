@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 12:52:54 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/13 22:02:24 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/12 15:31:49 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static void			ft_resize_htable(t_htable *htable)
 	htable->ran_a = ft_get_ran(htable->big_prime);
 	htable->ran_b = ft_get_ran(htable->big_prime);
 	free(htable->table);
-	/*ft_check_memory(*/htable->table = (t_hlist **)ft_memalloc(sizeof(t_hlist*)
-														* htable->table_size);
+	htable->table = (t_hlist **)ft_memalloc(
+										sizeof(t_hlist*) * htable->table_size);
 	voyager = entries;
 	while (voyager)
 	{
@@ -49,7 +49,7 @@ void				ft_insert(t_htable *htable, char *key, void *value)
 	content.key = key;
 	content.value_size = ft_get_value_size(htable->data_type, value);
 	content.value = value;
-	/*ft_check_memory(*/new_entry = (t_hlist*)ft_lstnew(&content, sizeof(content));
+	new_entry = (t_hlist*)ft_lstnew(&content, sizeof(content));
 	ft_cpy = ft_get_lstcpy(data_type);
 	ft_cpy((t_list*)new_entry);
 	index = ft_hash(htable, new_entry->content->key);

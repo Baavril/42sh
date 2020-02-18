@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 16:12:54 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/19 14:26:01 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/13 10:19:38 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,9 @@ char				*ft_get_alias(char *alias_name)
 {
 	char	*str;
 
+	if (!g_alias)
+		return (NULL);
 	if ((str = ft_get_entry(g_alias, alias_name)))
 		return (ft_strdup(str));
 	return (NULL);
-}
-
-void				ft_treat_alias(char **first_arg)
-{
-	char	*value;
-
-	if (!g_alias)
-		return ;
-	if ((value = ft_get_entry(g_alias, *first_arg)))
-	{
-		ft_strdel(first_arg);
-		*first_arg = ft_strdup(value);
-	}
 }

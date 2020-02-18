@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/07 17:06:14 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/22 14:36:36 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/12 11:16:44 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_maths_token	ft_init_maths_token(char *word, size_t token_len, char flag)
 {
 	t_maths_token	new;
 
-	/*ft_check_memory(*/new.token = ft_strndup(word, token_len);
+	new.token = ft_strndup(word, token_len);
 	if (flag == IS_OP)
 		new.prio = ft_get_op_priority(new.token);
 	else

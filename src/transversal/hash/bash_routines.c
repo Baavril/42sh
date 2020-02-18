@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 18:00:54 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/13 21:29:01 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/12 15:26:29 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void		ft_print_bash(t_list *to_print)
 	entry = ((t_hlist*)to_print)->content->value;
 	if (entry->hit_value < 10000)
 		print_text = "%4u    %s\n";
-	else// if (entry->hit_value < 1000000)
+	else
 		print_text = "%-8u%s\n";
 	ft_printf(print_text, entry->hit_value, entry->bin_path);
 }

@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 16:31:23 by tgouedar          #+#    #+#             */
-/*   Updated: 2019/11/04 15:10:42 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/12 15:28:27 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,5 @@ void				ft_free_htable(t_htable *table);
 void				ft_empty_htable(t_htable *htable);
 void				ft_insert_bash(t_htable *htable, char *key,
 												char *path, unsigned int hit);
-void				ft_hash_path(t_htable *bin_table, char *path);
 
 #endif

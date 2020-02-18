@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/02 15:18:08 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/12 15:10:57 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void		ft_free_shvar(void)
 	}
 }
 
-static int		ft_clean_exit(char **av, int exit_status)
+int				ft_clean_exit(char **av, int exit_status)
 {
 	extern char		**environ;
 
