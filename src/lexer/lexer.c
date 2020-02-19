@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 17:59:39 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/18 11:39:05 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/19 12:12:15 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 ** ------------------------------------------------------
 */
 
-static void	ft_free_token(t_token *token)
+void			ft_free_token(t_token *token)
 {
 	if (token)
 		if (token->type == WORD || token->type == ASSIGNMENT_WORD
@@ -216,36 +216,51 @@ static t_token		tokenization(char type, char *value)
 	return (token);
 }
 
-t_token				get_next_token(char *str)
+static t_token		ft_delimit_token(char **index) //#nompasinspire
 {
-	static char		*index;
 	int				token;
 	char			*tmp;
 
-	if (str)
-		index = str;
-	while (ft_isspace(*index))
-		++index;
-	while (*index)
+	while (ft_isspace(**index))
+		++(*index);
+	while (**index)
 	{
-		if (ft_is_quote(*index))
-			return (tokenization(WORD, ft_get_word(&index)));
-		if (ft_isdigit(*index))
+		if (ft_is_quote(**index))
+			return (tokenization(WORD, ft_get_word(index)));
+		if (ft_isdigit(**index))
 		{
-			if (*(index + 1) == '<' || *(index + 1) == '>')
-				return (tokenization(IO_NUMBER, ft_check_nbr(&index)));
+			if ((*index)[1] == '<' || ((*index)[1]) == '>')
+				return (tokenization(IO_NUMBER, ft_check_nbr(index)));
 		}
-		if (ft_istoken(index) == NONE)
-			if ((token = ft_assignment_word(index)))
-				return (tokenization(token, ft_get_word(&index)));
-		if ((token = ft_istoken(index)) != NONE)
+		if (ft_istoken(*index) == NONE)
+			if ((token = ft_assignment_word(*index)))
+				return (tokenization(token, ft_get_word(index)));
+		if ((token = ft_istoken(*index)) != NONE)
 		{
 			tmp = get_token_symbol(token);
-			return (tokenization(token, advance(tmp, &index)));
+			return (tokenization(token, advance(tmp, index)));
 		}
 		return (tokenization(E_ERROR, NULL));
 	}
 	return (tokenization(E_EOF, "EOF"));
+}
+
+t_token				get_next_token_alias(char *str)
+{
+	static char		*index;
+
+	if (str)
+		index = str;
+	return (ft_delimit_token(&index));
+}
+
+t_token				get_next_token(char *str)
+{
+	static char		*index;
+
+	if (str)
+		index = str;
+	return (ft_delimit_token(&index));
 }
 
 /* ------------------------------------------------------

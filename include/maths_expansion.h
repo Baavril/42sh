@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 15:01:05 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/02/12 13:45:35 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/19 12:15:30 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int				ft_get_flag(char side, char *op);
 void			ft_push_tokens(char *word, t_maths_list **token_list);
 t_maths_list	*ft_maths_lexer(char *expr);
 t_maths_token	ft_init_maths_token(char *word, size_t token_len, char flag);
-void			ft_free_token(void *content, size_t size);
+void			ft_free_maths_token(void *content, size_t size);
 int				ft_arg_value(char *token, int64_t *value);
 char			*ft_itoa64(int64_t nb);
 int				ft_build_ast(t_maths_ast *ast, int flag);

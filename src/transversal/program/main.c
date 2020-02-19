@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/18 12:56:21 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/19 11:44:21 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 #include "path.h"
 
 int					g_retval;
+extern int			g_alias_treated;
 struct termios		g_old_termios;
 
 static int	set_minimal_env(void)
@@ -97,6 +98,7 @@ int			main(int argc, char **argv)
 	}
 	while (!read_command(&input) || get_next_line(0, &input))
 	{
+		g_alias_treated = 0;
 		if (!(status = history(ADD_CMD, &input, NULL)))
 		{
 			psherror(e_cannot_allocate_memory, argv[0], e_cmd_type);

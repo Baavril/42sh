@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 12:18:14 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/02/12 13:49:11 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/19 12:14:56 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void		ft_equivalent_add(t_maths_list *list)
 	list->content->token = ft_strdup((inf % 2) ? "-" : "+");
 	voyager = list->next;
 	list->next = relink;
-	ft_lstdel((t_list**)(&voyager), &ft_free_token);
+	ft_lstdel((t_list**)(&voyager), &ft_free_maths_token);
 }
 
 void			ft_parse_sign(t_maths_list *list)
