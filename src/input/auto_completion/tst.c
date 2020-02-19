@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 14:30:55 by yberramd          #+#    #+#             */
-/*   Updated: 2020/02/07 19:59:42 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/02/19 17:35:06 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,8 @@ static int		ft_binaires(char **binaires, char **path_dir, int len)
 				closedir(dir);
 				return (-1);
 			}
-		closedir(dir);
+		if (dir)
+			closedir(dir);
 		i++;
 	}
 	return (1);

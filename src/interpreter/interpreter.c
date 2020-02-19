@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:13:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/19 15:52:31 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/19 16:44:20 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int				i_comp_list(t_elem left, t_elem right)
 	expand_tree(left.v);
 	g_mode = FOREGROUND;
 	left.v->f(left.v->left, left.v->right);
-	ft_launch_job("plop", g_mode);
+	ft_launch_job("plop ;", g_mode);
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
 	return (0);
@@ -41,7 +41,7 @@ int				i_and_list(t_elem left, t_elem right)
 	expand_tree(left.v);
 	g_mode = BACKGROUND;
 	left.v->f(left.v->left, left.v->right);
-	ft_launch_job("plop", g_mode);
+	ft_launch_job("plop &", g_mode);
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
 	return (0);
@@ -52,7 +52,7 @@ int				i_and_op(t_elem left, t_elem right)
 	expand_tree(left.v);
 	left.v->f(left.v->left, left.v->right);
 	if (g_mode == FOREGROUND)
-		ft_launch_job("plop", g_mode);
+		ft_launch_job("plop and", g_mode);
 	if (!g_retval)
 		right.v->f(right.v->left, right.v->right);
 	return (0);
@@ -63,7 +63,7 @@ int				i_or_op(t_elem left, t_elem right)
 	expand_tree(left.v);
 	left.v->f(left.v->left, left.v->right);
 	if (g_mode == FOREGROUND)
-		ft_launch_job("plop", g_mode);
+		ft_launch_job("plop or", g_mode);
 	if (g_retval)
 		right.v->f(right.v->left, right.v->right);
 	return (0);
