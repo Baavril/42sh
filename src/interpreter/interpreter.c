@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:13:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/18 12:52:57 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/19 14:15:25 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int				i_pipe_sequence(t_elem left, t_elem right)
 	int bckp;
 
 	pipe(pipe_fd);
-	ft_dprintf(2, "Create pipe with {%d->%d}\n", pipe_fd[0], pipe_fd[1]);
+	//ft_dprintf(2, "Create pipe with {%d->%d}\n", pipe_fd[0], pipe_fd[1]);
 	//valeurs de g_fd et g_fclose : 0, 1, 2 | -1 
 	bckp = g_fd[1];
 	g_fd[1] = pipe_fd[1];
@@ -83,7 +83,7 @@ int				i_pipe_sequence(t_elem left, t_elem right)
 	left.v->f(left.v->left, left.v->right);// 0, P0, 2 | P1
 	g_fd[1] = bckp;
 	g_fd[0] = pipe_fd[0];
-	ft_dprintf(2, "pipe_seq closing {%d}\n", pipe_fd[1]);
+	//ft_dprintf(2, "pipe_seq closing {%d}\n", pipe_fd[1]);
 	close(pipe_fd[1]);
 	g_fclose = -1;
 	bckp = right.v->f(right.v->left, right.v->right);// P1, 1, 2 | -1
@@ -95,7 +95,7 @@ int				i_execnode(t_elem left, t_elem right)
 {
 	if (!left.v || left.v->f(left.v->left, left.v->right) != -1)
 		right.v->f(right.v->left, right.v->right);
-	exit(1); //THIS IS A HOTFIX. What should we do when execve 'fails' ?
+	exit(1);
 }
 
 int				i_simple_command(t_elem left, t_elem right)
