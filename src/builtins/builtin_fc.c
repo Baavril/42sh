@@ -320,6 +320,8 @@ static int	ft_parser(int argc, char **argv, char *optstring, char **option)
 				return (argv[index][i - 1]);
 			}
 		}
+		if (argv[index][0] != '-' && !ft_strisnbr(argv[index]))
+			return (63);
 		i = 1;
 		index++;
 		return (1);

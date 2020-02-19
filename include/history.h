@@ -27,6 +27,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include "shell_variables.h"
+# include "maths_expansion.h"
 # include "libft.h"
 
 enum {

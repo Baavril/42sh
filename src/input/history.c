@@ -214,6 +214,27 @@ static int init_clean(int fd, char *get_line)
 	return (1);
 }
 
+static int		ft_atoi_history(const char *str)
+{
+	int				i;
+	unsigned long	nbr;
+	unsigned short	val;
+
+	i = 0;
+	nbr = 0;
+	while (str[i] == ' ' || (str[i] > 8 && str[i] < 14))
+		++i;
+	while (str[i] > 47 && str[i] < 58)
+	{
+		val = str[i] ^ ((1 << 5) | (1 << 4));
+		nbr = nbr * 10 + val;
+		if (nbr > 500)
+			return (0);
+		++i;
+	}
+	return (nbr);
+}
+
 static int	init_history(t_history *history, char **home)
 {
 	int 	len;
@@ -259,27 +280,6 @@ static int	init_history(t_history *history, char **home)
 	}
 	ft_dprintf(2, "history: can't open %s\n", home);
 	return (0);
-}
-
-static int		ft_atoi_history(const char *str)
-{
-	int				i;
-	unsigned long	nbr;
-	unsigned short	val;
-
-	i = 0;
-	nbr = 0;
-	while (str[i] == ' ' || (str[i] > 8 && str[i] < 14))
-		++i;
-	while (str[i] > 47 && str[i] < 58)
-	{
-		val = str[i] ^ ((1 << 5) | (1 << 4));
-		nbr = nbr * 10 + val;
-		if (nbr > 500)
-			return (0);
-		++i;
-	}
-	return (nbr);
 }
 
 static int		exclamation_point_number(const char *line, t_history *history, char **cmd)

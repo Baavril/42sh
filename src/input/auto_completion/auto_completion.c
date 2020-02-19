@@ -6,24 +6,17 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 16:12:14 by yberramd          #+#    #+#             */
-/*   Updated: 2020/02/12 13:10:31 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/19 12:59:12 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-les taches :
-- l'affichage des binaires
-- les leaks
-- et le path affichage et prise en compte*/
 
 #include "auto_completion.h"
 #include <stdio.h>
 
 extern struct s_svar	*g_svar;
+int						realloc_n;
 
-int realloc_n;
-
-void	print_double_char(char **tab)
+void			print_double_char(char **tab)
 {
 	int	i;
 
@@ -35,12 +28,12 @@ void	print_double_char(char **tab)
 	}
 }
 
-static char *ft_dirchr(char *input)
+static char		*ft_dirchr(char *input)
 {
-	char 	*cur_dir;
-	char 	svg;
-	char 	*last_bslash;
-	int 	i;
+	char	*cur_dir;
+	char	svg;
+	char	*last_bslash;
+	int		i;
 
 	i = 0;
 	last_bslash = NULL;
@@ -67,10 +60,10 @@ static char *ft_dirchr(char *input)
 	return (cur_dir);
 }
 
-static char *ft_last_back_slash(char *input)
+static char		*ft_last_back_slash(char *input)
 {
-	int 	i;
-	char 	*point;
+	int		i;
+	char	*point;
 
 	i = 0;
 	point = NULL;
@@ -85,7 +78,7 @@ static char *ft_last_back_slash(char *input)
 	return (point);
 }
 
-static int	ft_pointchr(char *str1, char *str2)
+static int		ft_pointchr(char *str1, char *str2)
 {
 	int	i;
 
@@ -103,10 +96,10 @@ static int	ft_pointchr(char *str1, char *str2)
 	return (1);
 }
 
-static char 	**ft_realloc(char **words)
+static char		**ft_realloc(char **words)
 {
-	char 	**tmp;
-	int 	i;
+	char	**tmp;
+	int		i;
 
 	i = 0;
 	realloc_n *= 2;
@@ -123,13 +116,13 @@ static char 	**ft_realloc(char **words)
 	return (words);
 }
 
-static char		**ft_path(char *input)// FAIRE ATTENTION AUX FREE
+static char		**ft_path(char *input)
 {
-	int 			i;
+	int				i;
 	char			**words;
-	struct dirent 	*dirent;
+	struct dirent	*dirent;
 	DIR				*dir;
-	char 			*point;
+	char			*point;
 
 	i = 0;
 	dir = NULL;
@@ -147,11 +140,10 @@ static char		**ft_path(char *input)// FAIRE ATTENTION AUX FREE
 		}
 		ft_strdel(&point);
 		point = ft_last_back_slash(input);
-		//ft_printf("after: point[%s]", point);
 		ft_putchar('\n');
-		while ((dirent = readdir(dir)) != NULL)//realloc
+		while ((dirent = readdir(dir)) != NULL)
 		{
-			if (ft_pointchr(point, dirent->d_name))// add point
+			if (ft_pointchr(point, dirent->d_name))
 			{
 				if (i == realloc_n - 1 && !(words = ft_realloc(words)))
 				{
@@ -160,7 +152,8 @@ static char		**ft_path(char *input)// FAIRE ATTENTION AUX FREE
 				}
 				if (*point == '\0' || ft_isspace(*point))
 				{
-					if (ft_strcmp("..", dirent->d_name) && ft_strcmp(".", dirent->d_name))
+					if (ft_strcmp("..", dirent->d_name)
+							&& ft_strcmp(".", dirent->d_name))
 					{
 						if (dirent->d_type == 4)
 						{
@@ -202,14 +195,13 @@ static char		**ft_path(char *input)// FAIRE ATTENTION AUX FREE
 			}
 			words[i] = NULL;
 		}
-	//	printf("--PATH2\n");	
 	}
 	if (dir)
 		closedir(dir);
 	return (words);
 }
 
-static int	count_words(t_tst *tst, int ret)
+static int		count_words(t_tst *tst, int ret)
 {
 	if (tst->right && tst->c != '\0')
 		ret = count_words(tst->right, ret);
@@ -222,7 +214,7 @@ static int	count_words(t_tst *tst, int ret)
 	return (ret);
 }
 
-static int	go_to_char(t_tst **tst, char *input)
+static int		go_to_char(t_tst **tst, char *input)
 {
 	int	i;
 
@@ -246,7 +238,7 @@ static int	go_to_char(t_tst **tst, char *input)
 	return (2);
 }
 
-static int	nbr_words(t_tst *tst, char *input)
+static int		nbr_words(t_tst *tst, char *input)
 {
 	int	ret;
 
@@ -256,9 +248,7 @@ static int	nbr_words(t_tst *tst, char *input)
 	return (count_words(tst, 0));
 }
 
-// A VOIR PB LSM LSMP....
-
-static int	malloc_words(t_tst *tst, int len, int index, char **words)
+static int		malloc_words(t_tst *tst, int len, int index, char **words)
 {
 	if (tst->right && tst->c != '\0')
 		index = malloc_words(tst->right, len, index, words);
@@ -267,15 +257,10 @@ static int	malloc_words(t_tst *tst, int len, int index, char **words)
 	if (tst->middle && tst->c != '\0')
 	{
 		len++;
-		//printf("%c", tst->c);
 		index = malloc_words(tst->middle, len, index, words);
 	}
 	if (tst->end == true)
 	{
-		/*printf("\n");
-		printf("len_word = [%d]\n", len);
-		printf("index_word = [%d]\n", index);
-		printf("_____________________________\n");*/
 		if (!(words[index] = (char*)malloc(sizeof(char) * (len + 1))))
 			return (-1);
 		index++;
@@ -283,7 +268,7 @@ static int	malloc_words(t_tst *tst, int len, int index, char **words)
 	return (index);
 }
 
-static int	ft_words(t_tst *tst, int len, int index, char **words, char *str)
+static int		ft_words(t_tst *tst, int len, int index, char **words, char *str)
 {
 	if (tst->right && tst->c != '\0')
 		index = ft_words(tst->right, len, index, words, str);
@@ -291,8 +276,6 @@ static int	ft_words(t_tst *tst, int len, int index, char **words, char *str)
 		index = ft_words(tst->left, len, index, words, str);
 	if (tst->middle && tst->c != '\0')
 	{
-		//printf("len [%d]\n", len);
-		//printf("tst-> [%c]\n", tst->c);
 		str[len] = tst->c;
 		len++;
 		index = ft_words(tst->middle, len, index, words, str);
@@ -306,7 +289,7 @@ static int	ft_words(t_tst *tst, int len, int index, char **words, char *str)
 	return (index);
 }
 
-static int 	malloc_str(t_tst *tst, int len, int max_len)
+static int		malloc_str(t_tst *tst, int len, int max_len)
 {
 	if (tst->right && tst->c != '\0')
 		max_len = malloc_str(tst->right, len, max_len);
@@ -325,39 +308,37 @@ static int 	malloc_str(t_tst *tst, int len, int max_len)
 	return (max_len);
 }
 
-static int	assign_words(t_tst *tst, char **words, char *input, int len)
+static int		assign_words(t_tst *tst, char **words, char *input, int len)
 {
-	int 	i;
-	char 	*str;
+	int		i;
+	char	*str;
 
 	i = 0;
 	if (go_to_char(&tst, input) == 0)
 		return (-1);
-	if ((str = (char*)malloc(sizeof(char) * (malloc_str(tst, 0, 0) + ft_strlen(input) + 1))) == NULL)
+	if ((str = (char*)malloc(sizeof(char)
+					* (malloc_str(tst, 0, 0) + ft_strlen(input) + 1))) == NULL)
 		return (-1);
 	if (malloc_words(tst, ft_strlen(input), 0, words) == -1)
 	{
 		ft_strdel(&str);
 		return (-1);
 	}
-	//ASSIG
 	while (i < len)
 	{
 		ft_strcpy(words[i], input);
 		i++;
 	}
-	//printf("HEAD: [%c]\n", tst->c);
 	ft_words(tst, 0, 0, words, str);
 	ft_strdel(&str);
 	return (1);
 }
 
-static char	**ft_binary(t_tst *tst, char *input)
+static char		**ft_binary(t_tst *tst, char *input)
 {
 	int		len;
 	char	**words;
 
-	//printf("\nBINARY\n");
 	words = NULL;
 	if ((len = nbr_words(tst, input)) == 0)
 		return (NULL);
@@ -370,44 +351,50 @@ static char	**ft_binary(t_tst *tst, char *input)
 		del_double_char(words);
 		return (NULL);
 	}
-	//printf("ft_binary nbr = [%d]\n", len);
 	return (words);
 }
 
-static int pos_start(char *input, int start)
+static int		pos_start(char *input, int start)
 {
-	if (ft_isspace(input[start]) || input[start] == '|' || input[start] == '&' || input[start] == ';')
+	if (ft_isspace(input[start]) || input[start] == '|'
+			|| input[start] == '&' || input[start] == ';')
 		start--;
 	if (!ft_isspace(input[start]))
 	{
-		while (start > 0 && !ft_isspace(input[start]) && !(input[start] == '|' || input[start] == '&' || input[start] == ';'))
+		while (start > 0 && !ft_isspace(input[start])
+				&& !(input[start] == '|' || input[start] == '&'
+					|| input[start] == ';'))
 			start--;
-		if (ft_isspace(input[start]) || input[start] == '|' || input[start] == '&' || input[start] == ';')
+		if (ft_isspace(input[start]) || input[start] == '|'
+				|| input[start] == '&' || input[start] == ';')
 			start++;
 	}
 	return (start);
 }
 
-int 	ft_restart(char *input, int start)
+int				ft_restart(char *input, int start)
 {
 	start--;
-	while (start >= 0 && !ft_isspace(input[start]) && !(input[start] == '|' || input[start] == '&' || input[start] == ';'))
+	while (start >= 0 && !ft_isspace(input[start]) && !(input[start] == '|'
+				|| input[start] == '&' || input[start] == ';'))
 		start--;
-	if (start != -1 && (input[start] == '|' || input[start] == '&' || input[start] == ';'))
+	if (start != -1 && (input[start] == '|'
+				|| input[start] == '&' || input[start] == ';'))
 		return (1);
 	while (start >= 0 && ft_isspace(input[start]))
 		start--;
-	if (start != -1 && (input[start] == '|' || input[start] == '&' || input[start] == ';'))
+	if (start != -1 && (input[start] == '|'
+				|| input[start] == '&' || input[start] == ';'))
 		return (1);
 	else
 		return (0);
 }
 
-static char 	*ft_assign_words(char *str, int dollar)
+static char		*ft_assign_words(char *str, int dollar)
 {
-	int 	i;
-	int 	y;
-	char 	*tmp;
+	int		i;
+	int		y;
+	char	*tmp;
 
 	i = 0;
 	y = 0;
@@ -444,7 +431,7 @@ static char 	*ft_assign_words(char *str, int dollar)
 	return (tmp);
 }
 
-static int	ft_cmp_str(char *str1, char *str2)
+static int		ft_cmp_str(char *str1, char *str2)
 {
 	int	i;
 
@@ -464,8 +451,8 @@ static int	ft_cmp_str(char *str1, char *str2)
 
 static int		ft_env_var(char *input, int dollar, char ***words)
 {
-	int 			i;
-	int 			y;
+	int				i;
+	int				y;
 	struct s_svar	*tmp;
 	struct s_svar	*tmp2;
 
@@ -507,25 +494,21 @@ static int		ft_env_var(char *input, int dollar, char ***words)
 	return (1);
 }
 
-int 	ft_auto_completion(t_tst *tst, char *input, char ***words, int start)
+int				ft_auto_completion(t_tst *tst, char *input, char ***words, int start)
 {
-	int 	cursor;
-	int 	ret;
-	char 	tmp;
+	int		cursor;
+	int		ret;
+	char	tmp;
 
 	cursor = start;
 	start = pos_start(input, start);
 	tmp = input[cursor];
 	input[cursor] = '\0';
-	/*c'est la structure externe g_svar qui t'interesse -> dedans tu trouveras char *str qui contient 
-	"key=value" ainsi que char *key qui contient "key=" ou "key" je sais plus et char *var qui contient "var"
-	Sinon, j'ai ecrit deux fonctions getshvar et setshvar dans mon module de maths si tu veux : dans expansion/maths_expansion/shvar_tools.c
-	*/
 	if (input[start] == '$')
 	{
 		ret = 1;
 		ft_putchar('\n');
-		if (input[start + 1] == '{')// a voir
+		if (input[start + 1] == '{')
 			ret = 2;
 		if (ft_env_var(&input[start + ret], ret, words) == 0)
 		{
