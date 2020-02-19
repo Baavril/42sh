@@ -6,31 +6,33 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:36:57 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/21 11:14:54 by baavril          ###   ########.fr       */
+/*   Updated: 2020/02/19 19:34:22 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "jcont.h"
 
+extern int			g_mode;
 extern t_jcont		g_jcont;
 extern t_job		g_curjob;
 extern int			g_fd[3];
 
-t_job				*ft_add_job(int status, char *cmd)
+t_job				*ft_add_job(void)
 {
 	t_list	*new_front;
 
-	if (!(g_curjob.process) || (cmd && !(g_curjob.cmd = ft_strdup(cmd))))
+	if (!(g_curjob.process))
 	{
+		ft_strdel(&(g_curjob.cmd));
 		ft_bzero(&g_curjob, sizeof(t_job));
 		return (NULL);
 	}
 	g_curjob.nbr = (g_jcont.job_nbr)++;
-	g_curjob.status = status | RUNNING;
+	g_curjob.status = g_mode | RUNNING;
 	if (!(new_front = ft_lstnew(&g_curjob, sizeof(t_job))))
 	{
-		free(g_curjob.cmd);
+		ft_strdel(&(g_curjob.cmd));
 		ft_bzero(&g_curjob, sizeof(t_job));
 		return (NULL);
 	}

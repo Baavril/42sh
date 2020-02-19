@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:56:52 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/02/12 13:18:31 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/19 19:33:56 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,21 @@
 #include <unistd.h>
 #include <signal.h>
 
+extern int		g_mode;
 t_jcont			g_jcont = {NULL, 1, {0, 0}};
 t_job			g_curjob = {NULL, 0, 0, NULL, 0};
 char			*g_bgpid = NULL;
 
-int			ft_launch_job(char *cmd, int status)
+int			ft_launch_job(void)
 {
 	t_job		*job;
 	int			ret_status;
 
 	if (!(g_curjob.process))
 		return (0);
-	if (!(job = ft_add_job(status, cmd)))
+	if (!(job = ft_add_job()))
 		return (e_cannot_allocate_memory);
-	if (status & BACKGROUND)
+	if (g_mode & BACKGROUND)
 	{
 		ft_dprintf(STDERR_FILENO, "[%i] %i\n", job->nbr, job->pgid);
 		ft_strdel(&g_bgpid);

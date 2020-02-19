@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:13:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/19 16:44:20 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/19 19:35:32 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #define STDERR 2
 
 extern char		**environ;
+extern const t_job	g_curjob;
 extern int 		g_retval;
 int				g_fd[3] = {STDIN, STDOUT, STDERR};
 int				g_fclose = -1;
@@ -30,7 +31,7 @@ int				i_comp_list(t_elem left, t_elem right)
 	expand_tree(left.v);
 	g_mode = FOREGROUND;
 	left.v->f(left.v->left, left.v->right);
-	ft_launch_job("plop ;", g_mode);
+	ft_launch_job();
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
 	return (0);
@@ -41,7 +42,7 @@ int				i_and_list(t_elem left, t_elem right)
 	expand_tree(left.v);
 	g_mode = BACKGROUND;
 	left.v->f(left.v->left, left.v->right);
-	ft_launch_job("plop &", g_mode);
+	ft_launch_job();
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
 	return (0);
@@ -52,7 +53,7 @@ int				i_and_op(t_elem left, t_elem right)
 	expand_tree(left.v);
 	left.v->f(left.v->left, left.v->right);
 	if (g_mode == FOREGROUND)
-		ft_launch_job("plop and", g_mode);
+	ft_launch_job();
 	if (!g_retval)
 		right.v->f(right.v->left, right.v->right);
 	return (0);
@@ -63,7 +64,7 @@ int				i_or_op(t_elem left, t_elem right)
 	expand_tree(left.v);
 	left.v->f(left.v->left, left.v->right);
 	if (g_mode == FOREGROUND)
-		ft_launch_job("plop or", g_mode);
+	ft_launch_job();
 	if (g_retval)
 		right.v->f(right.v->left, right.v->right);
 	return (0);

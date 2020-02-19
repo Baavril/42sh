@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:18:20 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/02/05 15:00:27 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/19 19:32:45 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void				ft_print_jobs(t_list *job_list, int opt);
 void				ft_print_job(t_job *job, int opt);
 void				ft_free_job(void *content, size_t size);
 int					ft_free_jcont(void);
-t_job				*ft_add_job(int status, char *cmd);
 void				ft_set_prio(void);
 int					ft_pop_job(int nbr);
 void				ft_update_job_status(void);
@@ -78,8 +77,8 @@ int					ft_isready(t_job *job);
 
 int					ft_add_process(t_elem left, t_elem right, int std_fd[3],
 															int fd_to_close);
-int					ft_launch_job(char *cmd, int status);
-t_job				*ft_add_job(int status, char *cmd);
+int					ft_launch_job(void);
+t_job				*ft_add_job(void);
 
 void				ft_save_term_fd(int save_fd[3]);
 void				ft_stdredir(int std_fd[3]);
