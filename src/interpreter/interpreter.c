@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:13:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/19 19:35:32 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/19 19:43:14 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 #define STDERR 2
 
 extern char		**environ;
-extern const t_job	g_curjob;
 extern int 		g_retval;
+extern const t_job 		g_curjob;
 int				g_fd[3] = {STDIN, STDOUT, STDERR};
 int				g_fclose = -1;
 int				g_mode;

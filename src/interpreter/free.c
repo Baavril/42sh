@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 08:40:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/17 14:43:09 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/19 19:39:35 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,24 @@
 #include "parser.h"
 #include "expansions.h"
 #include "builtins.h"
+#include "jcont.h"
+
+int 			curjob_cat(char *str)
+{
+	extern t_job g_curjob;
+	char *tmp;
+
+	tmp = g_curjob.cmd;
+	if (!g_curjob.cmd)
+		g_curjob.cmd = ft_strdup(str);
+	else
+	{
+		g_curjob.cmd = ft_strnjoin(3, g_curjob.cmd, " ", str);
+		free(tmp);
+	}
+	ft_printf("%s\n", g_curjob.cmd);
+	return (0);
+}
 
 int				shape(t_node *node)
 {
@@ -82,17 +100,19 @@ int				expand_tree(t_node *node)
 	{
 		if (node_type & 0b10)
 		{
-		//	ft_printf("expanding left [%s]\n", node->left.c);
+			curjob_cat(node->left.c);
 			expansions_treatment(&(node->left.c));
 		}
 		else
 			expand_tree(node->left.v);
 	}
+	if (node->f == i_pipe_sequence)
+		curjob_cat("|" );
 	if (node->right.c || node->right.v)
 	{
 		if (node_type & 0b01)
 		{
-		//	ft_printf("expanding right [%s]\n", node->right.c);
+			curjob_cat(node->right.c);
 			expansions_treatment(&(node->right.c));
 		}
 		else
