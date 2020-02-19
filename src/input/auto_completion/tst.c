@@ -6,15 +6,14 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 14:30:55 by yberramd          #+#    #+#             */
-/*   Updated: 2019/09/19 18:32:47 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/02/07 19:59:42 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "auto_completion.h"
 
-/*JUSTE UN TEST POUR L'AUTO_COMPLETION*/
-void		del_double_char(char **tab2)
+void			del_double_char(char **tab2)
 {
 	int	i;
 
@@ -31,7 +30,7 @@ void		del_double_char(char **tab2)
 	tab2 = NULL;
 }
 
-void		del_tst(t_tst *tst)
+void			del_tst(t_tst *tst)
 {
 	if (tst)
 	{
@@ -46,7 +45,7 @@ void		del_tst(t_tst *tst)
 	}
 }
 
-int		search_tst(t_tst *tst, char *str)
+int				search_tst(t_tst *tst, char *str)
 {
 	if (tst)
 	{
@@ -65,24 +64,12 @@ int		search_tst(t_tst *tst, char *str)
 	return (0);
 }
 
-/*static void	print_double_char(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab && tab[i] != NULL)
-	{
-		ft_putendl(tab[i]);
-		i++;
-	}
-}*/
-
-static char	**create_dir(char *path_src)/*a modifier*/
+static char		**create_dir(char *path_src)
 {
 	int		i;
 	int		len;
-	char	 *cp;
-	char 	**dir;
+	char	*cp;
+	char	**dir;
 	char	*path;
 
 	i = 0;
@@ -127,34 +114,44 @@ static void		ft_builtins(char **binaires)
 	binaires[5] = ft_strdup("exit");
 }
 
+static int		ft_assign_binary(char **binaires, DIR *dir, int len, int *y)
+{
+	struct dirent	*dirent;
+
+	while ((dirent = readdir(dir)))
+	{
+		if (ft_strcmp(".", dirent->d_name)
+				&& ft_strcmp("..", dirent->d_name)
+				&& (*y) < len)
+		{
+			if (!(binaires[(*y)] = ft_strdup(dirent->d_name)))
+			{
+				del_double_char(binaires);
+				return (-1);
+			}
+			(*y)++;
+		}
+	}
+	return (1);
+}
+
 static int		ft_binaires(char **binaires, char **path_dir, int len)
 {
-	int	i;
-	int	y;
-	DIR		*dir;
-	struct dirent	*dirent;
+	int				i;
+	int				y;
+	DIR				*dir;
 
 	i = 0;
 	y = 6;
 	while (path_dir[i])
 	{
 		if ((dir = opendir(path_dir[i])))
-		{
-			while ((dirent = readdir(dir)))
+			if (ft_assign_binary(binaires, dir, len, &y) == -1)
 			{
-				if (ft_strcmp(".", dirent->d_name) && ft_strcmp("..", dirent->d_name)
-						&& y < len)
-				{
-					if (!(binaires[y] = ft_strdup(dirent->d_name)))
-					{
-						del_double_char(binaires);
-						return (-1);
-					}
-					y++;
-				}
+				closedir(dir);
+				return (-1);
 			}
-			closedir(dir);
-		}
+		closedir(dir);
 		i++;
 	}
 	return (1);
@@ -162,9 +159,9 @@ static int		ft_binaires(char **binaires, char **path_dir, int len)
 
 static int		ft_nbr_binary(char **path_dir)
 {
-	int		i;
-	int		len;
-	DIR		*dir;
+	int				i;
+	int				len;
+	DIR				*dir;
 	struct dirent	*dirent;
 
 	i = 0;
@@ -176,7 +173,8 @@ static int		ft_nbr_binary(char **path_dir)
 			{
 				while (dir && (dirent = readdir(dir)))
 				{
-					if (ft_strcmp(".", dirent->d_name) && ft_strcmp("..", dirent->d_name))
+					if (ft_strcmp(".", dirent->d_name)
+							&& ft_strcmp("..", dirent->d_name))
 						len++;
 				}
 				if (dir)
@@ -202,13 +200,13 @@ static char		**create_binary(char **path_dir)
 	return (binaires);
 }
 
-static	int	new_word(char *str, t_tst **tst, int i)/*a coriger jeu de pointeur*/
+static int		new_word(char *str, t_tst **tst, int i)
 {
 	t_tst	*cpy;
 
 	if (str[i] != '\0')
 	{
-		if (!(cpy = (t_tst*)malloc(sizeof(t_tst))))//ajout de la fonction DEL !!!
+		if (!(cpy = (t_tst*)malloc(sizeof(t_tst))))
 			return (-1);
 		(*tst) = cpy;
 		cpy->left = NULL;
@@ -220,7 +218,7 @@ static	int	new_word(char *str, t_tst **tst, int i)/*a coriger jeu de pointeur*/
 	}
 	while (str[i] != '\0')
 	{
-		if (!(cpy->middle = (t_tst*)malloc(sizeof(t_tst))))//ajout de la fonction DEL !!!
+		if (!(cpy->middle = (t_tst*)malloc(sizeof(t_tst))))
 			return (-1);
 		cpy = cpy->middle;
 		cpy->left = NULL;
@@ -232,7 +230,7 @@ static	int	new_word(char *str, t_tst **tst, int i)/*a coriger jeu de pointeur*/
 	}
 	if (i != 0)
 	{
-		if (!(cpy->middle = (t_tst*)malloc(sizeof(t_tst))))//ajout de la fonction DEL !!!
+		if (!(cpy->middle = (t_tst*)malloc(sizeof(t_tst))))
 			return (-1);
 		cpy = cpy->middle;
 		cpy->c = '\0';
@@ -244,7 +242,7 @@ static	int	new_word(char *str, t_tst **tst, int i)/*a coriger jeu de pointeur*/
 	return (1);
 }
 
-static	int	last_char(t_tst **tst)/*a coriger jeu de pointeur*/
+static int		last_char(t_tst **tst)
 {
 	t_tst	*cpy;
 
@@ -253,7 +251,7 @@ static	int	last_char(t_tst **tst)/*a coriger jeu de pointeur*/
 		(*tst)->end = true;
 	else
 	{
-		if (!(cpy = (t_tst*)malloc(sizeof(t_tst))))//ajout de la fonction DEL !!!
+		if (!(cpy = (t_tst*)malloc(sizeof(t_tst))))
 			return (-1);
 		(*tst)->middle = cpy;
 		cpy->c = '\0';
@@ -265,7 +263,7 @@ static	int	last_char(t_tst **tst)/*a coriger jeu de pointeur*/
 	return (1);
 }
 
-static	int	add_word(char *str, t_tst *tst)/*a coriger jeu de pointeur*/
+static int		add_word(char *str, t_tst *tst)
 {
 	int		i;
 
@@ -304,7 +302,7 @@ static	int	add_word(char *str, t_tst *tst)/*a coriger jeu de pointeur*/
 	return (1);
 }
 
-static	int		create_tst(char **binaires, t_tst **tst)
+static int		create_tst(char **binaires, t_tst **tst)
 {
 	int		i;
 
@@ -324,7 +322,7 @@ static	int		create_tst(char **binaires, t_tst **tst)
 	return (1);
 }
 
-t_tst	*ft_tst()
+t_tst			*ft_tst(void)
 {
 	char	**binaires;
 	char	**path_dir;
@@ -334,8 +332,8 @@ t_tst	*ft_tst()
 	tst = NULL;
 	path_dir = NULL;
 	path = NULL;
-	if	((path = getenv("PATH")) != NULL)
-		path_dir = create_dir(path);// dir peut etre = a NULL
+	if ((path = getenv("PATH")) != NULL)
+		path_dir = create_dir(path);
 	binaires = create_binary(path_dir);
 	if (create_tst(binaires, &tst) == -1)
 		del_tst(tst);
