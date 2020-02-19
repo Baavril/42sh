@@ -6,17 +6,19 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 15:51:38 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/28 16:20:13 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/19 12:26:04 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKENS_H
-#define TOKENS_H
-/* -------------------------------------------------------
-   The token types
-   ------------------------------------------------------- */
+# define TOKENS_H
 
-enum e_tokens
+/* -------------------------------------------------------
+**                   The token types
+** -------------------------------------------------------
+*/
+
+enum					e_tokens
 {
 	NONE,
 	E_ERROR,
@@ -59,7 +61,7 @@ enum e_tokens
 	Rbrace
 };
 
-enum e_nodes
+enum					e_nodes
 {
 	N_SUFFIX,
 	N_PREFIX,
@@ -75,13 +77,14 @@ enum e_nodes
 	N_OR_IF,
 };
 
-struct s_token
+struct					s_token
 {
-	int	type;
-	char	*symbol;
+	int					type;
+	char				*symbol;
 };
 
 typedef struct s_token	t_token;
 
 extern struct s_token	g_grammar_symbols[];
+
 #endif
