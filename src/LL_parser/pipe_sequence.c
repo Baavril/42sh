@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:48:12 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/28 16:23:22 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/19 16:22:31 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,13 @@ static t_node	*pipe_sequence(t_token tok)
 	t_node *node;
 	t_node *tmp1;
 	t_node *tmp2;
+	extern int			g_alias_treated;
 
 	if ((tmp1 = command(tok)))
 	{
 		if (is_potential(peek(), N_PIPE))
 		{
+			g_alias_treated = 0;
 			eat();
 			if (!(tmp2 = pipe_sequence(eat())))
 				exit(ft_printf("error in pipe_sequence\n"));

@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:36:39 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/05 16:17:04 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/19 16:06:31 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ t_node *exec(t_token tok)
 {
 	t_node	*node;
 	char	*tmp1;
-
 	if ((tmp1 = cmd_word(tok)))
 	{
 		if (!(node = malloc(sizeof(t_node))))
@@ -103,7 +102,6 @@ t_node	*simple_command(t_token tok)
 {
 	t_node *node;
 	t_node *tmp1;
-
 	if ((tmp1 = cmd_prefix(tok)))
 	{
 		if (is_potential(peek(), N_CMD_WORD))

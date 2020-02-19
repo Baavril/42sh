@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:33:42 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/15 12:01:43 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/19 16:24:00 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ t_node	*io_redirect(t_token tok)
 {
 	t_node	*node;
 	char	*tmp1;
+	extern int g_alias_treated;
+	int bckp;
 
 	if ((tmp1 = io_number(tok)))
 			tok = eat();
@@ -45,11 +47,14 @@ t_node	*io_redirect(t_token tok)
 		node = malloc(sizeof(t_node));
 		node->left.c = tmp1;
 		node->f = g_redirect[tok.type - LESS];
+		bckp = g_alias_treated;
+		g_alias_treated = 1;
 		if (tok.type == DLESS
 		 || tok.type == DLESSDASH)
 			node->right.c = here_end(eat());
 		else
 			node->right.c = filename(eat());
+		g_alias_treated = bckp;
 		if (!node->right.c)
 			exit(ft_printf("parsing error in io_redirect"));
 		return(node);
