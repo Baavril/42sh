@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 16:12:14 by yberramd          #+#    #+#             */
-/*   Updated: 2020/02/07 19:43:37 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/02/19 12:59:12 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -499,9 +499,7 @@ int				ft_auto_completion(t_tst *tst, char *input, char ***words, int start)
 	int		cursor;
 	int		ret;
 	char	tmp;
-	char	**tmp1;
 
-	tmp1 = NULL;
 	cursor = start;
 	start = pos_start(input, start);
 	tmp = input[cursor];

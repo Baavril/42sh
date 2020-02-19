@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:43:12 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/02/02 15:03:58 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/12 11:58:01 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char					*getshvar(char *var_name)
 	{
 		if (!ft_strncmp(tmp->key, var_name, ft_strlen(tmp->key) - 1))
 		{
-			var_value = ft_strdup(tmp->value); // ft_memcheck ?
+			var_value = ft_strdup(tmp->value);
 			break ;
 		}
 		tmp = tmp->next;
@@ -61,7 +61,7 @@ void					setshvar(char *var_name, int64_t value)
 	var_value = ft_itoa64(value);
 	name_len = ft_strlen(var_name);
 	val_len = ft_strlen(var_value);
-	assig_word = (char*)malloc(name_len + val_len + 2); // ft_memcheck ?
+	assig_word = (char*)malloc(name_len + val_len + 2);
 	ft_memcpy(assig_word, var_name, name_len);
 	assig_word[name_len] = '=';
 	ft_memcpy(assig_word + name_len + 1, var_value, val_len);

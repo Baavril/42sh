@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/09 18:53:43 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/18 12:56:21 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int			main(int argc, char **argv)
 		}
 		if (status != -1 && input[0])
 		{
-			lexer_verbose(&input);
+			//lexer_verbose(&input);
 			execute(input);
 			ft_check_bgstatus();
 		}

@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:13:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/06 11:58:02 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/18 12:52:57 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #define STDERR 2
 
 extern char		**environ;
-extern const int g_retval;
+extern int 		g_retval;
 int				g_fd[3] = {STDIN, STDOUT, STDERR};
 int				g_fclose = -1;
 int				g_mode;
@@ -93,16 +93,15 @@ int				i_pipe_sequence(t_elem left, t_elem right)
 
 int				i_execnode(t_elem left, t_elem right)
 {
-	if (left.v)
-		left.v->f(left.v->left, left.v->right);
-	return (right.v->f(right.v->left, right.v->right));
+	if (!left.v || left.v->f(left.v->left, left.v->right) != -1)
+		right.v->f(right.v->left, right.v->right);
+	exit(1); //THIS IS A HOTFIX. What should we do when execve 'fails' ?
 }
 
 int				i_simple_command(t_elem left, t_elem right)
 {
 	char		**save_env;
 	int			save_stdfd[3];
-	int			rtn;
 
 	if (right.v->f == i_builtin)
 	{
@@ -113,17 +112,15 @@ int				i_simple_command(t_elem left, t_elem right)
 		{
 			save_env = environ;
 			environ = ft_tabcpy(environ);
-			left.v->f(left.v->left, left.v->right);
-			right.v->f(right.v->left, right.v->right);
-		}
-		rtn = right.v->f(right.v->left, right.v->right);
-		if (left.v)
-		{
+			if (!(g_retval = (left.v->f(left.v->left, left.v->right) == -1)))
+				right.v->f(right.v->left, right.v->right);
 			ft_tabdel(&environ);
 			environ = save_env;
 		}
+		else
+			g_retval = right.v->f(right.v->left, right.v->right);
 		ft_stdredir(save_stdfd);
-		return(rtn);
+		return(g_retval);
 	}
 	else
 		ft_add_process(left, right, g_fd, g_fclose);

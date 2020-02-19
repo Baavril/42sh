@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 11:36:54 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/03 19:51:50 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/17 14:41:46 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int			i_dless(t_elem left, t_elem right)
 	set_termcaps(TC_INPUT);
 	buff = NULL;
 	pipe(pipe_fd);
-	while (!buff || (ft_strcmp(right.c, buff) && write(1, "\n", 1)))
+	while (!buff || (write(1, "\n", 1) && ft_strcmp(right.c, buff)))
 	{
 		ft_putstr_fd(buff, pipe_fd[1]);
 		ft_strdel(&buff);
@@ -59,7 +59,7 @@ int			i_dlessdash(t_elem left, t_elem right)
 	set_termcaps(TC_INPUT);
 	buff = NULL;
 	pipe(pipe_fd);
-	while (!buff || (ft_strcmp(right.c, buff) && write(1, "\n", 1)))
+	while (!buff || (write(1, "\n", 1) && ft_strcmp(right.c, buff)))
 	{
 		ft_putstr_fd(find_firstchar(buff), pipe_fd[1]);
 		ft_strdel(&buff);
