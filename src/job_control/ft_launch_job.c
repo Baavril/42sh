@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:56:52 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/02/19 19:33:56 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/20 13:09:06 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ int			ft_launch_job(void)
 	int			ret_status;
 
 	if (!(g_curjob.process))
+	{
+		ft_strdel(&(g_curjob.cmd));
 		return (0);
+	}
 	if (!(job = ft_add_job()))
 		return (e_cannot_allocate_memory);
 	if (g_mode & BACKGROUND)
