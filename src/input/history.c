@@ -543,6 +543,14 @@ static int 	get_previous(t_history **history, char **cmd)
 	}
 }
 
+static int ft_swap_2(t_history **history, char *cmd)
+{
+	ft_strdel(&(*history)->str);
+	if (!((*history)->str = ft_strdup(cmd)))
+		return (-1);
+	return (1);
+}
+
 static int 	history_move(t_history *history_2, char **cmd, int flag)
 {
 	static t_history *history = NULL;
@@ -561,6 +569,8 @@ static int 	history_move(t_history *history_2, char **cmd, int flag)
 			return (get_first(&history, cmd));
 		if (flag == LAST)
 			return (get_last(&history, cmd));
+		if (flag == SWAP)
+			return (ft_swap_2(&history, *cmd));
 		return (1);
 	}
 	else
@@ -573,7 +583,7 @@ int		history(int flag, char **line, char **cmd)
 	static t_history	history = {NULL, NULL, NULL};
 	static char			*home = NULL;
 
-	if (flag == BACKWARD || flag == FORWARD || flag == GET || flag == FIRST || flag == LAST)
+	if (flag == BACKWARD || flag == FORWARD || flag == GET || flag == FIRST || flag == LAST || flag == SWAP)
 		return (history_move(&history, cmd, flag));
 	if (flag == INIT)
 		return (init_history(&history, &home));

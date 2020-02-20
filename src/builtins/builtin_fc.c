@@ -16,31 +16,13 @@
 #include "history.h"
 #include "libft.h"
 #include "ft_getopt.h"
+#include "sig_handler.h"
+#include "history.h"
+#include "parser.h"
 
 #ifndef INT_MAX
 #define INT_MAX 2147483647
 #endif
-
-static int		ft_execute(int arg, char **option)
-{
-//	char *cmd;
-
-	(void)arg, (void)option;	
-	return (1);
-}
-
-static void		ft_strdel_option(char ***option)
-{
-	if (option && *option)
-	{
-		if ((*option)[0])
-			free(*option[0]);
-		if ((*option)[1])
-			free(*option[1]);
-		free(*option);
-		option = NULL;
-	}
-}
 
 static int		ft_atoi_history(const char *str)
 {
@@ -68,6 +50,58 @@ static int		ft_atoi_history(const char *str)
 		++i;
 	}
 	return (nbr * sign);
+}
+
+static int 		fc_s_no_option()// boucle infini sur fc -s // ajout du seaarch sur fc
+{
+	char *cmd;
+	char *input;
+
+	history(LAST, NULL, &cmd);
+	history(BACKWARD, NULL, &input);
+	history(FORWARD, NULL, &cmd);
+	history(SWAP, NULL, &input);
+	history(GET, NULL, &cmd);
+	if (!(input = ft_strdup(cmd)))
+		return (0);
+	ft_printf("%s\n", input);
+	execute(input);
+	ft_strdel(&input);
+	update_intern_vars();
+	return (1);
+}
+
+static int 		fc_s_option(char *str_nbr)
+{
+	int 	nbr;
+	//char 	*cmd;
+
+	nbr = ft_atoi_history(str_nbr);
+/*	if (nbr == 0)
+	else if (nbr > 0)
+	else if (nbr < 0)*/
+	return (1);
+}
+
+static int		ft_execute(char **option)
+{
+	if (option[0] == NULL)
+		return (fc_s_no_option());
+	else
+		return(fc_s_option(option[0]));
+}
+
+static void		ft_strdel_option(char ***option)
+{
+	if (option && *option)
+	{
+		if ((*option)[0])
+			free(*option[0]);
+		if ((*option)[1])
+			free(*option[1]);
+		free(*option);
+		option = NULL;
+	}
 }
 
 static int		ft_fc()
@@ -346,6 +380,7 @@ static int		ft_init_option(char ***option)
 int		cmd_fc(int argc, char **argv)
 {
 	char	**option;
+	int 	ret;
 	int		opt;
 	int		arg;
 	char	optstring[] = "rnl::s:e::";
@@ -371,11 +406,11 @@ int		cmd_fc(int argc, char **argv)
 			opt_arg(&arg, opt);
 	}
 	if (arg & ARG_S)
-		ft_execute(arg, option);
+		ret = ft_execute(option);
 	else if (arg & ARG_L)
-		ft_print_history(arg, option);
+		ret = ft_print_history(arg, option);
 	else
-		ft_fc();
+		ret = ft_fc();
 	ft_strdel_option(&option);
-	return (1);
+	return (ret);
 }
