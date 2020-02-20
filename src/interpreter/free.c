@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 08:40:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/20 12:09:03 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/20 12:54:32 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,30 @@ int 			curjob_cat(char *str)
 		free(tmp);
 	}
 	return (0);
+}
+
+void			curjob_add(t_node *node)
+{
+	if (node->f == i_pipe_sequence)
+		curjob_cat("|");
+	if (node->f == i_less)
+		curjob_cat("<");
+	if (node->f == i_dless)
+		curjob_cat("<<");
+	if (node->f == i_lessand)
+		curjob_cat("<&");
+	if (node->f == i_great)
+		curjob_cat(">");
+	if (node->f == i_dgreat)
+		curjob_cat(">>");
+	if (node->f == i_greatand)
+		curjob_cat(">&");
+	if (node->f == i_lessgreat)
+		curjob_cat("<>");
+	if (node->f == i_dlessdash)
+		curjob_cat("<<-");
+	if (node->f == i_clobber)
+		curjob_cat(">|");
 }
 
 int				shape(t_node *node)
@@ -97,8 +121,7 @@ int				expand_tree(t_node *node)
 		else
 			expand_tree(node->left.v);
 	}
-	if (node->f == i_pipe_sequence)
-		curjob_cat("|");
+	curjob_add(node);
 	if (node->right.c || node->right.v)
 	{
 		if (node_type & 0b01)
