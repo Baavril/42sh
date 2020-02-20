@@ -199,7 +199,7 @@ static int 	cmp_binary(char *str1, char *str2, int y, char *input)
 	y = 0;
 	while (str1[i] != '\0' && input[i] != '\0' && str1[i] == input[i])
 		i++;
-	while (str1[i] !='\0' && str2[i] != '\0' &&str1[i] == str2[i])
+	while (str1[i] !='\0' && str2[i] != '\0' && str1[i] == str2[i])
 	{
 		i++;
 		y++;
@@ -298,7 +298,7 @@ int tab_key(char **buff, t_cursor *cursor)
 		set_string(buff, cursor, input);
 		ft_strdel(&input);
 	}
-	else if (binary)
+	else if (binary && binary[0] != NULL)
 	{
 		if ((ret = dynamic_completion(binary, *buff, &input, cursor->start)) == 1)
 		{

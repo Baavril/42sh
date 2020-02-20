@@ -42,6 +42,7 @@ enum {
 	FIRST,
 	LAST,
 	RESET,
+	SWAP,
 };
 
 enum {

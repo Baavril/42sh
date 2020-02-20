@@ -129,11 +129,13 @@ static char		**ft_path(char *input)
 	realloc_n = 64;
 	if (!(words = (char**)malloc(sizeof(char*) * realloc_n)))
 		return (NULL);
+	words[0] = NULL;
 	if (input)
 	{
 		point = ft_dirchr(input);
 		if ((dir = opendir(point)) == NULL)
 		{
+			del_double_char(words);
 			ft_strdel(&point);
 			ft_dprintf(2, "No such file or directory\n");
 			return (NULL);
