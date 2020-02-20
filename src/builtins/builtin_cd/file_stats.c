@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 14:39:14 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/02/13 17:39:30 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/20 18:26:57 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,15 @@ int				ft_get_permission(char *path)
 }
 
 int				ft_gettype(char *path)
+{
+	struct stat		file_stat;
+
+	if (lstat(path, &file_stat) == -1)
+		return (STAT_ERROR);
+	return (file_stat.st_mode & S_IFMT);
+}
+
+int				ft_get_targettype(char *path)
 {
 	struct stat		file_stat;
 

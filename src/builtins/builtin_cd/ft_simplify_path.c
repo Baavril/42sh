@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 17:16:22 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/02/20 15:43:46 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/20 18:27:10 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,17 @@ static int		ft_check_intermediate_target(char **target, int opt_p)
 
 	if ((type = ft_gettype(*target)) == STAT_ERROR)
 		return (TARGET_NOT_FOUND);
-	if ((type & S_IFMT) == S_IFLNK && opt_p)
+	if ((type & S_IFMT) == S_IFLNK)
 	{
-		tmp = ft_get_link_target(*target);
-		ft_strdel(target);
-		*target = tmp;
-		if ((type = ft_gettype(*target)) == STAT_ERROR)
+		if ((opt_p))
+		{
+			tmp = ft_get_link_target(*target);
+			ft_strdel(target);
+			*target = tmp;
+			if ((type = ft_gettype(*target)) == STAT_ERROR)
+				return (TARGET_NOT_FOUND);
+		}
+		if ((type = ft_get_targettype(*target)) == STAT_ERROR)
 			return (TARGET_NOT_FOUND);
 	}
 	if ((type & S_IFMT) != S_IFDIR)
