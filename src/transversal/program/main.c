@@ -70,8 +70,6 @@ static int	ft_shell_init(void)
 	set_termcaps(TC_SAVE);
 	tcsetpgrp(STDIN_FILENO, getpid());
 	set_signals(FATHER);
-	if (!(history(INIT, NULL, NULL)))
-		return (1);
 	if (!(environ = ft_tabcpy(environ)))
 		return (e_cannot_allocate_memory);
 	g_retval = e_success;
@@ -81,6 +79,8 @@ static int	ft_shell_init(void)
 		return (e_cannot_allocate_memory);
 	}
 	init_shell_vars(environ);
+	if (!(history(INIT, NULL, NULL)))
+		return (1);
 	return (0);
 }
 
