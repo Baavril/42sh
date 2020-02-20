@@ -106,7 +106,7 @@ int			main(int argc, char **argv)
 		}
 		if (status != -1 && input[0])
 		{
-			//lexer_verbose(&input);
+			lexer_verbose(&input);
 			execute(input);
 			ft_check_bgstatus();
 		}

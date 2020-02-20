@@ -45,7 +45,6 @@ enum					e_tokens
 	LESSGREAT,
 	DLESSDASH,
 	CLOBBER,
-	ANDGREAT,
 
 /* The following are the reserved words. */
 

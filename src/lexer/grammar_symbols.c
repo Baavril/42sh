@@ -29,7 +29,7 @@ struct s_token	g_grammar_symbols[] =
 	{ DGREAT, ">>" },
 	{ LESSAND, "<&" },
 	{ GREATAND, ">&" },
-	{ ANDGREAT, "&>" },
+	{ GREATAND, "&>" },
 	{ LESSGREAT, "<>" },
 	{ PIPE, "|" },
 	{ AND, "&" },
