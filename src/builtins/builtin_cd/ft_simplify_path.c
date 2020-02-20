@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 17:16:22 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/02/13 17:39:50 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/20 15:43:46 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 #include "builtin_cd.h"
 #include "libft.h"
 
-static int		ft_check_intermediate_target(char **target)
+static int		ft_check_intermediate_target(char **target, int opt_p)
 {
 	int		type;
 	char	*tmp;
 
 	if ((type = ft_gettype(*target)) == STAT_ERROR)
 		return (TARGET_NOT_FOUND);
-	if ((type & S_IFMT) == S_IFLNK)
+	if ((type & S_IFMT) == S_IFLNK && opt_p)
 	{
 		tmp = ft_get_link_target(*target);
 		ft_strdel(target);
@@ -36,7 +36,7 @@ static int		ft_check_intermediate_target(char **target)
 	return (EXEC_SUCCESS);
 }
 
-static int		ft_rebuild_path_substlink(char **target, char **path_split)
+static int		ft_rebuild_path(char **target, char **path_split, int opt_p)
 {
 	int		type;
 	char	*tmp;
@@ -48,7 +48,7 @@ static int		ft_rebuild_path_substlink(char **target, char **path_split)
 		tmp = ft_concatenate_path(*target, *path_split);
 		ft_strdel(target);
 		*target = tmp;
-		type = ft_check_intermediate_target(target);
+		type = ft_check_intermediate_target(target, opt_p);
 		if (type != EXEC_SUCCESS)
 			return (type);
 		path_split++;
@@ -85,7 +85,7 @@ int				ft_tab_linedel(char ***tab, int index, int nbr)
 	return (EXEC_SUCCESS);
 }
 
-int				ft_simplify_path(char **path)
+int				ft_simplify_path(char **path, int opt_p)
 {
 	int		ret;
 	size_t	i;
@@ -109,7 +109,7 @@ int				ft_simplify_path(char **path)
 		else
 			i++;
 	}
-	ret = ft_rebuild_path_substlink(path, split);
+	ret = ft_rebuild_path(path, split, opt_p);
 	ft_tabdel(&split);
 	return (ret);
 }

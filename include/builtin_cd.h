@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 16:34:46 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/23 18:07:10 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/20 15:44:30 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int				ft_gettype(char *path);
 char			*ft_get_link_target(char *link_name);
 int				ft_is_valid_dir(char *path);
 int				ft_get_abspath(char **new_pwd);
-int				ft_simplify_path(char **path);
+int				ft_simplify_path(char **path, int opt_p);
 char			*ft_concatenate_path(char *src, char *rel_dst);
 int				ft_pcderror(int error_type, char *arg);
 

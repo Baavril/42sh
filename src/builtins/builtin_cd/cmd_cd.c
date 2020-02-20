@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:14:44 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/02/13 16:38:23 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/20 15:45:44 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ extern int		g_optopt;
 static int		ft_update_pwd(char *new_pwd)
 {
 	char	*old_pwd;
-	char	pwd[PATH_MAX];
 
 	if (!ft_get_permission(new_pwd))
 		return (NO_PERM);
@@ -37,8 +36,7 @@ static int		ft_update_pwd(char *new_pwd)
 		ft_setenv("OLDPWD", old_pwd);
 		free(old_pwd);
 	}
-	getcwd(pwd, PATH_MAX);
-	ft_setenv("PWD", pwd);
+	ft_setenv("PWD", new_pwd);
 	return (EXEC_SUCCESS);
 }
 
@@ -67,7 +65,7 @@ static int		ft_cd_exec(char *target, int opt_p)
 	if ((ret = ft_get_path(target, &new_pwd)))
 		return (ret);
 	ft_get_abspath(&new_pwd);
-	if (!opt_p && (ret = ft_simplify_path(&new_pwd)))
+	if ((ret = ft_simplify_path(&new_pwd, opt_p)))
 	{
 		ft_strdel(&new_pwd);
 		return (ret);
