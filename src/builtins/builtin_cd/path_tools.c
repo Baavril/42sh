@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/22 12:20:22 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/02/13 17:39:57 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/20 17:19:01 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char		*ft_test_cdpaths(char *rel_dst)
 	char	*cdpaths;
 	char	**split;
 
-	if (!rel_dst || !(cdpaths = ft_getenv("CD_PATH")))
+	if (!rel_dst || !(cdpaths = ft_getenv("CDPATH")))
 		return (0);
 	i = 0;
 	split = ft_strsplit(cdpaths, ":");
