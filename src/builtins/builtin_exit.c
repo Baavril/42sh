@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/12 15:10:57 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/20 12:37:12 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ extern int				g_retval;
 extern char				*g_bgpid;
 extern struct s_svar	*g_svar;
 extern struct s_pos		*g_pos;
+extern t_job			g_curjob;
 
 static void		ft_free_shvar(void)
 {
@@ -66,6 +67,7 @@ int				ft_clean_exit(char **av, int exit_status)
 	ft_free_bintable();
 	set_termcaps(TC_RESTORE);
 	ft_strdel(&g_bgpid);
+	ft_strdel(&g_curjob.cmd);
 	//system("leaks 42sh");
 	exit(exit_status);
 }

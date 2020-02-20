@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:13:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/19 19:43:14 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/20 12:07:48 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int				i_and_op(t_elem left, t_elem right)
 	expand_tree(left.v);
 	left.v->f(left.v->left, left.v->right);
 	if (g_mode == FOREGROUND)
-	ft_launch_job();
+		ft_launch_job();
 	if (!g_retval)
 		right.v->f(right.v->left, right.v->right);
 	return (0);
@@ -64,7 +64,7 @@ int				i_or_op(t_elem left, t_elem right)
 	expand_tree(left.v);
 	left.v->f(left.v->left, left.v->right);
 	if (g_mode == FOREGROUND)
-	ft_launch_job();
+		ft_launch_job();
 	if (g_retval)
 		right.v->f(right.v->left, right.v->right);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 08:40:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/19 19:39:35 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/20 12:09:03 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int 			curjob_cat(char *str)
 		g_curjob.cmd = ft_strnjoin(3, g_curjob.cmd, " ", str);
 		free(tmp);
 	}
-	ft_printf("%s\n", g_curjob.cmd);
 	return (0);
 }
 
@@ -64,11 +63,7 @@ int				astdel(t_node *node)
 	if (node->left.c || node->left.v)
 	{
 		if (node_type & 0b10)
-		{
-			//ft_printf("free left [%p]\n", node->left.c);
-			//ft_printf("free left [%s]\n", node->left.c);
 			free(node->left.c);
-		}
 		else
 			astdel(node->left.v);
 		node->left.c = NULL;
@@ -76,11 +71,7 @@ int				astdel(t_node *node)
 	if (node->right.c || node->right.v)
 	{
 		if (node_type & 0b01)
-		{
-			//ft_printf("free left [%p]\n", node->right.c);
-			//ft_printf("free left [%s]\n", node->right.c);
 			free(node->right.c);
-		}
 		else
 			astdel(node->right.v);
 		node->right.c = NULL;
@@ -107,7 +98,7 @@ int				expand_tree(t_node *node)
 			expand_tree(node->left.v);
 	}
 	if (node->f == i_pipe_sequence)
-		curjob_cat("|" );
+		curjob_cat("|");
 	if (node->right.c || node->right.v)
 	{
 		if (node_type & 0b01)
