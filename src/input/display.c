@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 15:25:22 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/20 15:46:10 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/25 11:02:58 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int display_all(char *str, t_cursor *cursor)
 		ft_putnstr(str, cursor->end);
 	else
 		display_select(str, cursor);
-	if (!((cursor->end + cursor->prompt_len) % col))
+	if (!((cursor->end + cursor->prompt_len) % col) && cursor->prompt_len)
 		write(1, "\n", 1);
 	return((cursor->start + cursor->prompt_len) / col);
 }
