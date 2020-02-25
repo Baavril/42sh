@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:43:35 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/19 15:52:30 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/25 11:23:44 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,15 @@ int	i_suffix_word(t_elem left, t_elem right)
 	size_t i;
 
 	i = 0;
-	while (g_argv[++i])
-		(void) i;
-	if (!((i + 1) % TAB_SIZE))
-		g_argv = realloc_argv(g_argv, (i + 1) + TAB_SIZE);
-	g_argv[i] = left.c;
-	g_argv[++i] = NULL;
+	if (*left.c)
+	{
+		while (g_argv[++i])
+			(void) i;
+		if (!((i + 1) % TAB_SIZE))
+			g_argv = realloc_argv(g_argv, (i + 1) + TAB_SIZE);
+		g_argv[i] = left.c;
+		g_argv[++i] = NULL;
+	}
 	if (right.v)
 		return (right.v->f(right.v->left, right.v->right));
 	return (0);

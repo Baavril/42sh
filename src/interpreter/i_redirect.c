@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 12:08:47 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/17 16:51:46 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/25 11:29:16 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ int	i_less(t_elem left, t_elem right)
 	int fd1;
 
 	fd1 = left.c ? *left.c - '0' : 0;
-	if (!access(right.c, R_OK))
+	if (!*right.c)
+		ft_dprintf(STDERR_FILENO, "42sh: %s: Redirection ambigue\n", right.c);
+	else if (!access(right.c, R_OK))
 	{
 		if (is_regfile(right.c))
 			return (open_on_fd(right.c, O_RDONLY, 0, fd1));
@@ -39,7 +41,9 @@ int	i_great(t_elem left, t_elem right)
 	int		resfd;
 
 	fd1 = left.c ? *left.c - '0' : 1;
-	if (!access(right.c, W_OK))
+	if (!*right.c)
+		ft_dprintf(STDERR_FILENO, "42sh: %s: Redirection ambigue\n", right.c);
+	else if (!access(right.c, W_OK))
 	{
 		if (is_regfile(right.c))
 			return (open_on_fd(right.c, O_WRONLY | O_TRUNC, 0, fd1));
@@ -59,7 +63,9 @@ int	i_dgreat(t_elem left, t_elem right)
 	int fd1;
 
 	fd1 = left.c ? *left.c - '0' : 1;
-	if (!access(right.c, W_OK))
+	if (!*right.c)
+		ft_dprintf(STDERR_FILENO, "42sh: %s: Redirection ambigue\n", right.c);
+	else if (!access(right.c, W_OK))
 	{
 		if (is_regfile(right.c))
 			return (open_on_fd(right.c, O_WRONLY | O_APPEND, 0, fd1));
@@ -80,7 +86,9 @@ int	i_lessgreat(t_elem left, t_elem right)
 	int fd1;
 
 	fd1 = left.c ? *left.c - '0' : 0;
-	if (open_on_fd(right.c, O_RDWR | O_CREAT, CREATE_RIGHTS, fd1) != -1)
+	if (!*right.c)
+		ft_dprintf(STDERR_FILENO, "42sh: %s: Redirection ambigue\n", right.c);
+	else if (open_on_fd(right.c, O_RDWR | O_CREAT, CREATE_RIGHTS, fd1) != -1)
 		return (fd1);
 	ft_dprintf(STDERR_FILENO, "42sh: %s: Premission denied\n", right.c);
 	return (-1);
