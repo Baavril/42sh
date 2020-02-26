@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 15:25:22 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/25 11:02:58 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/26 15:37:43 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int display_select(char *str, t_cursor *cursor)
 	write(1, &str[cursor->start], cursor->in - cursor->start);
 	ft_putstr(tgetstr("me", NULL));
 	ft_putstr(&str[cursor->in]);
-	return(0);
+	return (0);
 }
 
 static int display_all(char *str, t_cursor *cursor)
@@ -52,40 +52,33 @@ static int display_all(char *str, t_cursor *cursor)
 		display_select(str, cursor);
 	if (!((cursor->end + cursor->prompt_len) % col) && cursor->prompt_len)
 		write(1, "\n", 1);
-	return((cursor->start + cursor->prompt_len) / col);
+	return ((cursor->start + cursor->prompt_len) / col);
 }
 
 int display(char *str, t_cursor *cursor)
 {
 	size_t col;
 	size_t x;
-	static size_t lines_offset = 0;
+	static size_t lines_offset;
 	size_t backup;
 
 	x = 0;
+	lines_offset = 0;
 	col = tgetnum("co");
 	backup = cursor->end;
 	if (cursor->end > cursor->start - (cursor->start % tgetnum("co")) + tgetnum("co") * tgetnum("li") - cursor->prompt_len - 1)
 		cursor->end = cursor->start - (cursor->start % tgetnum("co")) + tgetnum("co") * tgetnum("li") - cursor->prompt_len - 1;
 	if (tgetent(NULL, getenv("TERM")) != 1)
-		return(1);
-	// sets lines_offset value to normal if string is empty : ISSUE HERE
-	if (cursor->end == cursor->start && cursor->end == 0) // We enter this when opening a new, fresh prompt (usually after entering a command). This test is just not enough !
+		return (1);
+	if (cursor->end == cursor->start && cursor->end == 0)
 		lines_offset = cursor->prompt_len / col;
-
-	//use the value of lines_offset
 	while (lines_offset--)
 		ft_putstr(tgetstr("up", NULL));
-
-	//reset lines_offset value and display text
 	lines_offset = display_all(str, cursor);
-
-	//Reposition cursor
 	x = ((cursor->end + cursor->prompt_len) / col) - lines_offset;
 	while (x--)
 		ft_putstr(tgetstr("up", NULL));
 	ft_putstr(tgoto(tgetstr("ch", NULL), 0, (cursor->start + cursor->prompt_len) % col));
-
 	cursor->end = backup;
-	return(0);
+	return (0);
 }

@@ -65,7 +65,7 @@ int	standard_analyzer(union u_tc *term, char **buff, t_cursor *cursor)
 	keyboard_tabulation(term, buff, cursor);
 	if (keyboard_dispatcher(term, buff, cursor) == 0
 	|| !keyboard_enter(term, buff, cursor))
-		return(0);
+		return (0);
 	set_reader(term, buff, cursor);
 	return (1);
 }

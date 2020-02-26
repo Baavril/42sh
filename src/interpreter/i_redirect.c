@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 12:08:47 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/25 11:29:16 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/26 17:04:54 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int	i_less(t_elem left, t_elem right)
 	else if (!access(right.c, F_OK))
 		ft_dprintf(STDERR_FILENO, "42sh: %s: Premission denied\n", right.c);
 	else
-		ft_dprintf(STDERR_FILENO, "42sh: %s: No such file or directory\n", right.c);
+		ft_dprintf(STDERR_FILENO, "42sh: %s: No such file or directory\n",
+		right.c);
 	return (-1);
 }
 
@@ -51,7 +52,8 @@ int	i_great(t_elem left, t_elem right)
 	}
 	else if (!access(right.c, F_OK))
 		ft_dprintf(STDERR_FILENO, "42sh: %s: Premission denied\n", right.c);
-	else if ((resfd = open_on_fd(right.c, O_WRONLY | O_CREAT | O_TRUNC, CREATE_RIGHTS, fd1)) != -1)
+	else if ((resfd = open_on_fd(right.c, O_WRONLY | O_CREAT | O_TRUNC,
+			CREATE_RIGHTS, fd1)) != -1)
 		return (resfd);
 	else
 		ft_dprintf(STDERR_FILENO, "42sh: %s: Premission denied\n", right.c);

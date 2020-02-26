@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:43:35 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/25 11:23:44 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/26 17:03:31 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 char **g_argv;
 extern int g_retval;
 
-int	i_prefix(t_elem left, t_elem right)
+int		i_prefix(t_elem left, t_elem right)
 {
 	if (checkvarlst(left.c))
 		setenvnod(newnodshell(left.c, 0));
@@ -29,7 +29,7 @@ int	i_prefix(t_elem left, t_elem right)
 	return (0);
 }
 
-int	i_builtin(t_elem left, t_elem right)
+int		i_builtin(t_elem left, t_elem right)
 {
 	g_argv = malloc(sizeof(char *) * TAB_SIZE);
 	g_argv[0] = left.c;
@@ -41,7 +41,7 @@ int	i_builtin(t_elem left, t_elem right)
 	return (g_retval);
 }
 
-int	i_exec(t_elem left, t_elem right)
+int		i_exec(t_elem left, t_elem right)
 {
 	extern char	**environ;
 
@@ -54,17 +54,17 @@ int	i_exec(t_elem left, t_elem right)
 	return (-1);
 }
 
-char **realloc_argv(char **argv, size_t i)
+char	**realloc_argv(char **argv, size_t i)
 {
 	char **tmp_argv;
 
 	tmp_argv = malloc(sizeof(char *) * i);
 	ft_memcpy(tmp_argv, argv, sizeof(char *) * (i - TAB_SIZE));
 	free(argv);
-	return(tmp_argv);
+	return (tmp_argv);
 }
 
-int	i_suffix_word(t_elem left, t_elem right)
+int		i_suffix_word(t_elem left, t_elem right)
 {
 	size_t i;
 
@@ -72,7 +72,7 @@ int	i_suffix_word(t_elem left, t_elem right)
 	if (*left.c)
 	{
 		while (g_argv[++i])
-			(void) i;
+			(void)i;
 		if (!((i + 1) % TAB_SIZE))
 			g_argv = realloc_argv(g_argv, (i + 1) + TAB_SIZE);
 		g_argv[i] = left.c;
@@ -83,7 +83,7 @@ int	i_suffix_word(t_elem left, t_elem right)
 	return (0);
 }
 
-int	i_suffix_redirect(t_elem left, t_elem right)
+int		i_suffix_redirect(t_elem left, t_elem right)
 {
 	if (left.v->f(left.v->left, left.v->right) == -1)
 		return (-1);
