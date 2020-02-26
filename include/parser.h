@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 16:02:57 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/19 15:57:52 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/26 12:48:41 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef	struct	s_node
 	int		(*f)(t_elem, t_elem);
 }				t_node;
 
+int g_parsingerr;
 //parser.c
 void	execute(char *input);
 //is_potential.c

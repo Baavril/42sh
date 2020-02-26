@@ -6,14 +6,16 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:48:12 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/19 16:22:31 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/26 12:20:55 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokens.h"
 #include "parser.h"
 #include "libft.h"
+#include <unistd.h>
 
+extern int g_parsingerr;
 /*
  * pipe_sequence    : command
  *                  | command PIPE pipe_sequence
@@ -32,8 +34,8 @@ static t_node	*pipe_sequence(t_token tok)
 		{
 			g_alias_treated = 0;
 			eat();
-			if (!(tmp2 = pipe_sequence(eat())))
-				exit(ft_printf("error in pipe_sequence\n"));
+			if (!(tmp2 = pipe_sequence(eat())) && (g_parsingerr = 1))
+				ft_dprintf(STDERR_FILENO, "parsing error near pipe\n");
 			node = malloc(sizeof(t_node));
 			node->left.v = tmp1;
 			node->right.v = tmp2;
@@ -69,8 +71,8 @@ t_node	*and_or(t_token tok)
 		 || (is_potential(peek(), N_OR_IF) && (f = i_or_op)))
 		{
 			eat();
-			if (!(tmp2 = and_or(eat())))
-				exit(ft_printf("error in and_or\n"));
+			if (!(tmp2 = and_or(eat())) && (g_parsingerr = 1))
+				ft_dprintf(STDERR_FILENO, "parsing error near logical operator\n");
 			node = malloc(sizeof(t_node));
 			node->left.v = tmp1;
 			node->right.v = tmp2;

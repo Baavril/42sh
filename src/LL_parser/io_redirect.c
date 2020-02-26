@@ -6,13 +6,16 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:33:42 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/19 16:24:00 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/26 12:20:56 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokens.h"
 #include "parser.h"
 #include "libft.h"
+#include <unistd.h>
+
+extern int g_parsingerr;
 
 int		(*g_redirect[])(t_elem left, t_elem right) =
 {
@@ -55,8 +58,8 @@ t_node	*io_redirect(t_token tok)
 		else
 			node->right.c = filename(eat());
 		g_alias_treated = bckp;
-		if (!node->right.c)
-			exit(ft_printf("parsing error in io_redirect"));
+		if (!node->right.c && (g_parsingerr = 1))
+			ft_dprintf(STDERR_FILENO, "parsing error near redirection\n");
 		return(node);
 	}
 	return (NULL);

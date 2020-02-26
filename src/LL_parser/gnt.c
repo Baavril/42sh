@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 12:58:25 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/19 15:57:46 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/26 12:32:12 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "globing.h"
 #include "builtins.h"
 #include "expansions.h"
+#include "parser.h"
 
 int				g_alias_treated = 0;
 
@@ -94,6 +95,8 @@ t_token		gnt(char *input, int future)
 	t_list			*tmp_stack = NULL;
 	t_token			tmp_tok;
 
+	if (g_parsingerr)
+		return((t_token){E_EOF, NULL});
 	if (!stack)
 		fill_stack(&stack, input);
 	tmp_tok = *((t_token*)stack->content);
