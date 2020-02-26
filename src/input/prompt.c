@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 17:12:27 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/11/16 16:30:11 by baavril          ###   ########.fr       */
+/*   Updated: 2020/02/26 12:02:05 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "libft.h"
 #include "prompt.h"
 #include "quote.h"
+#include "shell_variables.h"
 
 # define COLOR "\033[96;m"
 # define ERR_COLOR "\033[31;m"
@@ -22,42 +23,23 @@
 # define RED "\033[96;m"
 # define RESET "\033[0m"
 
-static char *quoteword(char c)
-{
-	if (c == '\'')
-		return(ft_strdup("quote "));
-	if (c == '\"')
-		return(ft_strdup("dquote "));
-	if (c == '`')
-		return(ft_strdup("bquote "));
-	if (c == '{')
-		return(ft_strdup("crush "));
-	if (c == '(')
-		return(ft_strdup("subsh "));
-	return(ft_strdup(""));
-}
-
-static char *qtbuff_to_text(char *qtbuff)
-{
-	char *final;
-
-	final = ft_strdup("");
-	while (*qtbuff)
-	{
-		final = ft_strjoinfree(final, quoteword(*(qtbuff++)));
-	}
-	final = ft_strjoinfree(final, ft_strdup("> "));
-	return(final);
-}
+extern struct s_svar	*g_svar;
 
 size_t mkprompt_quote(char *input, char **buff)
 {
 	char *qtbuff;
+	struct s_svar	*voyager;
 
 	qtbuff = quote_prompt(input);
 	if (!qtbuff || !*qtbuff)
 		return(0);
-	*buff = qtbuff_to_text(qtbuff);
+	voyager = g_svar;
+	while (voyager)
+	{
+		if (!(ft_strcmp(voyager->key, PS2)))
+			*buff = ft_strdup(voyager->value);
+		voyager = voyager->next;
+	}
 	free(qtbuff);
 	return (ft_strlen(*buff));
 }

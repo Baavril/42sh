@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 09:48:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/02 14:33:08 by baavril          ###   ########.fr       */
+/*   Updated: 2020/02/26 11:57:20 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@
 ** Values of internal variables
 */
 
-# define PS1V			"prompt->"
-# define PS2V			"quote> "
-# define PS3V			"script> "
-# define PS4V			"heredoc> "
+# define PS1V			"42sh> "
+# define PS2V			"> "
+# define PS3V			"#? "
+# define PS4V			"$> "
 # define OPTERRV		"1"
 # define OPTINDV		"1"
 # define HISTSIZEV		"1000"

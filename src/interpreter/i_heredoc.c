@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 11:36:54 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/17 14:41:46 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/26 12:02:04 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "input.h"
 #include "termcaps.h"
 #include "parser.h"
+#include "prompt.h"
 #include <unistd.h>
 
 static char	*find_firstchar(char *str)
@@ -39,8 +40,7 @@ int			i_dless(t_elem left, t_elem right)
 		ft_putstr_fd(buff, pipe_fd[1]);
 		ft_strdel(&buff);
 		ft_init_cursor(&cursor);
-		cursor.prompt = ft_strdup("> ");
-		cursor.prompt_len = 2;
+		cursor.prompt_len = mkprompt_quote("\'", &(cursor.prompt));
 		get_stdin(&cursor, &buff);
 		ft_putstr_fd("\n", pipe_fd[1]);
 	}
@@ -64,8 +64,7 @@ int			i_dlessdash(t_elem left, t_elem right)
 		ft_putstr_fd(find_firstchar(buff), pipe_fd[1]);
 		ft_strdel(&buff);
 		ft_init_cursor(&cursor);
-		cursor.prompt = ft_strdup("> ");
-		cursor.prompt_len = 2;
+		cursor.prompt_len = mkprompt_quote("", &(cursor.prompt));
 		get_stdin(&cursor, &buff);
 		ft_putstr_fd("\n", pipe_fd[1]);
 	}
