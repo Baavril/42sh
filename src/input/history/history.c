@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 13:53:47 by yberramd          #+#    #+#             */
-/*   Updated: 2019/11/19 12:59:24 by baavril          ###   ########.fr       */
+/*   Updated: 2020/02/27 18:02:29 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,19 @@ static int	w_history(const char *line, int fd)
 
 	len = ft_strlen(line);
 	if (write(fd, line, len) != len)
+	{
+		close(fd);
 		return (-1);
+	}
 	if (write(fd, "\n", 1) != 1)
+	{
+		close(fd);
 		return (-1);
+	}
 	return (1);
 }
 
-static int 	write_history(t_history *history, char *home)
+static int	write_history(t_history *history, char *home)
 {
 	int len;
 	int fd;
@@ -58,25 +64,16 @@ static int 	write_history(t_history *history, char *home)
 		return (-1);
 	while (history && history->next)
 		history = history->next;
-	while (history && history->previous && len < 499)
-	{
-		len++;
+	while (history && history->previous && len++ < 499)
 		history = history->previous;
-	}
 	while (history && history->next)
 	{
 		if (w_history(history->str, fd) == -1)
-		{
-			close(fd);
 			return (-1);
-		}
 		history = history->next;
 	}
 	if (history && w_history(history->str, fd) == -1)
-	{
-		close(fd);
 		return (-1);
-	}
 	close(fd);
 	return (1);
 }
@@ -123,7 +120,7 @@ static int	add_cmd(const char *line, t_history *history)
 			len++;
 		}
 		if ((history->str == NULL || ft_strcmp(line, history->str) != 0)
-			 && ft_isspace(line[0]) != 1 && line[0] != '\0')
+				&& ft_isspace(line[0]) != 1 && line[0] != '\0')
 		{
 			if (add_history(line, history) == -1)
 			{
@@ -140,38 +137,34 @@ static int	ft_retinchr(char *str, char c)
 {
 	int i;
 
-	i = 0;
-	while (str[i])
+	i = 1;
+	while (str[i - 1])
 	{
-		if (str[i] - c == 0)
+		if (str[i - 1] - c == 0)
 			return (i);
 		i++;
 	}
 	return (1);
 }
 
-static int	ft_search(t_history *history_2, const char *line, char **cmd, int flag)
+static int	ft_search(t_history *history_2, const char *line, char **cmd, int f)
 {
 	static t_history *history = NULL;
 
-	if (!history)
+	if (!history || f == RESET)
 	{
-		history = history_2;
+		if (!history)
+			history = history_2;
 		while (history->next)
 			history = history->next;
 	}
-	if (flag == RESET)
-	{
-		while (history->next)
-			history = history->next;
-		return (1);
-	}
-	else
+	if (f != RESET)
 	{
 		history_2 = history;
 		while (history_2->previous)
 		{
-			if (history_2->str != NULL && line != NULL && *line && ft_strstr(history_2->str, line) != NULL)
+			if (history_2->str != NULL && line != NULL && *line
+					&& ft_strstr(history_2->str, line) != NULL)
 			{
 				history = history_2;
 				*cmd = history->str;
@@ -180,7 +173,7 @@ static int	ft_search(t_history *history_2, const char *line, char **cmd, int fla
 			history_2 = history_2->previous;
 		}
 	}
-	return (0);
+	return (f == RESET ? 1 : 0);
 }
 
 static int	search_history(t_history *history, char *line, char **cmd)
@@ -189,7 +182,8 @@ static int	search_history(t_history *history, char *line, char **cmd)
 		history = history->next;
 	while (history->previous)
 	{
-		if (history->str != NULL && line != NULL && ft_strfchr(history->str, line) != 0)
+		if (history->str != NULL && line != NULL
+				&& ft_strfchr(history->str, line) != 0)
 		{
 			*cmd = history->str;
 			return (1);
@@ -199,7 +193,7 @@ static int	search_history(t_history *history, char *line, char **cmd)
 	return (0);
 }
 
-static int error_clean(int fd, char *get_line)
+static int	error_clean(int fd, char *get_line)
 {
 	ft_dprintf(2, "cannot allocate memory\n");
 	close(fd);
@@ -207,14 +201,14 @@ static int error_clean(int fd, char *get_line)
 	return (0);
 }
 
-static int init_clean(int fd, char *get_line)
+static int	init_clean(int fd, char *get_line)
 {
 	close(fd);
 	ft_strdel(&get_line);
 	return (1);
 }
 
-static int		ft_atoi_history(const char *str)
+static int	ft_atoi_history(const char *str)
 {
 	int				i;
 	unsigned long	nbr;
@@ -235,15 +229,10 @@ static int		ft_atoi_history(const char *str)
 	return (nbr);
 }
 
-static int	init_history(t_history *history, char **home)
+static int	init_file_history(char **home)
 {
-	int 	len;
-	int		fd;
-	char	*get_line;
 	char	*get_home;
 
-	len = 0;
-	get_line = NULL;
 	if ((get_home = getenv("HOME")))
 	{
 		if (!(*home = ft_strjoin(get_home, "/.42sh_history")))
@@ -252,75 +241,92 @@ static int	init_history(t_history *history, char **home)
 			return (0);
 		}
 	}
-	else if (!(*home = ft_strdup("/tmp/.42sh_history")))// A MODIFIER
+	else if (!(*home = ft_strdup("/tmp/.42sh_history")))
 	{
 		ft_dprintf(2, "cannot allocate memory\n");
 		return (0);
 	}
-	if ((fd = open(*home, O_RDONLY | O_CREAT, 0600)) != -1)
+	return (1);
+}
+
+static int	assign_file_history(int fd, t_history *history)
+{
+	int		len;
+	char	*get_line;
+
+	len = 0;
+	get_line = NULL;
+	while (get_next_line(fd, &get_line) > 0 && len < 500)
 	{
-		while (get_next_line(fd, &get_line) > 0 && len < 500)
-		{
-			if (!(history->str = ft_strdup(get_line)))
-				return (error_clean(fd, get_line));
-			if (!(history->next = (t_history*)malloc(sizeof(t_history))))
-				return (error_clean(fd, get_line));
-			history->next->previous = history;
-			history = history->next;
-			ft_strdel(&get_line);
-			len++;
-		}
-		if (history->previous)
-		{
-			history = history->previous;
-			free(history->next);
-			history->next = NULL;
-		}
-		return (init_clean(fd, get_line));
+		if (!(history->str = ft_strdup(get_line)))
+			return (error_clean(fd, get_line));
+		if (!(history->next = (t_history*)malloc(sizeof(t_history))))
+			return (error_clean(fd, get_line));
+		history->next->previous = history;
+		history = history->next;
+		ft_strdel(&get_line);
+		len++;
 	}
+	if (history->previous)
+	{
+		history = history->previous;
+		free(history->next);
+		history->next = NULL;
+	}
+	return (init_clean(fd, get_line));
+}
+
+static int	init_history(t_history *history, char **home)
+{
+	int		fd;
+
+	if (!init_file_history(home))
+		return (0);
+	if ((fd = open(*home, O_RDONLY | O_CREAT, 0600)) != -1)
+		return (assign_file_history(fd, history));
 	ft_dprintf(2, "history: can't open %s\n", home);
 	return (0);
 }
 
-static int		exclamation_point_number(const char *line, t_history *history, char **cmd)
+static int	exclamation_point_number(const char *line, t_history *h, char **c)
 {
 	int nbr;
 
 	if ((nbr = ft_atoi_history(&line[1])) <= 0)
 		return (-1);
-	while (history->next && nbr > 1)
+	while (h->next && nbr > 1)
 	{
-		history = history->next;
+		h = h->next;
 		nbr--;
 	}
 	if (nbr > 1)
 		return (-1);
-	if (history)
-		*cmd = history->str;
+	if (h)
+		*c = h->str;
 	return (2);
 }
 
-static int		exclamation_point_minus_number(const char *line, t_history *history, char **cmd)
+static int	exclamation_p_m_n(const char *line, t_history *h, char **cmd)
 {
 	int nbr;
 
-	while (history->next)
-		history = history->next;
+	while (h->next)
+		h = h->next;
 	if ((nbr = ft_atoi_history(&line[2])) <= 0)
 		return (-1);
-	while (history->previous && nbr > 1)
+	while (h->previous && nbr > 1)
 	{
-		history = history->previous;
+		h = h->previous;
 		nbr--;
 	}
 	if (nbr > 1)
 		return (-1);
-	if (history)
-		*cmd = history->str;
+	if (h)
+		*cmd = h->str;
 	return (2);
 }
 
-static int		exclamation_point_exclamation_point(t_history *history, char **cmd)
+static int	exclamation_point_exclamation_point(t_history *history, char **cmd)
 {
 	while (history->next)
 		history = history->next;
@@ -333,7 +339,7 @@ static int		exclamation_point_exclamation_point(t_history *history, char **cmd)
 		return (-1);
 }
 
-static int 		ft_isseparator(char *str)
+static int	ft_isseparator(char *str)
 {
 	if (str[0] == '&' && str[1] == '&')
 		return (1);
@@ -344,7 +350,8 @@ static int 		ft_isseparator(char *str)
 	else if (str[0] == '<' && str[1] == '<')
 		return (1);
 	else
-		return (ft_isspace(str[0]) || str[0] == ';' || str[0] == '<' || str[0] == '>');
+		return (ft_isspace(str[0]) || str[0] == ';'
+				|| str[0] == '<' || str[0] == '>');
 }
 
 static int	ft_str_exclamation_chr(char *str1, char *str2)
@@ -363,7 +370,7 @@ static int	ft_str_exclamation_chr(char *str1, char *str2)
 	return (1);
 }
 
-static int	exclamation_search_history(t_history *history, char *line, char **cmd)
+static int	exclamation_s_history(t_history *history, char *line, char **cmd)
 {
 	if (history)
 	{
@@ -371,14 +378,16 @@ static int	exclamation_search_history(t_history *history, char *line, char **cmd
 			history = history->next;
 		while (history->previous)
 		{
-			if (history->str != NULL && line != NULL && ft_str_exclamation_chr(history->str, line) != 0)
+			if (history->str != NULL && line != NULL
+					&& ft_str_exclamation_chr(history->str, line) != 0)
 			{
 				*cmd = history->str;
 				return (2);
 			}
 			history = history->previous;
 		}
-		if (history->str != NULL && line != NULL && ft_str_exclamation_chr(history->str, line) != 0)
+		if (history->str != NULL && line != NULL
+				&& ft_str_exclamation_chr(history->str, line) != 0)
 		{
 			*cmd = history->str;
 			return (2);
@@ -387,33 +396,68 @@ static int	exclamation_search_history(t_history *history, char *line, char **cmd
 	return (-1);
 }
 
-static int 		exclamation_point(char *line, t_history *history, char **cmd)
+static int	digit(char *line, t_history *history, char **cmd)
 {
-	int 	i;
-	int 	ret;
+	int	i;
+	int	ret;
+
+	i = 1;
+	if ((ret = exclamation_point_number(line, history, cmd)) != -1)
+	{
+		while (ft_isdigit(line[i]))
+			i++;
+		if (!(*cmd = ft_strjoin(*cmd, &line[i])))
+			return (0);
+	}
+	return (ret);
+}
+
+static int	minus_digit(char *line, t_history *history, char **cmd)
+{
+	int	i;
+	int	ret;
+
+	i = 2;
+	if ((ret = exclamation_p_m_n(line, history, cmd)) != -1)
+	{
+		while (ft_isdigit(line[i]))
+			i++;
+		if (!(*cmd = ft_strjoin(*cmd, &line[i])))
+			return (0);
+	}
+	return (ret);
+}
+
+static int	exclamation_alone(char *line, t_history *history, char **cmd)
+{
+	int		i;
+	int		ret;
+
+	i = 1;
+	if ((ret = exclamation_s_history(history, &line[1], cmd)) != -1)
+	{
+		while (line[i] != '\0' && !ft_isseparator(&line[i]))
+			i++;
+		if (!(*cmd = ft_strjoin(*cmd, &line[i])))
+			return (0);
+	}
+	return (ret);
+}
+
+static int	exclamation_point(char *line, t_history *history, char **cmd)
+{
+	int		ret;
 
 	ret = 1;
 	if (ft_isdigit(line[1]))
 	{
-		i = 1;
-		if ((ret = exclamation_point_number(line, history, cmd)) != -1)
-		{
-			while(ft_isdigit(line[i]))
-				i++;
-			if (!(*cmd = ft_strjoin(*cmd, &line[i])))
-				return (0);
-		}
+		if (!(ret = digit(line, history, cmd)))
+			return (0);
 	}
 	else if (line[1] == '-' && ft_isdigit(line[2]))
 	{
-		i = 2;
-		if ((ret = exclamation_point_minus_number(line, history, cmd)) != -1)
-		{
-			while (ft_isdigit(line[i]))
-				i++;
-			if (!(*cmd = ft_strjoin(*cmd, &line[i])))
-				return (0);
-		}
+		if (!(ret = minus_digit(line, history, cmd)))
+			return (0);
 	}
 	else if (line[1] == '!')
 	{
@@ -423,19 +467,13 @@ static int 		exclamation_point(char *line, t_history *history, char **cmd)
 	}
 	else if (line[1] != '\0' && !ft_isseparator(&line[1]))
 	{
-		i = 1;
-		if ((ret = exclamation_search_history(history, &line[1], cmd)) != -1)
-		{
-			while(line[i] != '\0' && !ft_isseparator(&line[i]))
-				i++;
-			if (!(*cmd = ft_strjoin(*cmd, &line[i])))
-				return (0);
-		}
+		if (!(ret = exclamation_alone(line, history, cmd)))
+			return (0);
 	}
 	return (ret);
 }
 
-static int 		close_bracket(char *line)
+static int	close_bracket(char *line)
 {
 	int i;
 
@@ -449,47 +487,69 @@ static int 		close_bracket(char *line)
 	return (0);
 }
 
-static int		history_cmd(char **line, t_history *history)
+static int	brackets(char **line, int i, int a)
 {
-	int 	ret;
-	int 	i;
-	int 	a;
-	char	*cmd;
+	if ((*line)[i] == '[')
+		a = close_bracket(&(*line)[i]);
+	else if (a > 0 && (*line)[i] == '!')
+		a -= 1;
+	else if (a > 0 && (*line)[i] == ']')
+		a = 0;
+	return (a);
+}
 
-	ret = 1;
-	i = 0;
+static int	add_exclamation_string(int ret, char **line, char *cmd, int i)
+{
+	if (!ret)
+		return (0);
+	(*line)[i] = '\0';
+	if (!(*line = ft_strjoinfree(*line, cmd)))
+	{
+		ft_printf("str [%s]\n", *line);
+		ft_strdel(&cmd);
+		return (0);
+	}
+	return (1);
+}
+
+static int	s_exclamation(char **line, t_history *history, int *ret, char *cmd)
+{
+	int		i;
+	int		a;
+
 	a = 0;
-	cmd = NULL; 
+	i = 0;
 	while ((*line)[i] != '\0')
 	{
-		if ((*line)[i] == '[')
-			a = close_bracket(&(*line)[i]);
-		else if (a > 0 && (*line)[i] == '!')
-			a -= 1;
-		else if (a > 0 && (*line)[i] == ']')
-			a = 0;
-		if ((*line)[i] == '!' && (*line)[i + 1] != '\0' && !ft_isseparator(&(*line)[i + 1]) && a == 0)
+		a = brackets(line, i, a);
+		if ((*line)[i] == '!' && (*line)[i + 1] != '\0'
+				&& !ft_isseparator(&(*line)[i + 1]) && a == 0)
 		{
-			if ((ret = exclamation_point(&line[0][i], history, &cmd)) != -1)//seg quand la commande est exit
+			if ((*ret = exclamation_point(&line[0][i], history, &cmd)) != -1)
 			{
-				if (!ret)
+				if (!(add_exclamation_string(*ret, line, cmd, i)))
 					return (0);
-				(*line)[i] = '\0';
-				if (!(*line = ft_strjoinfree(*line, cmd)))
-				{
-					ft_printf("str [%s]\n", *line);
-					ft_strdel(&cmd);
-					return (0);
-				}
 			}
 			else
 			{
 				ft_dprintf(2, "42sh: %s: event not found\n", &(*line)[i]);
-				break;
+				break ;
 			}
 		}
 		i++;
 	}
+	return (1);
+}
+
+static int	history_cmd(char **line, t_history *history)
+{
+	int		ret;
+	char	*cmd;
+
+	ret = 1;
+	cmd = NULL;
+	if (!(s_exclamation(line, history, &ret, cmd)))
+		return (0);
 	if (ret == 2 && *line)
 		ft_printf("%s\n", *line);
 	if (ret != -1)
@@ -497,7 +557,7 @@ static int		history_cmd(char **line, t_history *history)
 	return (ret);
 }
 
-static int 	get_first(t_history **history, char **cmd)
+static int	get_first(t_history **history, char **cmd)
 {
 	while ((*history)->previous)
 		(*history) = (*history)->previous;
@@ -505,7 +565,7 @@ static int 	get_first(t_history **history, char **cmd)
 	return (1);
 }
 
-static int 	get_last(t_history **history, char **cmd)
+static int	get_last(t_history **history, char **cmd)
 {
 	while ((*history)->next)
 		(*history) = (*history)->next;
@@ -513,7 +573,7 @@ static int 	get_last(t_history **history, char **cmd)
 	return (1);
 }
 
-static int 	get_next(t_history **history, char **cmd)
+static int	get_next(t_history **history, char **cmd)
 {
 	if ((*history)->next)
 	{
@@ -528,7 +588,7 @@ static int 	get_next(t_history **history, char **cmd)
 	}
 }
 
-static int 	get_previous(t_history **history, char **cmd)
+static int	get_previous(t_history **history, char **cmd)
 {
 	if ((*history)->previous)
 	{
@@ -543,7 +603,7 @@ static int 	get_previous(t_history **history, char **cmd)
 	}
 }
 
-static int ft_swap_2(t_history **history, char *cmd)
+static int	ft_swap_2(t_history **history, char *cmd)
 {
 	ft_strdel(&(*history)->str);
 	if (!((*history)->str = ft_strdup(cmd)))
@@ -551,7 +611,7 @@ static int ft_swap_2(t_history **history, char *cmd)
 	return (1);
 }
 
-static int 	history_move(t_history *history_2, char **cmd, int flag)
+static int	history_move(t_history *history_2, char **cmd, int flag)
 {
 	static t_history *history = NULL;
 
@@ -578,12 +638,13 @@ static int 	history_move(t_history *history_2, char **cmd, int flag)
 	return (0);
 }
 
-int		history(int flag, char **line, char **cmd)
+int			history(int flag, char **line, char **cmd)
 {
 	static t_history	history = {NULL, NULL, NULL};
 	static char			*home = NULL;
 
-	if (flag == BACKWARD || flag == FORWARD || flag == GET || flag == FIRST || flag == LAST || flag == SWAP)
+	if (flag == BACKWARD || flag == FORWARD || flag == GET
+			|| flag == FIRST || flag == LAST || flag == SWAP)
 		return (history_move(&history, cmd, flag));
 	if (flag == INIT)
 		return (init_history(&history, &home));
@@ -592,8 +653,8 @@ int		history(int flag, char **line, char **cmd)
 	if (flag == ADD_CMD)
 		return (history_cmd(line, &history));
 	if (flag == SEARCH || flag == RESET)
-		return (ft_search(&history, *line, cmd, flag));//from anywhere [CMD+R]
+		return (ft_search(&history, *line, cmd, flag));
 	if (flag == HISTORY_SEARCH)
-		return (search_history(&history, *line, cmd));//debut fin [TAB]
+		return (search_history(&history, *line, cmd));
 	return (0);
 }

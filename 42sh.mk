@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/02/19 17:33:18 by bprunevi         ###   ########.fr        #
+#    Updated: 2020/02/26 17:11:41 by yberramd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,6 @@ SOURCES			:=		transversal/program/main.c \
 						transversal/pattern_matching/deployement/launcher.c \
 						transversal/pattern_matching/deployement/maker.c \
 						input/input.c \
-						input/history.c \
 						input/keys.c \
 						input/prompt.c \
 						input/quote.c \
@@ -58,6 +57,7 @@ SOURCES			:=		transversal/program/main.c \
 						input/auto_completion/auto_completion.c \
 						input/auto_completion/tst.c \
 						input/termcaps/termcaps.c \
+						input/history/history.c \
 						lexer/lexer.c \
 						lexer/grammar_symbols.c \
 						lexer/separators/unglue_metachr.c \
