@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 12:58:25 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/26 12:32:12 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:20:27 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,15 @@ static void		fill_stack(t_list **stack, char *input)
 	ft_treat_token(stack, &tok);
 }
 
-t_token		gnt(char *input, int future)
+t_token			gnt(char *input, int future)
 {
 	static t_list	*stack = NULL;
-	t_list			*tmp_stack = NULL;
+	t_list			*tmp_stack;
 	t_token			tmp_tok;
 
+	tmp_stack = NULL;
 	if (g_parsingerr)
-		return((t_token){E_EOF, NULL});
+		return ((t_token){E_EOF, NULL});
 	if (!stack)
 		fill_stack(&stack, input);
 	tmp_tok = *((t_token*)stack->content);

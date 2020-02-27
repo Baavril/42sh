@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:13:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/20 12:07:48 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:25:00 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@
 #define STDOUT 1
 #define STDERR 2
 
-extern char		**environ;
-extern int 		g_retval;
-extern const t_job 		g_curjob;
-int				g_fd[3] = {STDIN, STDOUT, STDERR};
-int				g_fclose = -1;
-int				g_mode;
+extern char				**environ;
+extern int				g_retval;
+extern const t_job		g_curjob;
+int						g_fd[3] = {STDIN, STDOUT, STDERR};
+int						g_fclose = -1;
+int						g_mode;
 
 int				i_comp_list(t_elem left, t_elem right)
 {
@@ -76,18 +76,15 @@ int				i_pipe_sequence(t_elem left, t_elem right)
 	int bckp;
 
 	pipe(pipe_fd);
-	//ft_dprintf(2, "Create pipe with {%d->%d}\n", pipe_fd[0], pipe_fd[1]);
-	//valeurs de g_fd et g_fclose : 0, 1, 2 | -1 
 	bckp = g_fd[1];
 	g_fd[1] = pipe_fd[1];
 	g_fclose = pipe_fd[0];
-	left.v->f(left.v->left, left.v->right);// 0, P0, 2 | P1
+	left.v->f(left.v->left, left.v->right);
 	g_fd[1] = bckp;
 	g_fd[0] = pipe_fd[0];
-	//ft_dprintf(2, "pipe_seq closing {%d}\n", pipe_fd[1]);
 	close(pipe_fd[1]);
 	g_fclose = -1;
-	bckp = right.v->f(right.v->left, right.v->right);// P1, 1, 2 | -1
+	bckp = right.v->f(right.v->left, right.v->right);
 	close(pipe_fd[0]);
 	return (bckp);
 }
@@ -121,7 +118,7 @@ int				i_simple_command(t_elem left, t_elem right)
 		else
 			g_retval = right.v->f(right.v->left, right.v->right);
 		ft_stdredir(save_stdfd);
-		return(g_retval);
+		return (g_retval);
 	}
 	else
 		ft_add_process(left, right, g_fd, g_fclose);

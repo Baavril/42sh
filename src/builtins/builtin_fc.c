@@ -88,7 +88,7 @@ static int		ft_execute(char **option)
 	if (option[0] == NULL)
 		return (fc_s_no_option());
 	else
-		return(fc_s_option(option[0]));
+		return (fc_s_option(option[0]));
 }
 
 static void		ft_strdel_option(char ***option)

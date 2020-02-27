@@ -16,20 +16,20 @@
 static char	next_valid_entry(char current_char, char previous_valid_entry)
 {
 	if (previous_valid_entry == '\\')
-		return(-1);
+		return (-1);
 	else if (  previous_valid_entry == '`' 
 			|| previous_valid_entry == '\"'
 			|| previous_valid_entry == '\'')
 	{
 		if (current_char == previous_valid_entry)
-			return(-1);
+			return (-1);
 	}
 	else if ((previous_valid_entry == '{' && current_char == '}')
 		  || (previous_valid_entry == '(' && current_char == ')'))
-		return(-1);
+		return (-1);
 	else if (ft_strchr("{(\'\"`\\\\", current_char))
 			return (current_char);
-	return(0);
+	return (0);
 }
 
 char *quote_prompt(char *command)
@@ -56,5 +56,5 @@ char *quote_prompt(char *command)
 	if (buff[0])
 		return (buff);
 	free(buff);
-	return(NULL);
+	return (NULL);
 }

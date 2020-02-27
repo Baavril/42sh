@@ -279,7 +279,7 @@ int tab_key(char **buff, t_cursor *cursor)
 
 	input = NULL;
 	if (!cursor->end)
-		return(1);
+		return (1);
 	tst = ft_tst();
 	if (!(ret = ft_auto_completion(tst, *buff, &binary, cursor->start)))// curseur !!!!!!
 	{

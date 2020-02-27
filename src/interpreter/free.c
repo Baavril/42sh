@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 08:40:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/20 13:00:37 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/26 17:07:22 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 #include "builtins.h"
 #include "jcont.h"
 
-int 			curjob_cat(char *str)
+int				curjob_cat(char *str)
 {
-	extern t_job g_curjob;
-	char *tmp;
+	extern t_job	g_curjob;
+	char			*tmp;
 
 	tmp = g_curjob.cmd;
 	if (!g_curjob.cmd)
@@ -63,22 +63,22 @@ void			curjob_add(t_node *node)
 int				shape(t_node *node)
 {
 	if (node->f == i_less
-	||  node->f == i_dless
-	||  node->f == i_lessand
-	||  node->f == i_great
-	||  node->f == i_dgreat
-	||  node->f == i_greatand
-	||  node->f == i_lessgreat
-	||  node->f == i_dlessdash
-	||  node->f == i_clobber)
-		return(0b11);
+	|| node->f == i_dless
+	|| node->f == i_lessand
+	|| node->f == i_great
+	|| node->f == i_dgreat
+	|| node->f == i_greatand
+	|| node->f == i_lessgreat
+	|| node->f == i_dlessdash
+	|| node->f == i_clobber)
+		return (0b11);
 	if (node->f == i_prefix
-	||  node->f == i_suffix_word
-	||  node->f == i_builtin
-	||  node->f == i_exec)
-		return(0b10);
+	|| node->f == i_suffix_word
+	|| node->f == i_builtin
+	|| node->f == i_exec)
+		return (0b10);
 	else
-		return(0b00);
+		return (0b00);
 }
 
 int				astdel(t_node *node)
@@ -86,7 +86,7 @@ int				astdel(t_node *node)
 	int node_type;
 
 	if (!node)
-		return(1);
+		return (1);
 	node_type = shape(node);
 	if (node->left.c || node->left.v)
 	{
@@ -113,7 +113,7 @@ int				expand_tree(t_node *node)
 	int node_type;
 
 	if (!node)
-		return(1);
+		return (1);
 	node_type = shape(node);
 	if (node->left.c || node->left.v)
 	{

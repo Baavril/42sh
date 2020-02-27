@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:33:42 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/26 12:20:56 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:13:40 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,16 @@ int		(*g_redirect[])(t_elem left, t_elem right) =
 	&i_clobber,
 };
 
-/*
- * io_redirect		: IO_NUMBER filename  DEPENDS
- * 					| IO_NUMBER end_here  DEPENDS
- *  node                left      right    f()
- */
 t_node	*io_redirect(t_token tok)
 {
-	t_node	*node;
-	char	*tmp1;
-	extern int g_alias_treated;
-	int bckp;
+	t_node		*node;
+	char		*tmp1;
+	extern int	g_alias_treated;
+	int			bckp;
 
 	if ((tmp1 = io_number(tok)))
-			tok = eat();
-	if (   tok.type >= LESS
-		&& tok.type <= CLOBBER)
+		tok = eat();
+	if (tok.type >= LESS && tok.type <= CLOBBER)
 	{
 		node = malloc(sizeof(t_node));
 		node->left.c = tmp1;
@@ -53,14 +47,14 @@ t_node	*io_redirect(t_token tok)
 		bckp = g_alias_treated;
 		g_alias_treated = 1;
 		if (tok.type == DLESS
-		 || tok.type == DLESSDASH)
+		|| tok.type == DLESSDASH)
 			node->right.c = here_end(eat());
 		else
 			node->right.c = filename(eat());
 		g_alias_treated = bckp;
 		if (!node->right.c && (g_parsingerr = 1))
 			ft_dprintf(STDERR_FILENO, "parsing error near redirection\n");
-		return(node);
+		return (node);
 	}
 	return (NULL);
 }

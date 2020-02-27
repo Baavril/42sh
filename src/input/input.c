@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/25 14:53:48 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:01:37 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 extern struct s_svar	*g_svar;
 
-void					ft_init_cursor(t_cursor *cursor)
+void				ft_init_cursor(t_cursor *cursor)
 {
 	cursor->prompt = NULL;
 	cursor->match = NULL;
@@ -93,7 +93,8 @@ int					read_command(char **buff)
 	get_stdin(&cursor, buff);
 	write(1, "\n", 1);
 	ft_init_cursor(&cursor);
-	while (**buff && (cursor.prompt_len = mkprompt_quote(*buff, &(cursor.prompt))))
+	while (**buff
+	&& (cursor.prompt_len = mkprompt_quote(*buff, &(cursor.prompt))))
 	{
 		get_stdin(&cursor, &tmp);
 		*buff = ft_strjoinfree(*buff, tmp);

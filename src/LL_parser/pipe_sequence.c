@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:48:12 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/26 12:20:55 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:11:49 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,13 @@
 #include <unistd.h>
 
 extern int g_parsingerr;
-/*
- * pipe_sequence    : command
- *                  | command PIPE pipe_sequence
- *     node            tmp1          tmp2
- */
+
 static t_node	*pipe_sequence(t_token tok)
 {
-	t_node *node;
-	t_node *tmp1;
-	t_node *tmp2;
-	extern int			g_alias_treated;
+	t_node		*node;
+	t_node		*tmp1;
+	t_node		*tmp2;
+	extern int	g_alias_treated;
 
 	if ((tmp1 = command(tok)))
 	{
@@ -34,63 +30,53 @@ static t_node	*pipe_sequence(t_token tok)
 		{
 			g_alias_treated = 0;
 			eat();
-			if (!(tmp2 = pipe_sequence(eat())) && (g_parsingerr = 1))
+			if (!(tmp2 = pipe_sequence(eat()))
+				&& (g_parsingerr = 1))
 				ft_dprintf(STDERR_FILENO, "parsing error near pipe\n");
 			node = malloc(sizeof(t_node));
 			node->left.v = tmp1;
 			node->right.v = tmp2;
 			node->f = i_pipe_sequence;
-			return(node);
+			return (node);
 		}
-		return(tmp1);
+		return (tmp1);
 	}
-	return(NULL);
+	return (NULL);
 }
 
-/*
- * pipeline         : pipe_sequence
- */
 static t_node	*pipeline(t_token tok)
 {
-	return(pipe_sequence(tok));
+	return (pipe_sequence(tok));
 }
 
-/*
- * and_or           : pipeline
- */
-t_node	*and_or(t_token tok)
+t_node			*and_or(t_token tok)
 {
-	t_node *node;
-	t_node *tmp1;
-	t_node *tmp2;
-	int (*f)(t_elem left, t_elem right);
+	t_node	*node;
+	t_node	*tmp1;
+	t_node	*tmp2;
+	int		(*f)(t_elem left, t_elem right);
 
 	if ((tmp1 = pipeline(tok)))
 	{
 		if ((is_potential(peek(), N_AND_IF) && (f = i_and_op))
-		 || (is_potential(peek(), N_OR_IF) && (f = i_or_op)))
+		|| (is_potential(peek(), N_OR_IF) && (f = i_or_op)))
 		{
 			eat();
-			if (!(tmp2 = and_or(eat())) && (g_parsingerr = 1))
-				ft_dprintf(STDERR_FILENO, "parsing error near logical operator\n");
+			if (!(tmp2 = and_or(eat()))
+				&& (g_parsingerr = 1))
+				ft_dprintf(STDERR_FILENO, "parsing error near logical op\n");
 			node = malloc(sizeof(t_node));
 			node->left.v = tmp1;
 			node->right.v = tmp2;
 			node->f = f;
-			return(node);
+			return (node);
 		}
-		return(tmp1);
+		return (tmp1);
 	}
-	return(NULL);
+	return (NULL);
 }
 
-/*
- * comp_list	: and_or SEMI comp_list
- 				| and_or SEMI (null) 
- 				| and_or AND  comp_list
- 				| and_or AND (null) 
- */
-t_node	*comp_list(t_token tok)
+t_node			*comp_list(t_token tok)
 {
 	t_node	*node;
 	t_node	*tmp1;
@@ -108,7 +94,7 @@ t_node	*comp_list(t_token tok)
 			node->f = i_and_list;
 		}
 		node->right.v = comp_list(eat());
-		return(node);
+		return (node);
 	}
-	return(NULL);
+	return (NULL);
 }

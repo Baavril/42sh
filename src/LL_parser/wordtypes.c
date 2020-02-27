@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 14:29:21 by yberramd          #+#    #+#             */
-/*   Updated: 2020/01/15 12:02:51 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:14:02 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 
 char	*filename(t_token tok)
 {
-	return(word(tok)); /* Apply rule 2*/
+	return (word(tok));
 }
 
 char	*here_end(t_token tok)
 {
-	return(word(tok)); /* Apply rule 3*/
+	return (word(tok));
 }
 
 char	*cmd_name(t_token tok)
 {
-	return(word(tok)); /* Apply rule 7a*/
+	return (word(tok));
 }
 
 char	*cmd_word(t_token tok)
 {
-	return(word(tok)); /* Apply rule 7b*/
+	return (word(tok));
 }

@@ -104,7 +104,7 @@ char				*get_prompt_value()
 				if (voyager->value[i] == ' ')
 					break;
 			}
-			return(ret);
+			return (ret);
 		}
 		voyager = voyager->next;
 	}

@@ -32,7 +32,7 @@ size_t mkprompt_quote(char *input, char **buff)
 
 	qtbuff = quote_prompt(input);
 	if (!qtbuff || !*qtbuff)
-		return(0);
+		return (0);
 	voyager = g_svar;
 	while (voyager)
 	{
@@ -49,12 +49,12 @@ char *mkprompt_intro(size_t ret, size_t *len)
 	if (!ret)
 	{
 		*len += 0;
-		return(ft_strdup(COLOR""));
+		return (ft_strdup(COLOR""));
 	}
 	else
 	{
 		*len += 0;
-		return(ft_strdup(ERR_COLOR""));
+		return (ft_strdup(ERR_COLOR""));
 	}
 }
 
@@ -65,7 +65,7 @@ char *mkprompt_getcwd(size_t ret, size_t *len)
 	(void) ret;
 	rtn = getcwd(NULL, 0);
 	*len += ft_strlen(rtn);
-	return(rtn);
+	return (rtn);
 }
 
 char *mkprompt_outro(size_t ret, size_t *len)
@@ -73,12 +73,12 @@ char *mkprompt_outro(size_t ret, size_t *len)
 	if (!ret)
 	{
 		*len += 3;
-		return(ft_strdup(" "BLUE"~"RESET" "));
+		return (ft_strdup(" "BLUE"~"RESET" "));
 	}
 	else
 	{
 		*len += 3;
-		return(ft_strdup(" "RED"~"RESET" "));
+		return (ft_strdup(" "RED"~"RESET" "));
 	}
 }
 
