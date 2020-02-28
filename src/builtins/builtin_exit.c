@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/28 14:33:35 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/28 17:13:43 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,13 @@ int				ft_clean_exit(char **av, int exit_status)
 {
 	extern char		**environ;
 
-	if (ft_free_jcont())
+	if ((av) && ft_free_jcont(STOP_CHECK))
 	{
 		ft_dprintf(STDERR_FILENO, "There are stopped jobs.\n");
 		return (1);
 	}
+	else if (!(av))
+		ft_free_jcont(NO_CHECK);
 	ft_free_shvar();
 	ft_tabdel(&av);
 	ft_tabdel(&environ);
