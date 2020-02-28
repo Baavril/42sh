@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/20 12:37:12 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/28 14:33:35 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int				ft_clean_exit(char **av, int exit_status)
 	set_termcaps(TC_RESTORE);
 	ft_strdel(&g_bgpid);
 	ft_strdel(&g_curjob.cmd);
-	//system("leaks 42sh");
 	exit(exit_status);
 }
 
