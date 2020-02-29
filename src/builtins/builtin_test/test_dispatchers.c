@@ -59,23 +59,23 @@ t_test_d_opt	g_test_d_opt[] =
 static int		ft_string_tests(int argc, char **argv)
 {
 	if (**argv != '\0' && argc == 1)
-		return (e_success);
-	else if (((ft_strcmp(argv[1], "=") == e_success)
-	|| (ft_strcmp(argv[1], "==") == e_success)) && argc == 3)
-		return ((ft_strcmp(argv[0], argv[2]) == 0) ? e_success : e_failure);
-	else if ((ft_strcmp(argv[1], "!=") == e_success) && argc == 3)
-		return ((ft_strcmp(argv[0], argv[2]) != 0) ? e_success : e_failure);
-	else if ((ft_strcmp(argv[1], ">") == e_success) && argc == 3)
-		return ((ft_strcmp(argv[0], argv[2]) < 0) ? e_success : e_failure);
-	else if ((ft_strcmp(argv[1], "<") == e_success) && argc == 3)
-		return ((ft_strcmp(argv[0], argv[2]) > 0) ? e_success : e_failure);
+		return (E_SUCCESS);
+	else if (((ft_strcmp(argv[1], "=") == E_SUCCESS)
+	|| (ft_strcmp(argv[1], "==") == E_SUCCESS)) && argc == 3)
+		return ((ft_strcmp(argv[0], argv[2]) == 0) ? E_SUCCESS : E_FAILURE);
+	else if ((ft_strcmp(argv[1], "!=") == E_SUCCESS) && argc == 3)
+		return ((ft_strcmp(argv[0], argv[2]) != 0) ? E_SUCCESS : E_FAILURE);
+	else if ((ft_strcmp(argv[1], ">") == E_SUCCESS) && argc == 3)
+		return ((ft_strcmp(argv[0], argv[2]) < 0) ? E_SUCCESS : E_FAILURE);
+	else if ((ft_strcmp(argv[1], "<") == E_SUCCESS) && argc == 3)
+		return ((ft_strcmp(argv[0], argv[2]) > 0) ? E_SUCCESS : E_FAILURE);
 	else if (argc == 2)
 		ft_printf("42sh: test: %s: unary operator expected\n", argv[0]);
 	else if (argc == 3)
 		ft_printf("42sh: test: %s: binary operator expected\n", argv[1]);
 	else
 		ft_printf("42sh: test: too many arguments\n");
-	return (e_error);
+	return (E_ERROR);
 }
 
 static int		ft_init_str(char *str[])
@@ -86,7 +86,7 @@ static int		ft_init_str(char *str[])
 	str[3] = ">=";
 	str[4] = "<";
 	str[5] = "<=";
-	return (e_success);
+	return (E_SUCCESS);
 }
 
 static int		ft_dispatch_d_option(char **argv, int nbr_opt, int argc)
@@ -100,12 +100,12 @@ static int		ft_dispatch_d_option(char **argv, int nbr_opt, int argc)
 	{
 		while (i < nbr_opt)
 		{
-			if (ft_strcmp(g_test_d_opt[i].d_opt, &argv[1][1]) == e_success)
+			if (ft_strcmp(g_test_d_opt[i].d_opt, &argv[1][1]) == E_SUCCESS)
 			{
-				if (g_test_d_opt[i].double_opt(argv, str[i]) == e_success)
-					return (e_success);
+				if (g_test_d_opt[i].double_opt(argv, str[i]) == E_SUCCESS)
+					return (E_SUCCESS);
 				else
-					return (e_failure);
+					return (E_FAILURE);
 			}
 			i++;
 		}
@@ -113,7 +113,7 @@ static int		ft_dispatch_d_option(char **argv, int nbr_opt, int argc)
 	(argc < 4)
 	? ft_printf("42sh: test: %s: binary operator expected\n", argv[1])
 	: ft_printf("42sh: test: too many arguments\n");
-	return (e_error);
+	return (E_ERROR);
 }
 
 static int		ft_dispatch_s_option(char **argv, int nbr_opt)
@@ -125,18 +125,18 @@ static int		ft_dispatch_s_option(char **argv, int nbr_opt)
 	{
 		while (i < nbr_opt)
 		{
-			if (ft_strcmp(g_test_s_opt[i].s_opt, &argv[0][1]) == e_success)
+			if (ft_strcmp(g_test_s_opt[i].s_opt, &argv[0][1]) == E_SUCCESS)
 			{
-				if (g_test_s_opt[i].single_opt(argv) == e_success)
-					return (e_success);
+				if (g_test_s_opt[i].single_opt(argv) == E_SUCCESS)
+					return (E_SUCCESS);
 				else
-					return (e_failure);
+					return (E_FAILURE);
 			}
 			i++;
 		}
 	}
 	ft_printf("42sh: test: %s: unary operator expected\n", argv[0]);
-	return (e_error);
+	return (E_ERROR);
 }
 
 int				return_tests(int argc, char **argv)
@@ -152,16 +152,16 @@ int				return_tests(int argc, char **argv)
 		{
 			argc--;
 			return ((argv[i + 1] && (ret = return_tests(argc, &argv[i + 1]))
-			== e_success) ? e_failure : e_success);
+			== E_SUCCESS) ? E_FAILURE : E_SUCCESS);
 		}
 		if (*argv[i] == '-' && argc == 2)
 			return (((ret = ft_dispatch_s_option(&argv[i], SINGLE_OPT))
-			== e_success) ? e_success : ret);
+			== E_SUCCESS) ? E_SUCCESS : ret);
 		if (argc > 2 && *argv[i + 1] == '-')
 			return (((ret = ft_dispatch_d_option(&argv[i], DOUBLE_OPT, argc))
-			== e_success) ? e_success : ret);
+			== E_SUCCESS) ? E_SUCCESS : ret);
 		return (((ret = ft_string_tests(argc, &argv[i]))
-		== e_success) ? e_success : ret);
+		== E_SUCCESS) ? E_SUCCESS : ret);
 		++i;
 	}
 	return (ret);

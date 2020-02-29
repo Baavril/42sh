@@ -21,22 +21,22 @@
 int		test_s_option_z(char **argv)
 {
 	if ((int)ft_strlen(argv[1]) == 0)
-		return (e_success);
-	return (e_failure);
+		return (E_SUCCESS);
+	return (E_FAILURE);
 }
 
 int		test_s_option_n(char **argv)
 {
 	if ((int)ft_strlen(argv[1]) > 0)
-		return (e_success);
-	return (e_failure);
+		return (E_SUCCESS);
+	return (E_FAILURE);
 }
 
 int		test_s_option_o(char **argv)
 {
 	(void)argv;
 	// trouver comment getenv optnames
-	return (e_failure);
+	return (E_FAILURE);
 }
 
 int		test_s_option_h(char **argv)
@@ -44,8 +44,8 @@ int		test_s_option_h(char **argv)
 	struct stat	sb;
 
 	if ((stat(argv[1], &sb) >= 0 && (sb.st_mode & LINK)))
-		return (e_success);
-	return (e_failure);
+		return (E_SUCCESS);
+	return (E_FAILURE);
 }
 
 int		test_s_option_g(char **argv)
@@ -53,6 +53,6 @@ int		test_s_option_g(char **argv)
 	struct stat	sb;
 
 	if ((stat(argv[1], &sb) >= 0 && (sb.st_mode & GID)))
-		return (e_success);
-	return (e_failure);
+		return (E_SUCCESS);
+	return (E_FAILURE);
 }

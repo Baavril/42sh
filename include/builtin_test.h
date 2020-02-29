@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/02/29 16:18:29 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/29 16:35:04 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 # define SINGLE_OPT	25
 # define DOUBLE_OPT	9
 
-# define e_success	0
-# define e_failure	1
-# define e_error	2
+# define E_SUCCESS	0
+# define E_FAILURE	1
+# define E_ERROR	2
 # define UID		0004000
 # define GID		0002000
 # define SOCK		0140000

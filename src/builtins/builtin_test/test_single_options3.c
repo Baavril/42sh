@@ -23,8 +23,8 @@ int		test_s_option_s(char **argv)
 	struct stat	sb;
 
 	if ((stat(argv[1], &sb) >= 0 && sb.st_size > 0))
-		return (e_success);
-	return (e_failure);
+		return (E_SUCCESS);
+	return (E_FAILURE);
 }
 
 int		test_s_option_S(char **argv)
@@ -32,8 +32,8 @@ int		test_s_option_S(char **argv)
 	struct stat	sb;
 
 	if ((stat(argv[1], &sb) >= 0 && (sb.st_mode & SOCK)))
-		return (e_success);
-	return (e_failure);
+		return (E_SUCCESS);
+	return (E_FAILURE);
 }
 
 int		test_s_option_k(char **argv)
@@ -41,15 +41,15 @@ int		test_s_option_k(char **argv)
 	struct stat	sb;
 
 	if ((stat(argv[1], &sb) >= 0 && (sb.st_mode & STKY)))
-		return (e_success);
-	return (e_failure);
+		return (E_SUCCESS);
+	return (E_FAILURE);
 }
 
 int		test_s_option_r(char **argv)
 {
-	if (access(argv[1], R_OK) == e_success)
-		return (e_success);
-	return (e_failure);
+	if (access(argv[1], R_OK) == E_SUCCESS)
+		return (E_SUCCESS);
+	return (E_FAILURE);
 }
 
 int		test_s_option_p(char **argv)
@@ -57,6 +57,6 @@ int		test_s_option_p(char **argv)
 	struct stat	sb;
 
 	if ((stat(argv[1], &sb) >= 0 && S_ISFIFO(sb.st_mode)))
-		return (e_success);
-	return (e_failure);
+		return (E_SUCCESS);
+	return (E_FAILURE);
 }

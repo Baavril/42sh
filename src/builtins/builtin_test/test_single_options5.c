@@ -24,8 +24,8 @@ int		test_s_option_N(char **argv)
 
 	if ((stat(argv[1], &sb) >= 0
 	&& sb.st_mtime == sb.st_atime))
-		return (e_success);
-	return (e_failure);
+		return (E_SUCCESS);
+	return (E_FAILURE);
 }
 
 int		test_s_option_O(char **argv)
@@ -34,8 +34,8 @@ int		test_s_option_O(char **argv)
 
 	if ((stat(argv[1], &sb) >= 0
 	&& sb.st_uid == getuid()))
-		return (e_success);
-	return (e_failure);
+		return (E_SUCCESS);
+	return (E_FAILURE);
 }
 
 int		test_s_option_G(char **argv)
@@ -44,6 +44,6 @@ int		test_s_option_G(char **argv)
 
 	if ((stat(argv[1], &sb) >= 0
 	&& sb.st_gid == getgid()))
-		return (e_success);
-	return (e_failure);
+		return (E_SUCCESS);
+	return (E_FAILURE);
 }

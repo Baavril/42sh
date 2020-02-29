@@ -23,15 +23,15 @@ int		test_s_option_f(char **argv)
 	struct stat	sb;
 
 	if ((stat(argv[1], &sb) >= 0 && S_ISREG(sb.st_mode)))
-		return (e_success);
-	return (e_failure);
+		return (E_SUCCESS);
+	return (E_FAILURE);
 }
 
 int		test_s_option_a(char **argv)
 {
-	if ((access(argv[1], F_OK) == e_success))
-		return (e_success);
-	return (e_failure);
+	if ((access(argv[1], F_OK) == E_SUCCESS))
+		return (E_SUCCESS);
+	return (E_FAILURE);
 }
 
 int		test_s_option_c(char **argv)
@@ -39,8 +39,8 @@ int		test_s_option_c(char **argv)
 	struct stat	sb;
 
 	if ((stat(argv[1], &sb) >= 0 && S_ISCHR(sb.st_mode)))
-		return (e_success);
-	return (e_failure);
+		return (E_SUCCESS);
+	return (E_FAILURE);
 }
 
 int		test_s_option_b(char **argv)
@@ -48,8 +48,8 @@ int		test_s_option_b(char **argv)
 	struct stat	sb;
 
 	if ((stat(argv[1], &sb) >= 0 && S_ISBLK(sb.st_mode)))
-		return (e_success);
-	return (e_failure);
+		return (E_SUCCESS);
+	return (E_FAILURE);
 }
 
 int		test_s_option_d(char **argv)
@@ -57,6 +57,6 @@ int		test_s_option_d(char **argv)
 	struct stat	sb;
 
 	if ((stat(argv[1], &sb) >= 0 && S_ISDIR(sb.st_mode)))
-		return (e_success);
-	return (e_failure);
+		return (E_SUCCESS);
+	return (E_FAILURE);
 }

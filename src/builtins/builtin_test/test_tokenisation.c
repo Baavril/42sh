@@ -30,7 +30,7 @@ int		find_next_opt(char **argv, int flag, int init)
 		if (((*argv[x] == '-' && (int)ft_strlen(argv[x]) == 2)
 		&& (argv[x][1] == 'a' || argv[x][1] == 'o')))
 		{
-			if (x > 0 && (*(argv[x - 1]) - '-')  != e_success)
+			if (x > 0 && (*(argv[x - 1]) - '-')  != E_SUCCESS)
 			{
 				(flag) ? y++: y;
 				return (y);
@@ -56,7 +56,7 @@ char	**split_btw_opts(char **argv, int opt)
 	{
 		if ((argv[i][0] == '-' && (int)ft_strlen(argv[i]) == 2
 		&& (argv[i][1] == 'a' || argv[i][1] == 'o'))
-		&& ((i > 0 && (*(argv[i - 1]) - '-')  != e_success)))
+		&& ((i > 0 && (*(argv[i - 1]) - '-')  != E_SUCCESS)))
 		{
 			args[j] = 0;
 			return (args);
@@ -79,10 +79,10 @@ int		ft_retnbr_opts(char **argv)
 	ret = 0;
 	while (argv[i])
 	{
-		if (ft_strcmp(argv[i], "-a") == e_success
-		|| ft_strcmp(argv[i], "-o") == e_success)
+		if (ft_strcmp(argv[i], "-a") == E_SUCCESS
+		|| ft_strcmp(argv[i], "-o") == E_SUCCESS)
 		{
-			if (i > 0 && (*(argv[i - 1]) - '-')  != e_success)
+			if (i > 0 && (*(argv[i - 1]) - '-')  != E_SUCCESS)
 				ret++;
 		}
 		i++;
@@ -106,7 +106,7 @@ char	*ft_ret_optstring(char **argv, int exps)
 		if (argv[i][0] == '-' && (int)ft_strlen(argv[i]) == 2
 		&& (argv[i][1] == 'a' || argv[i][1] == 'o'))
 		{
-			if (i > 0 && (*(argv[i - 1]) - '-')  != e_success)
+			if (i > 0 && (*(argv[i - 1]) - '-')  != E_SUCCESS)
 			{
 				opts[x] = argv[i][1];
 				x++;
