@@ -62,4 +62,20 @@ typedef struct	s_history
 }				t_history;
 
 int		history(int flag, char **line, char **cmd);
+int 	init_history(t_history *history, char **home);
+int		ft_swap_2(t_history **history, char *cmd);
+int		get_first(t_history **history, char **cmd);
+int		get_last(t_history **history, char **cmd);
+int		get_next(t_history **history, char **cmd);
+int 	get_previous(t_history **history, char **cmd);
+int		delete(t_history *history, char *home);
+int		s_exclamation(char **line, t_history *history, int *ret, char *cmd);
+int		ft_isseparator(char *str);
+int		exclamation_point(char *line, t_history *history, char **cmd);
+int		ft_atoi_history2(const char *str);
+int		exclamation_p_m_n(const char *line, t_history *h, char **cmd);
+int		exclamation_point_number(const char *line, t_history *h, char **c);
+int		exclamation_s_history(t_history *history, char *line, char **cmd);
+int		ft_search(t_history *history_2, const char *line, char **cmd, int f);
+int		search_history(t_history *history, char *line, char **cmd);
 #endif
