@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/29 19:08:45 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/29 19:49:21 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static int	ft_shell_init(void)
 
 static int	alloc_error(void)
 {
-	psherror(e_cannot_allocate_memory, argv[0], e_cmd_type);
+	psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 	return (1);
 }
 
