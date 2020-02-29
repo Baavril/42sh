@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:43:35 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/26 17:03:31 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/29 13:44:54 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 #include "builtins.h"
 #include "shell_variables.h"
 #include "error.h"
+#include "jcont.h"
 #include <unistd.h>
 #define TAB_SIZE 16
 
 char **g_argv;
 extern int g_retval;
+extern int g_prefix;
 
 int		i_prefix(t_elem left, t_elem right)
 {
@@ -83,10 +85,11 @@ int		i_suffix_word(t_elem left, t_elem right)
 	return (0);
 }
 
-int		i_suffix_redirect(t_elem left, t_elem right)
+int		i_redirect(t_elem left, t_elem right)
 {
-	if (left.v->f(left.v->left, left.v->right) == -1)
-		return (-1);
+	if (g_prefix)
+		if (left.v->f(left.v->left, left.v->right) == -1)
+			return (-1);
 	if (right.v)
 		return (right.v->f(right.v->left, right.v->right));
 	return (0);

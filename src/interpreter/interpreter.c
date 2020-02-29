@@ -1,4 +1,5 @@
-/* ************************************************************************** */
+/* **************************************************************************
+ * */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   interpreter.c                                      :+:      :+:    :+:   */
@@ -6,7 +7,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:13:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/26 16:25:00 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/29 13:54:48 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +26,7 @@ extern const t_job		g_curjob;
 int						g_fd[3] = {STDIN, STDOUT, STDERR};
 int						g_fclose = -1;
 int						g_mode;
+int						g_prefix;
 
 int				i_comp_list(t_elem left, t_elem right)
 {
@@ -91,6 +93,7 @@ int				i_pipe_sequence(t_elem left, t_elem right)
 
 int				i_execnode(t_elem left, t_elem right)
 {
+	g_prefix = 1;
 	if (!left.v || left.v->f(left.v->left, left.v->right) != -1)
 		right.v->f(right.v->left, right.v->right);
 	exit(1);
@@ -104,6 +107,7 @@ int				i_simple_command(t_elem left, t_elem right)
 	if (right.v->f == i_builtin)
 	{
 		save_env = NULL;
+		g_prefix = 1;
 		ft_save_term_fd(save_stdfd);
 		ft_stdredir(g_fd);
 		if (left.v)
@@ -122,5 +126,6 @@ int				i_simple_command(t_elem left, t_elem right)
 	}
 	else
 		ft_add_process(left, right, g_fd, g_fclose);
+	g_prefix = 0;
 	return (-1);
 }

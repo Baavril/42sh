@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:36:39 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/26 16:07:40 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/29 11:19:45 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_node		*cmd_suffix(t_token tok)
 	int		(*f)(t_elem left, t_elem right);
 
 	if (((tmp1.v = io_redirect(tok))
-	&& (f = i_suffix_redirect))
+	&& (f = i_redirect))
 	|| ((tmp1.c = word(tok))
 	&& (f = i_suffix_word)))
 	{
@@ -63,7 +63,7 @@ t_node		*cmd_prefix(t_token tok)
 	int		(*f)(t_elem left, t_elem right);
 
 	if (((tmp1.v = io_redirect(tok))
-	&& (f = i_suffix_redirect))
+	&& (f = i_redirect))
 	|| ((tmp1.c = assig_word(tok))
 	&& (f = i_prefix)))
 	{
