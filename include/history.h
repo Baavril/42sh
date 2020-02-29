@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 18:26:13 by yberramd          #+#    #+#             */
-/*   Updated: 2020/02/29 16:22:22 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/29 16:23:59 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int						ft_swap_2(t_history **history, char *cmd);
 int						get_first(t_history **history, char **cmd);
 int						get_last(t_history **history, char **cmd);
 int						get_next(t_history **history, char **cmd);
-int 					get_previous(t_history **history, char **cmd);
+int						get_previous(t_history **history, char **cmd);
 int						delete(t_history *history, char *home);
 int						s_exclamation(char **line, t_history *history, int *ret,
 																	char *cmd);
