@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 09:48:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/26 11:57:20 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/29 16:30:37 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define OPTIND			"OPTIND="
 # define HISTSIZE		"HISTSIZE="
 # define HISTFILE		"HISTFILE="
+# define PWD			"PWD="
 
 /*
 ** Values of internal variables
