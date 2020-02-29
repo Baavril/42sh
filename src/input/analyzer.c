@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 13:04:47 by baavril           #+#    #+#             */
-/*   Updated: 2020/02/28 17:13:44 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/29 16:08:34 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int			get_stdin(t_cursor *cursor, char **buff)
 	flag = 0;
 	if (ft_init_tab() == 1)
 		return (1);
-	inside_history = NULL;
+	g_inside_history = NULL;
 	*buff = ft_strdup("");
 	ft_bzero(term.buff, COUNT_KEY);
 	set_reader(&term, buff, cursor);
@@ -120,7 +120,7 @@ int			get_stdin(t_cursor *cursor, char **buff)
 		{
 			if ((flag = search_analyzer(&term, buff, cursor)) == 0)
 			{
-				ft_strdel(&inside_history);
+				ft_strdel(&g_inside_history);
 				ft_strdel(&(cursor->prompt));
 				return (0);
 			}
@@ -129,7 +129,7 @@ int			get_stdin(t_cursor *cursor, char **buff)
 		{
 			if (!(standard_analyzer(&term, buff, cursor)))
 			{
-				ft_strdel(&inside_history);
+				ft_strdel(&g_inside_history);
 				ft_strdel(&cursor->prompt);
 				return (0);
 			}

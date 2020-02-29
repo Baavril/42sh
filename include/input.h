@@ -6,14 +6,14 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 12:11:17 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/12 15:10:58 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/29 16:06:25 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef INPUT_H
 # define INPUT_H
 
-# define COUNT_KEY	 8
+# define COUNT_KEY	8
 # define CTRL_A		0x01
 # define CTRL_B		0x02
 # define CTRL_C		0x03
@@ -43,8 +43,8 @@
 # define ESC		'\033'
 # define INPUT_SIZE	256
 
-char				*copybuff;
-char				*inside_history;
+char				*g_copybuff;
+char				*g_inside_history;
 
 union				u_tc
 {
@@ -75,22 +75,32 @@ int					read_command(char **line);
 int					toggle_termcaps(void);
 void				restore_term_mode();
 int					get_stdin(t_cursor *cursor, char **buff);
-int					search_analyzer(union u_tc *term, char **buff, t_cursor *cursor);
-int					standard_analyzer(union u_tc *term, char **buff, t_cursor *cursor);
+int					search_analyzer(union u_tc *term, char **buff,
+															t_cursor *cursor);
+int					standard_analyzer(union u_tc *term, char **buff,
+															t_cursor *cursor);
 void				ft_reader(union u_tc *term, t_cursor *cursor, char ***buff);
 void				ft_init_cursor(t_cursor *cursor);
 
-int					keyboard_dispatcher(union u_tc *term, char **buff, t_cursor *cursor);
-int					keyboard_ctrl_c(union u_tc *term, char **buff, t_cursor *cursor);
-int					keyboard_ctrl_d(union u_tc *term, char **buff, t_cursor *cursor);
-int					keyboard_ctrl_l(union u_tc *term, char **buff, t_cursor *cursor);
-int					keyboard_normal_char(union u_tc *term, char **buff, t_cursor *cursor);
-int					keyboard_backspace(union u_tc *term, char **buff, t_cursor *cursor);
-int					keyboard_tabulation(union u_tc *term, char **buff, t_cursor *cursor);
+int					keyboard_dispatcher(union u_tc *term, char **buff,
+															t_cursor *cursor);
+int					keyboard_ctrl_c(union u_tc *term, char **buff,
+															t_cursor *cursor);
+int					keyboard_ctrl_d(union u_tc *term, char **buff,
+															t_cursor *cursor);
+int					keyboard_ctrl_l(union u_tc *term, char **buff,
+															t_cursor *cursor);
+int					keyboard_normal_char(union u_tc *term, char **buff,
+															t_cursor *cursor);
+int					keyboard_backspace(union u_tc *term, char **buff,
+															t_cursor *cursor);
+int					keyboard_tabulation(union u_tc *term, char **buff,
+															t_cursor *cursor);
 
 int					set_reader(union u_tc *term, char **buff, t_cursor *cursor);
 
-int					keyboard_enter(union u_tc *term,char **buff, t_cursor *cursor);
+int					keyboard_enter(union u_tc *term, char **buff,
+															t_cursor *cursor);
 void				update_buff(char **buff, t_cursor *cursor);
 int					ft_init_tab(void);
 
