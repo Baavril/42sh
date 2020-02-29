@@ -29,8 +29,8 @@ t_node		*cmd_suffix(t_token tok)
 		node = malloc(sizeof(t_node));
 		node->left = tmp1;
 		node->right.v = NULL;
-		if (is_potential(peek(), N_SUFFIX))
-			node->right.v = cmd_suffix(eat());
+		if (is_potential(gnt(NULL, 1), N_SUFFIX))
+			node->right.v = cmd_suffix(gnt(NULL, 0));
 		node->f = f;
 		return (node);
 	}
@@ -48,8 +48,8 @@ t_node		*exec(t_token tok)
 			return (NULL);
 		node->left.c = tmp1;
 		node->right.v = NULL;
-		if (is_potential(peek(), N_SUFFIX))
-			node->right.v = cmd_suffix(eat());
+		if (is_potential(gnt(NULL, 1), N_SUFFIX))
+			node->right.v = cmd_suffix(gnt(NULL, 0));
 		node->f = i_exec;
 		return (node);
 	}
@@ -70,8 +70,8 @@ t_node		*cmd_prefix(t_token tok)
 		node = malloc(sizeof(t_node));
 		node->left = tmp1;
 		node->right.v = NULL;
-		if (is_potential(peek(), N_PREFIX))
-			node->right.v = cmd_prefix(eat());
+		if (is_potential(gnt(NULL, 1), N_PREFIX))
+			node->right.v = cmd_prefix(gnt(NULL, 0));
 		node->f = f;
 		return (node);
 	}
@@ -85,11 +85,11 @@ t_node		*simple_command(t_token tok)
 
 	if ((tmp1 = cmd_prefix(tok)))
 	{
-		if (is_potential(peek(), N_CMD_WORD))
+		if (is_potential(gnt(NULL, 1), N_CMD_WORD))
 		{
 			node = malloc(sizeof(t_node));
 			node->left.v = tmp1;
-			node->right.v = exec(eat());
+			node->right.v = exec(gnt(NULL, 0));
 			node->f = i_simple_command;
 			return (node);
 		}

@@ -26,11 +26,11 @@ static t_node	*pipe_sequence(t_token tok)
 
 	if ((tmp1 = command(tok)))
 	{
-		if (is_potential(peek(), N_PIPE))
+		if (is_potential(gnt(NULL, 1), N_PIPE))
 		{
 			g_alias_treated = 0;
-			eat();
-			if (!(tmp2 = pipe_sequence(eat()))
+			gnt(NULL, 0);
+			if (!(tmp2 = pipe_sequence(gnt(NULL, 0)))
 				&& (g_parsingerr = 1))
 				ft_dprintf(STDERR_FILENO, "parsing error near pipe\n");
 			node = malloc(sizeof(t_node));
@@ -58,11 +58,11 @@ t_node			*and_or(t_token tok)
 
 	if ((tmp1 = pipeline(tok)))
 	{
-		if ((is_potential(peek(), N_AND_IF) && (f = i_and_op))
-		|| (is_potential(peek(), N_OR_IF) && (f = i_or_op)))
+		if ((is_potential(gnt(NULL, 1), N_AND_IF) && (f = i_and_op))
+		|| (is_potential(gnt(NULL, 1), N_OR_IF) && (f = i_or_op)))
 		{
-			eat();
-			if (!(tmp2 = and_or(eat()))
+			gnt(NULL, 0);
+			if (!(tmp2 = and_or(gnt(NULL, 0)))
 				&& (g_parsingerr = 1))
 				ft_dprintf(STDERR_FILENO, "parsing error near logical op\n");
 			node = malloc(sizeof(t_node));
@@ -86,14 +86,14 @@ t_node			*comp_list(t_token tok)
 		node = malloc(sizeof(t_node));
 		node->left.v = tmp1;
 		node->f = i_comp_list;
-		if (is_potential(peek(), N_SEMI))
-			eat();
-		if (is_potential(peek(), N_AND))
+		if (is_potential(gnt(NULL, 1), N_SEMI))
+			gnt(NULL, 0);
+		if (is_potential(gnt(NULL, 1), N_AND))
 		{
-			eat();
+			gnt(NULL, 0);
 			node->f = i_and_list;
 		}
-		node->right.v = comp_list(eat());
+		node->right.v = comp_list(gnt(NULL, 0));
 		return (node);
 	}
 	return (NULL);

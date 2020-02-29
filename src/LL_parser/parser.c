@@ -24,14 +24,14 @@ void	execute(char *input)
 	g_parsingerr = 0;
 	g_prefix = 0;
 	ast = comp_list(gnt(input, 0));
-	tok = eat();
+	tok = gnt(NULL, 0);
 	if (!g_parsingerr && ast)
 		ast->f(ast->left, ast->right);
 	g_parsingerr = 0;
 	while (tok.type != E_EOF)
 	{
 		ft_strdel(&tok.symbol);
-		tok = eat();
+		tok = gnt(NULL, 0);
 	}
 	astdel(ast);
 	ast = NULL;
