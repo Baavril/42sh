@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 13:16:47 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/26 17:05:05 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/29 15:42:24 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,19 @@ int	i_greatand(t_elem left, t_elem right)
 		return (fd1);
 	ft_dprintf(STDERR_FILENO, "42sh: %s: incorrect fd\n", right.c);
 	return (-1);
+}
+
+int	i_andgreat(t_elem left, t_elem right)
+{
+	int rtn;
+
+	left.c = ft_strdup("1");
+	rtn = i_great(left, right);
+	if (rtn > 0)
+	{
+		*left.c = '2';
+		rtn = i_great(left, right);
+	}
+	ft_strdel(&left.c);
+	return(rtn);
 }

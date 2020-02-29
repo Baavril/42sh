@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 08:40:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/29 11:34:38 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/29 15:35:20 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ int				shape(t_node *node)
 	|| node->f == i_greatand
 	|| node->f == i_lessgreat
 	|| node->f == i_dlessdash
-	|| node->f == i_clobber)
+	|| node->f == i_clobber
+	|| node->f == i_andgreat)
 		return (0b11);
 	if (node->f == i_prefix
 	|| node->f == i_suffix_word

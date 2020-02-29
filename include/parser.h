@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 16:02:57 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/29 13:55:16 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/29 14:22:49 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	i_greatand(t_elem left, t_elem right);
 int	i_lessgreat(t_elem left, t_elem right);
 int	i_dlessdash(t_elem left, t_elem right);
 int	i_clobber(t_elem left, t_elem right);
+int	i_andgreat(t_elem left, t_elem right);
 int	i_and_op(t_elem left, t_elem right);
 int	i_or_op(t_elem left, t_elem right);
 
