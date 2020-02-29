@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2019/11/09 11:47:27 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/02/29 19:17:38 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,16 +152,16 @@ int				return_tests(int argc, char **argv)
 		{
 			argc--;
 			return ((argv[i + 1] && (ret = return_tests(argc, &argv[i + 1]))
-			== E_SUCCESS) ? E_FAILURE : E_SUCCESS);
+						== E_SUCCESS) ? E_FAILURE : E_SUCCESS);
 		}
 		if (*argv[i] == '-' && argc == 2)
-			return (((ret = ft_dispatch_s_option(&argv[i], SINGLE_OPT))
-			== E_SUCCESS) ? E_SUCCESS : ret);
+			return (((ret = ft_dispatch_s_option(&argv[i], SINGLE_OPT)) ==
+						E_SUCCESS) ? E_SUCCESS : ret);
 		if (argc > 2 && *argv[i + 1] == '-')
-			return (((ret = ft_dispatch_d_option(&argv[i], DOUBLE_OPT, argc))
-			== E_SUCCESS) ? E_SUCCESS : ret);
-		return (((ret = ft_string_tests(argc, &argv[i]))
-		== E_SUCCESS) ? E_SUCCESS : ret);
+			return (((ret = ft_dispatch_d_option(&argv[i], DOUBLE_OPT, argc)) ==
+						E_SUCCESS) ? E_SUCCESS : ret);
+		return (((ret = ft_string_tests(argc, &argv[i])) ==
+					E_SUCCESS) ? E_SUCCESS : ret); // Ici, j'ai des erreurs de normes que je ne comprend pas pour Bad identation (bizarre), MAIS PLUS IMPORTANT: pourquoi le while si on return toujours au premier tour ???
 		++i;
 	}
 	return (ret);
