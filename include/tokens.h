@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 15:51:38 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/29 15:46:25 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/29 15:48:50 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ enum					e_tokens
 	LESSGREAT,
 	DLESSDASH,
 	CLOBBER,
+	ANDGREAT,
 /*
 ** The following are the reserved words.
 */

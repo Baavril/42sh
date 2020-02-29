@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 16:02:57 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/26 12:48:41 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/29 14:22:49 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int i_prefix(t_elem left, t_elem right);
 int i_add_process(t_elem left, t_elem right);
 int i_exec(t_elem left, t_elem right);
 int i_suffix_word(t_elem left, t_elem right);
-int i_suffix_redirect(t_elem left, t_elem right);
+int i_redirect(t_elem left, t_elem right);
 int i_debugredirect(t_elem left, t_elem right);
 
 int	i_less(t_elem left, t_elem right);
@@ -78,6 +78,7 @@ int	i_greatand(t_elem left, t_elem right);
 int	i_lessgreat(t_elem left, t_elem right);
 int	i_dlessdash(t_elem left, t_elem right);
 int	i_clobber(t_elem left, t_elem right);
+int	i_andgreat(t_elem left, t_elem right);
 int	i_and_op(t_elem left, t_elem right);
 int	i_or_op(t_elem left, t_elem right);
 

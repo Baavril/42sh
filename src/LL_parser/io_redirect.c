@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:33:42 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/26 16:13:40 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/29 15:36:12 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int		(*g_redirect[])(t_elem left, t_elem right) =
 	&i_lessgreat,
 	&i_dlessdash,
 	&i_clobber,
+	&i_andgreat,
 };
 
 t_node	*io_redirect(t_token tok)
@@ -39,7 +40,7 @@ t_node	*io_redirect(t_token tok)
 
 	if ((tmp1 = io_number(tok)))
 		tok = eat();
-	if (tok.type >= LESS && tok.type <= CLOBBER)
+	if (tok.type >= LESS && tok.type <= ANDGREAT)
 	{
 		node = malloc(sizeof(t_node));
 		node->left.c = tmp1;
