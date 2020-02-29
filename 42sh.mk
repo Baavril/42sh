@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/02/26 17:11:41 by yberramd         ###   ########.fr        #
+#    Updated: 2020/02/29 16:09:28 by yberramd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,14 @@ SOURCES			:=		transversal/program/main.c \
 						input/auto_completion/tst.c \
 						input/termcaps/termcaps.c \
 						input/history/history.c \
+						input/history/history_search.c \
+						input/history/init_history.c \
+						input/history/mv_history.c \
+						input/history/clean.c \
+						input/history/exclamation.c \
+						input/history/exclamation2.c \
+						input/history/search_exclamation.c \
+						input/history/ft_atoi_history.c \
 						lexer/lexer.c \
 						lexer/grammar_symbols.c \
 						lexer/separators/unglue_metachr.c \
