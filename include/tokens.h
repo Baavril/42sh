@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 15:51:38 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/29 15:48:50 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/29 15:49:56 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,6 @@ enum					e_tokens
 	AND_IF,
 	OR_IF,
 	AND,
-
-/*
-** The following are the redirect operators
-*/
-
 	LESS,
 	DLESS,
 	LESSAND,
@@ -49,21 +44,11 @@ enum					e_tokens
 	DLESSDASH,
 	CLOBBER,
 	ANDGREAT,
-/*
-** The following are the reserved words.
-*/
-
 	If,
 	Then,
 	Else,
 	Elif,
 	Fi,
-
-/*
-** These are reserved words, not operator tokens, and are
-** recognized when reserved words are recognized.
-*/
-
 	Lbrace,
 	Rbrace
 };
