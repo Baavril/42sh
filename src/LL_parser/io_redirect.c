@@ -39,7 +39,7 @@ t_node	*io_redirect(t_token tok)
 	int			bckp;
 
 	if ((tmp1 = io_number(tok)))
-		tok = eat();
+		tok = gnt(NULL, 0);
 	if (tok.type >= LESS && tok.type <= ANDGREAT)
 	{
 		node = malloc(sizeof(t_node));
@@ -49,9 +49,9 @@ t_node	*io_redirect(t_token tok)
 		g_alias_treated = 1;
 		if (tok.type == DLESS
 		|| tok.type == DLESSDASH)
-			node->right.c = here_end(eat());
+			node->right.c = here_end(gnt(NULL, 0));
 		else
-			node->right.c = filename(eat());
+			node->right.c = filename(gnt(NULL, 0));
 		g_alias_treated = bckp;
 		if (!node->right.c && (g_parsingerr = 1))
 			ft_dprintf(STDERR_FILENO, "parsing error near redirection\n");

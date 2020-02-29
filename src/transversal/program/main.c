@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/28 17:09:06 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/29 19:08:45 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,37 +86,33 @@ static int	ft_shell_init(void)
 	return (0);
 }
 
+static int	alloc_error(void)
+{
+	psherror(e_cannot_allocate_memory, argv[0], e_cmd_type);
+	return (1);
+}
+
 int			main(int argc, char **argv)
 {
 	char			*input;
 	int				status;
 
-	(void) argc;
+	(void)argc;
 	g_progname = argv[0];
 	if (ft_shell_init() == e_cannot_allocate_memory)
-	{
-		psherror(e_cannot_allocate_memory, argv[0], e_cmd_type);
-		return (1);
-	}
+		return (alloc_error());
 	while (!read_command(&input) || get_next_line(0, &input))
 	{
 		g_alias_treated = 0;
 		if (!(status = history(ADD_CMD, &input, NULL)))
-		{
-			psherror(e_cannot_allocate_memory, argv[0], e_cmd_type);
-			return (1);
-		}
+			return (alloc_error());
 		if (status != -1 && input[0])
-		{
-			//lexer_verbose(&input);
 			execute(input);
-			ft_check_bgstatus();
-		}
+		ft_check_bgstatus();
 		ft_strdel(&input);
 		update_intern_vars();
-		if (getppid() != g_ppid) // AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHH
-			break ;  // ALEEEEED: C'est Trop MOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOCHE
+		if (getppid() != g_ppid)
+			break ;
 	}
-	cmd_exit(0, NULL);
-	return (0);
+	return (cmd_exit(0, NULL));
 }

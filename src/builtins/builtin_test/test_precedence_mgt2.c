@@ -31,14 +31,14 @@ static int	ft_check_parenthesis(char **argv, int i, int j)
 	ret = 0;
 	while (argv[i])
 	{
-		if (ft_strcmp(argv[i], "(") == e_success)
+		if (ft_strcmp(argv[i], "(") == E_SUCCESS)
 		{
 			j = i + 1;
 			while (argv[j])
 			{
-				if (ft_strcmp(argv[j], "-o") == e_success)
+				if (ft_strcmp(argv[j], "-o") == E_SUCCESS)
 					argv[j][1] = 'a';
-				if (ft_strcmp(argv[j], ")") == e_success)
+				if (ft_strcmp(argv[j], ")") == E_SUCCESS)
 				{
 					ret++;
 					break ;
@@ -48,7 +48,7 @@ static int	ft_check_parenthesis(char **argv, int i, int j)
 		}
 		i++;
 	}
-	return ((ft_error_parenthesis(j, ret) != e_success) ? -1 : ret);
+	return ((ft_error_parenthesis(j, ret) != E_SUCCESS) ? -1 : ret);
 }
 
 int			ft_manage_parenthesis(char **argv)
@@ -65,11 +65,11 @@ int			ft_manage_parenthesis(char **argv)
 	{
 		while (argv[i])
 		{
-			if ((ft_strcmp(argv[i], "(") == e_success
-			|| ft_strcmp(argv[i], ")") == e_success) && argv[i + 1])
+			if ((ft_strcmp(argv[i], "(") == E_SUCCESS
+			|| ft_strcmp(argv[i], ")") == E_SUCCESS) && argv[i + 1])
 				i++;
 			if (!(argv[j] = ft_strdup(argv[i])))
-				return (e_error);
+				return (E_ERROR);
 			j++;
 			i++;
 		}

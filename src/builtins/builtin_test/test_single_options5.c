@@ -18,32 +18,32 @@
 #include "builtins.h"
 #include "builtin_test.h"
 
-int		test_s_option_N(char **argv)
+int		test_s_option_bign(char **argv)
 {
 	struct stat	sb;
 
 	if ((stat(argv[1], &sb) >= 0
 	&& sb.st_mtime == sb.st_atime))
-		return (e_success);
-	return (e_failure);
+		return (E_SUCCESS);
+	return (E_FAILURE);
 }
 
-int		test_s_option_O(char **argv)
+int		test_s_option_bigo(char **argv)
 {
 	struct stat	sb;
 
 	if ((stat(argv[1], &sb) >= 0
 	&& sb.st_uid == getuid()))
-		return (e_success);
-	return (e_failure);
+		return (E_SUCCESS);
+	return (E_FAILURE);
 }
 
-int		test_s_option_G(char **argv)
+int		test_s_option_bigg(char **argv)
 {
 	struct stat	sb;
 
 	if ((stat(argv[1], &sb) >= 0
 	&& sb.st_gid == getgid()))
-		return (e_success);
-	return (e_failure);
+		return (E_SUCCESS);
+	return (E_FAILURE);
 }

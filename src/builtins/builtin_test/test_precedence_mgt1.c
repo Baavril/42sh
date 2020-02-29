@@ -23,8 +23,8 @@ static int	ft_a_management(int ret, int argc, char **args)
 	int	keep;
 
 	keep = 0;
-	if ((keep = return_tests(argc, args)) == e_error)
-		return (e_error);
+	if ((keep = return_tests(argc, args)) == E_ERROR)
+		return (E_ERROR);
 	return (ret = (keep) ? 1 : ret + 0);
 }
 
@@ -37,8 +37,8 @@ static int	ft_o_management(int *tmp_rets, int ret, int argc, char **args)
 	keep = 0;
 	tmp_rets[n] = ret;
 	n++;
-	if ((keep = return_tests(argc, args)) == e_error)
-		return (e_error);
+	if ((keep = return_tests(argc, args)) == E_ERROR)
+		return (E_ERROR);
 	return (ret = (keep) ? 1 : 0);
 }
 
@@ -52,13 +52,13 @@ static int	test_precedences_management(int argc, char **argv, int ret, char *opt
 	n = 0;
 	set = 0;
 	if (!(tmp_rets = (int *)malloc(sizeof(int) * (ft_strlen(opts)))))
-		return (e_failure);
+		return (E_FAILURE);
 	while (*opts)
 	{
 		set = find_next_opt(argv, 1, 1);
 		argc = find_next_opt(&argv[argc], 0, 0);
 		if (!(args = split_btw_opts(&argv[set], argc)))
-			return (e_failure);
+			return (E_FAILURE);
 		ret = (*opts - 'a' == 0) ? ft_a_management(ret, argc, args)
 		: ft_o_management(&tmp_rets[n++], ret, argc, args) ;
 		//gestion erreur
@@ -66,7 +66,7 @@ static int	test_precedences_management(int argc, char **argv, int ret, char *opt
 		argv += set;
 		opts++;
 	}
-	return ((ft_tabret(opts, tmp_rets) == e_success) ? e_success: ret);
+	return ((ft_tabret(opts, tmp_rets) == E_SUCCESS) ? E_SUCCESS: ret);
 }
 
 static int	test_first_args(int argc, char **argv)
@@ -76,11 +76,11 @@ static int	test_first_args(int argc, char **argv)
 
 	ret = 0;
 	if (!(args = split_btw_opts(argv, argc)))
-		return (e_failure);
-	if ((ret = return_tests(argc, args)) == e_error)
+		return (E_FAILURE);
+	if ((ret = return_tests(argc, args)) == E_ERROR)
 	{
 		ft_free_tabs(args);
-		return (e_error);
+		return (E_ERROR);
 	}
 	ft_free_tabs(args);
 	return (ret);
@@ -97,15 +97,15 @@ int			cmd_test(int argc, char **argv)
 	opts = NULL;
 	if (argc == 1)
 	{
-		ft_printf("final_ret = %d\n", e_failure);
-		return (e_failure);
+		ft_printf("final_ret = %d\n", E_FAILURE);
+		return (E_FAILURE);
 	}
-	if (ft_strcmp("test", argv[0]) == e_success)
+	if (ft_strcmp("test", argv[0]) == E_SUCCESS)
 		argv++;
 	if (ft_manage_parenthesis(&argv[0]) == -1)
 	{
-		ft_printf("final_ret = %d\n", e_error);
-		return (e_error);
+		ft_printf("final_ret = %d\n", E_ERROR);
+		return (E_ERROR);
 	}
 	exps = ft_retnbr_opts(argv);
 	argc = find_next_opt(argv, 0, 1);
@@ -113,7 +113,7 @@ int			cmd_test(int argc, char **argv)
 	if (exps)
 	{
 		if (!(opts = ft_ret_optstring(argv, exps)))
-			return (e_failure);
+			return (E_FAILURE);
 		ret = test_precedences_management(argc, argv, ret, opts);
 	}
 	ft_strdel(&opts);

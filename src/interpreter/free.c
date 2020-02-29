@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 08:40:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/29 15:35:20 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/29 17:38:27 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void			curjob_add(t_node *node)
 		curjob_cat("&&");
 	if (node->f == i_or_op)
 		curjob_cat("||");
+	if (node->f == i_andgreat)
+		curjob_cat("&>");
 }
 
 int				shape(t_node *node)

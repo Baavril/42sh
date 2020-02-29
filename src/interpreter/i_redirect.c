@@ -53,7 +53,7 @@ int	i_great(t_elem left, t_elem right)
 	else if (!access(right.c, F_OK))
 		ft_dprintf(STDERR_FILENO, "42sh: %s: Premission denied\n", right.c);
 	else if ((resfd = open_on_fd(right.c, O_WRONLY | O_CREAT | O_TRUNC,
-			CREATE_RIGHTS, fd1)) != -1)
+			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH, fd1)) != -1)
 		return (resfd);
 	else
 		ft_dprintf(STDERR_FILENO, "42sh: %s: Premission denied\n", right.c);
@@ -78,7 +78,7 @@ int	i_dgreat(t_elem left, t_elem right)
 	else
 	{
 		return (open_on_fd(right.c,
-				O_WRONLY | O_APPEND | O_CREAT, CREATE_RIGHTS, fd1));
+				O_WRONLY | O_APPEND | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH, fd1));
 	}
 	return (-1);
 }
@@ -90,7 +90,7 @@ int	i_lessgreat(t_elem left, t_elem right)
 	fd1 = left.c ? *left.c - '0' : 0;
 	if (!*right.c)
 		ft_dprintf(STDERR_FILENO, "42sh: %s: Redirection ambigue\n", right.c);
-	else if (open_on_fd(right.c, O_RDWR | O_CREAT, CREATE_RIGHTS, fd1) != -1)
+	else if (open_on_fd(right.c, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH, fd1) != -1)
 		return (fd1);
 	ft_dprintf(STDERR_FILENO, "42sh: %s: Premission denied\n", right.c);
 	return (-1);

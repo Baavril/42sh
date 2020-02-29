@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:21:48 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/26 20:09:39 by baavril          ###   ########.fr       */
+/*   Updated: 2020/02/29 19:22:53 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int						cmd_set(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
-
 	if (argc == 1)
 		prtlist();
 	else

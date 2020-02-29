@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/22 18:40:52 by baavril          ###   ########.fr       */
+/*   Updated: 2020/02/29 19:33:07 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 #include "builtins.h"
 #include "libft.h"
 
-char *ft_strcdup(char *token, char c)
+char	*ft_strcdup(char *token, char c)
 {
-	int i;
-	char *ret;
+	int		i;
+	char	*ret;
 
 	i = 0;
 	ret = NULL;
@@ -38,10 +38,10 @@ char *ft_strcdup(char *token, char c)
 	return (ret);
 }
 
-int	ft_strpchr(char *str, char c)
+int		ft_strpchr(char *str, char c)
 {
-	int i;
-	int len;
+	int	i;
+	int	len;
 
 	i = 0;
 	len = ft_strlen(str);
@@ -54,23 +54,21 @@ int	ft_strpchr(char *str, char c)
 	return (0);
 }
 
-int ft_spechrlen(char *token)
+int		ft_spechrlen(char *token)
 {
-	int pos;
+	int	pos;
 
 	if ((pos = ft_strpchr(token, SHARP)))
-		return ((token[pos + 1] == SHARP)
-				? SUCCESS : ERROR);
+		return ((token[pos + 1] == SHARP) ? SUCCESS : ERROR);
 	if ((pos = ft_strpchr(token, PERCENT)))
-		return ((token[pos + 1] == PERCENT)
-				? SUCCESS : ERROR);
+		return ((token[pos + 1] == PERCENT) ? SUCCESS : ERROR);
 	return (ERROR);
 }
 
-int ft_strlncmp(const char *s1, const char *s2, size_t len)
+int		ft_strlncmp(const char *s1, const char *s2, size_t len)
 {
-	size_t i;
-	size_t j;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
 	j = 0;
@@ -94,11 +92,11 @@ int ft_strlncmp(const char *s1, const char *s2, size_t len)
 	return ((unsigned char)s1[i] - (unsigned char)s2[j]);
 }
 
-char *ft_strrev(char *token)
+char	*ft_strrev(char *token)
 {
-	int i;
-	int len;
-	char tmp;
+	int		i;
+	int		len;
+	char	tmp;
 
 	i = 0;
 	len = ft_strlen(token) - 1;
@@ -106,7 +104,7 @@ char *ft_strrev(char *token)
 	{
 		if (token[len] == CL_SQUAR)
 		{
-			while  (i != len && token[len] != OP_SQUAR)
+			while (i != len && token[len] != OP_SQUAR)
 				len--;
 		}
 		tmp = token[len];

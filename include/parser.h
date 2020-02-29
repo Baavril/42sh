@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 16:02:57 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/29 15:58:20 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/29 18:33:44 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,6 @@
 
 # include "tokens.h"
 # include <fcntl.h>
-
-# define CREATE_RIGHTS	S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH
-# define peek()			gnt(NULL, 1)
-# define eat()			gnt(NULL, 0)
 
 typedef union	u_elem
 {

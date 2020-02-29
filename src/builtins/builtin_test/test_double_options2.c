@@ -26,8 +26,8 @@ int	test_d_option_ef(char **argv, char *str)
 	(void)str;
 	if ((stat(argv[0], &file1) >= 0 && stat(argv[2], &file2) >= 0)
 	&& file1.st_ino == file2.st_ino)
-		return (e_success);
-	return (e_error);
+		return (E_SUCCESS);
+	return (E_ERROR);
 }
 
 int	test_d_option_ot(char **argv, char *str)
@@ -38,8 +38,8 @@ int	test_d_option_ot(char **argv, char *str)
 	(void)str;
 	if ((stat(argv[0], &file1) >= 0 && stat(argv[2], &file2) >= 0)
 	&& file1.st_mtime < file2.st_mtime)
-		return (e_success);
-	return (e_error);
+		return (E_SUCCESS);
+	return (E_ERROR);
 }
 
 int	test_d_option_nt(char **argv, char *str)
@@ -50,6 +50,6 @@ int	test_d_option_nt(char **argv, char *str)
 	(void)str;
 	if ((stat(argv[0], &file1) >= 0 && stat(argv[2], &file2) >= 0)
 	&& file1.st_mtime > file2.st_mtime)
-		return (e_success);
-	return (e_error);
+		return (E_SUCCESS);
+	return (E_ERROR);
 }

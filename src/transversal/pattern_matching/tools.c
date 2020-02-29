@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/02/02 18:03:24 by baavril          ###   ########.fr       */
+/*   Updated: 2020/02/29 18:59:28 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,26 +39,6 @@ char		*setasvar(char *token)
 	return (ret);
 }
 
-char		*ft_alpharange(char c, char x)
-{
-	int		i;
-	int		lim;
-	char	*ret;
-
-	i = 0;
-	ret = NULL;
-	lim = (x - c) + 1;
-	if (lim > 1)
-	{
-		if (!(ret = (char *)malloc(sizeof(char) * (lim + 1))))
-			return (0);
-		while (i < lim)
-			ret[i++] = c++;
-		ret[i] = '\0';
-	}
-	return (ret);
-}
-
 static char	*ft_struchr(char *match, int len)
 {
 	int		i;
@@ -86,20 +66,13 @@ static char	*ft_struchr(char *match, int len)
 	return (ret);
 }
 
-char		*ft_strneg(char *match)
+static void	ft_plop(char *strpos, char *strneg)
 {
 	int		j;
 	int		c;
-	char	*tmp;
-	char	*strneg;
-	char	*strpos;
 
 	j = 0;
 	c = 32;
-	strpos = ft_struchr(match, ft_strlen(match));
-	tmp = strpos;
-	if (!(strneg = (char*)ft_memalloc(sizeof(char) * MAXCHR)))
-		return (NULL);
 	while (*strpos && c < 127)
 	{
 		if ((*strpos - c) == 0)
@@ -112,6 +85,20 @@ char		*ft_strneg(char *match)
 	}
 	while (c < 127)
 		strneg[j++] = c++;
-	ft_strdel(&tmp);
+}
+
+char		*ft_strneg(char *match)
+{
+	char	*strneg;
+	char	*strpos;
+
+	if (!(strpos = ft_struchr(match, ft_strlen(match)))
+	|| !(strneg = (char*)ft_memalloc(sizeof(char) * MAXCHR)))
+	{
+		ft_strdel(&strpos);
+		return (NULL);
+	}
+	ft_plop(strpos, strneg);
+	ft_strdel(&strpos);
 	return (strneg);
 }

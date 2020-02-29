@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 12:58:25 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/26 16:20:27 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/29 18:40:09 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,12 @@ static int		ft_check_alias(t_list **stack, t_token *first)
 	{
 		ft_free_token(first);
 		tok = get_next_token_alias(alias);
-		ft_treat_token(stack, &tok);
 		while (1)
 		{
+			ft_treat_token(stack, &tok);
 			tok = get_next_token_alias(NULL);
 			if (tok.type == E_ERROR || tok.type == E_EOF)
 				break ;
-			ft_treat_token(stack, &tok);
 		}
 		ft_strdel(&alias);
 		return (1);

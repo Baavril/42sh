@@ -55,13 +55,13 @@ int		ft_tabret(char *opts, int *tmp_rets)
 	nb = ft_strnlen('o', opts);
 	while (i <= nb)
 	{
-		if (tmp_rets[i] == e_success)
+		if (tmp_rets[i] == E_SUCCESS)
 		{
 			free(tmp_rets);
-			return (e_success);
+			return (E_SUCCESS);
 		}
 		++i;
 	}
 	free(tmp_rets);
-	return (e_failure);
+	return (E_FAILURE);
 }

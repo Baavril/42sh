@@ -20,23 +20,23 @@
 
 int		test_s_option_x(char **argv)
 {
-	if (access(argv[1], X_OK) == e_success)
-		return (e_success);
-	return (e_failure);
+	if (access(argv[1], X_OK) == E_SUCCESS)
+		return (E_SUCCESS);
+	return (E_FAILURE);
 }
 
 int		test_s_option_w(char **argv)
 {
-	if (access(argv[1], W_OK) == e_success)
-		return (e_success);
-	return (e_failure);
+	if (access(argv[1], W_OK) == E_SUCCESS)
+		return (E_SUCCESS);
+	return (E_FAILURE);
 }
 
 int		test_s_option_v(char **argv)
 {
 	if (getenv(argv[1]))
-		return (e_success);
-	return (e_failure);
+		return (E_SUCCESS);
+	return (E_FAILURE);
 }
 
 int		test_s_option_u(char **argv)
@@ -44,14 +44,14 @@ int		test_s_option_u(char **argv)
 	struct stat	sb;
 
 	if ((stat(argv[1], &sb) >= 0 && (sb.st_mode & UID)))
-		return (e_success);
-	return (e_failure);
+		return (E_SUCCESS);
+	return (E_FAILURE);
 }
 
 int		test_s_option_t(char **argv)
 {
 	if (argv[1])
 		if (isatty(atoi(argv[1])))
-			return (e_success);
-	return (e_failure);
+			return (E_SUCCESS);
+	return (E_FAILURE);
 }

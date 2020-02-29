@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 17:12:27 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/26 12:02:05 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/29 16:54:45 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define RESET "\033[0m"
 
 extern struct s_svar	*g_svar;
+extern int 				g_retval;
 
 size_t mkprompt_quote(char *input, char **buff)
 {
@@ -44,9 +45,9 @@ size_t mkprompt_quote(char *input, char **buff)
 	return (ft_strlen(*buff));
 }
 
-char *mkprompt_intro(size_t ret, size_t *len)
+char *mkprompt_intro(size_t *len)
 {
-	if (!ret)
+	if (!g_retval)
 	{
 		*len += 0;
 		return (ft_strdup(COLOR""));
@@ -58,27 +59,35 @@ char *mkprompt_intro(size_t ret, size_t *len)
 	}
 }
 
-char *mkprompt_getcwd(size_t ret, size_t *len)
+char *mkprompt_getcwd(size_t *len)
 {
-	char *rtn;
+	struct s_svar	*voyager;
 
-	(void) ret;
-	rtn = getcwd(NULL, 0);
-	*len += ft_strlen(rtn);
-	return (rtn);
+	voyager = g_svar;
+	while (voyager)
+	{
+		if (!(ft_strcmp(voyager->key, PWD)))
+		{
+			*len = ft_strlen(voyager->value);
+			return(ft_strdup(voyager->value));
+		}
+		voyager = voyager->next;
+	}
+	*len = 0;
+	return (ft_strdup(""));
 }
 
-char *mkprompt_outro(size_t ret, size_t *len)
+char *mkprompt_outro(size_t *len)
 {
-	if (!ret)
+	if (!g_retval)
 	{
 		*len += 3;
-		return (ft_strdup(" "BLUE"~"RESET" "));
+		return (ft_strdup(" "COLOR"~"RESET" "));
 	}
 	else
 	{
 		*len += 3;
-		return (ft_strdup(" "RED"~"RESET" "));
+		return (ft_strdup(" "ERR_COLOR"~"RESET" "));
 	}
 }
 
@@ -90,9 +99,10 @@ size_t mkprompt(char **prompt)
 	len = 0;
 	ret = 0;
 	*prompt = ft_strnjoinfree(3,
-			mkprompt_intro(ret, &len),
-			mkprompt_getcwd(ret, &len),
-			mkprompt_outro(ret, &len));
+			mkprompt_intro(&len),
+			mkprompt_getcwd(&len),
+			mkprompt_outro(&len));
+	ft_printf("[%s]\n", *prompt);
 	return (len);
 }
 

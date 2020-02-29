@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/02/29 19:35:41 by yberramd         ###   ########.fr        #
+#    Updated: 2020/02/29 19:47:15 by yberramd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,10 @@ SOURCES			:=		transversal/program/main.c \
 						transversal/hash/init_htable.c \
 						transversal/hash/string_routines.c \
 						transversal/pattern_matching/main.c \
+						transversal/pattern_matching/ft_alpharange.c \
+						transversal/pattern_matching/tools.c \
+						transversal/pattern_matching/recursion.c \
+						transversal/pattern_matching/identifier.c \
 						transversal/pattern_matching/tools.c \
 						transversal/pattern_matching/recursion.c \
 						transversal/pattern_matching/identifier.c \
