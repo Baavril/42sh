@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:21:48 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/19 13:14:37 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/29 19:26:53 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 #include "builtins.h"
 #include "shell_variables.h"
 
-extern struct s_svar
-	*g_svar;
+extern struct s_svar	*g_svar;
 
 static int
 	varinlst(struct s_svar *tmp, char *argv, struct s_svar *relink)
