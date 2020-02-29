@@ -6,14 +6,15 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 15:51:38 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/26 12:32:13 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/29 15:46:25 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKENS_H
 # define TOKENS_H
 
-/* -------------------------------------------------------
+/*
+** -------------------------------------------------------
 **                   The token types
 ** -------------------------------------------------------
 */
@@ -34,7 +35,9 @@ enum					e_tokens
 	OR_IF,
 	AND,
 
-/* The following are the redirect operators */
+/*
+** The following are the redirect operators
+*/
 
 	LESS,
 	DLESS,
@@ -45,8 +48,9 @@ enum					e_tokens
 	LESSGREAT,
 	DLESSDASH,
 	CLOBBER,
-
-/* The following are the reserved words. */
+/*
+** The following are the reserved words.
+*/
 
 	If,
 	Then,
@@ -54,8 +58,10 @@ enum					e_tokens
 	Elif,
 	Fi,
 
-/* These are reserved words, not operator tokens, and are
-   recognized when reserved words are recognized. */
+/*
+** These are reserved words, not operator tokens, and are
+** recognized when reserved words are recognized.
+*/
 
 	Lbrace,
 	Rbrace
