@@ -56,10 +56,10 @@ int				test_s_option_v(char **argv);
 int				test_s_option_w(char **argv);
 int				test_s_option_x(char **argv);
 int				test_s_option_z(char **argv);
-int				test_s_option_S(char **argv);
-int				test_s_option_O(char **argv);
-int				test_s_option_N(char **argv);
-int				test_s_option_G(char **argv);
+int				test_s_option_bigs(char **argv);
+int				test_s_option_bigo(char **argv);
+int				test_s_option_bign(char **argv);
+int				test_s_option_bigg(char **argv);
 
 int				test_d_option_int(char **argv, char *str);
 int				test_d_option_nt(char **argv, char *str);

@@ -37,10 +37,10 @@ t_test_s_opt	g_test_s_opt[] =
 	{"x", &test_s_option_x},
 	{"z", &test_s_option_z},
 	{"L", &test_s_option_h},
-	{"O", &test_s_option_O},
-	{"N", &test_s_option_N},
-	{"G", &test_s_option_G},
-	{"S", &test_s_option_S}
+	{"O", &test_s_option_bigo},
+	{"N", &test_s_option_bign},
+	{"G", &test_s_option_bigg},
+	{"S", &test_s_option_bigs}
 };
 
 t_test_d_opt	g_test_d_opt[] =

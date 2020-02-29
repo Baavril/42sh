@@ -18,7 +18,7 @@
 #include "builtins.h"
 #include "builtin_test.h"
 
-int		test_s_option_N(char **argv)
+int		test_s_option_bign(char **argv)
 {
 	struct stat	sb;
 
@@ -28,7 +28,7 @@ int		test_s_option_N(char **argv)
 	return (E_FAILURE);
 }
 
-int		test_s_option_O(char **argv)
+int		test_s_option_bigo(char **argv)
 {
 	struct stat	sb;
 
@@ -38,7 +38,7 @@ int		test_s_option_O(char **argv)
 	return (E_FAILURE);
 }
 
-int		test_s_option_G(char **argv)
+int		test_s_option_bigg(char **argv)
 {
 	struct stat	sb;
 

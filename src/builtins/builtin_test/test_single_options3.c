@@ -27,7 +27,7 @@ int		test_s_option_s(char **argv)
 	return (E_FAILURE);
 }
 
-int		test_s_option_S(char **argv)
+int		test_s_option_bigs(char **argv)
 {
 	struct stat	sb;
 
