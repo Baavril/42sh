@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/25 11:18:19 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/28 17:09:06 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 #include "synt.h"
 #include "path.h"
 
+int					g_ppid;
 int					g_retval;
 extern int			g_alias_treated;
 struct termios		g_old_termios;
@@ -67,6 +68,7 @@ static int	ft_shell_init(void)
 {
 	extern char		**environ;
 
+	g_ppid = getppid();
 	set_termcaps(TC_SAVE);
 	tcsetpgrp(STDIN_FILENO, getpid());
 	set_signals(FATHER);
@@ -112,6 +114,8 @@ int			main(int argc, char **argv)
 		}
 		ft_strdel(&input);
 		update_intern_vars();
+		if (getppid() != g_ppid) // AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHH
+			break ;  // ALEEEEED: C'est Trop MOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOCHE
 	}
 	cmd_exit(0, NULL);
 	return (0);

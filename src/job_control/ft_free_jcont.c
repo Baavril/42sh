@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 14:24:58 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/18 14:38:28 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/28 17:02:15 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int			ft_a_stopped_job(void)
 	return (0);
 }
 
-int			ft_free_jcont(void)
+int			ft_free_jcont(int flag)
 {
-	if (ft_a_stopped_job())
+	if (flag == STOP_CHECK && ft_a_stopped_job())
 		return (1);
 	ft_lstdel(&(g_jcont.jobs), &ft_free_job);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:38:29 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/26 16:18:12 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/29 15:25:32 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		is_potential(t_token tok, int e_node)
 	if (e_node == N_SUFFIX)
 		return (is_potential(tok, N_REDIRECT) || is_potential(tok, N_WORD));
 	if (e_node == N_REDIRECT)
-		return ((tok.type >= LESS && tok.type <= CLOBBER) || tok.type == IO_NUMBER);
+		return ((tok.type >= LESS && tok.type <= ANDGREAT) || tok.type == IO_NUMBER);
 	if (e_node == N_ASSIGNMENT_WORD)
 		return (tok.type == ASSIGNMENT_WORD);
 	if (e_node == N_WORD)

@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:21:48 by baavril           #+#    #+#             */
-/*   Updated: 2020/02/02 14:44:14 by baavril          ###   ########.fr       */
+/*   Updated: 2020/02/28 16:46:25 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "libft.h"
 #include "prompt.h"
 
+extern int		g_ppid;
 struct s_svar	*g_svar;
 struct s_pos	*g_pos;
 
@@ -81,7 +82,7 @@ static void		init_intern_vars()
 	tmp = getcwd(NULL, 0);
 	setenvvar(ft_strdup(SH), ft_strdup(tmp));
 	ft_strdel(&tmp);
-	setenvvar(ft_strdup(PPID), ft_itoa(getppid()));
+	setenvvar(ft_strdup(PPID), ft_itoa(g_ppid));
 	setenvvar(ft_strdup(PID), ft_itoa(getpid()));
 	setenvvar(ft_strdup(OPTERR), ft_strdup(OPTERRV));
 	setenvvar(ft_strdup(OPTIND), ft_strdup(OPTINDV));

@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:18:20 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/02/19 19:32:45 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/29 13:52:38 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 # define JOBS_OPT				"+lp"
 # define L_OPT					1
 # define P_OPT					2
+
+# define NO_CHECK				0
+# define STOP_CHECK				1
 
 # define WHARD_EXIT				0x80
 # define WSTPED					0x1f
@@ -67,7 +70,7 @@ t_process			*ft_get_process_pid(pid_t pid);
 void				ft_print_jobs(t_list *job_list, int opt);
 void				ft_print_job(t_job *job, int opt);
 void				ft_free_job(void *content, size_t size);
-int					ft_free_jcont(void);
+int					ft_free_jcont(int flag);
 void				ft_set_prio(void);
 int					ft_pop_job(int nbr);
 void				ft_update_job_status(void);

@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42->fr>                    +#+  +:+       +#+       */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 18:02:02 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/27 15:41:35 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/02/29 16:08:00 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,12 +327,12 @@ int down_arrow(char **buff, t_cursor *cursor)
 	char *str;
 
 	str = NULL;
-	if (!inside_history)
+	if (!g_inside_history)
 		return (1);
 	else if (history(FORWARD, NULL, &str) == 2)
 	{
-		set_string(buff, cursor, inside_history);
-		ft_strdel(&inside_history);
+		set_string(buff, cursor, g_inside_history);
+		ft_strdel(&g_inside_history);
 	}
 	else
 		set_string(buff, cursor, str);
@@ -344,7 +344,7 @@ int up_arrow(char **buff, t_cursor *cursor)
 	char *str;
 
 	str = NULL;
-	if (!inside_history && (inside_history = ft_strdup(*buff)))
+	if (!g_inside_history && (g_inside_history = ft_strdup(*buff)))
 		history(LAST, NULL, &str);
 	else
 		history(BACKWARD, NULL, &str);
@@ -354,7 +354,7 @@ int up_arrow(char **buff, t_cursor *cursor)
 
 int paste_key(char **buff, t_cursor *cursor)
 {
-	char *str = copybuff;
+	char *str = g_copybuff;
 	if (str)
 		while (*str)
 			normal_char(buff, cursor, *str++);
@@ -399,11 +399,11 @@ int select_key(char **buff, t_cursor *cursor)
 		cursor->in = cursor->start;
 	else if (cursor->in != cursor->start)
 	{
-		ft_strdel(&copybuff);
+		ft_strdel(&g_copybuff);
 		if (cursor->start > cursor->in)
-			copybuff = ft_strndup(*buff + cursor->in, cursor->start - cursor->in);
+			g_copybuff = ft_strndup(*buff + cursor->in, cursor->start - cursor->in);
 		else if (cursor->start < cursor->in)
-			copybuff = ft_strndup(*buff + cursor->start, cursor->in - cursor->start);
+			g_copybuff = ft_strndup(*buff + cursor->start, cursor->in - cursor->start);
 		cursor->in = SIZE_MAX;
 	}
 	return (1);

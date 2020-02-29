@@ -6,15 +6,16 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 13:04:47 by baavril           #+#    #+#             */
-/*   Updated: 2020/02/12 15:11:00 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/02/29 16:08:34 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "keys.h"
 #include "libft.h"
 #include "input.h"
-#include "keys.h"
 #include "prompt.h"
 #include "display.h"
+#include "builtins.h"
 #include "history.h"
 
 #include <unistd.h>
@@ -23,7 +24,9 @@
 #include <curses.h>
 #include <stdint.h>
 
-void	update_buff(char **buff, t_cursor *cursor)
+extern int	g_ppid;
+
+void		update_buff(char **buff, t_cursor *cursor)
 {
 	size_t len;
 
@@ -39,7 +42,7 @@ void	update_buff(char **buff, t_cursor *cursor)
 	cursor->end = len;
 }
 
-int	set_reader(union u_tc *term, char **buff, t_cursor *cursor)
+int			set_reader(union u_tc *term, char **buff, t_cursor *cursor)
 {
 	if (cursor->ctrl_r)
 	{
@@ -55,7 +58,7 @@ int	set_reader(union u_tc *term, char **buff, t_cursor *cursor)
 	return (1);
 }
 
-int	standard_analyzer(union u_tc *term, char **buff, t_cursor *cursor)
+int			standard_analyzer(union u_tc *term, char **buff, t_cursor *cursor)
 {
 	keyboard_ctrl_c(term, buff, cursor);
 	keyboard_ctrl_d(term, buff, cursor);
@@ -70,7 +73,7 @@ int	standard_analyzer(union u_tc *term, char **buff, t_cursor *cursor)
 	return (1);
 }
 
-int	search_analyzer(union u_tc *term, char **buff, t_cursor *cursor)
+int			search_analyzer(union u_tc *term, char **buff, t_cursor *cursor)
 {
 	if (!cursor->ctrl_r)
 	{
@@ -97,7 +100,7 @@ int	search_analyzer(union u_tc *term, char **buff, t_cursor *cursor)
 	return (-1);
 }
 
-int	get_stdin(t_cursor *cursor, char **buff)
+int			get_stdin(t_cursor *cursor, char **buff)
 {
 	int flag;
 	union	u_tc term;
@@ -105,17 +108,19 @@ int	get_stdin(t_cursor *cursor, char **buff)
 	flag = 0;
 	if (ft_init_tab() == 1)
 		return (1);
-	inside_history = NULL;
+	g_inside_history = NULL;
 	*buff = ft_strdup("");
 	ft_bzero(term.buff, COUNT_KEY);
 	set_reader(&term, buff, cursor);
 	while (read(STDIN_FILENO, term.buff, COUNT_KEY))
 	{
+		if (getppid() != g_ppid) // AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHH
+			cmd_exit(0, NULL);  // ALEEEEED: C'est Trop MOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOCHE
 		if (term.key == CTRL_R || cursor->on == 1)
 		{
 			if ((flag = search_analyzer(&term, buff, cursor)) == 0)
 			{
-				ft_strdel(&inside_history);
+				ft_strdel(&g_inside_history);
 				ft_strdel(&(cursor->prompt));
 				return (0);
 			}
@@ -124,7 +129,7 @@ int	get_stdin(t_cursor *cursor, char **buff)
 		{
 			if (!(standard_analyzer(&term, buff, cursor)))
 			{
-				ft_strdel(&inside_history);
+				ft_strdel(&g_inside_history);
 				ft_strdel(&cursor->prompt);
 				return (0);
 			}
