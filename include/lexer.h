@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 17:59:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/19 16:16:15 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/29 16:01:43 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@
 char				**lexer_verbose(char **input);
 struct s_token		get_next_token(char *str);
 t_token				get_next_token_alias(char *str);
-void				ft_free_token(t_token*);
+void				ft_free_token(t_token *tok);
 
 #endif
