@@ -6,12 +6,13 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 13:04:49 by yberramd          #+#    #+#             */
-/*   Updated: 2019/09/19 15:33:38 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/02/29 16:15:17 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AUTO_COMPLETION_H
 # define AUTO_COMPLETION_H
+
 # include <stdlib.h>
 # include <dirent.h>
 # include <stdbool.h>
@@ -29,11 +30,12 @@ typedef struct		s_tst
 	struct s_tst	*right;
 }					t_tst;
 
-t_tst	*ft_tst(void);
-void	del_double_char(char **tab2);
-void	print_double_char(char **tab);
-void	del_tst(t_tst *tst);
-int		search_tst(t_tst *tst, char *str);
-int 	ft_auto_completion(t_tst *tst, char *input, char ***words, int start);
+t_tst				*ft_tst(void);
+void				del_double_char(char **tab2);
+void				print_double_char(char **tab);
+void				del_tst(t_tst *tst);
+int					search_tst(t_tst *tst, char *str);
+int					ft_auto_completion(t_tst *tst, char *input, char ***words,
+																	int start);
 
 #endif

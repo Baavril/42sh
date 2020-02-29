@@ -6,16 +6,16 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/02/02 18:32:02 by baavril          ###   ########.fr       */
+/*   Updated: 2020/02/29 16:13:20 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GLOBING_H
 # define GLOBING_H
 
-#include <dirent.h>
-#include <sys/types.h>
-#include <sys/stat.h>
+# include <dirent.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 
 # define MAX_DIR 8192
 # define HIDEN_FILE '.'
@@ -90,15 +90,18 @@ void				ft_str_swap(char **a, char **b);
 char				*matching_ret(char *token, char *match, int flag);
 char				*ft_strrev(char *token);
 int					ft_spechrlen(char *token);
-int					check_deploy(char *str, char *match, int flag, t_pattern *var);
+int					check_deploy(char *str, char *match, int flag,
+																t_pattern *var);
 int					get_deploy(char **match);
 char				*ft_alpharange(char c, char x);
 char				*ft_strneg(char *match);
 int					ft_strlchr(char *str, char c);
 
 char				*pattern_matching(char *token, char *match, int flag);
-int					complex_pattern_matching(t_pattern *var, char *match, char *str);
-int					simple_pattern_matching(t_pattern *var, char *match, char *str);
+int					complex_pattern_matching(t_pattern *var, char *match,
+																	char *str);
+int					simple_pattern_matching(t_pattern *var, char *match,
+																	char *str);
 int					matching_patterns(t_pattern *var, char *match, char *str);
 int					recursive_matching(t_pattern *var, char *match, char *str);
 int					deployement_limit(t_pattern *var, char *match, char *str);
