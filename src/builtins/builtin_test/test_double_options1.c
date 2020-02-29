@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2019/10/18 17:29:13 by baavril          ###   ########.fr       */
+/*   Updated: 2020/02/29 19:11:01 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static int		test_integers(char **argv, int cmp1, int cmp2)
 	char	*cmp12;
 	char	*cmp21;
 
-	if (!(cmp12 = ft_itoa(cmp1)) || !(cmp21 = ft_itoa(cmp2)))
+	if (!(cmp12 = ft_itoa(cmp1))
+	|| !(cmp21 = ft_itoa(cmp2)))
 		return (0);
 	if ((int)ft_strlen(argv[0]) != (int)ft_strlen(cmp12))
 	{
