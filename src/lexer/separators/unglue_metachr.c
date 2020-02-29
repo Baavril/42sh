@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 17:59:39 by abarthel          #+#    #+#             */
-/*   Updated: 2019/08/01 17:14:33 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/02/29 19:43:39 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@
 
 static char	*get_closest_meta(char *str, int *lsep)
 {
-	const struct s_metachr metachr[] =
-	{ {"||"}, {"&&"}, {"&>"}, {">&"}, {";;"}, {"|&"}, {"<<"}, {">>"}, {"<"}, {">"}, {";"}, {"&"}, {"\0"} };
-	char	*closest;
-	char	*ptr;
-	int		i;
+	const struct s_metachr	metachr[] =
+	{ {"||"}, {"&&"}, {"&>"}, {">&"}, {";;"}, {"|&"},
+		{"<<"}, {">>"}, {"<"}, {">"}, {";"}, {"&"}, {"\0"} };
+	char					*closest;
+	char					*ptr;
+	int						i;
 
 	i = 0;
 	closest = NULL;
 	while (*(metachr[i].c))
 	{
 		ptr = ft_strstr(str, metachr[i].c);
-		//ft_printf("_%s\n", ptr);
 		if (ptr && (!closest || (ptr < closest && closest)))
 		{
 			*lsep = ft_strlen(metachr[i].c);
@@ -42,7 +42,7 @@ static char	*get_closest_meta(char *str, int *lsep)
 
 static char	*extend(char *prefix, char *ptr, size_t lprefix, int lsep)
 {
-	int	lsep_cpy;
+	int		lsep_cpy;
 	size_t	len;
 	char	*new;
 
@@ -63,9 +63,9 @@ static char	*extend(char *prefix, char *ptr, size_t lprefix, int lsep)
 	return (new);
 }
 
-int	unglue_metachr(char **input)
+int			unglue_metachr(char **input)
 {
-	int	lsep;
+	int		lsep;
 	size_t	lprefix;
 	char	*new;
 	char	*ptr;
