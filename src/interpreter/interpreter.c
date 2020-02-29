@@ -1,5 +1,4 @@
-/* **************************************************************************
- * */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   interpreter.c                                      :+:      :+:    :+:   */
@@ -7,12 +6,13 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:13:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/29 13:54:48 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/02/29 17:37:57 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "builtins.h"
+#include "error.h"
 #include "parser.h"
 #include "jcont.h"
 
@@ -96,7 +96,7 @@ int				i_execnode(t_elem left, t_elem right)
 	g_prefix = 1;
 	if (!left.v || left.v->f(left.v->left, left.v->right) != -1)
 		right.v->f(right.v->left, right.v->right);
-	exit(1);
+	return(ft_clean_exit(NULL, 1));
 }
 
 int				i_simple_command(t_elem left, t_elem right)
