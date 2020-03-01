@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/02/02 15:40:42 by baavril          ###   ########.fr       */
+/*   Updated: 2020/03/01 12:09:58 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char		*ft_btwquotes(char *tokens, int c, int d)
 	return (ret);
 }
 
-char		*ft_quoted(char *tokens)
+char			*ft_quoted(char *tokens)
 {
 	int	c;
 	int	d;
@@ -65,7 +65,7 @@ char		*ft_quoted(char *tokens)
 	return (ft_btwquotes(tokens, c, d));
 }
 
-static char	*inquotes(char *tokens, char d)
+static char		*inquotes(char *tokens, char d)
 {
 	int	c;
 	int	i;
@@ -79,31 +79,15 @@ static char	*inquotes(char *tokens, char d)
 	return (ft_strndup(&tokens[c], i));
 }
 
-int		ft_strqchr(char *tokens, char c)
+char			*ft_unset_quoted(char *tokens, char c)
 {
-	int	i;
-
-	i = 0;
-	while (tokens[i])
-	{
-		if (tokens[i] == c && tokens[i + 1] != c)
-			return (i);
-		i++;
-	}
-	return (i);
-}
-
-char		*ft_unset_quoted(char *tokens, char c)
-{
-	int	n;
+	int		n;
 	char	*tmp;
 	char	*ptm;
 	char	*keep;
 
 	n = 0;
-	tmp = NULL;
 	ptm = NULL;
-	keep = NULL;
 	if (ft_isin(DOLLAR, tokens) && c == DQUOTES)
 		return (tokens);
 	while (ft_isin(c, &tokens[n]))
@@ -113,20 +97,16 @@ char		*ft_unset_quoted(char *tokens, char c)
 		ptm = (keep == NULL) ? ft_strdup(tmp) : ft_strjoin(keep, tmp);
 		ft_strdel(&tmp);
 		ft_strdel(&keep);
-		n += 1;
-		n += ft_strqchr(&tokens[n], c);
+		n += ft_strqchr(&tokens[n], c) + 1;
 		if (n > (int)ft_strlen(tokens))
 			break ;
 	}
 	if (n)
-	{
 		ft_strdel(&tokens);
-		tokens = ptm;
-	}
-	return (tokens);
+	return ((n) ? ptm : tokens);
 }
 
-char	*ft_getbtw(char *tokens, int type)
+char			*ft_getbtw(char *tokens, int type)
 {
 	if (type == MATHS_EXP)
 		return (ft_strdup(&(tokens[maths_len(tokens) + 2])));

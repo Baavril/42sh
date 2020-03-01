@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/02/02 17:13:33 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/01 11:55:02 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ static char	*expansions_management(char **splitok)
 	return (vars.tmp);
 }
 
-int		expansions_treatment(char **tokens)
+int			expansions_treatment(char **tokens)
 {
 	char **splitok;
 
