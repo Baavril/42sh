@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 17:12:27 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/29 16:54:45 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/01 15:59:41 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ size_t mkprompt(char **prompt)
 			mkprompt_intro(&len),
 			mkprompt_getcwd(&len),
 			mkprompt_outro(&len));
-	ft_printf("[%s]\n", *prompt);
 	return (len);
 }
 

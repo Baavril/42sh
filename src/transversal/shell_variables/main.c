@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:21:48 by baavril           #+#    #+#             */
-/*   Updated: 2020/03/01 11:38:52 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/01 15:31:28 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "shell_variables.h"
 #include "libft.h"
 #include "prompt.h"
+#include "builtins.h"
 
 extern int		g_ppid;
 struct s_svar	*g_svar;
@@ -55,7 +56,6 @@ static void		init_intern_vars(void)
 	char *tmp;
 
 	tmp = NULL;
-	g_svar = newnodshell("IFS=_", 0);
 	mkprompt(&tmp);
 	setenvvar(ft_strdup(PS1), tmp);
 	setenvvar(ft_strdup(PS2), ft_strdup(PS2V));
@@ -104,7 +104,9 @@ int				init_extern_vars(char **env)
 
 int				init_shell_vars(char **env)
 {
-	init_intern_vars();
+	g_svar = newnodshell("IFS=_", 0);
 	init_extern_vars(env);
+	init_intern_vars();
+	cmd_set(1, NULL);
 	return (1);
 }
