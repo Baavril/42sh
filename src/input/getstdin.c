@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 17:02:43 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/03/01 17:08:04 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/01 18:06:28 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,22 @@
 #include <unistd.h>
 
 extern int		g_ppid;
+
+static size_t	ft_get_input_len(char *input)
+{
+	size_t	len;
+
+	len = 0;
+	if (input[len] < 0)
+	{
+		while (input[len] < 0)
+			len++;
+		return (len);
+	}
+	if (input[len] == '\033')
+		return (ft_strlen(input));
+	return (1);
+}
 
 static int		ft_get_next_input(char buff[COUNT_KEY])
 {
@@ -31,16 +47,9 @@ static int		ft_get_next_input(char buff[COUNT_KEY])
 			return (-1);
 		input = &(stock[0]);
 	}
-	if (*input > 0)
-		buff[0] = *(input++);
-	else
-	{
-		i = 0;
-		while (input[i] && input[i] < 0)
-			i++;
-		ft_strncpy(input, buff, i);
-		input += i;
-	}
+	i = ft_get_input_len(input);
+	ft_strncpy(buff, input, i);
+	input += i;
 	if (!(*input))
 		input = NULL;
 	return (1);
