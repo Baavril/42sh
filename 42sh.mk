@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/01 11:07:24 by tgouedar         ###   ########.fr        #
+#    Updated: 2020/03/01 11:39:48 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SOURCES			:=		transversal/program/main.c \
 						transversal/program/error.c \
 						transversal/program/signals.c \
 						transversal/shell_variables/main.c \
+						transversal/shell_variables/newnodshell.c \
 						transversal/shell_variables/tools.c \
 						transversal/shell_variables/update.c \
 						transversal/hash/bash_routines.c \

@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:21:48 by baavril           #+#    #+#             */
-/*   Updated: 2020/02/28 16:46:25 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/01 11:38:52 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,6 @@ void			setenvnod(struct s_svar *new_back)
 	}
 }
 
-struct s_svar	*newnodshell(char *env, int exp)
-{
-	struct s_svar *svar_lst;
-
-	svar_lst = NULL;
-	if (*env)
-	{
-		if (!(svar_lst = (struct s_svar*)malloc(sizeof(struct s_svar))))
-			return (NULL);
-		svar_lst->str = ft_strdup(env);
-		svar_lst->key = ft_strdupto(env, '=');
-		svar_lst->value = ft_strdupfm(env, '=');
-		svar_lst->exp = exp;
-		svar_lst->next = NULL;
-	}
-	return (svar_lst);
-}
-
 int				setenvvar(char *key, char *value)
 {
 	char	*set;
@@ -68,7 +50,7 @@ int				setenvvar(char *key, char *value)
 	return (0);
 }
 
-static void		init_intern_vars()
+static void		init_intern_vars(void)
 {
 	char *tmp;
 
@@ -103,62 +85,13 @@ int				init_extern_vars(char **env)
 	voyager = g_svar;
 	while (i < len)
 	{
-		if (!ft_strncmp(env[i], "PWD=", 4))
-		{
-			setenvnod(newnodshell(env[i], 1));
-			g_svar = g_svar->next;
-		}
-		else if (!ft_strncmp(env[i], "OLDPWD=", 7))
-		{
-			setenvnod(newnodshell(env[i], 1));
-			g_svar = g_svar->next;
-		}
-		else if (!ft_strncmp(env[i], "HOME=", 5))
-		{
-			setenvnod(newnodshell(env[i], 1));
-			g_svar = g_svar->next;
-		}
-		else if (!ft_strncmp(env[i], "LOGNAME=", 8))
-		{
-			setenvnod(newnodshell(env[i], 1));
-			g_svar = g_svar->next;
-		}
-		else if (!ft_strncmp(env[i], "USER=", 5))
-		{
-			setenvnod(newnodshell(env[i], 1));
-			g_svar = g_svar->next;
-		}
-		else if (!ft_strncmp(env[i], "USERNAME=", 9))
-		{
-			setenvnod(newnodshell(env[i], 1));
-			g_svar = g_svar->next;
-		}
-		else if (!ft_strncmp(env[i], "TERM=", 5))
-		{
-			setenvnod(newnodshell(env[i], 1));
-			g_svar = g_svar->next;
-		}
-		else if (!ft_strncmp(env[i], "SHELL=", 6))
-		{
-			setenvnod(newnodshell(env[i], 1));
-			g_svar = g_svar->next;
-		}
-		else if (!ft_strncmp(env[i], "PATH=", 5))
-		{
-			setenvnod(newnodshell(env[i], 1));
-			g_svar = g_svar->next;
-		}
-		else if (!ft_strncmp(env[i], "COLORTERM=", 10))
-		{
-			setenvnod(newnodshell(env[i], 1));
-			g_svar = g_svar->next;
-		}
-		else if (!ft_strncmp(env[i], "SHLVL=", 6))
-		{
-			setenvnod(newnodshell(env[i], 1));
-			g_svar = g_svar->next;
-		}
-		else if (!ft_strncmp(env[i], "_=", 2))
+		if (!ft_strncmp(env[i], "PWD=", 4) || !ft_strncmp(env[i], "OLDPWD=", 7)
+		|| !ft_strncmp(env[i], "HOME=", 5) || !ft_strncmp(env[i], "LOGNAME=", 8)
+		|| !ft_strncmp(env[i], "USER=", 5) || !ft_strncmp(env[i], "TERM=", 5)
+		|| !ft_strncmp(env[i], "SHELL=", 6) || !ft_strncmp(env[i], "PATH=", 5)
+		|| !ft_strncmp(env[i], "COLORTERM=", 10) || !ft_strncmp(env[i], "_=", 2)
+		|| !ft_strncmp(env[i], "USERNAME=", 9)
+		|| !ft_strncmp(env[i], "SHLVL=", 6))
 		{
 			setenvnod(newnodshell(env[i], 1));
 			g_svar = g_svar->next;
