@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 13:04:47 by baavril           #+#    #+#             */
-/*   Updated: 2020/03/01 11:04:03 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/01 11:12:12 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 #include <stdint.h>
 
 extern int	g_ppid;
-
 
 int			set_reader(union u_tc *term, char **buff, t_cursor *cursor)
 {
