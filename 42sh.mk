@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/02/29 19:00:23 by tgouedar         ###   ########.fr        #
+#    Updated: 2020/02/29 19:47:15 by yberramd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,6 +71,10 @@ SOURCES			:=		transversal/program/main.c \
 						input/history/search_exclamation.c \
 						input/history/ft_atoi_history.c \
 						lexer/lexer.c \
+						lexer/lexer_verbose.c \
+						lexer/get_token.c \
+						lexer/quote.c \
+						lexer/tokens.c \
 						lexer/grammar_symbols.c \
 						lexer/separators/unglue_metachr.c \
 						lexer/separators/pipeline_separators.c \

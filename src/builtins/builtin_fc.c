@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 12:34:42 by yberramd          #+#    #+#             */
-/*   Updated: 2019/10/22 12:34:44 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/02/29 16:13:13 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include "history.h"
 #include "libft.h"
 #include "ft_getopt.h"
-#include "sig_handler.h"
 #include "history.h"
 #include "parser.h"
 

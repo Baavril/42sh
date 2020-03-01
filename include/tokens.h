@@ -69,13 +69,11 @@ enum					e_nodes
 	N_OR_IF,
 };
 
-struct					s_token
+typedef struct			s_token
 {
 	int					type;
 	char				*symbol;
-};
-
-typedef struct s_token	t_token;
+}						t_token;
 
 extern struct s_token	g_grammar_symbols[];
 
