@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 13:04:47 by baavril           #+#    #+#             */
-/*   Updated: 2020/03/01 17:17:13 by baavril          ###   ########.fr       */
+/*   Updated: 2020/03/01 17:19:46 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int			search_analyzer(union u_tc *term, char **buff, t_cursor *cursor)
 	else if (keyboard_tabulation(term, buff, cursor) == 0
 	|| keyboard_ctrl_l(term, buff, cursor) == 0
 	|| keyboard_ctrl_d(term, buff, cursor) == 0
+	|| keyboard_ctrl_c(term, buff, cursor) == 0
 	|| keyboard_dispatcher(term, buff, cursor) >= 0)
 	{
 		cursor->on = 0;
