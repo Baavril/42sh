@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 15:25:22 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/01 11:20:01 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/01 16:45:55 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,9 @@ int				display(char *str, t_cursor *cursor)
 	size_t			col;
 	size_t			x;
 	size_t			backup;
-	static size_t	lines_offset;
+	static size_t	lines_offset = 0;
 
 	x = 0;
-	lines_offset = 0;
 	col = tgetnum("co");
 	backup = cursor->end;
 	if (cursor->end > cursor->start - (cursor->start % tgetnum("co")) + tgetnum("co") * tgetnum("li") - cursor->prompt_len - 1)

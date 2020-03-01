@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 17:12:27 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/01 15:59:41 by baavril          ###   ########.fr       */
+/*   Updated: 2020/03/01 16:01:41 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 
 # define COLOR "\033[96;m"
 # define ERR_COLOR "\033[31;m"
-# define BLUE "\033[96;m"
-# define RED "\033[96;m"
 # define RESET "\033[0m"
 
 extern struct s_svar	*g_svar;
@@ -94,10 +92,8 @@ char *mkprompt_outro(size_t *len)
 size_t mkprompt(char **prompt)
 {
 	size_t len;
-	size_t ret;
 
 	len = 0;
-	ret = 0;
 	*prompt = ft_strnjoinfree(3,
 			mkprompt_intro(&len),
 			mkprompt_getcwd(&len),

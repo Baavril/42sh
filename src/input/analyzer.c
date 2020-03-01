@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 13:04:47 by baavril           #+#    #+#             */
-/*   Updated: 2020/03/01 17:14:40 by baavril          ###   ########.fr       */
+/*   Updated: 2020/03/01 17:17:13 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "input.h"
 #include "prompt.h"
 #include "display.h"
-#include "builtins.h"
 #include "history.h"
 
 #include <unistd.h>
@@ -23,8 +22,6 @@
 #include <term.h>
 #include <curses.h>
 #include <stdint.h>
-
-extern int	g_ppid;
 
 int			set_reader(union u_tc *term, char **buff, t_cursor *cursor)
 {
@@ -96,30 +93,6 @@ int			analyzer(t_cursor *cursor, char **buff, union u_tc *term)
 	{
 		if (!(standard_analyzer(term, buff, cursor)))
 			return (0);
-	}
-	return (1);
-}
-
-int			get_stdin(t_cursor *cursor, char **buff)
-{
-	union u_tc	term;
-
-	if (ft_init_tab() == 1)
-		return (1);
-	g_inside_history = NULL;
-	*buff = ft_strdup("");
-	ft_bzero(term.buff, COUNT_KEY);
-	set_reader(&term, buff, cursor);
-	while (read(STDIN_FILENO, term.buff, COUNT_KEY) > 0)
-	{
-		if (getppid() != g_ppid)
-			cmd_exit(0, NULL);
-		if (!analyzer(cursor, buff, &term))
-		{
-			ft_strdel(&g_inside_history);
-			ft_strdel(&cursor->prompt);
-			return (0);
-		}
 	}
 	return (1);
 }

@@ -6,12 +6,14 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 12:11:17 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/29 16:06:25 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/01 17:10:25 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef INPUT_H
 # define INPUT_H
+
+# include <stddef.h>
 
 # define COUNT_KEY	8
 # define CTRL_A		0x01
@@ -49,7 +51,7 @@ char				*g_inside_history;
 union				u_tc
 {
 	char			key;
-	char			buff[COUNT_KEY];
+	char			buff[COUNT_KEY + 1];
 };
 
 typedef struct		s_cursor
@@ -79,6 +81,7 @@ int					search_analyzer(union u_tc *term, char **buff,
 															t_cursor *cursor);
 int					standard_analyzer(union u_tc *term, char **buff,
 															t_cursor *cursor);
+int					analyzer(t_cursor *cursor, char **buff, union u_tc *term);
 void				ft_reader(union u_tc *term, t_cursor *cursor, char ***buff);
 void				ft_init_cursor(t_cursor *cursor);
 
