@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 22:47:47 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/02/01 17:30:30 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/01 12:44:35 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,7 @@ void			set_signals(int id)
 	{
 		ft_bzero(&action, sizeof(action));
 		sigemptyset(&action.sa_mask);
-		if (id == FATHER && signal->sig_nbr == SIGCHLD)
-		{
-			action.sa_flags = SA_SIGINFO;
-			action.sa_sigaction = (t_ft_sigact_handler)(signal->handlers[id]);
-		}
-		else
-			action.sa_handler = signal->handlers[id];
+		action.sa_handler = signal->handlers[id];
 		sigaction(signal->sig_nbr, &action, NULL);
 		signal = &(g_sigdispatcher[++i]);
 	}
