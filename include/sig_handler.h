@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 22:36:47 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/18 10:54:09 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/01 18:25:14 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 # define CHILD			1
 
 typedef void			(*t_ft_handler)(int sig_nbr);
-typedef void			(*t_ft_sigact_handler)(int sig_nbr, siginfo_t *action,
-														void *handling_info);
 
 typedef struct			s_sig
 {

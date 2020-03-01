@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/26 20:30:28 by baavril          ###   ########.fr       */
+/*   Updated: 2020/03/01 18:29:58 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		sort_ascii_tab(char **tab)
 	{
 		while (j < len)
 		{
-			if (ft_strspecasecmp(tab[i], tab[j]) < 0)
+			if (ft_strspecasecmp(tab[i], tab[j]) > 0)
 				ft_str_swap(&tab[i], &tab[j]);
 			++j;
 		}
