@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:21:48 by baavril           #+#    #+#             */
-/*   Updated: 2020/02/29 19:26:53 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/01 15:37:33 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,20 +111,23 @@ int
 	cmd_unset(int argc, char **argv)
 {
 	int			i;
+	int			ret;
 	extern char	**environ;
 
 	i = 1;
+	ret = 0;
 	(void)argc;
 	while (argv[i])
 	{
 		if (unsetvarset(argv[i]) == SUCCESS)
+			unsetvarenv(argv[i]);
+		else if (unsetvarenv(argv[i]) == ERROR)
 		{
-			if (unsetvarenv(argv[i]) == ERROR)
-				return (ERROR);
+			ft_dprintf(STDERR_FILENO,
+					"42sh: unset: `%s' is not a valid identifier.\n", argv[i]);
+			ret++;
 		}
-		else
-			ft_printf("42sh: unset: `%s' is not a valid identifier\n", argv[i]);
 		++i;
 	}
-	return (SUCCESS);
+	return ((ret) ? ERROR : SUCCESS);
 }
