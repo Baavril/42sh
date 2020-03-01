@@ -6,13 +6,13 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2019/10/18 17:29:13 by baavril          ###   ########.fr       */
+/*   Updated: 2020/03/01 10:32:41 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
- ** https://www.unix.com/man-page/posix/1posix/test/
- */
+** https://www.unix.com/man-page/posix/1posix/test/
+*/
 
 #include "libft.h"
 #include "builtins.h"
@@ -42,7 +42,8 @@ static int	ft_o_management(int *tmp_rets, int ret, int argc, char **args)
 	return (ret = (keep) ? 1 : 0);
 }
 
-static int	test_precedences_management(int argc, char **argv, int ret, char *opts)
+static int	test_precedences_management(int argc, char **argv, int ret,
+																	char *opts)
 {
 	int		n;
 	int		set;
@@ -60,13 +61,13 @@ static int	test_precedences_management(int argc, char **argv, int ret, char *opt
 		if (!(args = split_btw_opts(&argv[set], argc)))
 			return (E_FAILURE);
 		ret = (*opts - 'a' == 0) ? ft_a_management(ret, argc, args)
-		: ft_o_management(&tmp_rets[n++], ret, argc, args) ;
+						: ft_o_management(&tmp_rets[n++], ret, argc, args);
 		//gestion erreur
 		ft_free_tabs(args);
 		argv += set;
 		opts++;
 	}
-	return ((ft_tabret(opts, tmp_rets) == E_SUCCESS) ? E_SUCCESS: ret);
+	return ((ft_tabret(opts, tmp_rets) == E_SUCCESS) ? E_SUCCESS : ret);
 }
 
 static int	test_first_args(int argc, char **argv)
