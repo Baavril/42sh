@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/14 16:06:01 by baavril          ###   ########.fr       */
+/*   Updated: 2020/03/01 12:20:43 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 int		exp_limit(char *tokens)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (*tokens == BSLASH)
@@ -38,11 +38,11 @@ int		exp_limit(char *tokens)
 	return (i);
 }
 
-char *malexps(char *str, int *len, char c)
+char	*malexps(char *str, int *len, char c)
 {
-	int r;
-	int s;
-	char *ret;
+	int		r;
+	int		s;
+	char	*ret;
 
 	r = 0;
 	s = 0;
@@ -63,15 +63,15 @@ char *malexps(char *str, int *len, char c)
 	return (ret);
 }
 
-char **ft_expsplit(char *str, char c)
+char	**ft_expsplit(char *str, char c)
 {
-	int i;
-	int nb;
-	int len;
-	char **tab;
+	int		i;
+	int		nb;
+	int		len;
+	char	**tab;
 
 	i = 0;
-	nb = exp_limit(str) + 1; /* nb +- 1 si '\' */
+	nb = exp_limit(str) + 1; // nb +- 1 si '\'
 	if (nb == 0)
 		return (NULL);
 	if (!(tab = (char**)malloc(sizeof(char*) * (nb + 1))))
@@ -81,4 +81,4 @@ char **ft_expsplit(char *str, char c)
 		tab[i++] = malexps(str, &len, c);
 	tab[nb] = 0;
 	return (tab);
- }
+}
