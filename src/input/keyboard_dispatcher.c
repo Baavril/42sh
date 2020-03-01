@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 12:42:22 by baavril           #+#    #+#             */
-/*   Updated: 2019/11/19 12:48:06 by baavril          ###   ########.fr       */
+/*   Updated: 2020/03/01 11:22:57 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_dispatch_keys		g_dispatch_keys[] =
 	{NULL, NULL}
 };
 
-int	ft_init_tab(void)
+int		ft_init_tab(void)
 {
 	if (!(g_dispatch_keys[0].key_path = tgetstr("kl", NULL) + 2))
 		return (1);
@@ -66,18 +66,17 @@ int	ft_init_tab(void)
 	return (0);
 }
 
-int	keyboard_dispatcher(union u_tc *term, char **buff, t_cursor *cursor)
+int		keyboard_dispatcher(union u_tc *term, char **buff, t_cursor *cursor)
 {
 	int i;
 
-	i = 0;
 	if (term->key == ESC)
 	{
 		i = 0;
 		while (g_dispatch_keys[i].key_path != NULL)
 		{
-			if (ft_strncmp(g_dispatch_keys[i].key_path
-			, &term->buff[2], ft_strlen(g_dispatch_keys[i].key_path)) == 0)
+			if (ft_strncmp(g_dispatch_keys[i].key_path, &term->buff[2],
+								ft_strlen(g_dispatch_keys[i].key_path)) == 0)
 			{
 				if (cursor->ctrl_r)
 				{

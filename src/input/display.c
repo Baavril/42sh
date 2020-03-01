@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 15:25:22 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/26 15:37:43 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/01 11:20:01 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@
 #include <stdio.h>
 #include <stdint.h>
 
-
-static int display_select(char *str, t_cursor *cursor)
+static int		display_select(char *str, t_cursor *cursor)
 {
 	size_t swap;
 
@@ -38,7 +37,7 @@ static int display_select(char *str, t_cursor *cursor)
 	return (0);
 }
 
-static int display_all(char *str, t_cursor *cursor)
+static int		display_all(char *str, t_cursor *cursor)
 {
 	size_t col;
 
@@ -55,12 +54,12 @@ static int display_all(char *str, t_cursor *cursor)
 	return ((cursor->start + cursor->prompt_len) / col);
 }
 
-int display(char *str, t_cursor *cursor)
+int				display(char *str, t_cursor *cursor)
 {
-	size_t col;
-	size_t x;
-	static size_t lines_offset;
-	size_t backup;
+	size_t			col;
+	size_t			x;
+	size_t			backup;
+	static size_t	lines_offset;
 
 	x = 0;
 	lines_offset = 0;

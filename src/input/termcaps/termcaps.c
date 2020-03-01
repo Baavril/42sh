@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 16:49:15 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/18 16:24:33 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/01 11:16:30 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 static struct termios	input_termcaps(struct termios term)
 {
-	term.c_cc[VMIN] = 1; 
+	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
 	term.c_lflag = ECHOE;
 	return (term);
