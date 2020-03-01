@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/19 12:55:52 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/01 11:47:11 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ static int				check_sharp_var(char **token, char *word,
 
 int						osharp_exp(char **token)
 {
-	int flag;
-	char *word;
-	struct s_svar *tmp;
+	int				flag;
+	char			*word;
+	struct s_svar	*tmp;
 
 	tmp = g_svar;
 	flag = (!(ft_spechrlen(*token))) ? 2 : 1;

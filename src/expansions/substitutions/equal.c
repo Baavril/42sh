@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/19 12:55:11 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/01 11:44:24 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,13 @@
 #include "builtins.h"
 #include "libft.h"
 
-extern struct s_svar
-	*g_svar;
+extern struct s_svar	*g_svar;
 
 static int
 	check_equal_var(char **token, char *word, char *nod, struct s_svar *tmp)
 {
 	if (ft_strncmp(g_svar->key, *token + 2, ft_strlen(g_svar->key) - 1) == 0
-	&& check_next_var(g_svar->key, token, 1) == SUCCESS)
+			&& check_next_var(g_svar->key, token, 1) == SUCCESS)
 	{
 		ft_strdel(token);
 		if (g_svar->value && *(g_svar->value))
@@ -33,7 +32,7 @@ static int
 		else
 		{
 			if (!(*token = (word && *word) ? ft_strdup(word)
-			: ft_strdup(EMPTY_STR)))
+						: ft_strdup(EMPTY_STR)))
 				return (ERROR);
 			g_svar = tmp;
 			if (checkvarlst(nod))

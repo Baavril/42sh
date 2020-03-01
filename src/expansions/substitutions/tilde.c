@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/02/01 16:02:01 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/01 11:45:18 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static int		tilde_plus_exp(char **token, char *end)
 	return (ERROR);
 }
 
-int		tilde_exp(char **token)
+int				tilde_exp(char **token)
 {
 	char	*end;
 	char	*user;

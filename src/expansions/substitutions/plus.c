@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/19 12:53:49 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/01 11:46:05 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int						plus_exp(char **token)
 {
 	char			*var;
 	char			*word;
-	struct	s_svar	*tmp;
+	struct s_svar	*tmp;
 
 	tmp = g_svar;
 	if (!(var = ft_strcdup(*token + 2, COLON)))
