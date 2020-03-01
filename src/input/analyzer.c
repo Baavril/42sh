@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 13:04:47 by baavril           #+#    #+#             */
-/*   Updated: 2020/02/29 16:08:34 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/01 11:04:03 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,6 @@
 
 extern int	g_ppid;
 
-void		update_buff(char **buff, t_cursor *cursor)
-{
-	size_t len;
-
-	len = 0;
-	ft_bzero(*buff, ft_strlen(*buff));
-	if (cursor->match)
-	{
-		len = ft_strlen(cursor->match);
-		if (cursor->end < len)
-			*buff = buff_realloc(*buff, len);
-		ft_strcpy(*buff, cursor->match);
-	}
-	cursor->end = len;
-}
 
 int			set_reader(union u_tc *term, char **buff, t_cursor *cursor)
 {
@@ -100,39 +85,40 @@ int			search_analyzer(union u_tc *term, char **buff, t_cursor *cursor)
 	return (-1);
 }
 
+int			analyzer(t_cursor *cursor, char **buff, union u_tc *term)
+{
+	if (term->key == CTRL_R || cursor->on == 1)
+	{
+		if (!(search_analyzer(term, buff, cursor)))
+			return (0);
+	}
+	else if (cursor->on == 0)
+	{
+		if (!(standard_analyzer(term, buff, cursor)))
+			return (0);
+	}
+	return (1);
+}
+
 int			get_stdin(t_cursor *cursor, char **buff)
 {
-	int flag;
-	union	u_tc term;
+	union u_tc	term;
 
-	flag = 0;
 	if (ft_init_tab() == 1)
 		return (1);
 	g_inside_history = NULL;
 	*buff = ft_strdup("");
 	ft_bzero(term.buff, COUNT_KEY);
 	set_reader(&term, buff, cursor);
-	while (read(STDIN_FILENO, term.buff, COUNT_KEY))
+	while (read(STDIN_FILENO, term.buff, COUNT_KEY) > 0)
 	{
-		if (getppid() != g_ppid) // AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHH
-			cmd_exit(0, NULL);  // ALEEEEED: C'est Trop MOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOCHE
-		if (term.key == CTRL_R || cursor->on == 1)
+		if (getppid() != g_ppid)
+			cmd_exit(0, NULL);
+		if (!analyzer(cursor, buff, &term))
 		{
-			if ((flag = search_analyzer(&term, buff, cursor)) == 0)
-			{
-				ft_strdel(&g_inside_history);
-				ft_strdel(&(cursor->prompt));
-				return (0);
-			}
-		}
-		else if (cursor->on == 0)
-		{
-			if (!(standard_analyzer(&term, buff, cursor)))
-			{
-				ft_strdel(&g_inside_history);
-				ft_strdel(&cursor->prompt);
-				return (0);
-			}
+			ft_strdel(&g_inside_history);
+			ft_strdel(&cursor->prompt);
+			return (0);
 		}
 	}
 	return (1);

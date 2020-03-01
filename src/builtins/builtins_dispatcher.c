@@ -6,16 +6,20 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/05 21:19:04 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/01 10:44:28 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*
+** source : https://www.gnu.org/software/bash/manual/html_node/Exit-Status.html
+*/
 
 #include <stdlib.h>
 
 #include "libft.h"
 #include "builtins.h"
 #include "error.h"
-#define EXIT_STATUS 127 // source : https://www.gnu.org/software/bash/manual/html_node/Exit-Status.html
+#define EXIT_STATUS 127
 
 const t_builtins	g_builtins[] =
 {

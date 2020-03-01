@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/02/29 19:47:15 by yberramd         ###   ########.fr        #
+#    Updated: 2020/03/01 11:07:24 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,7 @@ SOURCES			:=		transversal/program/main.c \
 						input/quote.c \
 						input/display.c \
 						input/analyzer.c \
+						input/update_buffer.c \
 						input/keyboard_commands.c \
 						input/keyboard_dispatcher.c \
 						input/auto_completion/auto_completion.c \
