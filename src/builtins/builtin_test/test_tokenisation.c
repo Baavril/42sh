@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2019/11/09 11:44:32 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/01 10:40:23 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,16 @@ int		find_next_opt(char **argv, int flag, int init)
 
 	x = 0;
 	y = 0;
-	if (((init == 0 && *argv[x] == '-'
-	&& (int)ft_strlen(argv[x]) == 2)
+	if (((init == 0 && *argv[x] == '-' && (int)ft_strlen(argv[x]) == 2)
 	&& (argv[x][1] == 'a' || argv[x][1] == 'o')))
 		x++;
 	while (argv[x])
-	{	
+	{
 		if (((*argv[x] == '-' && (int)ft_strlen(argv[x]) == 2)
 		&& (argv[x][1] == 'a' || argv[x][1] == 'o')))
 		{
-			if (x > 0 && (*(argv[x - 1]) - '-')  != E_SUCCESS)
-			{
-				(flag) ? y++: y;
-				return (y);
-			}
+			if (x > 0 && (*(argv[x - 1]) - '-') != E_SUCCESS)
+				return ((flag) ? y + 1 : y);
 		}
 		y++;
 		x++;
@@ -56,9 +52,9 @@ char	**split_btw_opts(char **argv, int opt)
 	{
 		if ((argv[i][0] == '-' && (int)ft_strlen(argv[i]) == 2
 		&& (argv[i][1] == 'a' || argv[i][1] == 'o'))
-		&& ((i > 0 && (*(argv[i - 1]) - '-')  != E_SUCCESS)))
+		&& ((i > 0 && (*(argv[i - 1]) - '-') != E_SUCCESS)))
 		{
-			args[j] = 0;
+			args[j] = NULL;
 			return (args);
 		}
 		if (!(args[j] = ft_strdup(argv[i])))
@@ -82,7 +78,7 @@ int		ft_retnbr_opts(char **argv)
 		if (ft_strcmp(argv[i], "-a") == E_SUCCESS
 		|| ft_strcmp(argv[i], "-o") == E_SUCCESS)
 		{
-			if (i > 0 && (*(argv[i - 1]) - '-')  != E_SUCCESS)
+			if (i > 0 && (*(argv[i - 1]) - '-') != E_SUCCESS)
 				ret++;
 		}
 		i++;
@@ -92,9 +88,9 @@ int		ft_retnbr_opts(char **argv)
 
 char	*ft_ret_optstring(char **argv, int exps)
 {
-	int i;
-	int x;
-	char *opts;
+	int		i;
+	int		x;
+	char	*opts;
 
 	i = 0;
 	x = 0;
@@ -106,7 +102,7 @@ char	*ft_ret_optstring(char **argv, int exps)
 		if (argv[i][0] == '-' && (int)ft_strlen(argv[i]) == 2
 		&& (argv[i][1] == 'a' || argv[i][1] == 'o'))
 		{
-			if (i > 0 && (*(argv[i - 1]) - '-')  != E_SUCCESS)
+			if (i > 0 && (*(argv[i - 1]) - '-') != E_SUCCESS)
 			{
 				opts[x] = argv[i][1];
 				x++;
