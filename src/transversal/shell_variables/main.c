@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:21:48 by baavril           #+#    #+#             */
-/*   Updated: 2020/03/01 15:31:28 by baavril          ###   ########.fr       */
+/*   Updated: 2020/03/01 17:51:51 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,5 @@ int				init_shell_vars(char **env)
 	g_svar = newnodshell("IFS=_", 0);
 	init_extern_vars(env);
 	init_intern_vars();
-	cmd_set(1, NULL);
 	return (1);
 }
