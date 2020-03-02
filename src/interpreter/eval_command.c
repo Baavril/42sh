@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 16:26:31 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/09 11:59:31 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/02 18:06:37 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int				eval_command(char **arg)
 		ft_del_entry(g_bintable, absolute_path);
 	}
 	if ((absolute_path = check_bin(arg)))
-	{
 		if (!access(absolute_path, X_OK) && is_regfile(absolute_path))
 		{
 			ft_insert_bintable(*arg, absolute_path, 1);
@@ -103,6 +102,5 @@ int				eval_command(char **arg)
 			*arg = absolute_path;
 			return (0);
 		}
-	}
 	return (1);
 }

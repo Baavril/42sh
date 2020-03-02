@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   globing.c                                       :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/26 20:30:28 by baavril          ###   ########.fr       */
+/*   Updated: 2020/03/02 18:05:39 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,9 @@ static int	set_tab_ret(t_glob *var)
 	var->n = 0;
 	if (!var->nul)
 	{
-		if (!(var->ret
-		= (char**)ft_memalloc(sizeof(char*) * (ft_tablen(var->dir) + 1))))
+		if (!(var->ret =
+					(char**)ft_memalloc(sizeof(char*)
+						* (ft_tablen(var->dir) + 1))))
 			return (ERROR);
 		while (var->dir[var->n])
 		{

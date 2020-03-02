@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 13:16:47 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/02 13:23:12 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/02 18:09:02 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,5 @@ int	i_andgreat(t_elem left, t_elem right)
 		rtn = i_great(left, right);
 	}
 	ft_strdel(&left.c);
-	return(rtn);
+	return (rtn);
 }

@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/26 20:30:28 by baavril          ###   ########.fr       */
+/*   Updated: 2020/03/02 18:04:04 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int			scan_current_dir(t_glob *var, char **indepth)
 		{
 			if (*(var->filedata->d_name) != HIDEN_FILE)
 			{
-				var->dir[var->j]
-				= ft_strdup(pattern_matching(var->filedata->d_name,
+				var->dir[var->j] =
+					ft_strdup(pattern_matching(var->filedata->d_name,
 				indepth[var->i], GLOBING));
 				(!*(var->dir[var->j])) ? free(var->dir[var->j]) : ++var->j;
 			}
@@ -57,8 +57,8 @@ static int	dir_paths_constructor(t_glob *var, char **indepth)
 	if (*(var->filedata->d_name) != HIDEN_FILE)
 	{
 		var->tmp_file = ft_strjoin(var->tmp_dir[var->j], PATH_DIR);
-		var->dir[var->x]
-		= ft_strjoin(var->tmp_file, pattern_matching(var->filedata->d_name,
+		var->dir[var->x] =
+			ft_strjoin(var->tmp_file, pattern_matching(var->filedata->d_name,
 		indepth[var->i], GLOBING));
 		ft_strdel(&var->tmp_file);
 		if (!(var->dir[var->x][ft_strlchr(var->dir[var->x], NEXT_DIR) + 1]))
@@ -92,9 +92,7 @@ int			scan_indepth_dirs(t_glob *var, char **indepth)
 			closedir(var->dirhandle);
 		}
 		if (var->dir[var->x] && !var->f)
-		{
 			free(var->dir[var->x]);
-			}
 		var->dir[var->x] = 0;
 		++var->j;
 	}

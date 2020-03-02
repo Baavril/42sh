@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 15:25:22 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/01 16:45:55 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/02 17:40:52 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int		display_all(char *str, t_cursor *cursor)
 	return ((cursor->start + cursor->prompt_len) / col);
 }
 
-int				display(char *str, t_cursor *cursor)
+int				display(char *str, t_cursor *c)
 {
 	size_t			col;
 	size_t			x;
@@ -63,20 +63,22 @@ int				display(char *str, t_cursor *cursor)
 
 	x = 0;
 	col = tgetnum("co");
-	backup = cursor->end;
-	if (cursor->end > cursor->start - (cursor->start % tgetnum("co")) + tgetnum("co") * tgetnum("li") - cursor->prompt_len - 1)
-		cursor->end = cursor->start - (cursor->start % tgetnum("co")) + tgetnum("co") * tgetnum("li") - cursor->prompt_len - 1;
+	backup = c->end;
+	if (c->end > c->start - (c->start % tgetnum("co"))
+			+ tgetnum("co") * tgetnum("li") - c->prompt_len - 1)
+		c->end = c->start - (c->start % tgetnum("co"))
+			+ tgetnum("co") * tgetnum("li") - c->prompt_len - 1;
 	if (tgetent(NULL, getenv("TERM")) != 1)
 		return (1);
-	if (cursor->end == cursor->start && cursor->end == 0)
-		lines_offset = cursor->prompt_len / col;
+	if (c->end == c->start && c->end == 0)
+		lines_offset = c->prompt_len / col;
 	while (lines_offset--)
 		ft_putstr(tgetstr("up", NULL));
-	lines_offset = display_all(str, cursor);
-	x = ((cursor->end + cursor->prompt_len) / col) - lines_offset;
+	lines_offset = display_all(str, c);
+	x = ((c->end + c->prompt_len) / col) - lines_offset;
 	while (x--)
 		ft_putstr(tgetstr("up", NULL));
-	ft_putstr(tgoto(tgetstr("ch", NULL), 0, (cursor->start + cursor->prompt_len) % col));
-	cursor->end = backup;
+	ft_putstr(tgoto(tgetstr("ch", NULL), 0, (c->start + c->prompt_len) % col));
+	c->end = backup;
 	return (0);
 }

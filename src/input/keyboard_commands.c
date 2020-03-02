@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 12:41:28 by baavril           #+#    #+#             */
-/*   Updated: 2020/03/01 17:29:22 by baavril          ###   ########.fr       */
+/*   Updated: 2020/03/02 17:43:15 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,18 @@
 
 extern int	g_retval;
 
-int			keyboard_normal_char(union u_tc *term, char **buff, t_cursor *cursor)
+int			keyboard_normal_char(union u_tc *term, char **buff, t_cursor *curs)
 {
 	if (ft_isprint(term->key))
 	{
-		if (cursor->ctrl_r)
+		if (curs->ctrl_r)
 		{
-			cursor->start = ft_strlen(*buff);
-			normal_char(buff, cursor, term->key);
-			cursor->match = get_history(buff, cursor);
+			curs->start = ft_strlen(*buff);
+			normal_char(buff, curs, term->key);
+			curs->match = get_history(buff, curs);
 			return (0);
 		}
-		normal_char(buff, cursor, term->key);
+		normal_char(buff, curs, term->key);
 		return (0);
 	}
 	return (1);
@@ -175,4 +175,4 @@ int			keyboard_ctrl_d(union u_tc *term, char **buff, t_cursor *cursor)
 		}
 	}
 	return (1);
- }
+}

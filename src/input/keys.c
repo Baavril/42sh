@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42->fr>                    +#+  +:+       +#+       */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 18:02:02 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/29 16:08:00 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/02 18:01:38 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@
 #include <curses.h>
 #include <stdint.h>
 
-char	*buff_realloc(char *old_buff, size_t i)
+char		*buff_realloc(char *old_buff, size_t i)
 {
-	static size_t buff_size = 0;
-	char *new_buff;
+	static size_t	buff_size = 0;
+	char			*new_buff;
 
 	if (!*old_buff)
 		buff_size = 0;
@@ -42,20 +42,21 @@ char	*buff_realloc(char *old_buff, size_t i)
 	return (old_buff);
 }
 
-int normal_char(char **buff, t_cursor *cursor, char c)
+int			normal_char(char **buff, t_cursor *cursor, char c)
 {
 	*buff = buff_realloc(*buff, ++(cursor->end));
-	ft_memmove(&((*buff)[cursor->start + 1]), &((*buff)[cursor->start]), cursor->end - cursor->start);
+	ft_memmove(&((*buff)[cursor->start + 1]), &((*buff)[cursor->start]),
+			cursor->end - cursor->start);
 	(*buff)[(cursor->start)++] = c;
 	return (1);
 }
 
-char *get_history(char **buff, t_cursor *cursor)
+char		*get_history(char **buff, t_cursor *cursor)
 {
-	char *tmp;
-	int idx_tmp;
-	static int idx_buff = 0;
-	static char *match = NULL;
+	char		*tmp;
+	int			idx_tmp;
+	static int	idx_buff = 0;
+	static char	*match = NULL;
 
 	tmp = NULL;
 	if ((idx_tmp = history(SEARCH, buff, &tmp)) >= 1)
@@ -74,7 +75,11 @@ char *get_history(char **buff, t_cursor *cursor)
 	return (match);
 }
 
-int set_string(char **buff, t_cursor *cursor, char *str)//set line
+/*
+** set line
+*/
+
+int			set_string(char **buff, t_cursor *cursor, char *str)
 {
 	size_t len;
 
@@ -89,7 +94,7 @@ int set_string(char **buff, t_cursor *cursor, char *str)//set line
 	return (1);
 }
 
-int right_arrow(char **buff, t_cursor *cursor)
+int			right_arrow(char **buff, t_cursor *cursor)
 {
 	(void)buff;
 	if (cursor->start < cursor->end)
@@ -97,7 +102,7 @@ int right_arrow(char **buff, t_cursor *cursor)
 	return (1);
 }
 
-int left_arrow(char **buff, t_cursor *cursor)
+int			left_arrow(char **buff, t_cursor *cursor)
 {
 	(void)buff;
 	if (cursor->start > 0)
@@ -105,53 +110,63 @@ int left_arrow(char **buff, t_cursor *cursor)
 	return (1);
 }
 
-int delete_key(char **buff, t_cursor *cursor)
+int			delete_key(char **buff, t_cursor *cursor)
 {
 	if (cursor->start < cursor->end && cursor->end > 0)
 	{
-		ft_memmove(&((*buff)[cursor->start]), &((*buff)[cursor->start + 1]), cursor->end - cursor->start);
+		ft_memmove(&((*buff)[cursor->start]), &((*buff)[cursor->start + 1]),
+				cursor->end - cursor->start);
 		--(cursor->end);
 	}
 	return (1);
 }
 
-int backspace_key(char **buff, t_cursor *cursor)
+int			backspace_key(char **buff, t_cursor *cursor)
 {
 	if (cursor->end > 0 && cursor->start > 0)
 	{
 		--(cursor->start);
-		ft_memmove(&((*buff)[cursor->start]), &((*buff)[cursor->start + 1]), cursor->end - cursor->start);
+		ft_memmove(&((*buff)[cursor->start]), &((*buff)[cursor->start + 1]),
+				cursor->end - cursor->start);
 		--(cursor->end);
 	}
 	return (1);
 }
 
 /*
- * plus de leaks sur les tab keys -> fonctions a realiser pour prendre en charge autocompletion
- */
+** plus de leaks sur les tab keys -> fonctions a
+** realiser pour prendre en charge autocompletion
+*/
 
-/***********************************************AUTOCOMPLETION*********************************************************/
+/*
+** AUTOCOMPLETION
+*/
 
-static int pos_start(char *input, int start)
+static int	pos_start(char *input, int start)
 {
-	if (ft_isspace(input[start]) || input[start] == '/' || input[start] == '|' || input[start] == '&' || input[start] == ';')
+	if (ft_isspace(input[start]) || input[start] == '/' || input[start] == '|'
+			|| input[start] == '&' || input[start] == ';')
 		start--;
 	if (!ft_isspace(input[start]))
 	{
-		while (start > 0 && !ft_isspace(input[start]) && input[start] != '/' && !(input[start] == '|' || input[start] == '&' || input[start] == ';'))
+		while (start > 0 && !ft_isspace(input[start]) && input[start] != '/'
+				&& !(input[start] == '|' || input[start] == '&' ||
+					input[start] == ';'))
 			start--;
-		if (ft_isspace(input[start]) || input[start] == '/' || input[start] == '|' || input[start] == '&' || input[start] == ';')
+		if (ft_isspace(input[start]) || input[start] == '/'
+				|| input[start] == '|' || input[start] == '&'
+				|| input[start] == ';')
 			start++;
 	}
 	return (start);
 }
 
-static char *ft_add_string(char *input, char **binary, int start)
+static char	*ft_add_string(char *input, char **binary, int start)
 {
-	char 	*tmp;
-	int 	len;
-	int 	i;
-	int 	y;
+	char	*tmp;
+	int		len;
+	int		i;
+	int		y;
 
 	i = 0;
 	start = pos_start(input, start);
@@ -189,7 +204,7 @@ static char *ft_add_string(char *input, char **binary, int start)
 	return (tmp);
 }
 
-static int 	cmp_binary(char *str1, char *str2, int y, char *input)
+static int	cmp_binary(char *str1, char *str2, int y, char *input)
 {
 	int i;
 	int tmp_y;
@@ -199,7 +214,7 @@ static int 	cmp_binary(char *str1, char *str2, int y, char *input)
 	y = 0;
 	while (str1[i] != '\0' && input[i] != '\0' && str1[i] == input[i])
 		i++;
-	while (str1[i] !='\0' && str2[i] != '\0' && str1[i] == str2[i])
+	while (str1[i] != '\0' && str2[i] != '\0' && str1[i] == str2[i])
 	{
 		i++;
 		y++;
@@ -210,7 +225,7 @@ static int 	cmp_binary(char *str1, char *str2, int y, char *input)
 		return (y);
 }
 
-static void assign_tmp(char *tmp, char *binary, char *input, int y)
+static void	assign_tmp(char *tmp, char *binary, char *input, int y)
 {
 	int i;
 
@@ -228,22 +243,23 @@ static void assign_tmp(char *tmp, char *binary, char *input, int y)
 	tmp[i] = '\0';
 }
 
-static int ft_strlen_modif(char *str)
+static int	ft_strlen_modif(char *str)
 {
 	int i;
 
 	i = 0;
-	while (str && str[i] != '\0' && !ft_isspace(str[i]) && str[i] != '/' && str[i] != '|' && str[i] != '&' && str[i] != ';')
+	while (str && str[i] != '\0' && !ft_isspace(str[i]) && str[i] != '/'
+			&& str[i] != '|' && str[i] != '&' && str[i] != ';')
 		i++;
 	return (i);
 }
 
-static int 	dynamic_completion(char **binary, char *input, char **equal, int start)
+static int	dynamic_comp(char **binary, char *input, char **equal, int start)
 {
-	int 	i;
-	int 	y;
-	int 	tmp_start;
-	char 	*tmp;
+	int		i;
+	int		y;
+	int		tmp_start;
+	char	*tmp;
 
 	tmp_start = pos_start(input, start);
 	y = -1;
@@ -261,7 +277,7 @@ static int 	dynamic_completion(char **binary, char *input, char **equal, int sta
 	if (!(tmp = (char*)malloc(sizeof(char) * (y + 1))))
 		return (0);
 	assign_tmp(tmp, binary[0], &input[tmp_start], y);
-	if (!((*equal) = ft_add_string(input, &tmp, start)))	
+	if (!((*equal) = ft_add_string(input, &tmp, start)))
 	{
 		ft_strdel(&tmp);
 		return (0);
@@ -270,18 +286,22 @@ static int 	dynamic_completion(char **binary, char *input, char **equal, int sta
 	return (1);
 }
 
-int tab_key(char **buff, t_cursor *cursor)
+/*
+** curseur
+*/
+
+int			tab_key(char **buff, t_cursor *cursor)
 {
-	int 	ret;
-	t_tst 	*tst;
-	char 	**binary;
-	char 	*input;
+	int		ret;
+	t_tst	*tst;
+	char	**binary;
+	char	*input;
 
 	input = NULL;
 	if (!cursor->end)
 		return (1);
 	tst = ft_tst();
-	if (!(ret = ft_auto_completion(tst, *buff, &binary, cursor->start)))// curseur !!!!!!
+	if (!(ret = ft_auto_completion(tst, *buff, &binary, cursor->start)))
 	{
 		del_tst(tst);
 		return (0);
@@ -300,7 +320,7 @@ int tab_key(char **buff, t_cursor *cursor)
 	}
 	else if (binary && binary[0] != NULL)
 	{
-		if ((ret = dynamic_completion(binary, *buff, &input, cursor->start)) == 1)
+		if ((ret = dynamic_comp(binary, *buff, &input, cursor->start)) == 1)
 		{
 			set_string(buff, cursor, input);
 			ft_strdel(&input);
@@ -311,18 +331,19 @@ int tab_key(char **buff, t_cursor *cursor)
 			del_double_char(binary);
 			return (0);
 		}
-		print_double_char(binary);//FAIRE UN display
+		print_double_char(binary);
 	}
-	//printf("ret = %d\n", ret);
 	del_tst(tst);
 	if (binary)
 		del_double_char(binary);
 	return (1);
 }
 
-/**********************************************************************************************************************/
+/*
+** END
+*/
 
-int down_arrow(char **buff, t_cursor *cursor)
+int			down_arrow(char **buff, t_cursor *cursor)
 {
 	char *str;
 
@@ -339,7 +360,7 @@ int down_arrow(char **buff, t_cursor *cursor)
 	return (1);
 }
 
-int up_arrow(char **buff, t_cursor *cursor)
+int			up_arrow(char **buff, t_cursor *cursor)
 {
 	char *str;
 
@@ -352,48 +373,50 @@ int up_arrow(char **buff, t_cursor *cursor)
 	return (1);
 }
 
-int paste_key(char **buff, t_cursor *cursor)
+int			paste_key(char **buff, t_cursor *cursor)
 {
-	char *str = g_copybuff;
+	char *str;
+
+	str = g_copybuff;
 	if (str)
 		while (*str)
 			normal_char(buff, cursor, *str++);
 	return (1);
 }
 
-int home_key(char **buff, t_cursor *cursor)
+int			home_key(char **buff, t_cursor *cursor)
 {
 	(void)buff;
 	cursor->start = 0;
 	return (1);
 }
 
-int end_key(char **buff, t_cursor *cursor)
+int			end_key(char **buff, t_cursor *cursor)
 {
 	(void)buff;
 	cursor->start = cursor->end;
 	return (1);
 }
 
-int next_word(char **buff, t_cursor *cursor)
+int			next_word(char **buff, t_cursor *cursor)
 {
-	while(cursor->start < cursor->end && ft_isalnum((*buff)[cursor->start]))
+	while (cursor->start < cursor->end && ft_isalnum((*buff)[cursor->start]))
 		(cursor->start)++;
-	while(cursor->start < cursor->end && !ft_isalnum((*buff)[cursor->start]))
+	while (cursor->start < cursor->end && !ft_isalnum((*buff)[cursor->start]))
 		(cursor->start)++;
 	return (1);
 }
 
-int previous_word(char **buff, t_cursor *cursor)
+int			previous_word(char **buff, t_cursor *cursor)
 {
-	while(cursor->start > 0 && ft_isalnum((*buff)[cursor->start]))
+	while (cursor->start > 0 && ft_isalnum((*buff)[cursor->start]))
 		(cursor->start)--;
-	while(cursor->start > 0 && !ft_isalnum((*buff)[cursor->start]))
+	while (cursor->start > 0 && !ft_isalnum((*buff)[cursor->start]))
 		(cursor->start)--;
 	return (1);
 }
 
-int select_key(char **buff, t_cursor *cursor)
+int			select_key(char **buff, t_cursor *cursor)
 {
 	if (cursor->in == SIZE_MAX)
 		cursor->in = cursor->start;
@@ -401,9 +424,11 @@ int select_key(char **buff, t_cursor *cursor)
 	{
 		ft_strdel(&g_copybuff);
 		if (cursor->start > cursor->in)
-			g_copybuff = ft_strndup(*buff + cursor->in, cursor->start - cursor->in);
+			g_copybuff = ft_strndup(*buff + cursor->in,
+					cursor->start - cursor->in);
 		else if (cursor->start < cursor->in)
-			g_copybuff = ft_strndup(*buff + cursor->start, cursor->in - cursor->start);
+			g_copybuff = ft_strndup(*buff + cursor->start,
+					cursor->in - cursor->start);
 		cursor->in = SIZE_MAX;
 	}
 	return (1);

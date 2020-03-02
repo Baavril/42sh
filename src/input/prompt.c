@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 17:12:27 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/01 16:01:41 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/02 17:45:39 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@
 #include "quote.h"
 #include "shell_variables.h"
 
-# define COLOR "\033[96;m"
-# define ERR_COLOR "\033[31;m"
-# define RESET "\033[0m"
+#define COLOR "\033[96;m"
+#define ERR_COLOR "\033[31;m"
+#define RESET "\033[0m"
 
 extern struct s_svar	*g_svar;
-extern int 				g_retval;
+extern int				g_retval;
 
-size_t mkprompt_quote(char *input, char **buff)
+size_t	mkprompt_quote(char *input, char **buff)
 {
-	char *qtbuff;
+	char			*qtbuff;
 	struct s_svar	*voyager;
 
 	qtbuff = quote_prompt(input);
@@ -43,7 +43,7 @@ size_t mkprompt_quote(char *input, char **buff)
 	return (ft_strlen(*buff));
 }
 
-char *mkprompt_intro(size_t *len)
+char	*mkprompt_intro(size_t *len)
 {
 	if (!g_retval)
 	{
@@ -57,7 +57,7 @@ char *mkprompt_intro(size_t *len)
 	}
 }
 
-char *mkprompt_getcwd(size_t *len)
+char	*mkprompt_getcwd(size_t *len)
 {
 	struct s_svar	*voyager;
 
@@ -67,7 +67,7 @@ char *mkprompt_getcwd(size_t *len)
 		if (!(ft_strcmp(voyager->key, PWD)))
 		{
 			*len = ft_strlen(voyager->value);
-			return(ft_strdup(voyager->value));
+			return (ft_strdup(voyager->value));
 		}
 		voyager = voyager->next;
 	}
@@ -75,7 +75,7 @@ char *mkprompt_getcwd(size_t *len)
 	return (ft_strdup(""));
 }
 
-char *mkprompt_outro(size_t *len)
+char	*mkprompt_outro(size_t *len)
 {
 	if (!g_retval)
 	{
@@ -89,7 +89,7 @@ char *mkprompt_outro(size_t *len)
 	}
 }
 
-size_t mkprompt(char **prompt)
+size_t	mkprompt(char **prompt)
 {
 	size_t len;
 
@@ -117,10 +117,10 @@ char	*search_prompt_intro(t_cursor *cursor)
 
 size_t	search_prompt(t_cursor *cursor, char *buff)
 {
-	char *intro;
-	char *outro;
-	char *tmp;
-	int len;
+	char	*intro;
+	char	*outro;
+	char	*tmp;
+	int		len;
 
 	len = 0;
 	tmp = (!*buff) ? ft_strdup("") : ft_strdup(buff);

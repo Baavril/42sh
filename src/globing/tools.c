@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/03/01 18:29:58 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/02 18:04:34 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void		ft_freeintab(char **tab)
 		ft_strdel(&tab[i++]);
 }
 
-void	ft_str_swap(char **a, char **b)
+void		ft_str_swap(char **a, char **b)
 {
 	char	*i;
 
@@ -35,7 +35,7 @@ void	ft_str_swap(char **a, char **b)
 	*b = i;
 }
 
-int		sort_ascii_tab(char **tab)
+int			sort_ascii_tab(char **tab)
 {
 	int	i;
 	int	j;
@@ -58,7 +58,7 @@ int		sort_ascii_tab(char **tab)
 	return (SUCCESS);
 }
 
-int		ft_strspecasecmp(char *s1, char *s2)
+int			ft_strspecasecmp(char *s1, char *s2)
 {
 	size_t	i;
 	size_t	j;
@@ -70,9 +70,9 @@ int		ft_strspecasecmp(char *s1, char *s2)
 	while (s1[i] && s2[j])
 	{
 		if (!ft_isalnum(s1[i]) && ft_isprint(s1[i]))
-				++i;
+			++i;
 		if (!ft_isalnum(s2[j]) && ft_isprint(s1[i]))
-				++j;
+			++j;
 		if (ft_tolower(s1[i]) == ft_tolower(s2[j]) || s1[i] == s2[j])
 		{
 			++i;
