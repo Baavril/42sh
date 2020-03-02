@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 13:16:47 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/29 15:42:24 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/02 13:23:12 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,13 @@ int	i_lessand(t_elem left, t_elem right)
 	int fd1;
 
 	fd1 = left.c ? *left.c - '0' : 0;
-	if (!*right.c)
-		ft_dprintf(STDERR_FILENO, "42sh: %s: Redirection ambigue\n", right.c);
-	else if (dup2(*right.c - '0', fd1) != -1)
-		return (fd1);
+	if (*right.c && !*(right.c + 1))
+	{
+		if ((*right.c == '-') && !close(fd1))
+			return (fd1);
+		else if (dup2(*right.c - '0', fd1) != -1)
+			return (fd1);
+	}
 	ft_dprintf(STDERR_FILENO, "42sh: %s: incorrect fd\n", right.c);
 	return (-1);
 }
@@ -32,10 +35,13 @@ int	i_greatand(t_elem left, t_elem right)
 	int fd1;
 
 	fd1 = left.c ? *left.c - '0' : 1;
-	if (!*right.c)
-		ft_dprintf(STDERR_FILENO, "42sh: %s: Redirection ambigue\n", right.c);
-	else if (dup2(*right.c - '0', fd1) != -1)
-		return (fd1);
+	if (*right.c && !*(right.c + 1))
+	{
+		if ((*right.c == '-') && !close(fd1))
+			return (fd1);
+		else if (dup2(*right.c - '0', fd1) != -1)
+			return (fd1);
+	}
 	ft_dprintf(STDERR_FILENO, "42sh: %s: incorrect fd\n", right.c);
 	return (-1);
 }
