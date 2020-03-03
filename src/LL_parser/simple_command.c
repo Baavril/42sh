@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:36:39 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/29 11:19:45 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/03 19:26:58 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_node		*cmd_suffix(t_token tok)
 		node = malloc(sizeof(t_node));
 		node->left = tmp1;
 		node->right.v = NULL;
-		if (is_potential(gnt(NULL, 1), N_SUFFIX))
+		if (is_potenti(gnt(NULL, 1), N_SUFFIX))
 			node->right.v = cmd_suffix(gnt(NULL, 0));
 		node->f = f;
 		return (node);
@@ -48,7 +48,7 @@ t_node		*exec(t_token tok)
 			return (NULL);
 		node->left.c = tmp1;
 		node->right.v = NULL;
-		if (is_potential(gnt(NULL, 1), N_SUFFIX))
+		if (is_potenti(gnt(NULL, 1), N_SUFFIX))
 			node->right.v = cmd_suffix(gnt(NULL, 0));
 		node->f = i_exec;
 		return (node);
@@ -70,7 +70,7 @@ t_node		*cmd_prefix(t_token tok)
 		node = malloc(sizeof(t_node));
 		node->left = tmp1;
 		node->right.v = NULL;
-		if (is_potential(gnt(NULL, 1), N_PREFIX))
+		if (is_potenti(gnt(NULL, 1), N_PREFIX))
 			node->right.v = cmd_prefix(gnt(NULL, 0));
 		node->f = f;
 		return (node);
@@ -85,7 +85,7 @@ t_node		*simple_command(t_token tok)
 
 	if ((tmp1 = cmd_prefix(tok)))
 	{
-		if (is_potential(gnt(NULL, 1), N_CMD_WORD))
+		if (is_potenti(gnt(NULL, 1), N_CMD_WORD))
 		{
 			node = malloc(sizeof(t_node));
 			node->left.v = tmp1;
@@ -95,7 +95,7 @@ t_node		*simple_command(t_token tok)
 		}
 		return (tmp1);
 	}
-	else if (is_potential(tok, N_CMD_NAME))
+	else if (is_potenti(tok, N_CMD_NAME))
 	{
 		node = malloc(sizeof(t_node));
 		node->left.v = NULL;

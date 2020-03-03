@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/03/01 12:20:43 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/03 19:53:56 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,10 @@ char	*malexps(char *str, int *len, char c)
 	return (ret);
 }
 
+/*
+** nb +- 1 si '\' ligne 78 : nb = exp_limit(str) + 1;
+*/
+
 char	**ft_expsplit(char *str, char c)
 {
 	int		i;
@@ -71,7 +75,7 @@ char	**ft_expsplit(char *str, char c)
 	char	**tab;
 
 	i = 0;
-	nb = exp_limit(str) + 1; // nb +- 1 si '\'
+	nb = exp_limit(str) + 1;
 	if (nb == 0)
 		return (NULL);
 	if (!(tab = (char**)malloc(sizeof(char*) * (nb + 1))))

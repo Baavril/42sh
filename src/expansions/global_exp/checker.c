@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/01/08 18:31:11 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/03 19:52:56 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,10 @@ int		check_colon_symbol(char *token)
 	return (SIMPLE_EXP);
 }
 
+/*
+** parentheses imbriquees ligne 111 : return (ERROR)
+*/
+
 int		check_maths(char *token)
 {
 	int		i;
@@ -104,7 +108,7 @@ int		check_maths(char *token)
 		if (token[i] == CL_PAR)
 			opar--;
 		if (opar < 0)
-			return (ERROR);// parentheses imbriquees
+			return (ERROR);
 		++i;
 	}
 	return (ERROR);

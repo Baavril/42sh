@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 16:02:57 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/29 18:33:44 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/03 19:25:59 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct	s_node
 
 int				g_parsingerr;
 void			execute(char *input);
-int				is_potential(t_token tok, int i);
+int				is_potenti(t_token tok, int i);
 t_node			*io_redirect(t_token tok);
 t_node			*comp_list(t_token tok);
 t_node			*command(t_token tok);

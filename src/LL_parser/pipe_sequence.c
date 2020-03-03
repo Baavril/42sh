@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:48:12 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/26 16:11:49 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/03 19:26:02 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static t_node	*pipe_sequence(t_token tok)
 
 	if ((tmp1 = command(tok)))
 	{
-		if (is_potential(gnt(NULL, 1), N_PIPE))
+		if (is_potenti(gnt(NULL, 1), N_PIPE))
 		{
 			g_alias_treated = 0;
 			gnt(NULL, 0);
@@ -58,8 +58,8 @@ t_node			*and_or(t_token tok)
 
 	if ((tmp1 = pipeline(tok)))
 	{
-		if ((is_potential(gnt(NULL, 1), N_AND_IF) && (f = i_and_op))
-		|| (is_potential(gnt(NULL, 1), N_OR_IF) && (f = i_or_op)))
+		if ((is_potenti(gnt(NULL, 1), N_AND_IF) && (f = i_and_op))
+		|| (is_potenti(gnt(NULL, 1), N_OR_IF) && (f = i_or_op)))
 		{
 			gnt(NULL, 0);
 			if (!(tmp2 = and_or(gnt(NULL, 0)))
@@ -86,9 +86,9 @@ t_node			*comp_list(t_token tok)
 		node = malloc(sizeof(t_node));
 		node->left.v = tmp1;
 		node->f = i_comp_list;
-		if (is_potential(gnt(NULL, 1), N_SEMI))
+		if (is_potenti(gnt(NULL, 1), N_SEMI))
 			gnt(NULL, 0);
-		if (is_potential(gnt(NULL, 1), N_AND))
+		if (is_potenti(gnt(NULL, 1), N_AND))
 		{
 			gnt(NULL, 0);
 			node->f = i_and_list;

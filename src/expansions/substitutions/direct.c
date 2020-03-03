@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/02/02 15:47:43 by baavril          ###   ########.fr       */
+/*   Updated: 2020/03/03 19:59:39 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ static int	view_pos_param(char **token)
 	g_pos = ptr;
 	if (tmp2)
 	{
-		if (ft_isin(SLASH, *token)) 
+		if (ft_isin(SLASH, *token))
 			len = ft_strpchr(*token, SLASH);
 		else if (ft_strlchr(*token, '"'))
 			len = ft_strlchr(*token, '"');
@@ -166,7 +166,8 @@ static int	reach_pos_params(char **token)
 		len = ft_strpchr(*token, SLASH);
 	else if (ft_strlchr(*token, '"'))
 		len = ft_strlchr(*token, '"');
-	tmp2 = ft_strndup(&(*token)[ft_strpchr(*token, *(*token + 1)) + 1], len - 2);
+	tmp2 = ft_strndup(&(*token)[ft_strpchr(*token, *(*token + 1))
+			+ 1], len - 2);
 	ft_strdel(token);
 	*token = ft_strjoin(tmp1, tmp2);
 	ft_strdel(&tmp1);

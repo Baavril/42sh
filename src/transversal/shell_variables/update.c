@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:21:48 by baavril           #+#    #+#             */
-/*   Updated: 2020/03/01 15:53:51 by baavril          ###   ########.fr       */
+/*   Updated: 2020/03/03 19:50:02 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int				update_intern_vars(void)
 	return (0);
 }
 
-char				*get_prompt_value()
+char				*get_prompt_value(void)
 {
 	int				i;
 	int				j;
@@ -102,7 +102,7 @@ char				*get_prompt_value()
 					ret[j++] = voyager->value[i];
 				++i;
 				if (voyager->value[i] == ' ')
-					break;
+					break ;
 			}
 			return (ret);
 		}
@@ -142,9 +142,9 @@ int				update_prompt_var(void)
 	while (environ[i])
 	{
 		if (!ft_strncmp(environ[i], "PWD=", 4)
-		 || !ft_strncmp(environ[i], "OLDPWD=", 7))
-		{
-			if (!(ft_strcmp(tmp2, &environ[i][ft_strpchr(environ[i], '=') + 1])))
+				|| !ft_strncmp(environ[i], "OLDPWD=", 7))
+			if (!(ft_strcmp(tmp2, &environ[i][ft_strpchr(environ[i], '=')
+							+ 1])))
 			{
 				mkprompt(&tmp1);
 				set_new_prompt_var(tmp1);
@@ -152,7 +152,6 @@ int				update_prompt_var(void)
 				ft_strdel(&tmp2);
 				return (0);
 			}
-		}
 		++i;
 	}
 	ft_strdel(&tmp2);

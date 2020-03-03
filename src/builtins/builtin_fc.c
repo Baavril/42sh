@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 12:34:42 by yberramd          #+#    #+#             */
-/*   Updated: 2020/02/29 16:13:13 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/03/03 19:02:09 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include "parser.h"
 
 #ifndef INT_MAX
-#define INT_MAX 2147483647
+# define INT_MAX 2147483647
 #endif
 
 static int		ft_atoi_history(const char *str)
@@ -51,7 +51,11 @@ static int		ft_atoi_history(const char *str)
 	return (nbr * sign);
 }
 
-static int 		fc_s_no_option()// boucle infini sur fc -s // ajout du seaarch sur fc
+/*
+** boucle infini sur fc -s // ajout du seaarch sur fc
+*/
+
+static int		fc_s_no_option(void)
 {
 	char *cmd;
 	char *input;
@@ -70,15 +74,11 @@ static int 		fc_s_no_option()// boucle infini sur fc -s // ajout du seaarch sur 
 	return (1);
 }
 
-static int 		fc_s_option(char *str_nbr)
+static int		fc_s_option(char *str_nbr)
 {
-	int 	nbr;
-	//char 	*cmd;
+	int		nbr;
 
 	nbr = ft_atoi_history(str_nbr);
-/*	if (nbr == 0)
-	else if (nbr > 0)
-	else if (nbr < 0)*/
 	return (1);
 }
 
@@ -103,11 +103,15 @@ static void		ft_strdel_option(char ***option)
 	}
 }
 
-static int		ft_fc()
+static int		ft_fc(void)
 {
 	ft_printf("fc loloolololoololol\n");
 	return (1);
 }
+
+/*
+** message d'erreur si l'historique est vide (A AJOUTER)
+*/
 
 static void		ft_no_number(int arg, int max)
 {
@@ -117,7 +121,8 @@ static void		ft_no_number(int arg, int max)
 	i = 1;
 	max -= 17;
 	history(FIRST, NULL, &cmd);
-	if (history(GET, NULL, &cmd) && (i - max) > 0 && !(arg & ARG_R) && i != (max + 17))//message d'erreur si l'historique est vide (A AJOUTER)
+	if (history(GET, NULL, &cmd) && (i - max) > 0 && !(arg & ARG_R)
+			&& i != (max + 17))
 	{
 		if (!(arg & ARG_N))
 			ft_printf("%d", i);
@@ -126,7 +131,8 @@ static void		ft_no_number(int arg, int max)
 	while (history(FORWARD, NULL, &cmd) != 2 && cmd)
 	{
 		i++;
-		if (!(arg & ARG_N) && (i - max) > 0 && !(arg & ARG_R) && i != (max + 17))
+		if (!(arg & ARG_N) && (i - max) > 0 && !(arg & ARG_R)
+				&& i != (max + 17))
 			ft_printf("%d", i);
 		if ((i - max) > 0 && !(arg & ARG_R) && i != (max + 17))
 			ft_printf("\t%s\n", cmd);
@@ -151,12 +157,13 @@ static void		ft_number(int arg, int nbr, int nbr2, int max)
 
 	i = 1;
 	(void)nbr2;
-	if (nbr == 0) // S'IL EST EGAL A 0
+	if (nbr == 0)
 		nbr = INT_MAX;
-	if (nbr > 0)// S'IL est SUPERIEUR A 0
+	if (nbr > 0)
 	{
 		history(FIRST, NULL, &cmd);
-		if (!(arg & ARG_R) && i != max && history(GET, NULL, &cmd) && ((i - nbr) >= 0 || (i == max - 1)) && (i - nbr2) <= 0)
+		if (!(arg & ARG_R) && i != max && history(GET, NULL, &cmd)
+				&& ((i - nbr) >= 0 || (i == max - 1)) && (i - nbr2) <= 0)
 		{
 			if (!(arg & ARG_N))
 				ft_printf("%d", i);
@@ -165,9 +172,11 @@ static void		ft_number(int arg, int nbr, int nbr2, int max)
 		while (history(FORWARD, NULL, &cmd) != 2 && cmd)
 		{
 			i++;
-			if (i != max && !(arg & ARG_N) && ((i - nbr) >= 0 || i == (max - 1)) && !(arg & ARG_R) && (i - nbr2) <= 0)
+			if (i != max && !(arg & ARG_N) && ((i - nbr) >= 0 || i == (max - 1))
+					&& !(arg & ARG_R) && (i - nbr2) <= 0)
 				ft_printf("%d", i);
-			if (i != max && ((i - nbr) >= 0 || (i == max - 1)) && !(arg & ARG_R) && (i - nbr2) <= 0)
+			if (i != max && ((i - nbr) >= 0 || (i == max - 1))
+					&& !(arg & ARG_R) && (i - nbr2) <= 0)
 				ft_printf("\t%s\n", cmd);
 		}
 		if (arg & ARG_R)// SI ARG R EST UTILISER
@@ -175,14 +184,15 @@ static void		ft_number(int arg, int nbr, int nbr2, int max)
 			while (history(BACKWARD, NULL, &cmd) != 2 && cmd)
 			{
 				i--;
-				if (!(arg & ARG_N) && ((i - nbr) >= 0 || i == (max - 1)) && (i - nbr2) <= 0)
+				if (!(arg & ARG_N) && ((i - nbr) >= 0
+							|| i == (max - 1)) && (i - nbr2) <= 0)
 					ft_printf("%d", i);
 				if (((i - nbr) >= 0 || (i == max - 1)) && (i - nbr2) <= 0)
 					ft_printf("\t%s\n", cmd);
 			}
 		}
 	}
-	else if (nbr < 0)// S'IL EST NEGATIF
+	else if (nbr < 0)
 	{
 		nbr -= 1;
 		max += nbr;
@@ -215,11 +225,11 @@ static void		ft_number(int arg, int nbr, int nbr2, int max)
 	}
 }
 
-static void		ft_one_number(int arg, char *str_nbr, int max)// a utiliser pour les deux nbr
+static void		ft_one_number(int arg, char *str_nbr, int max)
 {
 	int		nbr;
 
-	nbr = ft_atoi_history(str_nbr);//SI NBR SUPP a 500 PB
+	nbr = ft_atoi_history(str_nbr);
 	ft_number(arg, nbr, INT_MAX, max);
 }
 
@@ -300,15 +310,15 @@ static int		ft_print_history(int arg, char **argv)
 
 static int	opt_arg(int *arg, int opt)
 {
-	if (opt == 108)/*[l]*/
+	if (opt == 108)
 		*arg = *arg | ARG_L;
-	else if (opt == 115)/*[s]*/
+	else if (opt == 115)
 		*arg = *arg | ARG_S;
-	else if (opt == 110)/*[n]*/
+	else if (opt == 110)
 		*arg = *arg | ARG_N;
-	else if (opt == 114)/*[r]*/
+	else if (opt == 114)
 		*arg = *arg | ARG_R;
-	else if (opt == 101)/*[e]*/
+	else if (opt == 101)
 		*arg = *arg | ARG_E;
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:21:48 by baavril           #+#    #+#             */
-/*   Updated: 2020/02/09 18:20:36 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/03 18:48:59 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ static int				checkvarenv(char *argv)
 	return (ERROR);
 }
 
-static int				testvarlst(char *tmp_name, char *argv, struct s_svar *tmp)
+static int				testvarlst(char *tmp_n, char *argv, struct s_svar *tmp)
 {
 	char	*key_name;
 
 	if (!(key_name = get_key(g_svar->str)))
 		return (ERROR);
-	if (ft_strcmp(key_name, tmp_name) == 0)
+	if (ft_strcmp(key_name, tmp_n) == 0)
 	{
 		ft_strdel(&(g_svar->str));
 		ft_strdel(&(g_svar->value));
@@ -77,7 +77,7 @@ static int				testvarlst(char *tmp_name, char *argv, struct s_svar *tmp)
 		if (!(g_svar->value = ft_strdupfm(argv, '=')))
 			return (ERROR);
 		ft_strdel(&key_name);
-		ft_strdel(&tmp_name);
+		ft_strdel(&tmp_n);
 		g_svar = tmp;
 		return (SUCCESS);
 	}
