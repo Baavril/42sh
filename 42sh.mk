@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/04 13:50:40 by bprunevi         ###   ########.fr        #
+#    Updated: 2020/03/04 14:54:21 by bprunevi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,15 +52,13 @@ SOURCES			:=		transversal/program/main.c \
 						transversal/pattern_matching/deployement/launcher.c \
 						transversal/pattern_matching/deployement/maker.c \
 						input/input.c \
-						input/keys.c \
 						input/prompt.c \
+						input/search_prompt.c \
 						input/quote.c \
 						input/display.c \
 						input/getstdin.c \
 						input/analyzer.c \
 						input/update_buffer.c \
-						input/keyboard_commands.c \
-						input/keyboard_dispatcher.c \
 						input/auto_completion/auto_completion.c \
 						input/auto_completion/tst.c \
 						input/termcaps/termcaps.c \
@@ -73,6 +71,14 @@ SOURCES			:=		transversal/program/main.c \
 						input/history/exclamation2.c \
 						input/history/search_exclamation.c \
 						input/history/ft_atoi_history.c \
+						input/keys/autocompletion.c \
+						input/keys/keyboard_commands.c \
+						input/keys/keyboard_commands_ctrl.c \
+						input/keys/keyboard_dispatcher.c \
+						input/keys/keys.c \
+						input/keys/keys_arrow.c \
+						input/keys/keys_copypaste.c \
+						input/keys/keys_navig.c \
 						lexer/lexer.c \
 						lexer/lexer_verbose.c \
 						lexer/get_token.c \
