@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 08:40:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/01 17:45:33 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/04 13:28:27 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,53 +14,7 @@
 #include "parser.h"
 #include "expansions.h"
 #include "builtins.h"
-#include "jcont.h"
-
-int				curjob_cat(char *str)
-{
-	extern t_job	g_curjob;
-	char			*tmp;
-
-	tmp = g_curjob.cmd;
-	if (!g_curjob.cmd)
-		g_curjob.cmd = ft_strdup(str);
-	else
-	{
-		g_curjob.cmd = ft_strnjoin(3, g_curjob.cmd, " ", str);
-		free(tmp);
-	}
-	return (0);
-}
-
-void			curjob_add(t_node *node)
-{
-	if (node->f == i_pipe_sequence)
-		curjob_cat("|");
-	if (node->f == i_less)
-		curjob_cat("<");
-	if (node->f == i_dless)
-		curjob_cat("<<");
-	if (node->f == i_lessand)
-		curjob_cat("<&");
-	if (node->f == i_great)
-		curjob_cat(">");
-	if (node->f == i_dgreat)
-		curjob_cat(">>");
-	if (node->f == i_greatand)
-		curjob_cat(">&");
-	if (node->f == i_lessgreat)
-		curjob_cat("<>");
-	if (node->f == i_dlessdash)
-		curjob_cat("<<-");
-	if (node->f == i_clobber)
-		curjob_cat(">|");
-	if (node->f == i_and_op)
-		curjob_cat("&&");
-	if (node->f == i_or_op)
-		curjob_cat("||");
-	if (node->f == i_andgreat)
-		curjob_cat("&>");
-}
+#include "curjob.h"
 
 int				shape(t_node *node)
 {

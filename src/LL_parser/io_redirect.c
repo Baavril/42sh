@@ -6,30 +6,18 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:33:42 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/29 15:36:12 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/04 13:28:26 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokens.h"
 #include "parser.h"
+#include "curjob.h"
 #include "libft.h"
 #include <unistd.h>
 
 extern int g_parsingerr;
-
-int		(*g_redirect[])(t_elem left, t_elem right) =
-{
-	&i_less,
-	&i_dless,
-	&i_lessand,
-	&i_great,
-	&i_dgreat,
-	&i_greatand,
-	&i_lessgreat,
-	&i_dlessdash,
-	&i_clobber,
-	&i_andgreat,
-};
+extern t_flist g_flist[];
 
 t_node	*io_redirect(t_token tok)
 {
@@ -44,7 +32,7 @@ t_node	*io_redirect(t_token tok)
 	{
 		node = malloc(sizeof(t_node));
 		node->left.c = tmp1;
-		node->f = g_redirect[tok.type - LESS];
+		node->f = g_flist[tok.type - LESS];
 		bckp = g_alias_treated;
 		g_alias_treated = 1;
 		if (tok.type == DLESS
