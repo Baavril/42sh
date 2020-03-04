@@ -6,7 +6,7 @@
 #    By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/04 15:22:51 by bprunevi          #+#    #+#              #
-#    Updated: 2020/03/04 15:57:08 by bprunevi         ###   ########.fr        #
+#    Updated: 2020/03/04 16:51:37 by bprunevi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -161,9 +161,7 @@ SOURCES			:=		transversal/program/main.c \
 						builtins/builtin_type.c \
 						builtins/builtin_exit.c \
 						builtins/builtin_hash.c \
-						builtins/builtin_history.c \
 						builtins/builtin_truefalse.c \
-						builtins/builtin_fc.c \
 						builtins/builtin_export/main.c \
 						builtins/builtin_export/tools.c \
 						builtins/builtin_export/var_checker.c \

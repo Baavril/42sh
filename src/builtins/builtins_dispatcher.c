@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/04 15:56:27 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/04 16:52:07 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ const t_builtins	g_builtins[] =
 	{ "true", &cmd_true},
 	{ "false", &cmd_false},
 	{ "type", &cmd_type},
-	{ "history", &cmd_history},
-	{ "fc", &cmd_fc},
 	{ "fg", &cmd_fg},
 	{ "bg", &cmd_bg},
 	{ "jobs", &cmd_jobs},
