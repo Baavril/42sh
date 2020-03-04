@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_test_double_options1.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bprunev <bprunev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/02/29 19:11:01 by tgouedar         ###   ########.fr       */
+/*   Created: 2019/07/06 20:52:32 by bprunev           #+#    #+#             */
+/*   Updated: 2020/02/29 19:11:01 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

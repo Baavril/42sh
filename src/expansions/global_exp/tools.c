@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   potential_libft_functions.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bprunev <bprunev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/02/29 19:33:07 by tgouedar         ###   ########.fr       */
+/*   Created: 2019/07/06 20:52:32 by bprunev           #+#    #+#             */
+/*   Updated: 2020/02/29 19:33:07 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

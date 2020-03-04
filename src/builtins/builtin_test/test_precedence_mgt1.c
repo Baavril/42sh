@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_test_precedence_management1.c              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bprunev <bprunev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/03/01 10:32:41 by tgouedar         ###   ########.fr       */
+/*   Created: 2019/07/06 20:52:32 by bprunev           #+#    #+#             */
+/*   Updated: 2020/03/01 10:32:41 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
