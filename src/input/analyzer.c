@@ -6,7 +6,7 @@
 /*   By: bprunev <bprunev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 13:04:47 by bprunev           #+#    #+#             */
-/*   Updated: 2020/03/01 17:19:46 by bprunev          ###   ########.fr       */
+/*   Updated: 2020/03/04 15:53:38 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int			standard_analyzer(union u_tc *term, char **buff, t_cursor *cursor)
 	keyboard_ctrl_l(term, buff, cursor);
 	keyboard_normal_char(term, buff, cursor);
 	keyboard_backspace(term, buff, cursor);
-	keyboard_tabulation(term, buff, cursor);
 	if (keyboard_dispatcher(term, buff, cursor) == 0
 	|| !keyboard_enter(term, buff, cursor))
 		return (0);
@@ -67,8 +66,7 @@ int			search_analyzer(union u_tc *term, char **buff, t_cursor *cursor)
 	keyboard_backspace(term, buff, cursor);
 	if (!(keyboard_enter(term, buff, cursor)))
 		return (0);
-	else if (keyboard_tabulation(term, buff, cursor) == 0
-	|| keyboard_ctrl_l(term, buff, cursor) == 0
+	else if (keyboard_ctrl_l(term, buff, cursor) == 0
 	|| keyboard_ctrl_d(term, buff, cursor) == 0
 	|| keyboard_ctrl_c(term, buff, cursor) == 0
 	|| keyboard_dispatcher(term, buff, cursor) >= 0)

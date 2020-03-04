@@ -6,7 +6,7 @@
 #    By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/04 15:22:51 by bprunevi          #+#    #+#              #
-#    Updated: 2020/03/04 15:23:24 by bprunevi         ###   ########.fr        #
+#    Updated: 2020/03/04 15:57:08 by bprunevi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,8 +59,6 @@ SOURCES			:=		transversal/program/main.c \
 						input/getstdin.c \
 						input/analyzer.c \
 						input/update_buffer.c \
-						input/auto_completion/auto_completion.c \
-						input/auto_completion/tst.c \
 						input/termcaps/termcaps.c \
 						input/history/history.c \
 						input/history/history_search.c \
@@ -71,7 +69,6 @@ SOURCES			:=		transversal/program/main.c \
 						input/history/exclamation2.c \
 						input/history/search_exclamation.c \
 						input/history/ft_atoi_history.c \
-						input/keys/autocompletion.c \
 						input/keys/keyboard_commands.c \
 						input/keys/keyboard_commands_ctrl.c \
 						input/keys/keyboard_dispatcher.c \
@@ -174,19 +171,6 @@ SOURCES			:=		transversal/program/main.c \
 						builtins/builtin_jcont/cmd_fg.c \
 						builtins/builtin_jcont/cmd_jobs.c \
 						builtins/builtin_jcont/resume_job.c \
-						builtins/builtin_test/test_free.c \
-						builtins/builtin_test/test_tools.c \
-						builtins/builtin_test/test_dispatchers.c \
-						builtins/builtin_test/test_tokenisation.c \
-						builtins/builtin_test/test_single_options1.c \
-						builtins/builtin_test/test_single_options2.c \
-						builtins/builtin_test/test_single_options3.c \
-						builtins/builtin_test/test_single_options4.c \
-						builtins/builtin_test/test_single_options5.c \
-						builtins/builtin_test/test_double_options1.c \
-						builtins/builtin_test/test_double_options2.c \
-						builtins/builtin_test/test_precedence_mgt1.c \
-						builtins/builtin_test/test_precedence_mgt2.c \
 						builtins/builtins_dispatcher.c \
 						LL_parser/gnt.c \
 						LL_parser/io_redirect.c \

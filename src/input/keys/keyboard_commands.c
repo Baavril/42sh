@@ -6,7 +6,7 @@
 /*   By: bprunev <bprunev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 12:41:28 by bprunev           #+#    #+#             */
-/*   Updated: 2020/03/04 14:16:12 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/04 15:53:05 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,6 @@ int			keyboard_normal_char(union u_tc *term, char **buff, t_cursor *curs)
 			return (0);
 		}
 		normal_char(buff, curs, term->key);
-		return (0);
-	}
-	return (1);
-}
-
-int			keyboard_tabulation(union u_tc *term, char **buff, t_cursor *cursor)
-{
-	if (term->key == TABULATION)
-	{
-		if (cursor->ctrl_r)
-		{
-			tab_key(buff, cursor);
-			ft_strdel(&(cursor->prompt));
-			cursor->prompt_len = mkprompt(&(cursor->prompt));
-			history(RESET, buff, NULL);
-			return (0);
-		}
-		if (!(tab_key(buff, cursor)))
-			return (-1);
 		return (0);
 	}
 	return (1);

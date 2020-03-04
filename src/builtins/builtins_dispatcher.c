@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/01 10:44:28 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/04 15:56:27 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ const t_builtins	g_builtins[] =
 	{ "false", &cmd_false},
 	{ "type", &cmd_type},
 	{ "history", &cmd_history},
-	{ "test", &cmd_test},
 	{ "fc", &cmd_fc},
 	{ "fg", &cmd_fg},
 	{ "bg", &cmd_bg},
@@ -43,24 +42,6 @@ const t_builtins	g_builtins[] =
 	{ "export", &cmd_export},
 	{ "\0", NULL}
 };
-
-_Bool				prior_builtin(char *str)
-{
-	const struct s_prior_builtin	pbuiltin_list[] =
-	{ {"alias"}, {"unalias"}, {"echo"}, {"exit"}, {"hash"}, {"cd"}, {"type"},
-		{"test"}, {"set"}, {"fc"}, {"fg"}, {"bg"}, {"jobs"}, {"export"},
-		{"unset"}, {"\0"} };
-	int								i;
-
-	i = 0;
-	while (*(pbuiltin_list[i].pbuiltin))
-	{
-		if (!ft_strcmp(str, pbuiltin_list[i].pbuiltin))
-			return (1);
-		++i;
-	}
-	return (0);
-}
 
 static void			*dispatcher(char *cmd)
 {
