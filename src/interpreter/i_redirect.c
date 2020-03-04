@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 12:08:47 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/02 18:08:38 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/03/04 13:37:59 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,18 @@
 #include "libft.h"
 #include <unistd.h>
 #include <fcntl.h>
+
+extern int g_prefix;
+
+int	i_redirect(t_elem left, t_elem right)
+{
+	if (g_prefix)
+		if (left.v->f(left.v->left, left.v->right) == -1)
+			return (-1);
+	if (right.v)
+		return (right.v->f(right.v->left, right.v->right));
+	return (0);
+}
 
 int	i_less(t_elem left, t_elem right)
 {
@@ -81,20 +93,6 @@ int	i_dgreat(t_elem left, t_elem right)
 				O_WRONLY | O_APPEND | O_CREAT, S_IRUSR
 				| S_IWUSR | S_IRGRP | S_IROTH, fd1));
 	}
-	return (-1);
-}
-
-int	i_lessgreat(t_elem left, t_elem right)
-{
-	int fd1;
-
-	fd1 = left.c ? *left.c - '0' : 0;
-	if (!*right.c)
-		ft_dprintf(STDERR_FILENO, "42sh: %s: Redirection ambigue\n", right.c);
-	else if (open_on_fd(right.c, O_RDWR | O_CREAT, S_IRUSR
-				| S_IWUSR | S_IRGRP | S_IROTH, fd1) != -1)
-		return (fd1);
-	ft_dprintf(STDERR_FILENO, "42sh: %s: Premission denied\n", right.c);
 	return (-1);
 }
 

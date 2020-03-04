@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/04 12:46:58 by bprunevi         ###   ########.fr        #
+#    Updated: 2020/03/04 13:50:40 by bprunevi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -191,6 +191,8 @@ SOURCES			:=		transversal/program/main.c \
 						LL_parser/terminals.c \
 						LL_parser/wordtypes.c \
 						interpreter/interpreter.c \
+						interpreter/i_comp.c \
+						interpreter/i_pipe.c \
 						interpreter/i_simple_command.c \
 						interpreter/eval_command.c \
 						interpreter/i_redirect.c \

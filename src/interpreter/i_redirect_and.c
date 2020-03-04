@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 13:16:47 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/02 18:09:02 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/03/04 13:36:32 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,18 @@ int	i_andgreat(t_elem left, t_elem right)
 	}
 	ft_strdel(&left.c);
 	return (rtn);
+}
+
+int	i_lessgreat(t_elem left, t_elem right)
+{
+	int fd1;
+
+	fd1 = left.c ? *left.c - '0' : 0;
+	if (!*right.c)
+		ft_dprintf(STDERR_FILENO, "42sh: %s: Redirection ambigue\n", right.c);
+	else if (open_on_fd(right.c, O_RDWR | O_CREAT, S_IRUSR
+				| S_IWUSR | S_IRGRP | S_IROTH, fd1) != -1)
+		return (fd1);
+	ft_dprintf(STDERR_FILENO, "42sh: %s: Premission denied\n", right.c);
+	return (-1);
 }

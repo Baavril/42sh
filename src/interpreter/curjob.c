@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 12:08:53 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/04 13:28:31 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/04 13:59:48 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int				curjob_cat(char *str)
 	return (0);
 }
 
-void			curjob_add(t_node *node)
+int				curjob_add(t_node *node)
 {
 	int i;
 
@@ -71,4 +71,5 @@ void			curjob_add(t_node *node)
 	while (g_flist[++i])
 		if (node->f == g_flist[i])
 			curjob_cat(g_flist_name[i]);
+	return (0);
 }

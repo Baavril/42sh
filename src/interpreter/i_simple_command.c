@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:43:35 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/29 15:21:50 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/04 13:56:43 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 
 char **g_argv;
 extern int g_retval;
-extern int g_prefix;
 
 int		i_prefix(t_elem left, t_elem right)
 {
@@ -80,16 +79,6 @@ int		i_suffix_word(t_elem left, t_elem right)
 		g_argv[i] = left.c;
 		g_argv[++i] = NULL;
 	}
-	if (right.v)
-		return (right.v->f(right.v->left, right.v->right));
-	return (0);
-}
-
-int		i_redirect(t_elem left, t_elem right)
-{
-	if (g_prefix)
-		if (left.v->f(left.v->left, left.v->right) == -1)
-			return (-1);
 	if (right.v)
 		return (right.v->f(right.v->left, right.v->right));
 	return (0);
