@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
+#    By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/06/25 14:03:51 by abarthel          #+#    #+#              #
-#    Updated: 2020/01/18 14:46:06 by tgouedar         ###   ########.fr        #
+#    Created: 2020/03/04 15:23:21 by bprunevi          #+#    #+#              #
+#    Updated: 2020/03/04 15:23:23 by bprunevi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
--include 42sh.mk
+-include 21sh.mk
 
 .PHONY: all clean fclean re try_lib
 
