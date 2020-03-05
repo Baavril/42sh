@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 20:40:42 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/03/05 18:43:26 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/05 18:48:25 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int				ft_wait_foreground(t_job *job)
 
 int				ft_wait_background(t_job *job)
 {
-	int			ret_status;
 	sigset_t	wakeup_sig;
 
 	sigfillset(&wakeup_sig);
