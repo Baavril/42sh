@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 15:25:22 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/04 14:57:24 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/05 14:23:53 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,27 +56,27 @@ static int		display_all(char *str, t_cursor *cursor)
 
 int				display(char *str, t_cursor *c)
 {
-	size_t			col;
-	size_t			x;
-	size_t			backup;
-	static size_t	lines_offset = 0;
+	int			col;
+	int			x;
+	int			backup;
+	static int	lines_offset = 0;
 
+	if (tgetent(NULL, getenv("TERM")) != 1)
+		return (1);
 	x = 0;
 	col = tgetnum("co");
 	backup = c->end;
-	if (c->end > c->start - (c->start % tgetnum("co"))
-			+ tgetnum("co") * tgetnum("li") - c->prompt_len - 1)
-		c->end = c->start - (c->start % tgetnum("co"))
-			+ tgetnum("co") * tgetnum("li") - c->prompt_len - 1;
-	if (tgetent(NULL, getenv("TERM")) != 1)
-		return (1);
-	if (c->end == c->start && c->end == 0)
+	if (c->end > c->start - (c->start % col)
+			+ col * tgetnum("li") - c->prompt_len - 1)
+		c->end = c->start - (c->start % col)
+			+ col * tgetnum("li") - c->prompt_len - 1;
+	if (lines_offset < 0 || (c->end == c->start && c->end == 0))
 		lines_offset = c->prompt_len / col;
-	while (lines_offset--)
+	while (lines_offset-- > 0)
 		ft_putstr(tgetstr("up", NULL));
 	lines_offset = display_all(str, c);
 	x = ((c->end + c->prompt_len) / col) - lines_offset;
-	while (x--)
+	while (x-- > 0)
 		ft_putstr(tgetstr("up", NULL));
 	ft_putstr(tgoto(tgetstr("ch", NULL), 0, (c->start + c->prompt_len) % col));
 	c->end = backup;
