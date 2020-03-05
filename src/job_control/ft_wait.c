@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 20:40:42 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/02/01 17:17:13 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/05 18:43:26 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,10 @@
 
 extern int		g_retval;
 
-int				ft_wait_foreground(t_job *job)
+static int		ft_afterwait(t_job *job)
 {
 	int			ret_status;
-	sigset_t	wakeup_sig;
 
-	tcsetpgrp(STDIN_FILENO, job->pgid);
-	sigfillset(&wakeup_sig);
-	sigdelset(&wakeup_sig, SIGCHLD);
-	while (job->status & RUNNING)
-		sigsuspend(&wakeup_sig);
-	tcsetpgrp(STDIN_FILENO, getpid());
 	if (WIFSTOPPED(job->status))
 	{
 		ret_status = job->status;
@@ -40,6 +33,32 @@ int				ft_wait_foreground(t_job *job)
 			g_retval = WEXITSTATUS(ret_status);
 		else
 			g_retval = WHARD_EXIT | WTERMSIG(ret_status);
+		ft_pop_job(job->nbr);
 	}
 	return (ret_status);
+}
+
+int				ft_wait_foreground(t_job *job)
+{
+	sigset_t	wakeup_sig;
+
+	tcsetpgrp(STDIN_FILENO, job->pgid);
+	sigfillset(&wakeup_sig);
+	sigdelset(&wakeup_sig, SIGCHLD);
+	while (job->status & RUNNING)
+		sigsuspend(&wakeup_sig);
+	tcsetpgrp(STDIN_FILENO, getpid());
+	return (ft_afterwait(job));
+}
+
+int				ft_wait_background(t_job *job)
+{
+	int			ret_status;
+	sigset_t	wakeup_sig;
+
+	sigfillset(&wakeup_sig);
+	sigdelset(&wakeup_sig, SIGCHLD);
+	while (job->status & RUNNING)
+		sigsuspend(&wakeup_sig);
+	return (ft_afterwait(job));
 }

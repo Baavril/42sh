@@ -6,11 +6,12 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:13:16 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/04 14:20:52 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/05 15:20:12 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keys.h"
+#include "jcont.h"
 #include "error.h"
 #include "prompt.h"
 
@@ -52,6 +53,7 @@ static int	keyboard_ctrl_c_wiper(char **buff, t_cursor *cursor)
 	cursor->prompt = tmp;
 	cursor->prompt_len = tmp_len;
 	ft_putchar('\n');
+	ft_check_bgstatus();
 	g_retval = 130;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 15:51:32 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/02/12 13:16:45 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/05 18:36:01 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "jcont.h"
 #include "parser.h"
 
+extern int		g_mode;
 extern t_job	g_curjob;
 
 void			ft_save_term_fd(int save_fd[3])
@@ -55,7 +56,9 @@ int				ft_add_process(t_elem left, t_elem right, int std_fd[3],
 	{
 		if (fd_to_close != -1)
 			close(fd_to_close);
-		set_signals(CHILD);
+		if (!(g_mode & FORK_SHELL)) // pas exactement
+			set_signals(CHILD);
+		g_mode |= FORK_SHELL;
 		ft_stdredir(std_fd);
 		return (i_execnode(left, right));
 	}

@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:18:20 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/02/29 13:52:38 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/05 18:32:21 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,11 @@
 
 # define WHARD_EXIT				0x80
 # define WSTPED					0x1f
-# define RUNNING				0x20000
-# define BACKGROUND				0x10000
+# define RUNNING				0x10000
+# define BACKGROUND				0x20000
 # define FOREGROUND				0x0
-# define MAJOR_FAILLURE			0x40000
+# define FORK_SHELL				0x40000
+# define MAJOR_FAILLURE			0x80000
 
 # define RESERVED_INFD			10
 # define RESERVED_OUTFD			11
@@ -75,6 +76,7 @@ void				ft_set_prio(void);
 int					ft_pop_job(int nbr);
 void				ft_update_job_status(void);
 void				ft_check_bgstatus(void);
+int					ft_wait_background(t_job *job);
 int					ft_wait_foreground(t_job *job);
 int					ft_isready(t_job *job);
 

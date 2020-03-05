@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/04 14:54:21 by bprunevi         ###   ########.fr        #
+#    Updated: 2020/03/05 18:44:28 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -146,7 +146,7 @@ SOURCES			:=		transversal/program/main.c \
 						job_control/ft_set_prio.c \
 						job_control/ft_sigchld_handler.c \
 						job_control/ft_update_job_status.c \
-						job_control/ft_wait_foreground.c \
+						job_control/ft_wait.c \
 						job_control/path_concat.c \
 						job_control/get_sequence.c \
 						builtins/builtin_alias/cmd_alias.c \
