@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 11:39:09 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/03/06 12:34:21 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/06 13:17:58 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void				ft_transferstop(int nbr)
 	t_list		*voyager;
 	t_job		*job;
 
-	set_signals(FORK_SHELL);
 	voyager = g_jcont.jobs;
 	while (voyager)
 	{
@@ -55,7 +54,6 @@ void				ft_transfercont(int nbr)
 	t_list		*voyager;
 	t_job		*job;
 
-	set_signals(FORK_SHELL);
 	voyager = g_jcont.jobs;
 	while (voyager)
 	{
@@ -64,7 +62,6 @@ void				ft_transfercont(int nbr)
 		voyager = voyager->next;
 	}
 	ft_update_job_status();
-	ft_wait_background(ft_get_job_nbr(g_jcont.active_jobs[0]));
 }
 
 void				ft_transfersig(int nbr)

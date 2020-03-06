@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 20:40:42 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/03/06 12:33:36 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/06 13:19:08 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int				ft_wait_background(t_job *job)
 	sigdelset(&wakeup_sig, SIGCONT);
 	sigdelset(&wakeup_sig, SIGTSTP);
 	sigdelset(&wakeup_sig, SIGINT);
-	while (job->status & RUNNING)
+	while (job->status & RUNNING || WIFSTOPPED(job->status))
 		sigsuspend(&wakeup_sig);
 	return (ft_afterwait(job));
 }

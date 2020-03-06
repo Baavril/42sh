@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 22:36:47 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/03/06 12:10:06 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/06 12:55:54 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void					ft_sigchld_handler(int nbr);
 void					ft_transfersig(int nbr);
 void					ft_transferkill(int nbr);
 void					ft_transferstop(int nbr);
+void					ft_transfercont(int nbr);
 
 void					set_signals(int id);
 
