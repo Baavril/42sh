@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/05 18:44:28 by tgouedar         ###   ########.fr        #
+#    Updated: 2020/03/06 11:50:46 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -145,6 +145,7 @@ SOURCES			:=		transversal/program/main.c \
 						job_control/ft_print_job.c \
 						job_control/ft_set_prio.c \
 						job_control/ft_sigchld_handler.c \
+						job_control/ft_transfersig.c \
 						job_control/ft_update_job_status.c \
 						job_control/ft_wait.c \
 						job_control/path_concat.c \

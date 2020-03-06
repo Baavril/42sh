@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:56:52 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/03/05 18:43:21 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/06 12:35:24 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ extern int		g_retval;
 int			ft_launch_job(void)
 {
 	t_job		*job;
-	int			ret_status = 0;
+	int			ret_status;
 
+	ret_status = 0;
 	if (!(g_curjob.process))
 	{
 		ft_strdel(&(g_curjob.cmd));

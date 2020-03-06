@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:13:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/05 17:14:36 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/06 12:36:28 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "jcont.h"
 #include "error.h"
 
-extern char				**environ;
 extern int				g_retval;
 extern int				g_fd[3];
 extern int				g_fclose;
@@ -30,8 +29,9 @@ int				i_execnode(t_elem left, t_elem right)
 
 static int		i_simple_command_builtin(t_elem left, t_elem right)
 {
-	char		**save_env;
-	int			save_stdfd[3];
+	extern char		**environ;
+	char			**save_env;
+	int				save_stdfd[3];
 
 	save_env = NULL;
 	g_prefix = 1;

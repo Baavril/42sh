@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 15:51:32 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/03/05 18:36:01 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/06 11:38:37 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ int				ft_add_process(t_elem left, t_elem right, int std_fd[3],
 	{
 		if (fd_to_close != -1)
 			close(fd_to_close);
-		if (!(g_mode & FORK_SHELL)) // pas exactement
-			set_signals(CHILD);
-		g_mode |= FORK_SHELL;
+		set_signals((g_mode & FORK_SHELL) ? FORKED_CONTROL : CHILD);
+		if (g_mode & FORK_SHELL)
+			ft_free_jcont(NO_CHECK);
 		ft_stdredir(std_fd);
 		return (i_execnode(left, right));
 	}
