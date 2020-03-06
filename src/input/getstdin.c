@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 17:02:43 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/03/01 18:06:28 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/06 13:25:43 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static int		ft_get_next_input(char buff[COUNT_KEY])
 
 int				get_stdin(t_cursor *cursor, char **buff)
 {
+	int			ret;
 	union u_tc	term;
 
 	if (ft_init_tab() == 1)
@@ -65,10 +66,8 @@ int				get_stdin(t_cursor *cursor, char **buff)
 	*buff = ft_strdup("");
 	ft_bzero(term.buff, COUNT_KEY + 1);
 	set_reader(&term, buff, cursor);
-	while (ft_get_next_input(term.buff) > 0)
+	while ((ret = ft_get_next_input(term.buff)) > 0)
 	{
-		if (getppid() != g_ppid)
-			cmd_exit(0, NULL);
 		if (!analyzer(cursor, buff, &term))
 		{
 			ft_strdel(&g_inside_history);
@@ -76,5 +75,7 @@ int				get_stdin(t_cursor *cursor, char **buff)
 			return (0);
 		}
 	}
+	if (ret == -1 && getppid() != g_ppid)
+		cmd_exit(0, NULL);
 	return (1);
 }
