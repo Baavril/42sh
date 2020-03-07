@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/06 11:50:46 by tgouedar         ###   ########.fr        #
+#    Updated: 2020/03/07 10:56:48 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -216,7 +216,10 @@ OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 PATH_LIB := ./libft/
 LIBFT := $(PATH_LIB)libft.a
 
-INCLUDES := -I./include/ -I$(PATH_LIB)include/
+HEADER_PATH :=	./include \
+				$(PATH_LIB)include
+
+INCLUDES :=	$(addprefix -I, $(HEADER_PATH))
 
 DEPENDS := $(patsubst %.c,%.d,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
