@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 11:40:15 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/18 12:19:52 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/07 11:18:19 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ int					ft_resume_in_fg(t_job *job)
 		}
 	}
 	ret_status = ft_wait_foreground(job);
-	if (!WIFSTOPPED(job->status))
-		ft_pop_job(job->nbr);
 	return (ret_status);
 }
 

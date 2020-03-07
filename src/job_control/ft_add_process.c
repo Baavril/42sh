@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 15:51:32 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/03/06 11:38:37 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/07 12:46:40 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,13 @@ int				ft_add_process(t_elem left, t_elem right, int std_fd[3],
 			close(fd_to_close);
 		set_signals((g_mode & FORK_SHELL) ? FORKED_CONTROL : CHILD);
 		if (g_mode & FORK_SHELL)
+		{
+			ft_dprintf(2, "CHLD launch !!\n");
+			ft_lstdel(&(g_curjob.process), &ft_free_proc);
+			g_curjob.pgid = 0;
+			ft_strdel(&(g_curjob.cmd));
 			ft_free_jcont(NO_CHECK);
+		}
 		ft_stdredir(std_fd);
 		return (i_execnode(left, right));
 	}

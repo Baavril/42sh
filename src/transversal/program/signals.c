@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 22:47:47 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/03/06 12:37:22 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/07 14:08:19 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ t_sig			g_sigdispatcher[] =
 	{SIGTSTP, {SIG_IGN, SIG_DFL, &ft_transferstop}},
 	{SIGCONT, {SIG_IGN, SIG_DFL, &ft_transfercont}},
 	{SIGCHLD, {&ft_sigchld_handler, SIG_DFL, &ft_sigchld_handler}},
-	{SIGTTIN, {SIG_IGN, SIG_DFL, &ft_transfersig}},
-	{SIGTTOU, {SIG_IGN, SIG_DFL, &ft_transfersig}},
+	{SIGTTIN, {SIG_IGN, SIG_DFL, SIG_IGN}},
+	{SIGTTOU, {SIG_IGN, SIG_DFL, SIG_IGN}},
 	{SIGXFSZ, {SIG_IGN, SIG_DFL, &ft_transfersig}},
 	{SIGVTALRM, {SIG_IGN, SIG_DFL, &ft_transfersig}},
 	{SIGPROF, {SIG_IGN, SIG_DFL, &ft_transfersig}},
