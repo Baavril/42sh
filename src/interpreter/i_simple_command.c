@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:43:35 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/04 13:56:43 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/07 13:28:52 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 #include <unistd.h>
 #define TAB_SIZE 16
 
-char **g_argv;
-extern int g_retval;
+char		**g_argv;
+extern int	g_retval;
 
 int		i_prefix(t_elem left, t_elem right)
 {

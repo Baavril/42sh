@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 12:08:53 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/04 13:59:48 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/07 10:56:01 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int (*g_flist[])(t_elem left, t_elem right) =
 	&i_and_op,
 	&i_or_op,
 	&i_pipe_sequence,
+	&i_and_list,
+	NULL
 };
 
 char g_flist_name[14][4] =
@@ -45,6 +47,7 @@ char g_flist_name[14][4] =
 	"&&",
 	"||",
 	"|",
+	"&"
 };
 
 int				curjob_cat(char *str)
