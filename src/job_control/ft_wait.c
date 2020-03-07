@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 20:40:42 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/03/07 14:22:20 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/07 17:23:53 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ static int		ft_afterwait(t_job *job)
 
 	if (WIFSTOPPED(job->status))
 	{
-		ret_status = job->status;
+		ret_status = job->status & RETVAL;
 		g_retval = WHARD_EXIT | WSTOPSIG(ret_status);
 	}
 	else
 	{
-		ret_status = ((t_process*)(job->process->content))->status;
+		ret_status = ((t_process*)(job->process->content))->status & RETVAL;
 		if (WIFEXITED(ret_status))
 			g_retval = WEXITSTATUS(ret_status);
 		else

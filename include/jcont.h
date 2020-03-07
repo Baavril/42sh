@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:18:20 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/03/07 11:36:53 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/07 16:18:22 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 
 # define WHARD_EXIT				0x80
 # define WSTPED					0x1f
+# define RETVAL					0xffff
 # define RUNNING				0x10000
 # define BACKGROUND				0x20000
 # define FOREGROUND				0x0

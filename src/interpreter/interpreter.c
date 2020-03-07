@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:13:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/07 14:50:58 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/07 17:17:31 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int				i_execnode(t_elem left, t_elem right)
 {
 	g_prefix = 1;
 	if (!left.v || left.v->f(left.v->left, left.v->right) != -1)
-		g_retval = right.v->f(right.v->left, right.v->right);
+		right.v->f(right.v->left, right.v->right);
 	if (g_mode & FORK_SHELL)
-		g_retval = ft_launch_job();
+		ft_launch_job();
 	return (ft_clean_exit(NULL, g_retval));
 }
 
