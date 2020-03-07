@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 11:39:09 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/03/06 13:17:58 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/07 15:54:45 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void				ft_transfercont(int nbr)
 	t_list		*voyager;
 	t_job		*job;
 
+	set_signals(FORKED_CONTROL);
 	voyager = g_jcont.jobs;
 	while (voyager)
 	{
