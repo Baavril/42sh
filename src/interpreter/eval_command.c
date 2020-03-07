@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 16:26:31 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/02 18:06:37 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/03/07 17:41:44 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int				eval_command(char **arg)
 	char				*absolute_path;
 	extern t_htable		*g_bintable;
 
-	if (!access(*arg, X_OK) && is_regfile(*arg))
+	if (ft_strchr(*arg, '/') && !access(*arg, X_OK) && is_regfile(*arg))
 		return (0);
 	if (ft_inbintable(*arg, &absolute_path, HIT))
 	{
