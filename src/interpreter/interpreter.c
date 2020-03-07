@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:13:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/07 17:17:31 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/07 17:27:54 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ static int		i_simple_command_builtin(t_elem left, t_elem right)
 
 int				i_simple_command(t_elem left, t_elem right)
 {
+	expand_tree(left.v);
+	expand_tree(right.v);
 	if (right.v->f == i_builtin)
 		return (i_simple_command_builtin(left, right));
 	else

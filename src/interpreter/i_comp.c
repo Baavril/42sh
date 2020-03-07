@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 13:40:10 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/07 14:50:41 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/07 16:13:43 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ extern int				g_fclose;
 
 int				i_comp_list(t_elem left, t_elem right)
 {
-	expand_tree(left.v);
 	if (!(g_mode & FORK_SHELL))
 		g_mode = FOREGROUND;
 	left.v->f(left.v->left, left.v->right);
@@ -53,7 +52,6 @@ int				i_and_list(t_elem left, t_elem right)
 
 int				i_and_op(t_elem left, t_elem right)
 {
-	expand_tree(left.v);
 	left.v->f(left.v->left, left.v->right);
 	ft_launch_job();
 	if (!g_retval)
@@ -63,7 +61,6 @@ int				i_and_op(t_elem left, t_elem right)
 
 int				i_or_op(t_elem left, t_elem right)
 {
-	expand_tree(left.v);
 	left.v->f(left.v->left, left.v->right);
 	ft_launch_job();
 	if (g_retval)
