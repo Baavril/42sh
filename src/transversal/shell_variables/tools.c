@@ -6,7 +6,7 @@
 /*   By: bprunev <bprunev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:21:48 by bprunev           #+#    #+#             */
-/*   Updated: 2019/12/03 16:21:55 by bprunev          ###   ########.fr       */
+/*   Updated: 2020/03/07 16:19:50 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdio.h>
 
 #include "shell_variables.h"
+#include "expansions.h"
 #include "libft.h"
 
 struct s_svar	*g_svar;
@@ -79,4 +80,45 @@ char			*ft_strdupto(char *str, char c)
 	}
 	ret[i] = '\0';
 	return (ret);
+}
+
+static int		update_path_vars(char *str)
+{
+	struct s_svar	*voyager;
+
+	voyager = g_svar;
+	while (voyager)
+	{
+		if (!ft_strncmp(str, voyager->key, ft_strpchr(str, EQUAL) + 1))
+		{
+			if (ft_strcmp(str, voyager->str))
+			{
+				ft_strdel(&voyager->value);
+				ft_strdel(&voyager->str);
+				voyager->value = ft_strdupfm(str, EQUAL);
+				voyager->str = ft_strdup(str);
+			}
+		}
+		voyager = voyager->next;
+	}
+	voyager = g_svar;
+	return (0);
+}
+
+int				update_intern_vars(void)
+{
+	int				i;
+	int				len;
+	extern char		**environ;
+
+	i = 0;
+	len = ft_tablen(environ);
+	while (i < len)
+	{
+		if (!ft_strncmp(environ[i], "PWD=", 4)
+				|| !ft_strncmp(environ[i], "OLDPWD=", 7))
+			update_path_vars(environ[i]);
+		++i;
+	}
+	return (0);
 }
