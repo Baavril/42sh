@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 16:12:14 by yberramd          #+#    #+#             */
-/*   Updated: 2020/02/19 12:59:12 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/03/05 18:33:18 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,22 +270,22 @@ static int		malloc_words(t_tst *tst, int len, int index, char **words)
 	return (index);
 }
 
-static int		ft_words(t_tst *tst, int len, int index, char **words, char *str)
+static int		ft_words(t_tst *tst, int len, int index, char **w, char *str)
 {
 	if (tst->right && tst->c != '\0')
-		index = ft_words(tst->right, len, index, words, str);
+		index = ft_words(tst->right, len, index, w, str);
 	if (tst->left && tst->c != '\0')
-		index = ft_words(tst->left, len, index, words, str);
+		index = ft_words(tst->left, len, index, w, str);
 	if (tst->middle && tst->c != '\0')
 	{
 		str[len] = tst->c;
 		len++;
-		index = ft_words(tst->middle, len, index, words, str);
+		index = ft_words(tst->middle, len, index, w, str);
 	}
 	if (tst->middle && tst->middle->end == true)
 	{
 		str[len] = '\0';
-		ft_strcat(words[index], str);
+		ft_strcat(w[index], str);
 		index++;
 	}
 	return (index);
@@ -496,7 +496,7 @@ static int		ft_env_var(char *input, int dollar, char ***words)
 	return (1);
 }
 
-int				ft_auto_completion(t_tst *tst, char *input, char ***words, int start)
+int				ft_auto_completion(t_tst *t, char *input, char ***w, int start)
 {
 	int		cursor;
 	int		ret;
@@ -512,7 +512,7 @@ int				ft_auto_completion(t_tst *tst, char *input, char ***words, int start)
 		ft_putchar('\n');
 		if (input[start + 1] == '{')
 			ret = 2;
-		if (ft_env_var(&input[start + ret], ret, words) == 0)
+		if (ft_env_var(&input[start + ret], ret, w) == 0)
 		{
 			input[cursor] = tmp;
 			return (0);
@@ -520,8 +520,8 @@ int				ft_auto_completion(t_tst *tst, char *input, char ***words, int start)
 	}
 	else if (start == 0 || ft_restart(input, cursor))
 	{
-		if (((*words) = ft_binary(tst, &input[start])) == NULL)
-			if (((*words) = ft_path(&input[start])) == NULL)
+		if (((*w) = ft_binary(t, &input[start])) == NULL)
+			if (((*w) = ft_path(&input[start])) == NULL)
 			{
 				input[cursor] = tmp;
 				return (0);
@@ -529,13 +529,13 @@ int				ft_auto_completion(t_tst *tst, char *input, char ***words, int start)
 	}
 	else
 	{
-		if (((*words) = ft_path(&input[start])) == NULL)
+		if (((*w) = ft_path(&input[start])) == NULL)
 		{
 			input[cursor] = tmp;
 			return (0);
 		}
 	}
-	if ((*words) && (*words)[0] != NULL && (*words)[1] == NULL)
+	if ((*w) && (*w)[0] != NULL && (*w)[1] == NULL)
 	{
 		input[cursor] = tmp;
 		return (2);

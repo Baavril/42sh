@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:31:43 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/04 14:33:54 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/05 18:02:50 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,27 @@ static int	pos_start(char *input, int start)
 	return (start);
 }
 
+static void	ft_assign_tmp1(int start, int *i, char *input, char **tmp)
+{
+	*i = 0;
+	while (*i < start)
+	{
+		(*tmp)[*i] = input[*i];
+		(*i)++;
+	}
+}
+
+static void	ft_assign_tmp2(int start, int i, char *input, char **tmp)
+{
+	while (input[start] != '\0')
+	{
+		(*tmp)[i] = input[start];
+		start++;
+		i++;
+	}
+	(*tmp)[i] = '\0';
+}
+
 static char	*ft_add_string(char *input, char **binary, int start)
 {
 	char	*tmp;
@@ -53,21 +74,13 @@ static char	*ft_add_string(char *input, char **binary, int start)
 	i = 0;
 	start = pos_start(input, start);
 	y = start;
-	while (input[y] != '\0' && input[y] == (*binary)[i])
-	{
+	while (input[y] != '\0' && input[y] == (*binary)[i++])
 		y++;
-		i++;
-	}
 	len = ft_strlen((*binary)) - i;
 	if (!(tmp = (char*)malloc(sizeof(char) * (len + ft_strlen(input) + 1))))
 		return (NULL);
 	len = i;
-	i = 0;
-	while (i < start)
-	{
-		tmp[i] = input[i];
-		i++;
-	}
+	ft_assign_tmp1(start, &i, input, &tmp);
 	y = 0;
 	while ((*binary)[y] != '\0')
 	{
@@ -76,13 +89,7 @@ static char	*ft_add_string(char *input, char **binary, int start)
 		y++;
 	}
 	start = start + len;
-	while (input[start] != '\0')
-	{
-		tmp[i] = input[start];
-		start++;
-		i++;
-	}
-	tmp[i] = '\0';
+	ft_assign_tmp2(start, i, input, &tmp);
 	return (tmp);
 }
 
@@ -159,13 +166,10 @@ static int	dynamic_comp(char **binary, char *input, char **equal, int start)
 	if (!(tmp = (char*)malloc(sizeof(char) * (y + 1))))
 		return (0);
 	assign_tmp(tmp, binary[0], &input[tmp_start], y);
-	if (!((*equal) = ft_add_string(input, &tmp, start)))
-	{
-		ft_strdel(&tmp);
-		return (0);
-	}
+	y =
+		((*equal) = ft_add_string(input, &tmp, start)) ? 1 : 0;
 	ft_strdel(&tmp);
-	return (1);
+	return (y);
 }
 
 /*
@@ -184,10 +188,7 @@ int			tab_key(char **buff, t_cursor *cursor)
 		return (1);
 	tst = ft_tst();
 	if (!(ret = ft_auto_completion(tst, *buff, &binary, cursor->start)))
-	{
-		del_tst(tst);
-		return (0);
-	}
+		return (del_tst(tst));
 	if (ret == 2)
 	{
 		if (!(input = ft_add_string(*buff, &binary[0], cursor->start)))
@@ -196,7 +197,6 @@ int			tab_key(char **buff, t_cursor *cursor)
 			del_double_char(binary);
 			return (0);
 		}
-		ft_printf("path = [%s]\n", binary[0]);
 		set_string(buff, cursor, input);
 		ft_strdel(&input);
 	}
