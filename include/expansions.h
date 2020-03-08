@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/02/02 15:40:06 by baavril          ###   ########.fr       */
+/*   Updated: 2020/03/08 17:59:16 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,26 @@ typedef struct	s_expand
 	char		**tokens;
 }				t_expand;
 
+typedef struct	s_params
+{
+	char		*tmp1;
+	char		*tmp2;
+	char		*tmp3;
+	char		*tmp4;
+	int			len;
+	char		*esc;
+}				t_params;
+
+typedef struct	s_rev
+{
+	int			i;
+	int			len;
+	int			flag;
+	char		*tmp1;
+}				t_rev;
+
 int				expansions_treatment(char **tokens);
+int				expansions_launcher(t_expand *vars);
 
 int				direct_exp(char **token);
 int				simple_exp(char **token);
@@ -97,6 +116,13 @@ int				opercent_exp(char **token);
 int				dpercent_exp(char **token);
 int				maths_exp(char **token);
 int				tilde_exp(char **token);
+
+int				ret_value(char **token);
+int				reach_pos_params(char **token);
+int				count_pos_params(char **token);
+int				view_pos_param(char **token);
+int				script_param(char **token);
+char			*get_var_value(char *var_name);
 
 int				ft_strpchr(char *str, char c);
 size_t			maths_len(char *token);

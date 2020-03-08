@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 18:20:20 by abarthel          #+#    #+#             */
-/*   Updated: 2019/01/29 14:12:03 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/08 16:40:13 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,5 @@ char	*ft_strndup(const char *s1, size_t len)
 		s2[i] = s1[i];
 		++i;
 	}
-	s2[len] = '\0';
 	return (s2);
 }

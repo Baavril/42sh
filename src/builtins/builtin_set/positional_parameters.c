@@ -6,7 +6,7 @@
 /*   By: bprunev <bprunev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:21:48 by bprunev           #+#    #+#             */
-/*   Updated: 2020/01/26 20:09:39 by bprunev          ###   ########.fr       */
+/*   Updated: 2020/03/08 16:01:20 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ static int				set_first_positional_param(char **tokens, int pos)
 		ft_strdel(&tmp1);
 		ft_strdel(&tmp2);
 		ft_strdel(&tmp3);
-		++pos;
 	}
 	return (SUCCESS);
 }
@@ -89,10 +88,11 @@ int						set_positional_params(char **tokens)
 	char			*tmp2;
 	struct s_pos	*ptr;
 
-	i = 1;
+	i = 2;
 	pos = 1;
 	set_first_positional_param(tokens, pos);
 	ptr = g_pos;
+	++pos;
 	while (tokens[i])
 	{
 		tmp1 = ft_itoa(pos);

@@ -6,7 +6,7 @@
 #    By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/04 15:22:51 by bprunevi          #+#    #+#              #
-#    Updated: 2020/03/08 13:41:36 by bprunevi         ###   ########.fr        #
+#    Updated: 2020/03/08 18:20:39 by baavril          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,6 +91,7 @@ SOURCES			:=		transversal/program/main.c \
 						expansions/global_exp/tools.c \
 						expansions/global_exp/split.c \
 						expansions/global_exp/checker.c \
+						expansions/global_exp/launcher.c \
 						expansions/global_exp/inbetween.c \
 						expansions/global_exp/identifier.c \
 						expansions/global_exp/backslash.c \
@@ -101,7 +102,9 @@ SOURCES			:=		transversal/program/main.c \
 						expansions/substitutions/dash.c \
 						expansions/substitutions/equal.c \
 						expansions/substitutions/sharp.c \
+						expansions/substitutions/params.c \
 						expansions/substitutions/percent.c \
+						expansions/substitutions/positional.c \
 						expansions/substitutions/begin_sharp.c \
 						expansions/substitutions/question_mark.c \
 						expansions/maths_exp/operations/addition.c \
@@ -218,4 +221,4 @@ CFLAGS += -Wall -Wextra -Werror -ansi -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200809
 
 #CFLAGS += -fno-builtin -O2
 
-CDEBUG += -g #-fsanitize=address -fno-optimize-sibling-calls
+CDEBUG += -g# -fsanitize=address -fno-optimize-sibling-calls

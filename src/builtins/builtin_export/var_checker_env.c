@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 13:37:29 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/08 14:24:41 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/08 18:26:14 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int				testvarenv(char *tmp_cmp, char *argv)
 	return (ERROR);
 }
 
-int				checkvarenv(char *argv)
+int						checkvarenv(char *argv)
 {
 	char	*tmp_cmp;
 
