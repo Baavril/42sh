@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/03/01 11:51:21 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/08 12:55:42 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,50 +40,48 @@ static int		check_percent_var(char **token, char *word, struct s_svar *tmp,
 	return (ERROR);
 }
 
+static int		plop(char *word, char *tmp, int *len, int *i)
+{
+	int		flag;
+
+	flag = 0;
+	while (word[*len] == CL_SQUAR)
+	{
+		while (word[*len] != OP_SQUAR)
+			--(*len);
+		while (word[*len] != CL_SQUAR)
+			tmp[(*i)++] = word[(*len)++];
+		while (word[*len] != OP_SQUAR)
+			--(*len);
+		if (*len > 0)
+		{
+			--(*len);
+			++(*i);
+		}
+		else if (*len == 0 && word[*len] == OP_SQUAR)
+			flag++;
+	}
+	return (flag);
+}
+
 char			*ft_revstar(char *word)
 {
 	int		i;
 	int		len;
-	int		flag;
-	char	*tmp1;
+	char	*tmp;
 
 	i = 0;
-	flag = 0;
-	tmp1 = NULL;
 	len = (int)ft_strlen(word) - 1;
-	if (!(tmp1 = (char*)ft_memalloc(sizeof(char) * (len + 2))))
+	if (!(tmp = (char*)ft_memalloc(sizeof(char) * (len + 2))))
 		return (NULL);
 	while (len >= 0)
 	{
-		while (word[len] == CL_SQUAR)
-		{
-			while (word[len] != OP_SQUAR)
-				--len;
-			while (word[len] != CL_SQUAR)
-			{
-				tmp1[i] = word[len];
-				++i;
-				++len;
-			}
-			tmp1[i] = word[len];
-			while (word[len] != OP_SQUAR)
-				--len;
-			if (len > 0)
-			{
-				--len;
-				++i;
-			}
-			else if (len == 0 && word[len] == OP_SQUAR)
-				flag++;
-		}
-		if (flag)
+		if (plop(word, tmp, &len, &i))
 			break ;
-		tmp1[i] = word[len];
-		++i;
-		--len;
+		tmp[i++] = word[len--];
 	}
 	ft_strdel(&word);
-	return (tmp1);
+	return (tmp);
 }
 
 int				opercent_exp(char **token)
