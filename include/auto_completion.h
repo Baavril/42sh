@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 13:04:49 by yberramd          #+#    #+#             */
-/*   Updated: 2020/02/29 16:26:36 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/08 12:09:44 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include "shell_variables.h"
 # include "libft.h"
 # include "expansions.h"
+
+# define BUILTIN_NBR	18
 
 typedef struct		s_tst
 {

@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:31:43 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/04 14:33:54 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/08 11:57:13 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,8 +150,7 @@ static int	dynamic_comp(char **binary, char *input, char **equal, int start)
 	while (binary[i] != NULL && y != 0 && binary[0])
 	{
 		y = cmp_binary(binary[i], tmp, y, &input[tmp_start]);
-		tmp = binary[i];
-		i++;
+		tmp = binary[i++];
 	}
 	if (y == 0 || y == -1)
 		return (2);
@@ -159,13 +158,9 @@ static int	dynamic_comp(char **binary, char *input, char **equal, int start)
 	if (!(tmp = (char*)malloc(sizeof(char) * (y + 1))))
 		return (0);
 	assign_tmp(tmp, binary[0], &input[tmp_start], y);
-	if (!((*equal) = ft_add_string(input, &tmp, start)))
-	{
-		ft_strdel(&tmp);
-		return (0);
-	}
+	*equal = ft_add_string(input, &tmp, start);
 	ft_strdel(&tmp);
-	return (1);
+	return ((*equal) ? 1 : 0);
 }
 
 /*
@@ -188,19 +183,18 @@ int			tab_key(char **buff, t_cursor *cursor)
 		del_tst(tst);
 		return (0);
 	}
+	del_tst(tst);
 	if (ret == 2)
 	{
 		if (!(input = ft_add_string(*buff, &binary[0], cursor->start)))
 		{
-			del_tst(tst);
 			del_double_char(binary);
 			return (0);
 		}
-		ft_printf("path = [%s]\n", binary[0]);
 		set_string(buff, cursor, input);
 		ft_strdel(&input);
 	}
-	else if (binary && binary[0] != NULL)
+	else if ((binary) && binary[0] != NULL)
 	{
 		if ((ret = dynamic_comp(binary, *buff, &input, cursor->start)) == 1)
 		{
@@ -209,13 +203,11 @@ int			tab_key(char **buff, t_cursor *cursor)
 		}
 		else if (ret == 0)
 		{
-			del_tst(tst);
 			del_double_char(binary);
 			return (0);
 		}
 		print_double_char(binary);
 	}
-	del_tst(tst);
 	if (binary)
 		del_double_char(binary);
 	return (1);

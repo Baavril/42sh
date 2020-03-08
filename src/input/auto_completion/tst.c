@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 14:30:55 by yberramd          #+#    #+#             */
-/*   Updated: 2020/03/08 11:42:47 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/08 12:13:07 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,13 +108,25 @@ static void		ft_builtins(char **binaires)
 {
 	binaires[0] = ft_strdup("echo");
 	binaires[1] = ft_strdup("cd");
-	binaires[2] = ft_strdup("setenv");
-	binaires[3] = ft_strdup("unsetenv");
-	binaires[4] = ft_strdup("env");
+	binaires[2] = ft_strdup("alias");
+	binaires[3] = ft_strdup("unalias");
+	binaires[4] = ft_strdup("hash");
 	binaires[5] = ft_strdup("exit");
+	binaires[6] = ft_strdup("test");
+	binaires[7] = ft_strdup("set");
+	binaires[8] = ft_strdup("fc");
+	binaires[9] = ft_strdup("fg");
+	binaires[10] = ft_strdup("bg");
+	binaires[11] = ft_strdup("jobs");
+	binaires[12] = ft_strdup("export");
+	binaires[13] = ft_strdup("unset");
+	binaires[14] = ft_strdup("history");
+	binaires[15] = ft_strdup("type");
+	binaires[16] = ft_strdup("true");
+	binaires[17] = ft_strdup("false");
 }
 
-static int		ft_assign_binary(char **binaires, DIR *dir, int len, int *y)
+static int		ft_assign_binary(char **binaires, DIR *dir, int len, int y)
 {
 	struct dirent	*dirent;
 
@@ -122,14 +134,14 @@ static int		ft_assign_binary(char **binaires, DIR *dir, int len, int *y)
 	{
 		if (ft_strcmp(".", dirent->d_name)
 				&& ft_strcmp("..", dirent->d_name)
-				&& (*y) < len)
+				&& y < len)
 		{
-			if (!(binaires[(*y)] = ft_strdup(dirent->d_name)))
+			if (!(binaires[y] = ft_strdup(dirent->d_name)))
 			{
 				del_double_char(binaires);
 				return (-1);
 			}
-			(*y)++;
+			y++;
 		}
 	}
 	return (1);
@@ -138,15 +150,13 @@ static int		ft_assign_binary(char **binaires, DIR *dir, int len, int *y)
 static int		ft_binaires(char **binaires, char **path_dir, int len)
 {
 	int				i;
-	int				y;
 	DIR				*dir;
 
 	i = 0;
-	y = 6;
 	while (path_dir[i])
 	{
 		if ((dir = opendir(path_dir[i])))
-			if (ft_assign_binary(binaires, dir, len, &y) == -1)
+			if (ft_assign_binary(binaires, dir, len, BUILTIN_NBR) == -1)
 			{
 				closedir(dir);
 				return (-1);
@@ -191,12 +201,12 @@ static char		**create_binary(char **path_dir)
 	int				len;
 	char			**binaires;
 
-	len = ft_nbr_binary(path_dir) + 6;
+	len = ft_nbr_binary(path_dir) + BUILTIN_NBR;
 	if (!(binaires = (char**)malloc(sizeof(char*) * (len + 1))))
 		return (NULL);
 	binaires[len] = NULL;
 	ft_builtins(binaires);
-	if (len > 6)
+	if (len > BUILTIN_NBR)
 		ft_binaires(binaires, path_dir, len);
 	return (binaires);
 }
