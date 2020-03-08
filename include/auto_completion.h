@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 13:04:49 by yberramd          #+#    #+#             */
-/*   Updated: 2020/03/05 16:31:06 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/03/08 19:20:20 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ int					del_tst(t_tst *tst);
 int					search_tst(t_tst *tst, char *str);
 int					ft_auto_completion(t_tst *tst, char *input, char ***words,
 																	int start);
+char				**ft_path(char *input);
 
 #endif
