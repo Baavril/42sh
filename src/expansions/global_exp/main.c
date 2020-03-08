@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/03/08 12:42:09 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/08 14:45:13 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,9 @@ static int	expansions_launcher(t_expand *vars)
 		while (g_symexp[vars->j].expand)
 		{
 			if (g_symexp[vars->j].sym == vars->type)
-				if (g_symexp[(vars->j)++].expand(vars->tokens) == ERROR)
+				if (g_symexp[(vars->j)].expand(vars->tokens) == ERROR)
 					return (ERROR);
+			(vars->j)++;
 		}
 		if (vars->nb > 0)
 			*(vars->tokens) = ft_setbslash(*(vars->tokens), vars->nb);
