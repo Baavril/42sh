@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:13:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/04 13:56:24 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/07 17:27:54 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,27 @@
 #include "jcont.h"
 #include "error.h"
 
-extern char				**environ;
 extern int				g_retval;
 extern int				g_fd[3];
 extern int				g_fclose;
 int						g_prefix;
+int						g_mode;
 
 int				i_execnode(t_elem left, t_elem right)
 {
 	g_prefix = 1;
 	if (!left.v || left.v->f(left.v->left, left.v->right) != -1)
 		right.v->f(right.v->left, right.v->right);
-	return (ft_clean_exit(NULL, 1));
+	if (g_mode & FORK_SHELL)
+		ft_launch_job();
+	return (ft_clean_exit(NULL, g_retval));
 }
 
 static int		i_simple_command_builtin(t_elem left, t_elem right)
 {
-	char		**save_env;
-	int			save_stdfd[3];
+	extern char		**environ;
+	char			**save_env;
+	int				save_stdfd[3];
 
 	save_env = NULL;
 	g_prefix = 1;
@@ -55,6 +58,8 @@ static int		i_simple_command_builtin(t_elem left, t_elem right)
 
 int				i_simple_command(t_elem left, t_elem right)
 {
+	expand_tree(left.v);
+	expand_tree(right.v);
 	if (right.v->f == i_builtin)
 		return (i_simple_command_builtin(left, right));
 	else

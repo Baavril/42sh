@@ -6,12 +6,11 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:21:48 by baavril           #+#    #+#             */
-/*   Updated: 2020/02/29 19:22:53 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/08 18:56:57 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <stdio.h>
 
 #include "shell_variables.h"
 #include "libft.h"
@@ -26,7 +25,7 @@ static void				prtlist(void)
 	voyager = g_svar;
 	while (g_svar)
 	{
-		printf("%s\n", ((char*)g_svar->str));
+		ft_printf("%s\n", ((char*)g_svar->str));
 		g_svar = g_svar->next;
 	}
 	g_svar = voyager;

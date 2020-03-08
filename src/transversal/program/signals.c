@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 22:47:47 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/03/01 18:25:15 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/07 14:08:19 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,30 +20,30 @@
 
 t_sig			g_sigdispatcher[] =
 {
-	{SIGHUP, {SIG_IGN, SIG_DFL}},
-	{SIGINT, {SIG_IGN, SIG_DFL}},
-	{SIGQUIT, {SIG_IGN, SIG_DFL}},
-	{SIGILL, {SIG_IGN, SIG_DFL}},
-	{SIGTRAP, {SIG_IGN, SIG_DFL}},
-	{SIGABRT, {SIG_IGN, SIG_DFL}},
-	{SIGFPE, {SIG_IGN, SIG_DFL}},
-	{SIGBUS, {SIG_IGN, SIG_DFL}},
-	{SIGSEGV, {SIG_IGN, SIG_DFL}},
-	{SIGSYS, {SIG_IGN, SIG_DFL}},
-	{SIGPIPE, {SIG_IGN, SIG_DFL}},
-	{SIGALRM, {SIG_IGN, SIG_DFL}},
-	{SIGTERM, {SIG_IGN, SIG_DFL}},
-	{SIGURG, {SIG_IGN, SIG_DFL}},
-	{SIGTSTP, {SIG_IGN, SIG_DFL}},
-	{SIGCONT, {SIG_IGN, SIG_DFL}},
-	{SIGCHLD, {&ft_sigchld_handler, SIG_DFL}},
-	{SIGTTIN, {SIG_IGN, SIG_DFL}},
-	{SIGTTOU, {SIG_IGN, SIG_DFL}},
-	{SIGXFSZ, {SIG_IGN, SIG_DFL}},
-	{SIGVTALRM, {SIG_IGN, SIG_DFL}},
-	{SIGPROF, {SIG_IGN, SIG_DFL}},
-	{SIGUSR1, {SIG_IGN, SIG_IGN}},
-	{SIGUSR2, {SIG_IGN, SIG_IGN}},
+	{SIGHUP, {SIG_IGN, SIG_DFL, &ft_transferkill}},
+	{SIGINT, {SIG_IGN, SIG_DFL, &ft_transferkill}},
+	{SIGQUIT, {SIG_IGN, SIG_DFL, &ft_transferkill}},
+	{SIGILL, {SIG_IGN, SIG_DFL, &ft_transferkill}},
+	{SIGTRAP, {SIG_IGN, SIG_DFL, &ft_transferkill}},
+	{SIGABRT, {SIG_IGN, SIG_DFL, &ft_transferkill}},
+	{SIGFPE, {SIG_IGN, SIG_DFL, &ft_transferkill}},
+	{SIGBUS, {SIG_IGN, SIG_DFL, &ft_transferkill}},
+	{SIGSEGV, {SIG_IGN, SIG_DFL, &ft_transferkill}},
+	{SIGSYS, {SIG_IGN, SIG_DFL, &ft_transferkill}},
+	{SIGPIPE, {SIG_IGN, SIG_DFL, &ft_transferkill}},
+	{SIGALRM, {SIG_IGN, SIG_DFL, &ft_transferkill}},
+	{SIGTERM, {SIG_IGN, SIG_DFL, &ft_transferkill}},
+	{SIGURG, {SIG_IGN, SIG_DFL, SIG_IGN}},
+	{SIGTSTP, {SIG_IGN, SIG_DFL, &ft_transferstop}},
+	{SIGCONT, {SIG_IGN, SIG_DFL, &ft_transfercont}},
+	{SIGCHLD, {&ft_sigchld_handler, SIG_DFL, &ft_sigchld_handler}},
+	{SIGTTIN, {SIG_IGN, SIG_DFL, SIG_IGN}},
+	{SIGTTOU, {SIG_IGN, SIG_DFL, SIG_IGN}},
+	{SIGXFSZ, {SIG_IGN, SIG_DFL, &ft_transfersig}},
+	{SIGVTALRM, {SIG_IGN, SIG_DFL, &ft_transfersig}},
+	{SIGPROF, {SIG_IGN, SIG_DFL, &ft_transfersig}},
+	{SIGUSR1, {SIG_IGN, SIG_IGN, SIG_IGN}},
+	{SIGUSR2, {SIG_IGN, SIG_IGN, SIG_IGN}},
 	{0, {NULL, NULL}},
 };
 

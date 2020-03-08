@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/08 19:12:13 by yberramd         ###   ########.fr        #
+#    Updated: 2020/03/08 19:21:38 by yberramd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -146,8 +146,9 @@ SOURCES			:=		transversal/program/main.c \
 						job_control/ft_print_job.c \
 						job_control/ft_set_prio.c \
 						job_control/ft_sigchld_handler.c \
+						job_control/ft_transfersig.c \
 						job_control/ft_update_job_status.c \
-						job_control/ft_wait_foreground.c \
+						job_control/ft_wait.c \
 						job_control/path_concat.c \
 						job_control/get_sequence.c \
 						builtins/builtin_alias/cmd_alias.c \
@@ -216,7 +217,10 @@ OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 PATH_LIB := ./libft/
 LIBFT := $(PATH_LIB)libft.a
 
-INCLUDES := -I./include/ -I$(PATH_LIB)include/
+HEADER_PATH :=	./include \
+				$(PATH_LIB)include
+
+INCLUDES :=	$(addprefix -I, $(HEADER_PATH))
 
 DEPENDS := $(patsubst %.c,%.d,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
