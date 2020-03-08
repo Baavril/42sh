@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 14:30:55 by yberramd          #+#    #+#             */
-/*   Updated: 2020/03/08 11:32:59 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/08 11:42:47 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int				search_tst(t_tst *tst, char *str)
 	return (0);
 }
 
-static char		**create_dir(char *path_src)
+static char		**create_dir(char *path_src) // C'est pas un ft_strsplit(path, ":") ca ?
 {
 	int		i;
 	int		len;
