@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/03/08 14:45:13 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/08 14:47:31 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,8 @@ static int	expansions_launcher(t_expand *vars)
 		if (vars->nb > 0)
 			*(vars->tokens) = ft_setbslash(*(vars->tokens), vars->nb);
 	}
-	else
-	{
-		*(vars->tokens) = ft_set_slashed(vars->tokens);
+	else if	((*(vars->tokens) = ft_set_slashed(vars->tokens)) || 1)
 		*(vars->tokens) = ft_unset_quoted(*vars->tokens, SQUOTES);
-	}
 	return (SUCCESS);
 }
 
