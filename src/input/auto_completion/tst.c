@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 14:30:55 by yberramd          #+#    #+#             */
-/*   Updated: 2020/02/19 17:35:06 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/08 11:32:59 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,36 +271,26 @@ static int		add_word(char *str, t_tst *tst)
 	i = 0;
 	while (str[i] != '\0' && tst->c != '\0')
 	{
-		if (str[i] == tst->c)
-		{
+		if (str[i] == tst->c && (++i))
 			tst = tst->middle;
-			i++;
-		}
-		if (tst->c != '\0' && str[i] > tst->c && str[i] != '\0')
+		else if (str[i] > tst->c)
 		{
-			if (tst->right != NULL)
-				tst = tst->right;
-			else
+			if (tst->right == NULL)
 				return (new_word(str, &tst->right, i));
+			tst = tst->right;
 		}
-		if (tst->c != '\0' && str[i] < tst->c && str[i] != '\0')
+		else if (str[i] < tst->c)
 		{
-			if (tst->left != NULL)
-				tst = tst->left;
-			else
+			if (tst->left == NULL)
 				return (new_word(str, &tst->left, i));
+			tst = tst->left;
 		}
 	}
 	if (tst->c == '\0' && str[i] != '\0')
-	{
-		tst->c = str[i];
-		i++;
-	}
+		tst->c = str[i++];
 	if (str[i] != '\0')
 		return (new_word(str, &tst->middle, i));
-	if (tst->c != '\0')
-		return (last_char(&tst));
-	return (1);
+	return ((tst->c != '\0') ? last_char(&tst) : 1);
 }
 
 static int		create_tst(char **binaires, t_tst **tst)
