@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 14:01:09 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/03/06 13:16:55 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/08 18:35:02 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void				ft_update_job_status(void)
 	{
 		job = (t_job*)(voyager->content);
 		status = ft_accumulate_proc_status(job->process);
-		if (WIFEXITED(status))
+		if (WIFEXITED(status) && !(status & RUNNING))
 			status = ((t_process*)(job->process->content))->status;
 		if (job->status & BACKGROUND)
 			status |= BACKGROUND;

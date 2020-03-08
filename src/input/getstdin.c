@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 17:02:43 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/03/06 13:25:43 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/08 18:37:37 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,5 @@ int				get_stdin(t_cursor *cursor, char **buff)
 	}
 	if (ret == -1 && getppid() != g_ppid)
 		cmd_exit(0, NULL);
-	return (1);
+	return (ret);
 }
