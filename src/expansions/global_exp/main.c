@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/03/03 19:58:31 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/03/08 12:42:09 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	initexpvars(t_expand *vars)
 	vars->tokens = NULL;
 }
 
-static int	expansions_linker(t_expand *vars)
+static void	expansions_linker(t_expand *vars)
 {
 	if (*(vars->tokens))
 	{
@@ -56,9 +56,8 @@ static int	expansions_linker(t_expand *vars)
 			vars->tmp = ft_strdup(*(vars->tokens));
 		else
 		{
-			vars->ptm = ft_strdup(vars->tmp);
-			ft_strdel(&(vars->tmp));
-			vars->tmp = ft_strjoin(vars->ptm, *(vars->tokens));
+			vars->ptm = vars->tmp;
+			vars->tmp = ft_strjoin(vars->ptm, vars->btw);
 			ft_strdel(&(vars->ptm));
 		}
 	}
@@ -66,21 +65,16 @@ static int	expansions_linker(t_expand *vars)
 	{
 		if (ft_strlen(*(vars->tokens)) == 0 && vars->type == WHY_EXP)
 			ft_strdel(&vars->btw);
+		else if (vars->tmp == NULL)
+			vars->tmp = vars->btw;
 		else
 		{
-			if (vars->tmp == NULL)
-				vars->tmp = vars->btw;
-			else
-			{
-				vars->ptm = ft_strdup(vars->tmp);
-				ft_strdel(&(vars->tmp));
-				vars->tmp = ft_strjoin(vars->ptm, vars->btw);
-				ft_strdel(&(vars->ptm));
-				ft_strdel(&vars->btw);
-			}
+			vars->ptm = vars->tmp;
+			vars->tmp = ft_strjoin(vars->ptm, vars->btw);
+			ft_strdel(&(vars->ptm));
+			ft_strdel(&vars->btw);
 		}
 	}
-	return (SUCCESS);
 }
 
 static int	expansions_launcher(t_expand *vars)
@@ -98,9 +92,8 @@ static int	expansions_launcher(t_expand *vars)
 		while (g_symexp[vars->j].expand)
 		{
 			if (g_symexp[vars->j].sym == vars->type)
-				if (g_symexp[vars->j].expand(vars->tokens) == ERROR)
+				if (g_symexp[(vars->j)++].expand(vars->tokens) == ERROR)
 					return (ERROR);
-			vars->j++;
 		}
 		if (vars->nb > 0)
 			*(vars->tokens) = ft_setbslash(*(vars->tokens), vars->nb);
