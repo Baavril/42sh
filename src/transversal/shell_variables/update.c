@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:21:48 by baavril           #+#    #+#             */
-/*   Updated: 2020/03/03 19:50:02 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/03/08 11:09:18 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 #include "libft.h"
 #include "prompt.h"
 
-struct s_svar	*g_svar;
+struct s_svar		*g_svar;
 
-int				update_intern_vars(void)
+int					update_intern_vars(void)
 {
 	int				i;
 	int				len;
@@ -73,45 +73,47 @@ int				update_intern_vars(void)
 	return (0);
 }
 
-char				*get_prompt_value(void)
+static char			*cpy_prompt(struct s_svar *voyager)
 {
-	int				i;
-	int				j;
-	char			*ret;
-	struct s_svar	*voyager;
+	int		i;
+	int		j;
+	char	*ret;
 
 	i = 0;
 	j = 0;
-	voyager = g_svar;
-	while (voyager)
+	if (!(ret = ft_strnew(ft_strplen(voyager->value))))
+		return (NULL);
+	while (voyager->value[i])
 	{
-		if (!(ft_strcmp(voyager->key, PS1)))
+		if (voyager->value[i] == '\033')
 		{
-			if (!(ret = (char*)ft_memalloc(sizeof(char)
-			* (ft_strplen(voyager->value) + 1))))
-				return (0);
-			while (voyager->value[i])
-			{
-				if (voyager->value[i] == '\033')
-				{
-					while (voyager->value[i] != 'm')
-						++i;
-					++i;
-				}
-				if (ft_isprint(voyager->value[i]))
-					ret[j++] = voyager->value[i];
+			while (voyager->value[i] != 'm')
 				++i;
-				if (voyager->value[i] == ' ')
-					break ;
-			}
-			return (ret);
+			++i;
 		}
-		voyager = voyager->next;
+		if (ft_isprint(voyager->value[i]))
+			ret[j++] = voyager->value[i];
+		if (voyager->value[++i] == ' ')
+			break ;
 	}
-	return (NULL);
+	return (ret);
 }
 
-int				set_new_prompt_var(char *new)
+char				*get_prompt_value(void)
+{
+	char			*ret;
+	struct s_svar	*voyager;
+
+	ret = NULL;
+	voyager = g_svar;
+	while ((voyager) && (ft_strcmp(voyager->key, PS1)))
+		voyager = voyager->next;
+	if ((voyager))
+		ret = cpy_prompt(voyager);
+	return (ret);
+}
+
+int					set_new_prompt_var(char *new)
 {
 	struct s_svar	*voyager;
 
@@ -129,7 +131,7 @@ int				set_new_prompt_var(char *new)
 	return (0);
 }
 
-int				update_prompt_var(void)
+int					update_prompt_var(void)
 {
 	int				i;
 	char			*tmp1;
