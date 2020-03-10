@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 16:12:14 by yberramd          #+#    #+#             */
-/*   Updated: 2020/03/08 19:22:09 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/03/10 14:17:19 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,25 +93,23 @@ static int		malloc_words(t_tst *tst, int len, int index, char **words)
 	return (index);
 }
 
-static int		ft_words(t_tst *tst, int len, int index, char **w, char *str)
+static int		ft_words(t_tst *tst, t_int in, char **w, char *str)
 {
 	if (tst->right && tst->c != '\0')
-		index = ft_words(tst->right, len, index, w, str);
+		in.index = ft_words(tst->right, in, w, str);
 	if (tst->left && tst->c != '\0')
-		index = ft_words(tst->left, len, index, w, str);
+		in.index = ft_words(tst->left, in, w, str);
 	if (tst->middle && tst->c != '\0')
 	{
-		str[len] = tst->c;
-		len++;
-		index = ft_words(tst->middle, len, index, w, str);
+		str[in.len++] = tst->c;
+		in.index = ft_words(tst->middle, in, w, str);
 	}
 	if (tst->middle && tst->middle->end == true)
 	{
-		str[len] = '\0';
-		ft_strcat(w[index], str);
-		index++;
+		str[in.len] = '\0';
+		ft_strcat(w[in.index++], str);
 	}
-	return (index);
+	return (in.index);
 }
 
 static int		malloc_str(t_tst *tst, int len, int max_len)
@@ -137,8 +135,11 @@ static int		assign_words(t_tst *tst, char **words, char *input, int len)
 {
 	int		i;
 	char	*str;
+	t_int	in;
 
 	i = 0;
+	in.index = 0;
+	in.len = 0;
 	if (go_to_char(&tst, input) == 0)
 		return (-1);
 	if ((str = (char*)malloc(sizeof(char)
@@ -154,7 +155,7 @@ static int		assign_words(t_tst *tst, char **words, char *input, int len)
 		ft_strcpy(words[i], input);
 		i++;
 	}
-	ft_words(tst, 0, 0, words, str);
+	ft_words(tst, in, words, str);
 	ft_strdel(&str);
 	return (1);
 }
@@ -215,7 +216,29 @@ int				ft_restart(char *input, int start)
 		return (0);
 }
 
-static char		*ft_assign_words(char *str, int dollar)
+static char		*ft_dollar(char *str)
+{
+	char	*tmp;
+	int		i;
+	int		y;
+
+	i = 0;
+	y = 0;
+	if (!(tmp = (char*)malloc(sizeof(char) * (ft_strlen(str) + 1))))
+		return (NULL);
+	tmp[y] = '$';
+	y++;
+	while (str[i + 1] != '\0')
+	{
+		tmp[y] = str[i];
+		i++;
+		y++;
+	}
+	tmp[y] = '\0';
+	return (tmp);
+}
+
+static char		*ft_dollar_brace(char *str)
 {
 	int		i;
 	int		y;
@@ -223,36 +246,34 @@ static char		*ft_assign_words(char *str, int dollar)
 
 	i = 0;
 	y = 0;
+	if (!(tmp = (char*)malloc(sizeof(char) * (ft_strlen(str) + 3))))
+		return (NULL);
+	tmp[0] = '$';
+	tmp[1] = '{';
+	y += 2;
+	while (str[i + 1] != '\0')
+	{
+		tmp[y] = str[i];
+		i++;
+		y++;
+	}
+	tmp[y] = '}';
+	y++;
+	tmp[y] = '\0';
+	return (tmp);
+}
+
+static char		*ft_assign_words(char *str, int dollar)
+{
+	char	*tmp;
+
 	if (dollar == 1)
 	{
-		if (!(tmp = (char*)malloc(sizeof(char) * (ft_strlen(str) + 1))))
+		if (!(tmp = ft_dollar(str)))
 			return (NULL);
-		tmp[y] = '$';
-		y++;
-		while (str[i + 1] != '\0')
-		{
-			tmp[y] = str[i];
-			i++;
-			y++;
-		}
 	}
-	else
-	{
-		if (!(tmp = (char*)malloc(sizeof(char) * (ft_strlen(str) + 3))))
-			return (NULL);
-		tmp[0] = '$';
-		tmp[1] = '{';
-		y += 2;
-		while (str[i + 1] != '\0')
-		{
-			tmp[y] = str[i];
-			i++;
-			y++;
-		}
-		tmp[y] = '}';
-		y++;
-	}
-	tmp[y] = '\0';
+	else if (!(tmp = ft_dollar_brace(str)))
+		return (NULL);
 	return (tmp);
 }
 

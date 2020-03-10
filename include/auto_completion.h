@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 13:04:49 by yberramd          #+#    #+#             */
-/*   Updated: 2020/03/08 19:20:20 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/03/10 14:15:04 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ typedef struct		s_tst
 	struct s_tst	*middle;
 	struct s_tst	*right;
 }					t_tst;
+
+typedef struct		s_int
+{
+	int	len;
+	int	index;
+}					t_int;
 
 t_tst				*ft_tst(void);
 void				del_double_char(char **tab2);
