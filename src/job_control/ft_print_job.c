@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 18:25:57 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/12 13:16:29 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/11 17:49:27 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void			ft_print_job(t_job *job, int opt)
 
 	if (!(job))
 		return ;
-	ft_statestring(mess, job->status);
+	ft_statestring(mess, job->status & RETVAL);
 	prio = ' ';
 	if (g_jcont.active_jobs[0] == job->nbr)
 		prio = '+';

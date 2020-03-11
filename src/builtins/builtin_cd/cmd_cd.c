@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:14:44 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/20 17:50:20 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/11 17:44:36 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 extern int		g_optind;
 extern int		g_opterr;
 extern int		g_optopt;
+extern int		g_link_lvl;
 
 static int		ft_update_pwd(char *new_pwd)
 {
@@ -65,6 +66,11 @@ static int		ft_cd_exec(char *target, int opt_p)
 	if ((ret = ft_get_path(target, &new_pwd)))
 		return (ret);
 	ft_get_abspath(&new_pwd);
+	if (!ft_is_valid_dir(new_pwd))
+	{
+		ft_strdel(&new_pwd);
+		return (TARGET_NOT_FOUND);
+	}
 	if ((ret = ft_simplify_path(&new_pwd, opt_p)))
 	{
 		ft_strdel(&new_pwd);
@@ -103,6 +109,7 @@ int				cmd_cd(int ac, char **av)
 	int		ret;
 	char	*var_value;
 
+	g_link_lvl = 0;
 	if ((ret = ft_parse_cd_opt(ac, av, &opt_p)))
 		return (ret);
 	if ((ret = ft_cd_exec(av[g_optind], opt_p)) == EXEC_SUCCESS)

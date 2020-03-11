@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:18:20 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/29 13:52:38 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/11 17:43:15 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,12 @@
 
 # define WHARD_EXIT				0x80
 # define WSTPED					0x1f
-# define RUNNING				0x20000
-# define BACKGROUND				0x10000
+# define RETVAL					0xffff
+# define RUNNING				0x10000
+# define BACKGROUND				0x20000
 # define FOREGROUND				0x0
-# define MAJOR_FAILLURE			0x40000
+# define FORK_SHELL				0x40000
+# define MAJOR_FAILLURE			0x80000
 
 # define RESERVED_INFD			10
 # define RESERVED_OUTFD			11
@@ -69,12 +71,14 @@ t_process			*ft_get_process_pid(pid_t pid);
 
 void				ft_print_jobs(t_list *job_list, int opt);
 void				ft_print_job(t_job *job, int opt);
+void				ft_free_proc(void *content, size_t size);
 void				ft_free_job(void *content, size_t size);
 int					ft_free_jcont(int flag);
 void				ft_set_prio(void);
 int					ft_pop_job(int nbr);
 void				ft_update_job_status(void);
 void				ft_check_bgstatus(void);
+int					ft_wait_background(t_job *job);
 int					ft_wait_foreground(t_job *job);
 int					ft_isready(t_job *job);
 

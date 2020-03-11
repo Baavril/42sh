@@ -6,13 +6,13 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 18:18:41 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/05 15:43:10 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/11 17:48:48 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "jcont.h"
 
-static void		ft_free_proc(void *content, size_t size)
+void			ft_free_proc(void *content, size_t size)
 {
 	(void)size;
 	free(content);

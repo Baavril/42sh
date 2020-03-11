@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 10:08:05 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/18 11:07:54 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/11 17:45:33 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static int			ft_parse_jobopt(int ac, char **av)
 	int			ret;
 	int			opt;
 
+	opt = 0;
 	g_opterr = 0;
 	g_optind = 1;
 	while ((ret = ft_getopt(ac, av, JOBS_OPT)) > 0)

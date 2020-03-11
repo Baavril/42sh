@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:43:35 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/04 13:56:43 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/07 17:17:30 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 #include <unistd.h>
 #define TAB_SIZE 16
 
-char **g_argv;
-extern int g_retval;
+char		**g_argv;
+extern int	g_retval;
 
 int		i_prefix(t_elem left, t_elem right)
 {
@@ -52,7 +52,8 @@ int		i_exec(t_elem left, t_elem right)
 	if (!right.v || right.v->f(right.v->left, right.v->right) != -1)
 		execve(g_argv[0], g_argv, environ);
 	free(g_argv);
-	return (-1);
+	g_retval = 1;
+	return (1);
 }
 
 char	**realloc_argv(char **argv, size_t i)

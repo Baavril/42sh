@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/11 16:42:10 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/11 17:50:12 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 
 int					g_ppid;
 int					g_retval;
+extern int			g_mode;
 extern int			g_alias_treated;
 struct termios		g_old_termios;
 
@@ -109,10 +110,12 @@ int			main(int argc, char **argv)
 		if (status != -1 && input[0])
 			execute(input);
 		ft_check_bgstatus();
+		if (g_mode & FORK_SHELL)
+			break ;
 		ft_strdel(&input);
 		update_intern_vars();
 		if (getppid() != g_ppid)
 			break ;
 	}
-	return (cmd_exit(0, NULL));
+	return (ft_clean_exit(NULL, g_retval));
 }

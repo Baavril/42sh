@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 11:40:15 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/18 12:19:52 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/11 17:45:47 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <signal.h>
 #include "jcont.h"
 
+extern int			g_retval;
 extern char			*g_progname;
 extern t_jcont		g_jcont;
 
@@ -35,8 +36,6 @@ static void			ft_set_running(t_job *job)
 
 int					ft_resume_in_fg(t_job *job)
 {
-	int		ret_status;
-
 	if (g_jcont.active_jobs[0] != job->nbr)
 		g_jcont.active_jobs[1] = g_jcont.active_jobs[0];
 	g_jcont.active_jobs[0] = job->nbr;
@@ -51,10 +50,8 @@ int					ft_resume_in_fg(t_job *job)
 			return (1);
 		}
 	}
-	ret_status = ft_wait_foreground(job);
-	if (!WIFSTOPPED(job->status))
-		ft_pop_job(job->nbr);
-	return (ret_status);
+	ft_wait_foreground(job);
+	return (g_retval);
 }
 
 int					ft_resume_in_bg(t_job *job)

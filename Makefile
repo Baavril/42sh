@@ -6,13 +6,13 @@
 #    By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/04 15:23:21 by bprunevi          #+#    #+#              #
-#    Updated: 2020/03/04 15:23:23 by bprunevi         ###   ########.fr        #
+#    Updated: 2020/03/11 17:41:58 by bprunevi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 -include 21sh.mk
 
-.PHONY: all clean fclean re try_lib
+.PHONY: all clean fclean re try_lib tags
 
 all: try_lib $(NAME)
 
@@ -22,6 +22,9 @@ $(NAME): $(LIBFT) $(OBJECTS)
 
 try_lib:
 	@$(MAKE) -j -C $(PATH_LIB)
+
+tags:
+	@ctags -dt $$(find $(SOURCES_PATH)  $(PATH_LIB)$(SOURCES_PATH) | grep "\.c" && find $(HEADER_PATH) | grep "\.h") 2> /dev/null
 
 clean:
 	@$(RM) $(OBJECTS) $(DEPENDS)

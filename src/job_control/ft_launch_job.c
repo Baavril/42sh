@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:56:52 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/20 13:09:06 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/11 17:49:07 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,18 @@
 #include <unistd.h>
 #include <signal.h>
 
-extern int		g_mode;
 t_jcont			g_jcont = {NULL, 1, {0, 0}};
 t_job			g_curjob = {NULL, 0, 0, NULL, 0};
 char			*g_bgpid = NULL;
+extern int		g_mode;
+extern int		g_retval;
 
 int			ft_launch_job(void)
 {
 	t_job		*job;
 	int			ret_status;
 
+	ret_status = 0;
 	if (!(g_curjob.process))
 	{
 		ft_strdel(&(g_curjob.cmd));
@@ -35,13 +37,14 @@ int			ft_launch_job(void)
 		return (e_cannot_allocate_memory);
 	if (g_mode & BACKGROUND)
 	{
-		ft_dprintf(STDERR_FILENO, "[%i] %i\n", job->nbr, job->pgid);
 		ft_strdel(&g_bgpid);
 		g_bgpid = ft_itoa(job->pgid);
-		return (0);
+		if (!(g_mode & FORK_SHELL))
+			ft_dprintf(STDERR_FILENO, "[%i] %i\n", job->nbr, job->pgid);
+		else
+			ret_status = ft_wait_background(job);
+		return (ret_status);
 	}
 	ret_status = ft_wait_foreground(job);
-	if (!WIFSTOPPED(job->status))
-		ft_pop_job(job->nbr);
 	return (ret_status);
 }

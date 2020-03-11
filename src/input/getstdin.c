@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 17:02:43 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/11 17:08:08 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/11 17:47:01 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,7 @@ int				get_stdin(t_cursor *cursor, char **buff)
 		if (ret == -1 && getppid() != g_ppid)
 			cmd_exit(0, NULL);
 	}
-	return (1);
+	if (ret == -1 && getppid() != g_ppid)
+		cmd_exit(0, NULL);
+	return (ret);
 }

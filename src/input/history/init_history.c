@@ -6,24 +6,24 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 13:50:19 by yberramd          #+#    #+#             */
-/*   Updated: 2020/02/29 16:02:23 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/03/08 19:30:07 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "history.h"
 
-static int	error_clean(int fd, char *get_line)
+static int	error_clean(int fd, char **get_line)
 {
 	ft_dprintf(2, "cannot allocate memory\n");
 	close(fd);
-	ft_strdel(&get_line);
+	ft_strdel(get_line);
 	return (0);
 }
 
-static int	init_clean(int fd, char *get_line)
+static int	init_clean(int fd, char **get_line)
 {
 	close(fd);
-	ft_strdel(&get_line);
+	ft_strdel(get_line);
 	return (1);
 }
 
@@ -57,9 +57,9 @@ static int	assign_file_history(int fd, t_history *history)
 	while (get_next_line(fd, &get_line) > 0 && len < 500)
 	{
 		if (!(history->str = ft_strdup(get_line)))
-			return (error_clean(fd, get_line));
+			return (error_clean(fd, &get_line));
 		if (!(history->next = (t_history*)malloc(sizeof(t_history))))
-			return (error_clean(fd, get_line));
+			return (error_clean(fd, &get_line));
 		history->next->previous = history;
 		history = history->next;
 		ft_strdel(&get_line);
@@ -71,7 +71,7 @@ static int	assign_file_history(int fd, t_history *history)
 		free(history->next);
 		history->next = NULL;
 	}
-	return (init_clean(fd, get_line));
+	return (init_clean(fd, &get_line));
 }
 
 int			init_history(t_history *history, char **home)
