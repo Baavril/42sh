@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:14:44 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/03/11 12:19:22 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/11 12:39:26 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,10 @@ static int		ft_cd_exec(char *target, int opt_p)
 		return (ret);
 	ft_get_abspath(&new_pwd);
 	if (!ft_is_valid_dir(new_pwd))
+	{
+		ft_strdel(&new_pwd);
 		return (TARGET_NOT_FOUND);
+	}
 	if ((ret = ft_simplify_path(&new_pwd, opt_p)))
 	{
 		ft_strdel(&new_pwd);
