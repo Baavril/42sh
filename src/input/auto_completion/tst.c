@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 14:30:55 by yberramd          #+#    #+#             */
-/*   Updated: 2020/02/19 17:35:06 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/10 16:38:41 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void			del_double_char(char **tab2)
 	tab2 = NULL;
 }
 
-void			del_tst(t_tst *tst)
+int				del_tst(t_tst *tst)
 {
 	if (tst)
 	{
@@ -43,6 +43,7 @@ void			del_tst(t_tst *tst)
 		free(tst);
 		tst = NULL;
 	}
+	return (0);
 }
 
 int				search_tst(t_tst *tst, char *str)
@@ -64,26 +65,33 @@ int				search_tst(t_tst *tst, char *str)
 	return (0);
 }
 
-static char		**create_dir(char *path_src)
+static int		nbr_dir(char **p)
 {
-	int		i;
-	int		len;
+	int len;
+	int	i;
+
+	i = 0;
+	len = 1;
+	while ((*p)[i] != '\0')
+	{
+		if ((*p)[i] == ':' && (*p)[i + 1] != '\0' && (*p)[i + 1] != ':')
+			len++;
+		if ((*p)[i] == ':')
+			(*p)[i] = '\0';
+		i++;
+	}
+	return (len);
+}
+
+static char		**create_dir(char *path_src, int i, int len)
+{
 	char	*cp;
 	char	**dir;
 	char	*path;
 
-	i = 0;
-	len = 1;
 	if (!(path = ft_strdup(path_src)))
 		return (NULL);
-	while (path[i] != '\0')
-	{
-		if (path[i] == ':' && path[i + 1] != '\0' && path[i + 1] != ':')
-			len++;
-		if (path[i] == ':')
-			path[i] = '\0';
-		i++;
-	}
+	len = nbr_dir(&path);
 	if (!(dir = (char**)malloc(sizeof(char*) * (len + 1))))
 	{
 		ft_strdel(&path);
@@ -201,33 +209,48 @@ static char		**create_binary(char **path_dir)
 	return (binaires);
 }
 
+static t_tst	*first_cpy(char *str, t_tst **tst, int i)
+{
+	t_tst	*cpy;
+
+	if (!(cpy = (t_tst*)malloc(sizeof(t_tst))))
+		return (NULL);
+	(*tst) = cpy;
+	cpy->left = NULL;
+	cpy->right = NULL;
+	cpy->middle = NULL;
+	cpy->c = str[i];
+	cpy->end = false;
+	return (cpy);
+}
+
+static int		assign_cpy(char *str, t_tst **cpy, int i)
+{
+	if (!((*cpy)->middle = (t_tst*)malloc(sizeof(t_tst))))
+		return (-1);
+	(*cpy) = (*cpy)->middle;
+	(*cpy)->left = NULL;
+	(*cpy)->right = NULL;
+	(*cpy)->middle = NULL;
+	(*cpy)->c = str[i];
+	(*cpy)->end = false;
+	return (1);
+}
+
 static int		new_word(char *str, t_tst **tst, int i)
 {
 	t_tst	*cpy;
 
 	if (str[i] != '\0')
 	{
-		if (!(cpy = (t_tst*)malloc(sizeof(t_tst))))
+		if (!(cpy = first_cpy(str, tst, i)))
 			return (-1);
-		(*tst) = cpy;
-		cpy->left = NULL;
-		cpy->right = NULL;
-		cpy->middle = NULL;
-		cpy->c = str[i];
-		cpy->end = false;
 		i++;
 	}
 	while (str[i] != '\0')
 	{
-		if (!(cpy->middle = (t_tst*)malloc(sizeof(t_tst))))
+		if (assign_cpy(str, &cpy, i++) == -1)
 			return (-1);
-		cpy = cpy->middle;
-		cpy->left = NULL;
-		cpy->right = NULL;
-		cpy->middle = NULL;
-		cpy->c = str[i];
-		cpy->end = false;
-		i++;
 	}
 	if (i != 0)
 	{
@@ -334,7 +357,7 @@ t_tst			*ft_tst(void)
 	path_dir = NULL;
 	path = NULL;
 	if ((path = getenv("PATH")) != NULL)
-		path_dir = create_dir(path);
+		path_dir = create_dir(path, 0, 0);
 	binaires = create_binary(path_dir);
 	if (create_tst(binaires, &tst) == -1)
 		del_tst(tst);
