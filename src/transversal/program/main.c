@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/29 19:49:21 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/03/11 16:42:10 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int			main(int argc, char **argv)
 	g_progname = argv[0];
 	if (ft_shell_init() == e_cannot_allocate_memory)
 		return (alloc_error());
-	while (!read_command(&input) || get_next_line(0, &input))
+	while (!read_command(&input, PS1) || get_next_line(0, &input))
 	{
 		g_alias_treated = 0;
 		if (!(status = history(ADD_CMD, &input, NULL)))

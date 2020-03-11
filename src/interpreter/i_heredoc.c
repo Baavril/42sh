@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 11:36:54 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/26 12:02:04 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/11 17:10:09 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "termcaps.h"
 #include "parser.h"
 #include "prompt.h"
+#include "shell_variables.h"
 #include <unistd.h>
 
 static char	*find_firstchar(char *str)
@@ -27,7 +28,6 @@ static char	*find_firstchar(char *str)
 
 int			i_dless(t_elem left, t_elem right)
 {
-	t_cursor	cursor;
 	char		*buff;
 	int			pipe_fd[2];
 
@@ -39,9 +39,7 @@ int			i_dless(t_elem left, t_elem right)
 	{
 		ft_putstr_fd(buff, pipe_fd[1]);
 		ft_strdel(&buff);
-		ft_init_cursor(&cursor);
-		cursor.prompt_len = mkprompt_quote("\'", &(cursor.prompt));
-		get_stdin(&cursor, &buff);
+		read_command(&buff, PS2);
 		ft_putstr_fd("\n", pipe_fd[1]);
 	}
 	close(pipe_fd[1]);
@@ -51,7 +49,6 @@ int			i_dless(t_elem left, t_elem right)
 
 int			i_dlessdash(t_elem left, t_elem right)
 {
-	t_cursor	cursor;
 	char		*buff;
 	int			pipe_fd[2];
 
@@ -63,9 +60,7 @@ int			i_dlessdash(t_elem left, t_elem right)
 	{
 		ft_putstr_fd(find_firstchar(buff), pipe_fd[1]);
 		ft_strdel(&buff);
-		ft_init_cursor(&cursor);
-		cursor.prompt_len = mkprompt_quote("", &(cursor.prompt));
-		get_stdin(&cursor, &buff);
+		read_command(&buff, PS2);
 		ft_putstr_fd("\n", pipe_fd[1]);
 	}
 	close(pipe_fd[1]);

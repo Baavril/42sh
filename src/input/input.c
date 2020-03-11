@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/08 13:24:00 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/11 17:08:21 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int					ft_strplen(char *str)
 	return (j);
 }
 
-int					init_prompt(t_cursor *cursor)
+int					init_prompt(t_cursor *cursor, char *prompt_var)
 {
 	struct s_svar	*voyager;
 
@@ -67,7 +67,7 @@ int					init_prompt(t_cursor *cursor)
 	voyager = g_svar;
 	while (voyager)
 	{
-		if (!(ft_strcmp(voyager->key, PS1)))
+		if (!(ft_strcmp(voyager->key, prompt_var)))
 		{
 			cursor->prompt_len = ft_strplen(voyager->value);
 			cursor->prompt = ft_strdup(voyager->value);
@@ -79,7 +79,7 @@ int					init_prompt(t_cursor *cursor)
 	return (0);
 }
 
-int					read_command(char **buff)
+int					read_command(char **buff, char *prompt_var)
 {
 	char		*tmp;
 	t_cursor	cursor;
@@ -89,7 +89,7 @@ int					read_command(char **buff)
 		return (1);
 	if (set_termcaps(TC_INPUT))
 		return (2);
-	init_prompt(&cursor);
+	init_prompt(&cursor, prompt_var);
 	get_stdin(&cursor, buff);
 	write(1, "\n", 1);
 	ft_init_cursor(&cursor);
