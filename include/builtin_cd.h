@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 16:34:46 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/02/20 18:27:56 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/03/11 12:25:51 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@
 # define NO_PERM				3
 # define NOT_DIR				4
 # define TARGET_NOT_FOUND		5
+# define EXCEED_LINK_LVL		6
 # define STAT_ERROR				-1
+
+# define LINK_LVL				50
 
 int				ft_get_permission(char *path);
 int				ft_gettype(char *path);
