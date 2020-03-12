@@ -6,24 +6,15 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 12:08:47 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/12 13:18:10 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/12 13:24:47 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "libft.h"
 #include <unistd.h>
-#include <sys/stat.h>
 
 extern int g_prefix;
-
-int	is_not_a_dir(const char *path)
-{
-	struct stat	path_stat;
-
-	stat(path, &path_stat);
-	return (!S_ISDIR(path_stat.st_mode));
-}
 
 int	i_redirect(t_elem left, t_elem right)
 {

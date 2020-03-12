@@ -6,23 +6,15 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 16:26:31 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/11 17:47:45 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/12 13:25:54 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "builtins.h"
 #include "hash_module.h"
-#include <sys/stat.h>
+#include "parser.h"
 #include <unistd.h>
-
-int				is_regfile(const char *path)
-{
-	struct stat	path_stat;
-
-	stat(path, &path_stat);
-	return (S_ISREG(path_stat.st_mode) || S_ISCHR(path_stat.st_mode));
-}
 
 char			*path_join(char *str1, char *str2)
 {
