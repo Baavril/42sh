@@ -79,6 +79,7 @@ static int		fc_s_option(char *str_nbr)
 	int		nbr;
 
 	nbr = ft_atoi_history(str_nbr);
+	(void) nbr;
 	return (1);
 }
 

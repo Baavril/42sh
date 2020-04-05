@@ -157,10 +157,10 @@ int				return_tests(int argc, char **argv)
 		if (*argv[i] == '-' && argc == 2)
 			return (((ret = ft_dispatch_s_option(&argv[i], SINGLE_OPT)) ==
 						E_SUCCESS) ? E_SUCCESS : ret);
-			if (argc > 2 && *argv[i + 1] == '-')
+		if (argc > 2 && *argv[i + 1] == '-')
 			return (((ret = ft_dispatch_d_option(&argv[i], DOUBLE_OPT, argc)) ==
 						E_SUCCESS) ? E_SUCCESS : ret);
-			return (((ret = ft_string_tests(argc, &argv[i])) ==
+		return (((ret = ft_string_tests(argc, &argv[i])) ==
 					E_SUCCESS) ? E_SUCCESS : ret);
 			// IMPORTANT: pourquoi le while si on return toujours au premier tour ???
 		++i;
