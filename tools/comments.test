@@ -1,6 +1,0 @@
-#echo "should not print it\n"
-echo "It should prints this" #echo "but not this"
-#echo 'not ok' # echo "neither"
-#
-      #
-	  				#

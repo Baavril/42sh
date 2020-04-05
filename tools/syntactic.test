@@ -1,8 +1,0 @@
-./42sh < bad
-ls | echo $ENV
-& env
-ls & echo ok
-ls && ls
-/bin/ls -l -G > newfile
-ls || rm newfile
-exit | exit
