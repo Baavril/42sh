@@ -23,20 +23,26 @@ extern int				g_retval;
 
 size_t	mkprompt_quote(char *input, char **buff)
 {
-	char			*qtbuff;
-	struct s_svar	*voyager;
+	t_list			*unclosed_inhib;
 
-	qtbuff = quote_prompt(input);
-	if (!qtbuff || !*qtbuff)
-		return (0);
-	voyager = g_svar;
-	while (voyager)
+ft_printf("avant: |%s|\n", input);
+	unclosed_inhib = NULL;
+	if (quote_prompt(&unclosed_inhib, input))
+		return (0); //cas d'erreur donc pas zero en fait
+	if (unclosed_inhib == NULL)
+		return (0);// cas où rien a fermer
+
+
+
+	struct s_svar	*voy;
+
+	voy = g_svar;
+	while (voy)
 	{
-		if (!(ft_strcmp(voyager->key, PS2)))
-			*buff = ft_strdup(voyager->value);
-		voyager = voyager->next;
+		if (!(ft_strcmp(voy->key, PS2)))
+			*buff = ft_strdup(voy->value);
+		voy = voy->next;
 	}
-	free(qtbuff);
 	return (ft_strlen(*buff));
 }
 
