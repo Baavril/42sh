@@ -74,11 +74,16 @@ static int		fc_s_no_option(void)
 	return (1);
 }
 
+//probleme de compilation et de logique avec la fonction suivante
+// le passage commenté est la fonction originale, la ligne rajoutée est pour 
+//compiler a la zeub
+
 static int		fc_s_option(char *str_nbr)
 {
-	int		nbr;
+//	int		nbr;
 
-	nbr = ft_atoi_history(str_nbr);
+//	nbr = ft_atoi_history(str_nbr);
+	ft_atoi_history(str_nbr);
 	return (1);
 }
 
