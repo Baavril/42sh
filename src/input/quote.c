@@ -63,7 +63,8 @@ int			quote_prompt(t_list **unclosed_inhib, char *command)
 		}
 		else if (*command == '$')
 		{
-			if (*((char*)((*unclosed_inhib)->content)) != '\''
+			if (!(*unclosed_inhib
+			&& *((char*)((*unclosed_inhib)->content)) == '\'')
 			&& *(++command) == '{')
 				ft_lstadd(unclosed_inhib, ft_lstnew(command, 1));
 		}
