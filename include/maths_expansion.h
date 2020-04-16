@@ -47,8 +47,6 @@ void			ft_interpret_incr(t_maths_list *list);
 void			ft_set_and_pop(void *content, size_t size);
 
 int				ft_is_varname(const char *token);
-void			setshvar(char *var_name, int64_t value);
-char			*getshvar(char *var_name);
 int				ft_maths_expansion(char *to_expand, char **expansion);
 
 #endif

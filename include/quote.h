@@ -19,6 +19,7 @@
 # define QUOTES		"\'\""
 
 
+void		ft_lst_strdel(void *content, size_t content_size);
 int			quote_prompt(t_list **unclosed_inhib, char *command);
 
 #endif

@@ -87,4 +87,7 @@ int						update_prompt_var(void);
 int						update_intern_vars(void);
 int						ft_strplen(char *str);
 
+void					setshvar(char *var_name, int64_t value);
+char					*getshvar(char *var_name);
+
 #endif

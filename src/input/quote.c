@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "quote.h"
 
-static void			ft_lst_strdel(void *content, size_t content_size)
+void					ft_lst_strdel(void *content, size_t content_size)
 {
 	ft_memset(content, 0, content_size);
 	free(content);
@@ -38,10 +38,13 @@ static int		ft_treat_inhib(t_list **unclosed_inhib, char inhib)
 	char	open;
 
 	open = (*unclosed_inhib) ? *((char*)((*unclosed_inhib)->content)) : 0;
-	if (ft_isin(open, CLOSE))
+	if (ft_isin(open, CLOSE)) // check d'erreur pour voir si on a stacké une fermeture
 		return (1);
-	if (!open && ft_isin(inhib, CLOSE))
+	if (!open && ft_isin(inhib, CLOSE)) // cas ou l'on stack une fermeture
+	{
+		ft_lstadd(unclosed_inhib, ft_lstnew(&inhib, 1));
 		return (1);
+	}
 	if (ft_close_match(open, inhib))
 		ft_lstpop(unclosed_inhib, &ft_lst_strdel);
 	else if (open != '\'' && open != '\"')

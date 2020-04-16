@@ -81,6 +81,7 @@ int					init_prompt(t_cursor *cursor)
 
 int					read_command(char **buff)
 {
+	int			ret;
 	char		*tmp;
 	t_cursor	cursor;
 
@@ -95,13 +96,20 @@ int					read_command(char **buff)
 	ft_strdel(&(cursor.prompt));
 	ft_init_cursor(&cursor);
 	while (**buff
-	&& (cursor.prompt_len = mkprompt_quote(*buff, &(cursor.prompt))))
+	&& (ret = mkprompt_quote(*buff, &(cursor.prompt), &(cursor.prompt_len))) == 1)
 	{
 		get_stdin(&cursor, &tmp);
+		*buff = ft_strjoinfree(*buff, ft_strdup("\n")); //hotfix pas elegant
 		*buff = ft_strjoinfree(*buff, tmp);
 		ft_strdel(&(cursor.prompt));
 		write(1, "\n", 1);
 		ft_init_cursor(&cursor);
+	}
+	if (ret == -1) // hotfix des erreurs de syntaxe
+	{
+		history(ADD_CMD, buff, NULL);
+		free(*buff);
+		*buff = ft_strdup("");
 	}
 	set_termcaps(TC_RESTORE);
 	return (0);

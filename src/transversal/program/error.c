@@ -15,7 +15,8 @@
 #include "libft.h"
 #include "error.h"
 
-char	*g_progname;
+char						*g_progname;
+extern int					g_retval;
 
 const struct s_error_desc	g_errordesc[] =
 {
@@ -63,4 +64,5 @@ void	psherror(int e_error, char *str, int e_message_type)
 	else if (e_message_type == e_maths_type)
 		ft_dprintf(STDERR_FILENO, "%s: %s: %s.\n", \
 				g_progname, str, g_errordesc[e_error].message);
+	g_retval = g_errordesc[e_error].code;
 }

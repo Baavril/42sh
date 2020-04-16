@@ -18,6 +18,6 @@
 
 size_t	search_prompt(t_cursor *cursor, char *buff);
 size_t	mkprompt(char **buff);
-size_t	mkprompt_quote(char *input, char **buff);
+int		mkprompt_quote(char *input, char **buff, size_t *len);
 
 #endif

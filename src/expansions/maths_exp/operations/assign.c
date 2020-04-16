@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "shell_variables.h"
 #include "maths_expansion.h"
 
 int		ft_assign(void *left_cmd, void *right_cmd, int64_t *res)

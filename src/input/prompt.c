@@ -12,6 +12,7 @@
 
 #include "libft.h"
 #include "quote.h"
+#include "error.h"
 #include "shell_variables.h"
 
 #define COLOR "\033[96;m"
@@ -21,29 +22,26 @@
 extern struct s_svar	*g_svar;
 extern int				g_retval;
 
-size_t	mkprompt_quote(char *input, char **buff)
+int		mkprompt_quote(char *input, char **prompt, size_t *len)
 {
 	t_list			*unclosed_inhib;
+	char			err[2];
 
-ft_printf("avant: |%s|\n", input);
 	unclosed_inhib = NULL;
 	if (quote_prompt(&unclosed_inhib, input))
-		return (0); //cas d'erreur donc pas zero en fait
-	if (unclosed_inhib == NULL)
-		return (0);// cas où rien a fermer
-
-
-
-	struct s_svar	*voy;
-
-	voy = g_svar;
-	while (voy)
 	{
-		if (!(ft_strcmp(voy->key, PS2)))
-			*buff = ft_strdup(voy->value);
-		voy = voy->next;
+		err[0] = *((char*)(unclosed_inhib->content));
+		err[1] = '\0';
+		psherror(e_syntax_error, &(err[0]), e_parsing_type);
+		ft_lstdel(&unclosed_inhib, &ft_lst_strdel);
+		return (-1);
 	}
-	return (ft_strlen(*buff));
+	if (unclosed_inhib == NULL)
+		return (0);
+	*prompt = getshvar("PS2");
+	*len = ft_strlen(*prompt);
+	ft_lstdel(&unclosed_inhib, &ft_lst_strdel);
+	return (1);
 }
 
 char	*mkprompt_intro(size_t *len)
