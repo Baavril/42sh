@@ -24,22 +24,41 @@
 ** AUTOCOMPLETION
 */
 
-static int	pos_start(char *input, int start)
+static int		pos_start(char *input, int start)
 {
-	if (ft_isspace(input[start]) || input[start] == '/' || input[start] == '|'
-			|| input[start] == '&' || input[start] == ';')
-		start--;
-	if (!ft_isspace(input[start]))
+	int	i;
+	int	new_w;
+	int	tmp;
+
+	i = 0;
+	new_w = 1;
+	tmp = 0;
+	while (i <= start)
 	{
-		while (start > 0 && !ft_isspace(input[start]) && input[start] != '/'
-				&& !(input[start] == '|' || input[start] == '&' ||
-					input[start] == ';'))
-			start--;
-		if (ft_isspace(input[start]) || input[start] == '/'
-				|| input[start] == '|' || input[start] == '&'
-				|| input[start] == ';')
-			start++;
+		if (input[i] == '\\')
+		{
+			if (new_w == 0)
+			{
+				tmp = i;
+				new_w = 1;
+			}
+			i++;
+		}
+		else
+		{
+			if (ft_isspace(input[i]) || input[i] == '|' || input[i] == '&'
+					|| input[i] == ';' || input[i] == '/')
+				new_w = 0;
+			else if (new_w == 0)
+			{
+				tmp = i;
+				new_w = 1;
+			}
+		}
+		i++;
 	}
+	if (new_w == 1)
+		start = tmp;
 	return (start);
 }
 
@@ -72,6 +91,8 @@ static char	*ft_add_string(char *input, char **binary, int start)
 	int		y;
 
 	i = 0;
+	ft_printf("path=[%s]\n", *binary);
+	ft_printf("input=[%s]\n", input);
 	start = pos_start(input, start);
 	y = start;
 	while (input[y] != '\0' && input[y] == (*binary)[i++])
@@ -90,6 +111,7 @@ static char	*ft_add_string(char *input, char **binary, int start)
 	}
 	start = start + len;
 	ft_assign_tmp2(start, i, input, &tmp);
+	ft_printf("line=[%s]\n", tmp);
 	return (tmp);
 }
 
