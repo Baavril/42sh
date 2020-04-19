@@ -91,8 +91,6 @@ static char	*ft_add_string(char *input, char **binary, int start)
 	int		y;
 
 	i = 0;
-	ft_printf("path=[%s]\n", *binary);
-	ft_printf("input=[%s]\n", input);
 	start = pos_start(input, start);
 	y = start;
 	while (input[y] != '\0' && input[y] == (*binary)[i++])
@@ -111,7 +109,6 @@ static char	*ft_add_string(char *input, char **binary, int start)
 	}
 	start = start + len;
 	ft_assign_tmp2(start, i, input, &tmp);
-	ft_printf("line=[%s]\n", tmp);
 	return (tmp);
 }
 
