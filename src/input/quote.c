@@ -68,8 +68,8 @@ int			quote_prompt(t_list **unclosed_inhib, char *command)
 		{
 			if (!(*unclosed_inhib
 			&& *((char*)((*unclosed_inhib)->content)) == '\'')
-			&& *(++command) == '{')
-				ft_lstadd(unclosed_inhib, ft_lstnew(command, 1));
+			&& (*(command + 1) == '{' || *(command + 1) == '('))
+				ft_lstadd(unclosed_inhib, ft_lstnew(++command, 1));
 		}
 		else if (ft_isin(*command, INHIB))
 		{
