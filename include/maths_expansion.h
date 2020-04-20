@@ -42,6 +42,7 @@ int				eval_expression(t_maths_ast *ast, int64_t *res);
 size_t			ft_ast_depth(const t_maths_ast *ast);
 int				ft_maths_parser(t_maths_list *list);
 void			ft_parse_sign(t_maths_list *list);
+void			ft_parse_neg_prio(t_maths_list *list);
 int				ft_parse_incr(t_maths_list *list);
 void			ft_interpret_incr(t_maths_list *list);
 void			ft_set_and_pop(void *content, size_t size);
