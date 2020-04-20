@@ -182,19 +182,39 @@ static char		**ft_binary(t_tst *tst, char *input)
 
 static int		pos_start(char *input, int start)
 {
-	if (ft_isspace(input[start]) || input[start] == '|'
-			|| input[start] == '&' || input[start] == ';')
-		start--;
-	if (!ft_isspace(input[start]))
+	int	i;
+	int	new_w;
+	int	tmp;
+
+	i = 0;
+	new_w = 1;
+	tmp = 0;
+	while (i <= start)
 	{
-		while (start > 0 && !ft_isspace(input[start])
-				&& !(input[start] == '|' || input[start] == '&'
-					|| input[start] == ';'))
-			start--;
-		if (ft_isspace(input[start]) || input[start] == '|'
-				|| input[start] == '&' || input[start] == ';')
-			start++;
+		if (input[i] == '\\')
+		{
+			if (new_w == 0)
+			{
+				tmp = i;
+				new_w = 1;
+			}
+			i++;
+		}
+		else
+		{
+			if (ft_isspace(input[i]) || input[i] == '|' || input[i] == '&'
+					|| input[i] == ';')
+				new_w = 0;
+			else if (new_w == 0)
+			{
+				tmp = i;
+				new_w = 1;
+			}
+		}
+		i++;
 	}
+	if (new_w == 1)
+		start = tmp;
 	return (start);
 }
 
