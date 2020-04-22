@@ -207,6 +207,8 @@ void				ft_lst_mergesort(t_list **lst, t_ft_cmp ft_cmp);
 
 void				ft_lstadd_back(t_list **alst, t_list *new_nod);
 
+void				ft_lstpop(t_list **alist, void (*del)(void *, size_t));
+
 void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
 
 void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));

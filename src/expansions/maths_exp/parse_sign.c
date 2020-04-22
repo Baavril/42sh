@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_signs.c                                      :+:      :+:    :+:   */
+/*   parse_sign.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -42,5 +42,20 @@ void			ft_parse_sign(t_maths_list *list)
 		if (list->content->prio == ADD_PRIO)
 			ft_equivalent_add(list);
 		list = list->next;
+	}
+}
+
+void			ft_parse_neg_prio(t_maths_list *list)
+{
+	t_maths_list	*voyager;
+
+	voyager = list;
+	while (voyager->next)
+	{
+		voyager = voyager->next;
+		if (list->content->prio < ADD_PRIO && list->content->prio >0
+		&& voyager->content->prio == ADD_PRIO)
+			voyager->content->prio = NEG_PRIO;
+		list = voyager;
 	}
 }

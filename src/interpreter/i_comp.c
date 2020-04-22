@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 13:40:10 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/07 16:13:43 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/04/15 17:19:39 by petitfish        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 int						g_mode;
 extern int				g_retval;
+int						g_compvalue;
 extern int				g_fd[3];
 extern int				g_fclose;
 
@@ -22,6 +23,7 @@ int				i_comp_list(t_elem left, t_elem right)
 {
 	if (!(g_mode & FORK_SHELL))
 		g_mode = FOREGROUND;
+	g_compvalue = 0;
 	left.v->f(left.v->left, left.v->right);
 	ft_launch_job();
 	if (right.v)
@@ -36,6 +38,7 @@ int				i_and_list(t_elem left, t_elem right)
 	empty.v = NULL;
 	expand_tree(left.v);
 	g_mode = BACKGROUND;
+	g_compvalue = 0;
 	if (left.v->f == i_and_op || left.v->f == i_or_op)
 	{
 		g_mode |= FORK_SHELL;
@@ -52,18 +55,40 @@ int				i_and_list(t_elem left, t_elem right)
 
 int				i_and_op(t_elem left, t_elem right)
 {
-	left.v->f(left.v->left, left.v->right);
-	ft_launch_job();
+	if (!g_compvalue)
+	{
+		left.v->f(left.v->left, left.v->right);
+		ft_launch_job();
+	}
 	if (!g_retval)
+	{
+		g_compvalue = 0;
 		right.v->f(right.v->left, right.v->right);
+	}
+	else if (right.v->f == i_or_op || right.v->f == i_and_op)
+	{
+		g_compvalue = 1;
+		right.v->f(right.v->left, right.v->right);
+	}
 	return (0);
 }
 
 int				i_or_op(t_elem left, t_elem right)
 {
-	left.v->f(left.v->left, left.v->right);
-	ft_launch_job();
+	if (!g_compvalue)
+	{
+		left.v->f(left.v->left, left.v->right);
+		ft_launch_job();
+	}
 	if (g_retval)
+	{
+		g_compvalue = 0;
 		right.v->f(right.v->left, right.v->right);
+	}
+	else if (right.v->f == i_or_op || right.v->f == i_and_op)
+	{
+		g_compvalue = 1;
+		right.v->f(right.v->left, right.v->right);
+	}
 	return (0);
 }

@@ -162,7 +162,7 @@ int				return_tests(int argc, char **argv)
 						E_SUCCESS) ? E_SUCCESS : ret);
 		return (((ret = ft_string_tests(argc, &argv[i])) ==
 					E_SUCCESS) ? E_SUCCESS : ret);
-			// IMPORTANT: pourquoi le while si on return toujours au premier tour ???
+		// IMPORTANT: pourquoi le while si on return toujours au premier tour ???
 		++i;
 	}
 	return (ret);

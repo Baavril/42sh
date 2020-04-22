@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "shell_variables.h"
 #include "maths_expansion.h"
 
 extern t_list	*g_post_incr;

@@ -100,36 +100,70 @@ static char		*ft_add_bslash(int directory, char *d_name)
 static int		ft_pointchr(char *str1, char *str2)
 {
 	int	i;
+	int	y;
 
 	i = 0;
+	y = 0;
 	if (!str1 && !str2)
 		return (0);
-	while (str1[i] && str2[i] && !ft_isspace(str1[i]))
+	while (str1[y] && str2[i] && !ft_isspace(str1[y]))
 	{
-		if (str1[i] != str2[i])
+		if (str1[y] == '\\')
+			y++;
+		if (str1[y] != str2[i] && str1[y] != '\0')
 			return (0);
-		i++;
+		if (str1[y] != '\0')
+		{
+			i++;
+			y++;
+		}
 	}
-	if (str1[i] && str2 && !ft_isspace(str1[i]))
+	if (str1[y] && str2 && !ft_isspace(str1[y]))
 		return (0);
 	return (1);
+}
+
+static char		*ft_strdup_bslash(char *input, int length)
+{
+	char	*tmp;
+	int	i;
+	int	y;
+
+	i = 0;
+	y = 0;
+	if (!(tmp = (char*)malloc(sizeof(char) * (length + 1))))
+		return (NULL);
+	while (input[i] != '\0')
+	{
+		if (input[i] == '\\')
+			i++;
+		tmp[y] = input[i];
+		i++;
+		y++;
+	}
+	tmp[y] = '\0';
+	return (tmp);
+
 }
 
 static char		*ft_dirchr(char *input)
 {
 	char	*cur_dir;
-	char	svg;
 	char	*last_bslash;
-	int		i;
+	int	i;
+	int	length;
 
 	i = 0;
+	length = 0;
 	last_bslash = NULL;
 	while (input[i] != '\0' && !ft_isspace(input[i]))
 	{
 		if (input[i] == '/')
-		{
-			svg = input[i];
 			last_bslash = &input[i];
+		if (input[i] == '\\')
+		{
+			i++;
+			length--;
 		}
 		i++;
 	}
@@ -139,8 +173,8 @@ static char		*ft_dirchr(char *input)
 		if (input[0] == '\0')
 			cur_dir = ft_strdup("/");
 		else
-			cur_dir = ft_strdup(input);
-		*last_bslash = svg;
+			cur_dir = ft_strdup_bslash(input, i + length);
+		*last_bslash = '/';
 	}
 	else
 		cur_dir = ft_strdup(getenv("PWD"));

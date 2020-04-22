@@ -37,7 +37,7 @@ int		i_builtin(t_elem left, t_elem right)
 	g_argv[1] = NULL;
 	if (!right.v || right.v->f(right.v->left, right.v->right) != -1)
 		if ((g_retval = builtins_dispatcher(g_argv)) == 127)
-			ft_dprintf(STDERR_FILENO, "unknown command : %s\n", g_argv[0]);
+			psherror(e_command_not_found, *g_argv, e_cmd_type);
 	free(g_argv);
 	return (g_retval);
 }

@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 12:34:42 by yberramd          #+#    #+#             */
-/*   Updated: 2020/03/03 19:02:09 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/04/22 10:11:35 by petitfish        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,16 @@ static int		fc_s_no_option(void)
 	return (1);
 }
 
+//probleme de compilation et de logique avec la fonction suivante
+// le passage commenté est la fonction originale, la ligne rajoutée est pour 
+//compiler a la zeub
+
 static int		fc_s_option(char *str_nbr)
 {
-	int		nbr;
+//	int		nbr;
 
-	nbr = ft_atoi_history(str_nbr);
-	(void) nbr;
+//	nbr = ft_atoi_history(str_nbr);
+	ft_atoi_history(str_nbr);
 	return (1);
 }
 

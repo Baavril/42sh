@@ -24,7 +24,7 @@ try_lib:
 	@$(MAKE) -j -C $(PATH_LIB)
 
 tags:
-	@ctags -dt $$(find $(SOURCES_PATH)  $(PATH_LIB)$(SOURCES_PATH) | grep "\.c" && find $(HEADER_PATH) | grep "\.h") 2> /dev/null
+	@ctags $$(find $(SOURCES_PATH)  $(PATH_LIB)$(SOURCES_PATH) | grep "\.c" && find $(HEADER_PATH) | grep "\.h")
 
 clean:
 	@$(RM) $(OBJECTS) $(DEPENDS)

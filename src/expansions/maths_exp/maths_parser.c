@@ -68,5 +68,6 @@ int				ft_maths_parser(t_maths_list *list)
 	if (ft_parse_incr(list) == CONV_FAIL)
 		return (CONV_FAIL);
 	ft_parse_sign(list);
+	ft_parse_neg_prio(list);
 	return (CONV_SUCCESS);
 }

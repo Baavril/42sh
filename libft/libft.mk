@@ -39,6 +39,7 @@ SOURCES	:=	btree_apply_infix.c \
 		ft_lstadd_back.c \
 		ft_lstdel.c \
 		ft_lstdelone.c \
+		ft_lstpop.c \
 		ft_lstiter.c \
 		ft_lstmap.c \
 		ft_lstnew.c \
