@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 15:25:22 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/05 14:23:53 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/04/22 14:18:08 by petitfish        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,27 @@ static int		display_select(char *str, t_cursor *cursor)
 	return (0);
 }
 
+int				get_lines_offset(char *str, int col, int prompt_len, int len)
+{
+	int rtn;
+	int chr;
+
+	rtn = 0;
+	chr = prompt_len;
+	while (len--)
+	{
+		chr++;
+		if (*(str++) == '\n')
+		{
+			rtn += 1 + chr / col;
+			chr = 0;
+		}
+	}
+	rtn += chr / col;
+	ft_dprintf(2, "(%d)", rtn);
+	return(rtn);
+}
+
 static int		display_all(char *str, t_cursor *cursor)
 {
 	size_t col;
@@ -51,7 +72,18 @@ static int		display_all(char *str, t_cursor *cursor)
 		display_select(str, cursor);
 	if (!((cursor->end + cursor->prompt_len) % col) && cursor->prompt_len)
 		write(1, "\n", 1);
-	return ((cursor->start + cursor->prompt_len) / col);
+	return (get_lines_offset(str, col, cursor->prompt_len, cursor->start));
+}
+
+static void		place_cursor(char *str, int col, int prompt_len, int start) 
+{
+	int rtn;
+	rtn = 0;
+	while(start && *(str + --start) != '\n')
+		rtn++;
+	if(!start)
+		rtn += prompt_len;
+	ft_putstr(tgoto(tgetstr("ch", NULL), 0, rtn % col));
 }
 
 int				display(char *str, t_cursor *c)
@@ -75,10 +107,10 @@ int				display(char *str, t_cursor *c)
 	while (lines_offset-- > 0)
 		ft_putstr(tgetstr("up", NULL));
 	lines_offset = display_all(str, c);
-	x = ((c->end + c->prompt_len) / col) - lines_offset;
+	x =  get_lines_offset(str, col, c->prompt_len, c->end) - lines_offset;
 	while (x-- > 0)
 		ft_putstr(tgetstr("up", NULL));
-	ft_putstr(tgoto(tgetstr("ch", NULL), 0, (c->start + c->prompt_len) % col));
+	place_cursor(str, col, c->prompt_len, c->start);
 	c->end = backup;
 	return (0);
 }
