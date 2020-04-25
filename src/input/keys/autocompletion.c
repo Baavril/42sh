@@ -33,7 +33,7 @@ static int		pos_start(char *input, int start)
 	i = 0;
 	new_w = 1;
 	tmp = 0;
-	while (i <= start)
+	while (i < start)
 	{
 		if (input[i] == '\\')
 		{
@@ -95,6 +95,8 @@ static char	*ft_add_string(char *input, char **binary, int start)
 	y = start;
 	while (input[y] != '\0' && input[y] == (*binary)[i++])
 		y++;
+	if (input[y] != '\0')
+		i--;
 	len = ft_strlen((*binary)) - i;
 	if (!(tmp = (char*)malloc(sizeof(char) * (len + ft_strlen(input) + 1))))
 		return (NULL);

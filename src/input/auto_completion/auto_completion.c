@@ -189,7 +189,7 @@ static int		pos_start(char *input, int start)
 	i = 0;
 	new_w = 1;
 	tmp = 0;
-	while (i <= start)
+	while (i < start)
 	{
 		if (input[i] == '\\')
 		{
