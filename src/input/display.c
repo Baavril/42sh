@@ -55,7 +55,7 @@ int				get_lines_offset(char *str, int col, int prompt_len, int len)
 	}
 	rtn += chr / col;
 	ft_dprintf(2, "(%d)", rtn);
-	return(rtn);
+	return (rtn);
 }
 
 static int		display_all(char *str, t_cursor *cursor)
@@ -75,13 +75,14 @@ static int		display_all(char *str, t_cursor *cursor)
 	return (get_lines_offset(str, col, cursor->prompt_len, cursor->start));
 }
 
-static void		place_cursor(char *str, int col, int prompt_len, int start) 
+static void		place_cursor(char *str, int col, int prompt_len, int start)
 {
-	int rtn;
+	int	rtn;
+
 	rtn = 0;
-	while(start && *(str + --start) != '\n')
+	while (start && *(str + --start) != '\n')
 		rtn++;
-	if(!start)
+	if (!start)
 		rtn += prompt_len;
 	ft_putstr(tgoto(tgetstr("ch", NULL), 0, rtn % col));
 }
@@ -107,7 +108,7 @@ int				display(char *str, t_cursor *c)
 	while (lines_offset-- > 0)
 		ft_putstr(tgetstr("up", NULL));
 	lines_offset = display_all(str, c);
-	x =  get_lines_offset(str, col, c->prompt_len, c->end) - lines_offset;
+	x = get_lines_offset(str, col, c->prompt_len, c->end) - lines_offset;
 	while (x-- > 0)
 		ft_putstr(tgetstr("up", NULL));
 	place_cursor(str, col, c->prompt_len, c->start);

@@ -79,10 +79,22 @@ int					init_prompt(t_cursor *cursor)
 	return (0);
 }
 
+static void				ft_agregate_line(t_cursor *cursor, char **buff)
+{
+	char		*tmp;
+
+	get_stdin(cursor, &tmp);
+	*buff = ft_strjoinfree(*buff, ft_strdup("\n"));
+	*buff = ft_strjoinfree(*buff, tmp);
+	ft_strdel(&(cursor->prompt));
+	write(1, "\n", 1);
+	ft_init_cursor(cursor);
+	
+}
+
 int					read_command(char **buff)
 {
 	int			ret;
-	char		*tmp;
 	t_cursor	cursor;
 
 	ft_init_cursor(&cursor);
@@ -97,15 +109,8 @@ int					read_command(char **buff)
 	ft_init_cursor(&cursor);
 	while (**buff
 	&& (ret = mkprompt_quote(*buff, &(cursor.prompt), &(cursor.prompt_len))) == 1)
-	{
-		get_stdin(&cursor, &tmp);
-		*buff = ft_strjoinfree(*buff, ft_strdup("\n")); //hotfix pas elegant
-		*buff = ft_strjoinfree(*buff, tmp);
-		ft_strdel(&(cursor.prompt));
-		write(1, "\n", 1);
-		ft_init_cursor(&cursor);
-	}
-	if (ret == -1) // hotfix des erreurs de syntaxe
+		ft_agregate_line(&cursor, buff);
+	if (ret == -1)
 	{
 		history(ADD_CMD, buff, NULL);
 		free(*buff);

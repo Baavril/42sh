@@ -39,11 +39,8 @@ int			i_dless(t_elem left, t_elem right)
 	i = 0;
 	while (!buff || (write(1, "\n", 1) && ft_strcmp(right.c, buff)))
 	{
-		while (i)
-		{
+		while (i--)
 			ft_putstr_fd("\n", pipe_fd[1]);
-			i--;
-		}
 		ft_putstr_fd(buff, pipe_fd[1]);
 		ft_strdel(&buff);
 		ft_init_cursor(&cursor);
