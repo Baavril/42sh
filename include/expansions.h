@@ -70,6 +70,13 @@ typedef struct	s_symexp
 	int			(*expand)(char **);
 }				t_symexp;
 
+struct				s_quoted
+{
+	int				expand;
+	char			*token;
+	struct s_quoted	*next;
+};
+
 typedef struct	s_expand
 {
 	int			j;
@@ -108,6 +115,7 @@ char			*ft_set_slashed(char **tokens);
 char			*ft_getbtw(char *tokens, int type);
 char			*ft_quoted(char *tokens);
 char			*ft_unset_quoted(char *tokens, char c);
+char			*token_quotes_generator(char *str);
 
 int				identifier(char *token);
 

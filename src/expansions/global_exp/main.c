@@ -19,6 +19,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+struct s_quoted	*g_quoted;
+
 t_symexp	g_symexp[] =
 {
 	{DIRECT_EXP, &direct_exp},
@@ -46,6 +48,19 @@ static void	initexpvars(t_expand *vars)
 	vars->btw = NULL;
 	vars->keep = NULL;
 	vars->tokens = NULL;
+}
+
+static void	free_quoted_token_lst()
+{
+	struct s_quoted *tmp;
+
+	while (g_quoted)
+	{
+		ft_strdel(&(g_quoted->token));
+		tmp = g_quoted->next;
+		free(g_quoted);
+		g_quoted = tmp;
+	}
 }
 
 static int	expansions_linker(t_expand *vars)
@@ -83,16 +98,12 @@ static int	expansions_linker(t_expand *vars)
 	return (SUCCESS);
 }
 
-static int	expansions_launcher(t_expand *vars)
+static int	expansions_launcher(t_expand *vars, int expand)
 {
 	vars->j = 0;
-	if (((vars->nb = ft_back_slashed(vars->tokens)) >= 0)
-	&& !(ft_isin(SQUOTES, *vars->tokens) && ft_isin(DOLLAR, *vars->tokens)))
+	if (!(expand) && ((vars->nb = ft_back_slashed(vars->tokens)) >= 0))
 	{
 		*(vars->tokens) = ft_set_slashed(vars->tokens);
-		*(vars->tokens) = ft_isin(SQUOTES, *vars->tokens)
-		? ft_unset_quoted(*vars->tokens, SQUOTES)
-		: ft_unset_quoted(*vars->tokens, DQUOTES);
 		vars->type = identifier(*(vars->tokens));
 		vars->btw = ft_getbtw(*(vars->tokens), vars->type);
 		while (g_symexp[vars->j].expand)
@@ -106,14 +117,11 @@ static int	expansions_launcher(t_expand *vars)
 			*(vars->tokens) = ft_setbslash(*(vars->tokens), vars->nb);
 	}
 	else
-	{
 		*(vars->tokens) = ft_set_slashed(vars->tokens);
-		*(vars->tokens) = ft_unset_quoted(*vars->tokens, SQUOTES);
-	}
 	return (SUCCESS);
 }
 
-static char	*expansions_management(char **splitok)
+static char	*expansions_management(char **splitok, int expand)
 {
 	t_expand	vars;
 
@@ -121,7 +129,7 @@ static char	*expansions_management(char **splitok)
 	vars.tokens = splitok;
 	while (*(vars.tokens))
 	{
-		if (expansions_launcher(&vars) == ERROR)
+		if (expansions_launcher(&vars, expand) == ERROR)
 		{
 			ft_dprintf(2, "42sh: %s: bad substitution\n", *vars.tokens);
 			ft_tabdel(&splitok);
@@ -136,15 +144,55 @@ static char	*expansions_management(char **splitok)
 	return (vars.tmp);
 }
 
+static int	expansions_quoted_treatment(char **tokens, char **splitok)
+{
+	struct s_quoted	*tmp;
+	char			*tmp_to_free;
+	char			*tmp_to_free_2;
+	
+	token_quotes_generator(*tokens);
+	tmp = g_quoted;
+	ft_strdel(tokens);
+	tmp_to_free = NULL;
+	while (g_quoted)
+	{
+		if (!(splitok = ft_expsplit(g_quoted->token, DOLLAR)))
+			return (ERROR);
+		if (*tokens == NULL)
+			*tokens = expansions_management(splitok, g_quoted->expand);
+		else
+		{
+			tmp_to_free = ft_strdup(*tokens);
+			ft_strdel(&(*tokens));
+			tmp_to_free_2 = expansions_management(splitok, g_quoted->expand);
+			*tokens = ft_strjoin(tmp_to_free, tmp_to_free_2);
+			ft_strdel(&tmp_to_free);
+			ft_strdel(&tmp_to_free_2);
+		}
+		g_quoted = g_quoted->next;
+	}
+	g_quoted = tmp;
+	return (0);
+}
+
 int			expansions_treatment(char **tokens)
 {
 	char **splitok;
 
+	splitok = NULL;
 	if (**tokens == TILDE)
 		tilde_exp(tokens);
-	if (!(splitok = ft_expsplit(*tokens, DOLLAR)))
-		return (ERROR);
-	ft_strdel(tokens);
-	*tokens = expansions_management(splitok);
+	if (*tokens && (ft_isin(DQUOTES, *tokens) || ft_isin(SQUOTES, *tokens)))
+	{
+		expansions_quoted_treatment(tokens, splitok);
+		free_quoted_token_lst();
+	}
+	else
+	{
+		if (!(splitok = ft_expsplit(*tokens, DOLLAR)))
+			return (ERROR);
+		ft_strdel(tokens);
+		*tokens = expansions_management(splitok, 0);
+	}
 	return (SUCCESS);
 }

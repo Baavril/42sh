@@ -96,8 +96,9 @@ SOURCES			:=		transversal/program/main.c \
 						expansions/global_exp/split.c \
 						expansions/global_exp/checker.c \
 						expansions/global_exp/inbetween.c \
-						expansions/global_exp/identifier.c \
 						expansions/global_exp/backslash.c \
+						expansions/global_exp/identifier.c \
+						expansions/global_exp/quotesplit.c \
 						expansions/substitutions/tilde.c \
 						expansions/substitutions/direct.c \
 						expansions/substitutions/simple.c \
@@ -240,4 +241,4 @@ CFLAGS += -Wall -Wextra -Werror -ansi -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200809
 
 #CFLAGS += -fno-builtin -O2
 
-CDEBUG += -g #-fsanitize=address -fno-optimize-sibling-calls
+CDEBUG += -g -fsanitize=address -fno-optimize-sibling-calls
