@@ -62,21 +62,21 @@ int			quote_prompt(t_list **unclosed_inhib, char *command)
 			|| *((char*)((*unclosed_inhib)->content)) != '\'')
 				command++;
 			if (!(*command)) // cas du '\' en fin de ligne
-				return (0);
+				return (ESC_NL);
 		}
 		else if (*command == '$')
 		{
 			if (!(*unclosed_inhib
 			&& *((char*)((*unclosed_inhib)->content)) == '\'')
-			&& (*(command + 1) == '{' || *(command + 1) == '('))
-				ft_lstadd(unclosed_inhib, ft_lstnew(++command, 1));
+			&& *(++command) == '{')
+				ft_lstadd(unclosed_inhib, ft_lstnew(command, 1));
 		}
 		else if (ft_isin(*command, INHIB))
 		{
 			if (ft_treat_inhib(unclosed_inhib, *command) == 1)
-				return (1);
+				return (ERR);
 		}
 		command++;
 	}
-	return (0);
+	return (NO_ERR);
 }

@@ -17,6 +17,9 @@
 # define OPEN		"[{("
 # define CLOSE		"]})"
 # define QUOTES		"\'\""
+# define ERR		0
+# define NO_ERR		1
+# define ESC_NL		2
 
 
 void		ft_lst_strdel(void *content, size_t content_size);

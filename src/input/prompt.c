@@ -26,9 +26,10 @@ int		mkprompt_quote(char *input, char **prompt, size_t *len)
 {
 	t_list			*unclosed_inhib;
 	char			err[2];
+int				ret;
 
 	unclosed_inhib = NULL;
-	if (quote_prompt(&unclosed_inhib, input))
+	if ((ret = quote_prompt(&unclosed_inhib, input)) == ERR)
 	{
 		err[0] = *((char*)(unclosed_inhib->content));
 		err[1] = '\0';
@@ -36,7 +37,7 @@ int		mkprompt_quote(char *input, char **prompt, size_t *len)
 		ft_lstdel(&unclosed_inhib, &ft_lst_strdel);
 		return (-1);
 	}
-	if (unclosed_inhib == NULL)
+	if (unclosed_inhib == NULL && ret != ESC_NL)
 		return (0);
 	*prompt = getshvar("PS2");
 	*len = ft_strlen(*prompt);
