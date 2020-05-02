@@ -54,8 +54,7 @@ int				get_lines_offset(char *str, int col, int prompt_len, int len)
 		}
 	}
 	rtn += chr / col;
-	ft_dprintf(2, "(%d)", rtn);
-	return(rtn);
+	return (rtn);
 }
 
 static int		display_all(char *str, t_cursor *cursor)
