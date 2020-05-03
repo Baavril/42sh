@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/20 18:32:13 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/11 17:50:12 by bprunevi         ###   ########.fr       */
+/*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
+/*   Updated: 2020/03/23 11:16:57 by petitfish        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,16 +93,29 @@ static int	alloc_error(void)
 	return (1);
 }
 
+char *parse_argv(int argc, char **argv)
+{
+	if (argc > 1)
+	{
+		if (!ft_strcmp(argv[1], "-c"))
+				return(ft_strdup(argv[2]));
+		open_on_fd(argv[1], O_RDONLY, 0, 0);
+	}
+	return(NULL);
+}
+
 int			main(int argc, char **argv)
 {
 	char			*input;
 	int				status;
 
-	(void)argc;
 	g_progname = argv[0];
+	input = parse_argv(argc, argv);
 	if (ft_shell_init() == e_cannot_allocate_memory)
 		return (alloc_error());
-	while (!read_command(&input, PS1) || get_next_line(0, &input))
+	while ( (argc > 0) && ((input != NULL && (argc = -1))
+						|| (argc == 1 && !read_command(&input))
+						|| get_next_line(0, &input)))
 	{
 		g_alias_treated = 0;
 		if (!(status = history(ADD_CMD, &input, NULL)))

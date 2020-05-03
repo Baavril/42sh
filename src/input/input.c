@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/11 17:47:18 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/08 18:04:26 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int					ft_strplen(char *str)
 	return (j);
 }
 
-int					init_prompt(t_cursor *cursor, char *prompt_var)
+int					init_prompt(t_cursor *cursor)
 {
 	struct s_svar	*voyager;
 
@@ -67,7 +67,7 @@ int					init_prompt(t_cursor *cursor, char *prompt_var)
 	voyager = g_svar;
 	while (voyager)
 	{
-		if (!(ft_strcmp(voyager->key, prompt_var)))
+		if (!(ft_strcmp(voyager->key, PS1)))
 		{
 			cursor->prompt_len = ft_strplen(voyager->value);
 			cursor->prompt = ft_strdup(voyager->value);
@@ -79,9 +79,22 @@ int					init_prompt(t_cursor *cursor, char *prompt_var)
 	return (0);
 }
 
-int					read_command(char **buff, char *prompt_var)
+static void				ft_agregate_line(t_cursor *cursor, char **buff)
 {
 	char		*tmp;
+
+	get_stdin(cursor, &tmp);
+	*buff = ft_strjoinfree(*buff, ft_strdup("\n"));
+	*buff = ft_strjoinfree(*buff, tmp);
+	ft_strdel(&(cursor->prompt));
+	write(1, "\n", 1);
+	ft_init_cursor(cursor);
+	
+}
+
+int					read_command(char **buff)
+{
+	int			ret;
 	t_cursor	cursor;
 
 	ft_init_cursor(&cursor);
@@ -89,19 +102,19 @@ int					read_command(char **buff, char *prompt_var)
 		return (1);
 	if (set_termcaps(TC_INPUT))
 		return (2);
-	init_prompt(&cursor, prompt_var);
+	init_prompt(&cursor);
 	get_stdin(&cursor, buff);
 	write(1, "\n", 1);
 	ft_strdel(&(cursor.prompt));
 	ft_init_cursor(&cursor);
 	while (**buff
-	&& (cursor.prompt_len = mkprompt_quote(*buff, &(cursor.prompt))))
+	&& (ret = mkprompt_quote(*buff, &(cursor.prompt), &(cursor.prompt_len))) == 1)
+		ft_agregate_line(&cursor, buff);
+	if (ret == -1)
 	{
-		get_stdin(&cursor, &tmp);
-		*buff = ft_strjoinfree(*buff, tmp);
-		ft_strdel(&(cursor.prompt));
-		write(1, "\n", 1);
-		ft_init_cursor(&cursor);
+		history(ADD_CMD, buff, NULL);
+		free(*buff);
+		*buff = ft_strdup("");
 	}
 	set_termcaps(TC_RESTORE);
 	return (0);

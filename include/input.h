@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 12:11:17 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/11 16:35:28 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/01 17:10:25 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct		s_dispatch_keys
 	int				(*function_call)(char**, t_cursor*);
 }					t_dispatch_keys;
 
-int					read_command(char **line, char *prompt_var);
+int					read_command(char **line);
 int					toggle_termcaps(void);
 void				restore_term_mode();
 int					get_stdin(t_cursor *cursor, char **buff);

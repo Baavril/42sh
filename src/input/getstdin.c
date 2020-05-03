@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   getstdin.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/01 17:02:43 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/11 17:47:01 by bprunevi         ###   ########.fr       */
+/*   Created: 2020/03/01 17:02:43 by tgouedar          #+#    #+#             */
+/*   Updated: 2020/03/08 18:37:37 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ int				get_stdin(t_cursor *cursor, char **buff)
 			ft_strdel(&cursor->prompt);
 			return (0);
 		}
-		if (ret == -1 && getppid() != g_ppid)
-			cmd_exit(0, NULL);
 	}
 	if (ret == -1 && getppid() != g_ppid)
 		cmd_exit(0, NULL);
