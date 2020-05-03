@@ -30,24 +30,14 @@ t_symexp	g_symexp[] =
 	{0, NULL}
 };
 
-static int	expansions_setter(t_expand *vars)
-{
-	*(vars->tokens) = ft_set_slashed(vars->tokens);
-	*(vars->tokens) = ft_isin(SQUOTES, *vars->tokens)
-		? ft_unset_quoted(*vars->tokens, SQUOTES)
-		: ft_unset_quoted(*vars->tokens, DQUOTES);
-	vars->type = identifier(*(vars->tokens));
-	vars->btw = ft_getbtw(*(vars->tokens), vars->type);
-	return (SUCCESS);
-}
-
-int			expansions_launcher(t_expand *vars)
+int	expansions_launcher(t_expand *vars, int expand)
 {
 	vars->j = 0;
-	if (((vars->nb = ft_back_slashed(vars->tokens)) >= 0)
-	&& !(ft_isin(SQUOTES, *vars->tokens) && ft_isin(DOLLAR, *vars->tokens)))
+	if (!(expand) && ((vars->nb = ft_back_slashed(vars->tokens)) >= 0))
 	{
-		expansions_setter(vars);
+		*(vars->tokens) = ft_set_slashed(vars->tokens);
+		vars->type = identifier(*(vars->tokens));
+		vars->btw = ft_getbtw(*(vars->tokens), vars->type);
 		while (g_symexp[vars->j].expand)
 		{
 			if (g_symexp[vars->j].sym == vars->type)
@@ -59,9 +49,6 @@ int			expansions_launcher(t_expand *vars)
 			*(vars->tokens) = ft_setbslash(*(vars->tokens), vars->nb);
 	}
 	else
-	{
 		*(vars->tokens) = ft_set_slashed(vars->tokens);
-		*(vars->tokens) = ft_unset_quoted(*vars->tokens, SQUOTES);
-	}
 	return (SUCCESS);
 }

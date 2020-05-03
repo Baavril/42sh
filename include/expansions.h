@@ -70,6 +70,13 @@ typedef struct	s_symexp
 	int			(*expand)(char **);
 }				t_symexp;
 
+struct				s_quoted
+{
+	int				expand;
+	char			*token;
+	struct s_quoted	*next;
+};
+
 typedef struct	s_expand
 {
 	int			j;
@@ -101,7 +108,8 @@ typedef struct	s_rev
 }				t_rev;
 
 int				expansions_treatment(char **tokens);
-int				expansions_launcher(t_expand *vars);
+int				expansions_launcher(t_expand *vars, int expand);
+char			*expansions_management(char **tokens, int expand);
 
 int				direct_exp(char **token);
 int				simple_exp(char **token);
@@ -127,13 +135,18 @@ char			*get_var_value(char *var_name);
 int				ft_strpchr(char *str, char c);
 size_t			maths_len(char *token);
 
+int				getquotelim(char *str);
+int				isexpandable(char *str, int lim);
+int				counter_quoted_words(char *str);
+char			*dupbtwq(char *str);
+char			*dupbtwqlim(char *str, int lim);
 char			**ft_expsplit(char *str, char c);
 char			*ft_setbslash(char *tokens, int nb);
 int				ft_back_slashed(char **tokens);
 char			*ft_set_slashed(char **tokens);
 char			*ft_getbtw(char *tokens, int type);
-char			*ft_quoted(char *tokens);
-char			*ft_unset_quoted(char *tokens, char c);
+char			*token_quotes_generator(char *str);
+void			setquotenod(struct s_quoted *new_back);
 
 int				identifier(char *token);
 
