@@ -131,11 +131,11 @@ static char	*expansions_management(char **splitok, int expand)
 	{
 		if (expansions_launcher(&vars, expand) == ERROR)
 		{
-			ft_dprintf(2, "42sh: %s: bad substitution\n", *vars.tokens);
+			ft_dprintf(2, "42sh: %s: bad substitution", *vars.tokens);
 			ft_tabdel(&splitok);
 			ft_strdel(&vars.btw);
 			ft_strdel(&vars.tmp);
-			return (NULL);
+			return (ft_strdup(EMPTY_STR));
 		}
 		expansions_linker(&vars);
 		vars.tokens++;
