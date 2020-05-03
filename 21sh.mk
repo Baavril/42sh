@@ -90,11 +90,14 @@ SOURCES			:=		transversal/program/main.c \
 						expansions/global_exp/main.c \
 						expansions/global_exp/tools.c \
 						expansions/global_exp/split.c \
+						expansions/global_exp/quotes.c \
 						expansions/global_exp/checker.c \
 						expansions/global_exp/launcher.c \
+						expansions/global_exp/generator.c \
 						expansions/global_exp/inbetween.c \
-						expansions/global_exp/identifier.c \
 						expansions/global_exp/backslash.c \
+						expansions/global_exp/identifier.c \
+						expansions/global_exp/management.c \
 						expansions/substitutions/tilde.c \
 						expansions/substitutions/direct.c \
 						expansions/substitutions/simple.c \
