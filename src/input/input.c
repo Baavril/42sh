@@ -24,7 +24,7 @@
 
 extern struct s_svar	*g_svar;
 
-void				ft_init_cursor(t_cursor *cursor)
+void					ft_init_cursor(t_cursor *cursor)
 {
 	cursor->prompt = NULL;
 	cursor->match = NULL;
@@ -37,7 +37,7 @@ void				ft_init_cursor(t_cursor *cursor)
 	cursor->on = 0;
 }
 
-int					ft_strplen(char *str)
+int						ft_strplen(char *str)
 {
 	int	i;
 	int	j;
@@ -59,7 +59,7 @@ int					ft_strplen(char *str)
 	return (j);
 }
 
-int					init_prompt(t_cursor *cursor)
+int						init_prompt(t_cursor *cursor)
 {
 	struct s_svar	*voyager;
 
@@ -89,10 +89,9 @@ static void				ft_agregate_line(t_cursor *cursor, char **buff)
 	ft_strdel(&(cursor->prompt));
 	write(1, "\n", 1);
 	ft_init_cursor(cursor);
-	
 }
 
-int					read_command(char **buff)
+int						read_command(char **buff)
 {
 	int			ret;
 	t_cursor	cursor;
@@ -107,8 +106,8 @@ int					read_command(char **buff)
 	write(1, "\n", 1);
 	ft_strdel(&(cursor.prompt));
 	ft_init_cursor(&cursor);
-	while (**buff
-	&& (ret = mkprompt_quote(*buff, &(cursor.prompt), &(cursor.prompt_len))) == 1)
+	while (**buff && (ret =
+			mkprompt_quote(*buff, &(cursor.prompt), &(cursor.prompt_len))) == 1)
 		ft_agregate_line(&cursor, buff);
 	if (ret == -1)
 	{

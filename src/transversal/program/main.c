@@ -39,7 +39,7 @@ extern int			g_mode;
 extern int			g_alias_treated;
 struct termios		g_old_termios;
 
-static int	set_minimal_env(void)
+static int			set_minimal_env(void)
 {
 	char	*tmp;
 	int		shlvl;
@@ -65,7 +65,7 @@ static int	set_minimal_env(void)
 	return (e_success);
 }
 
-static int	ft_shell_init(void)
+static int			ft_shell_init(void)
 {
 	extern char		**environ;
 
@@ -87,24 +87,24 @@ static int	ft_shell_init(void)
 	return (0);
 }
 
-static int	alloc_error(void)
+static int			alloc_error(void)
 {
 	psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 	return (1);
 }
 
-char *parse_argv(int argc, char **argv)
+char				*parse_argv(int argc, char **argv)
 {
 	if (argc > 1)
 	{
 		if (!ft_strcmp(argv[1], "-c"))
-				return(ft_strdup(argv[2]));
+			return (ft_strdup(argv[2]));
 		open_on_fd(argv[1], O_RDONLY, 0, 0);
 	}
-	return(NULL);
+	return (NULL);
 }
 
-int			main(int argc, char **argv)
+int					main(int argc, char **argv)
 {
 	char			*input;
 	int				status;
@@ -113,7 +113,7 @@ int			main(int argc, char **argv)
 	input = parse_argv(argc, argv);
 	if (ft_shell_init() == e_cannot_allocate_memory)
 		return (alloc_error());
-	while ( (argc > 0) && ((input != NULL && (argc = -1))
+	while ((argc > 0) && ((input != NULL && (argc = -1))
 						|| (argc == 1 && !read_command(&input))
 						|| get_next_line(0, &input)))
 	{

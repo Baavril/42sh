@@ -26,7 +26,7 @@ int		mkprompt_quote(char *input, char **prompt, size_t *len)
 {
 	t_list			*unclosed_inhib;
 	char			err[2];
-int				ret;
+	int				ret;
 
 	unclosed_inhib = NULL;
 	if ((ret = quote_prompt(&unclosed_inhib, input)) == ERR)
