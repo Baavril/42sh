@@ -23,7 +23,11 @@ static int		reachquotelim(char *str, char c)
 
 	i = 1;
 	while (str[i] && str[i] != c)
+	{
 		++i;
+		if (str[i] == c && str[i - 1] == BSLASH)
+			++i;
+	}
 	++i;
 	return (i);
 }
