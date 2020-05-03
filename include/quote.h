@@ -21,7 +21,6 @@
 # define NO_ERR		1
 # define ESC_NL		2
 
-
 void		ft_lst_strdel(void *content, size_t content_size);
 int			quote_prompt(t_list **unclosed_inhib, char *command);
 
