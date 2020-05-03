@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_signs.c                                      :+:      :+:    :+:   */
+/*   parse_sign.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/12 12:18:14 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/19 12:14:56 by bprunevi         ###   ########.fr       */
+/*   Created: 2020/02/12 12:18:14 by tgouedar          #+#    #+#             */
+/*   Updated: 2020/02/19 12:14:56 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,20 @@ void			ft_parse_sign(t_maths_list *list)
 		if (list->content->prio == ADD_PRIO)
 			ft_equivalent_add(list);
 		list = list->next;
+	}
+}
+
+void			ft_parse_neg_prio(t_maths_list *list)
+{
+	t_maths_list	*voyager;
+
+	voyager = list;
+	while (voyager->next)
+	{
+		voyager = voyager->next;
+		if (list->content->prio < ADD_PRIO && list->content->prio >0
+		&& voyager->content->prio == ADD_PRIO)
+			voyager->content->prio = NEG_PRIO;
+		list = voyager;
 	}
 }

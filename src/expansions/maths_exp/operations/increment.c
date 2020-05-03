@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   increment.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/12 12:50:32 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/19 11:49:37 by bprunevi         ###   ########.fr       */
+/*   Created: 2019/10/12 12:50:32 by tgouedar          #+#    #+#             */
+/*   Updated: 2020/01/19 11:49:37 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "shell_variables.h"
 #include "maths_expansion.h"
 
 extern t_list	*g_post_incr;

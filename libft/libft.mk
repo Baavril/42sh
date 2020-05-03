@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    libft.mk                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+         #
+#    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/06/25 14:45:47 by bprunevi          #+#    #+#              #
-#    Updated: 2020/03/11 17:43:53 by bprunevi         ###   ########.fr        #
+#    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
+#    Updated: 2020/03/05 15:30:37 by bprunevi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SOURCES	:=	btree_apply_infix.c \
 		ft_lstadd_back.c \
 		ft_lstdel.c \
 		ft_lstdelone.c \
+		ft_lstpop.c \
 		ft_lstiter.c \
 		ft_lstmap.c \
 		ft_lstnew.c \

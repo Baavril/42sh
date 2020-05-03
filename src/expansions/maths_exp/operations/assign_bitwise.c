@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   assign_bitwise.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/13 20:47:52 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/13 20:54:14 by bprunevi         ###   ########.fr       */
+/*   Created: 2020/01/13 20:47:52 by tgouedar          #+#    #+#             */
+/*   Updated: 2020/01/13 20:54:14 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "shell_variables.h"
 #include "maths_expansion.h"
 
 int		ft_r_shift_assign(void *left_cmd, void *right_cmd, int64_t *res)

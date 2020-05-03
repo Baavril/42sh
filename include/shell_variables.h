@@ -3,9 +3,9 @@
 /*                                                        :::      ::::::::   */
 /*   shell_variables.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/08 09:48:01 by bprunevi          #+#    #+#             */
+/*   Created: 2019/11/08 09:48:01 by abarthel          #+#    #+#             */
 /*   Updated: 2020/02/29 16:30:37 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -86,5 +86,8 @@ int						set_positional_params(char **tokens);
 int						update_prompt_var(void);
 int						update_intern_vars(void);
 int						ft_strplen(char *str);
+
+void					setshvar(char *var_name, int64_t value);
+char					*getshvar(char *var_name);
 
 #endif

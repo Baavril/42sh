@@ -13,6 +13,16 @@
 #ifndef QUOTE_H
 # define QUOTE_H
 
-char *quote_prompt(char *command);
+# define INHIB		"[]{}()\'\""
+# define OPEN		"[{("
+# define CLOSE		"]})"
+# define QUOTES		"\'\""
+# define ERR		0
+# define NO_ERR		1
+# define ESC_NL		2
+
+
+void		ft_lst_strdel(void *content, size_t content_size);
+int			quote_prompt(t_list **unclosed_inhib, char *command);
 
 #endif

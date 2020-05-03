@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+         #
+#    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/06/25 14:03:51 by bprunevi          #+#    #+#              #
-#    Updated: 2020/01/18 14:47:00 by bprunevi         ###   ########.fr        #
+#    Created: 2019/06/25 14:03:51 by abarthel          #+#    #+#              #
+#    Updated: 2020/01/18 14:47:00 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

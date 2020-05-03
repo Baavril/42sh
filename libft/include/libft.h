@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/06 11:55:45 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/01 12:10:29 by bprunevi         ###   ########.fr       */
+/*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
+/*   Updated: 2020/03/01 12:10:29 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,8 @@ typedef int			(*t_ft_cmp)(t_list *, t_list *);
 void				ft_lst_mergesort(t_list **lst, t_ft_cmp ft_cmp);
 
 void				ft_lstadd_back(t_list **alst, t_list *new_nod);
+
+void				ft_lstpop(t_list **alist, void (*del)(void *, size_t));
 
 void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   maths_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/07 19:24:31 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/12 13:47:42 by bprunevi         ###   ########.fr       */
+/*   Created: 2019/10/07 19:24:31 by tgouedar          #+#    #+#             */
+/*   Updated: 2020/02/12 13:47:42 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,6 @@ int				ft_maths_parser(t_maths_list *list)
 	if (ft_parse_incr(list) == CONV_FAIL)
 		return (CONV_FAIL);
 	ft_parse_sign(list);
+	ft_parse_neg_prio(list);
 	return (CONV_SUCCESS);
 }
