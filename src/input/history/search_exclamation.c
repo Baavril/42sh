@@ -44,7 +44,7 @@ static int	add_exclamation_string(int ret, char **line, char *cmd, int i)
 	(*line)[i] = '\0';
 	if (!(*line = ft_strjoinfree(*line, cmd)))
 	{
-		ft_printf("str [%s]\n", *line);
+		ft_dprintf(2, "cannot allocate memory\n");
 		ft_strdel(&cmd);
 		return (0);
 	}

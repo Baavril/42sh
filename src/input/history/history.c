@@ -105,15 +105,16 @@ static int	history_move(t_history *history_2, char **cmd, int flag)
 int			history(int flag, char **line, char **cmd)
 {
 	static t_history	history = {NULL, NULL, NULL};
-	static char			*home = NULL;
+	static char		*home = NULL;
+	static int		max = 500;
 
 	if (flag == BACKWARD || flag == FORWARD || flag == GET
 			|| flag == FIRST || flag == LAST || flag == SWAP)
 		return (history_move(&history, cmd, flag));
 	if (flag == INIT)
-		return (init_history(&history, &home));
+		return (init_history(&history, &home, &max));
 	if (flag == DELETE)
-		return (delete(&history, home));
+		return (delete(&history, home, max));
 	if (flag == ADD_CMD)
 		return (history_cmd(line, &history));
 	if (flag == SEARCH || flag == RESET)

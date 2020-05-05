@@ -66,13 +66,13 @@ typedef struct			s_history
 }						t_history;
 
 int						history(int flag, char **line, char **cmd);
-int						init_history(t_history *history, char **home);
+int						init_history(t_history *history, char **home, int *max);
 int						ft_swap_2(t_history **history, char *cmd);
 int						get_first(t_history **history, char **cmd);
 int						get_last(t_history **history, char **cmd);
 int						get_next(t_history **history, char **cmd);
 int						get_previous(t_history **history, char **cmd);
-int						delete(t_history *history, char *home);
+int						delete(t_history *history, char *home, int max);
 int						s_exclamation(char **line, t_history *history, int *ret,
 																	char *cmd);
 int						ft_isseparator(char *str);

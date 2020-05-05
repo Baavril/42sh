@@ -62,10 +62,10 @@ int				ft_clean_exit(char **av, int exit_status)
 	}
 	else if (!(av))
 		ft_free_jcont(NO_CHECK);
+	history(DELETE, NULL, NULL);
 	ft_free_shvar();
 	ft_tabdel(&av);
 	ft_tabdel(&environ);
-	history(DELETE, NULL, NULL);
 	ft_free_bintable();
 	set_termcaps(TC_RESTORE);
 	ft_strdel(&g_bgpid);

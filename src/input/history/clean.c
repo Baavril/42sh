@@ -12,6 +12,8 @@
 
 #include "history.h"
 
+struct s_var	*g_svar;
+
 static int	delete_history(t_history *history)
 {
 	t_history	*tmp;
@@ -51,7 +53,7 @@ static int	w_history(const char *line, int fd)
 	return (1);
 }
 
-static int	write_history(t_history *history, char *home)
+static int	write_history(t_history *history, char *home, int max)
 {
 	int len;
 	int fd;
@@ -61,7 +63,7 @@ static int	write_history(t_history *history, char *home)
 		return (-1);
 	while (history && history->next)
 		history = history->next;
-	while (history && history->previous && len++ < 499)
+	while (history && history->previous && len++ < (max - 1))
 		history = history->previous;
 	while (history && history->next)
 	{
@@ -75,10 +77,13 @@ static int	write_history(t_history *history, char *home)
 	return (1);
 }
 
-int			delete(t_history *history, char *home)
+int			delete(t_history *history, char *home, int max)
 {
-	if (write_history(history, home) == -1)
-		ft_dprintf(2, "history: can't open %s\n", home);
+	if (*home != '\0')
+	{
+		if (write_history(history, home, max) == -1)
+			ft_dprintf(2, "history: can't open %s\n", home);
+	}
 	ft_strdel(&home);
 	delete_history(history);
 	return (1);
