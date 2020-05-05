@@ -65,6 +65,7 @@ int			keyboard_ctrl_c(union u_tc *term, char **buff, t_cursor *cursor)
 		if (cursor->ctrl_r)
 		{
 			update_buff(buff, cursor);
+			ft_strdel(&(cursor->prompt));
 			cursor->prompt_len = mkprompt(&(cursor->prompt));
 			cursor->start = ft_strlen(*buff);
 			keyboard_ctrl_c_wiper(buff, cursor);
