@@ -68,7 +68,7 @@ char	*mkprompt_getcwd(size_t *len)
 	{
 		if (!(ft_strcmp(voyager->key, PWD)))
 		{
-			*len = ft_strlen(voyager->value);
+			*len += ft_strlen(voyager->value);
 			return (ft_strdup(voyager->value));
 		}
 		voyager = voyager->next;
