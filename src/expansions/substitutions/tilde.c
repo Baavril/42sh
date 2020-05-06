@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tilde_substitutions.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprunev <bprunev@student.42.fr>            +#+  +:+       +#+        */
+/*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/06 20:52:32 by bprunev           #+#    #+#             */
-/*   Updated: 2020/03/04 16:42:56 by bprunevi         ###   ########.fr       */
+/*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
+/*   Updated: 2020/03/01 11:45:18 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 #include "shell_variables.h"
 #include "expansions.h"
 #include "libft.h"
-#include <dirent.h>
+#include "unistd.h"
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <pwd.h>
 
 static int		tilde_int_exp(char **token, char *end, int flag)
 {
@@ -25,10 +27,12 @@ static int		tilde_int_exp(char **token, char *end, int flag)
 	tmp = NULL;
 	if ((flag == 2 || flag == 3) && *(*token + flag - 1) == '0')
 	{
-		tmp = ft_getenv("PWD");
-		ft_strdel(token);
-		*token = ft_strjoin(tmp, end);
-		ft_strdel(&tmp);
+		if ((tmp = ft_getenv("PWD")))
+		{
+			ft_strdel(token);
+			*token = ft_strjoin(tmp, end);
+			ft_strdel(&tmp);
+		}
 		return (SUCCESS);
 	}
 	return (ERROR);
@@ -41,11 +45,23 @@ static int		tilde_nude_exp(char **token, char *end, int flag)
 	tmp = NULL;
 	if (flag == 1 && (*(*token + flag) == SLASH || !(*(*token + flag))))
 	{
-		tmp = ft_getenv("HOME");
+		if (!(tmp = ft_getenv("HOME")))
+			tmp = ft_strdup(getpwuid(getuid())->pw_dir);
 		ft_strdel(token);
 		*token = ft_strjoin(tmp, end);
 		ft_strdel(&tmp);
 		return (SUCCESS);
+	}
+	else
+	{
+		if (!(ft_strcmp(getpwuid(getuid())->pw_name, *token + 1)))
+		{
+			tmp = ft_strdup(getpwuid(getuid())->pw_dir);
+			ft_strdel(token);
+			*token = ft_strjoin(tmp, end);
+			ft_strdel(&tmp);
+			return (SUCCESS);
+		}
 	}
 	return (ERROR);
 }
@@ -57,10 +73,12 @@ static int		tilde_minus_exp(char **token, char *end)
 	tmp = NULL;
 	if (*(*token + 1) == MINUS && (*(*token + 2) == SLASH || !(*(*token + 2))))
 	{
-		tmp = ft_getenv("OLDPWD");
-		ft_strdel(token);
-		*token = ft_strjoin(tmp, end);
-		ft_strdel(&tmp);
+		if ((tmp = ft_getenv("OLDPWD")))
+		{
+			ft_strdel(token);
+			*token = ft_strjoin(tmp, end);
+			ft_strdel(&tmp);
+		}
 		return (SUCCESS);
 	}
 	return (ERROR);
@@ -73,10 +91,12 @@ static int		tilde_plus_exp(char **token, char *end)
 	tmp = NULL;
 	if (*(*token + 1) == PLUS && (*(*token + 2) == SLASH || !(*(*token + 2))))
 	{
-		tmp = ft_getenv("PWD");
-		ft_strdel(token);
-		*token = ft_strjoin(tmp, end);
-		ft_strdel(&tmp);
+		if ((tmp = ft_getenv("PWD")))
+		{
+			ft_strdel(token);
+			*token = ft_strjoin(tmp, end);
+			ft_strdel(&tmp);
+		}
 		return (SUCCESS);
 	}
 	return (ERROR);

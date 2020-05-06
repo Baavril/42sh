@@ -35,6 +35,7 @@
 # define HISTSIZE		"HISTSIZE="
 # define HISTFILE		"HISTFILE="
 # define PWD			"PWD="
+# define HOME			"HOME="
 
 /*
 ** Values of internal variables
