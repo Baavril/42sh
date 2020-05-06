@@ -15,9 +15,11 @@
 #include "builtin_test.h"
 #include "expansions.h"
 #include "libft.h"
-#include <dirent.h>
+#include "unistd.h"
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <pwd.h>
 
 static int		tilde_int_exp(char **token, char *end, int flag)
 {
@@ -26,10 +28,12 @@ static int		tilde_int_exp(char **token, char *end, int flag)
 	tmp = NULL;
 	if ((flag == 2 || flag == 3) && *(*token + flag - 1) == '0')
 	{
-		tmp = ft_getenv("PWD");
-		ft_strdel(token);
-		*token = ft_strjoin(tmp, end);
-		ft_strdel(&tmp);
+		if ((tmp = ft_getenv("PWD")))
+		{
+			ft_strdel(token);
+			*token = ft_strjoin(tmp, end);
+			ft_strdel(&tmp);
+		}
 		return (SUCCESS);
 	}
 	return (ERROR);
@@ -42,11 +46,23 @@ static int		tilde_nude_exp(char **token, char *end, int flag)
 	tmp = NULL;
 	if (flag == 1 && (*(*token + flag) == SLASH || !(*(*token + flag))))
 	{
-		tmp = ft_getenv("HOME");
+		if (!(tmp = ft_getenv("HOME")))
+			tmp = ft_strdup(getpwuid(getuid())->pw_dir);
 		ft_strdel(token);
 		*token = ft_strjoin(tmp, end);
 		ft_strdel(&tmp);
 		return (SUCCESS);
+	}
+	else
+	{
+		if (!(ft_strcmp(getpwuid(getuid())->pw_name, *token + 1)))
+		{
+			tmp = ft_strdup(getpwuid(getuid())->pw_dir);
+			ft_strdel(token);
+			*token = ft_strjoin(tmp, end);
+			ft_strdel(&tmp);
+			return (SUCCESS);
+		}
 	}
 	return (ERROR);
 }
@@ -58,10 +74,12 @@ static int		tilde_minus_exp(char **token, char *end)
 	tmp = NULL;
 	if (*(*token + 1) == MINUS && (*(*token + 2) == SLASH || !(*(*token + 2))))
 	{
-		tmp = ft_getenv("OLDPWD");
-		ft_strdel(token);
-		*token = ft_strjoin(tmp, end);
-		ft_strdel(&tmp);
+		if ((tmp = ft_getenv("OLDPWD")))
+		{
+			ft_strdel(token);
+			*token = ft_strjoin(tmp, end);
+			ft_strdel(&tmp);
+		}
 		return (SUCCESS);
 	}
 	return (ERROR);
@@ -74,10 +92,12 @@ static int		tilde_plus_exp(char **token, char *end)
 	tmp = NULL;
 	if (*(*token + 1) == PLUS && (*(*token + 2) == SLASH || !(*(*token + 2))))
 	{
-		tmp = ft_getenv("PWD");
-		ft_strdel(token);
-		*token = ft_strjoin(tmp, end);
-		ft_strdel(&tmp);
+		if ((tmp = ft_getenv("PWD")))
+		{
+			ft_strdel(token);
+			*token = ft_strjoin(tmp, end);
+			ft_strdel(&tmp);
+		}
 		return (SUCCESS);
 	}
 	return (ERROR);

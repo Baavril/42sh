@@ -17,6 +17,9 @@
 #include "libft.h"
 #include "prompt.h"
 #include "builtins.h"
+#include "unistd.h"
+#include <sys/types.h>
+#include <pwd.h>
 
 extern int		g_ppid;
 struct s_svar	*g_svar;
@@ -68,8 +71,13 @@ static void		init_intern_vars(void)
 	setenvvar(ft_strdup(PID), ft_itoa(getpid()));
 	setenvvar(ft_strdup(OPTERR), ft_strdup(OPTERRV));
 	setenvvar(ft_strdup(OPTIND), ft_strdup(OPTINDV));
+	if (!(tmp = ft_getenv("HOME")))
+	{
+		tmp = ft_strdup(getpwuid(getuid())->pw_dir);
+		setenvvar(ft_strdup(HOME), ft_strdup(tmp));
+	}
 	setenvvar(ft_strdup(HISTSIZE), ft_strdup(HISTSIZEV));
-	tmp = ft_getenv("HOME");
+	setenvvar(ft_strdup(HISTSIZE), ft_strdup(HISTSIZEV));
 	setenvvar(ft_strdup(HISTFILE), ft_strjoin(tmp, HISTFILEV));
 	ft_strdel(&tmp);
 }
