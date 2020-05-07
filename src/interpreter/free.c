@@ -15,6 +15,7 @@
 #include "expansions.h"
 #include "builtins.h"
 #include "curjob.h"
+#include <unistd.h>
 
 int				shape(t_node *node)
 {
@@ -65,19 +66,24 @@ int				astdel(t_node *node)
 	return (0);
 }
 
-int				expand_tree(t_node *node)
+int				expand_tree(t_node *node, int fork_builtin)
 {
 	int node_type;
 
 	if (!node)
 		return (1);
 	node_type = shape(node);
+	if (node->f == i_pipe_sequence)
+	{
+		ft_printf("pipe!\n");
+		fork_builtin = 1;
+	}
 	if (node->left.c || node->left.v)
 	{
 		if ((node_type & 0b10) && !(curjob_cat(node->left.c)))
 			expansions_treatment(&(node->left.c));
 		else
-			expand_tree(node->left.v);
+			expand_tree(node->left.v, fork_builtin);
 	}
 	curjob_add(node);
 	if (node->right.c || node->right.v)
@@ -85,10 +91,18 @@ int				expand_tree(t_node *node)
 		if ((node_type & 0b01) && !(curjob_cat(node->right.c)))
 			expansions_treatment(&(node->right.c));
 		else
-			expand_tree(node->right.v);
+			expand_tree(node->right.v, fork_builtin);
 	}
 	if (node->f == i_exec)
-		if (is_a_builtin(node->left.c) || eval_command(&node->left.c))
+	{
+		ft_printf("creating proces from %d...\n", getpid());
+		if (is_a_builtin(node->left.c))
+		{
+			if (!fork_builtin)
+				node->f = i_builtin;
+		}
+		else if (eval_command(&node->left.c))
 			node->f = i_builtin;
+	}
 	return (0);
 }
