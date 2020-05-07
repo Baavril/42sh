@@ -13,6 +13,7 @@
 #include "parser.h"
 #include "builtins.h"
 #include "shell_variables.h"
+#include "expansions.h"
 #include "error.h"
 #include "jcont.h"
 #include <unistd.h>
@@ -23,8 +24,14 @@ extern int	g_retval;
 
 int		i_prefix(t_elem left, t_elem right)
 {
-	if (checkvarlst(left.c))
-		setenvnod(newnodshell(left.c, 0));
+	char	*token;
+
+	if (!(token = ft_strdup(left.c)))
+		return (0);
+	expansions_treatment(&(token));
+	if (checkvarlst(token))
+		setenvnod(newnodshell(token, 0));
+	ft_strdel(&token);
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
 	return (0);
@@ -37,7 +44,7 @@ int		i_builtin(t_elem left, t_elem right)
 	g_argv[1] = NULL;
 	if (!right.v || right.v->f(right.v->left, right.v->right) != -1)
 		if ((g_retval = builtins_dispatcher(g_argv)) == 127)
-			psherror(e_command_not_found, *g_argv, e_cmd_type);
+			ft_dprintf(STDERR_FILENO, "unknown command : %s\n", g_argv[0]);
 	free(g_argv);
 	return (g_retval);
 }
