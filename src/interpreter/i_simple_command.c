@@ -13,6 +13,7 @@
 #include "parser.h"
 #include "builtins.h"
 #include "shell_variables.h"
+#include "expansions.h"
 #include "error.h"
 #include "jcont.h"
 #include <unistd.h>
@@ -23,8 +24,14 @@ extern int	g_retval;
 
 int		i_prefix(t_elem left, t_elem right)
 {
-	if (checkvarlst(left.c))
-		setenvnod(newnodshell(left.c, 0));
+	char	*token;
+
+	if (!(token = ft_strdup(left.c)))
+		return (0);
+	expansions_treatment(&(token));
+	if (checkvarlst(token))
+		setenvnod(newnodshell(token, 0));
+	ft_strdel(&token);
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
 	return (0);
