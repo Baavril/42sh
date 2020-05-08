@@ -37,7 +37,7 @@ int	expansions_launcher(t_expand *vars, int expand)
 	{
 		*(vars->tokens) = ft_set_slashed(vars->tokens);
 		vars->type = identifier(*(vars->tokens));
-		vars->btw = ft_getbtw(*(vars->tokens), vars->type);
+		vars->btw = getbtw(*(vars->tokens), vars->type, 0);
 		while (g_symexp[vars->j].expand)
 		{
 			if (g_symexp[vars->j].sym == vars->type)
