@@ -6,7 +6,7 @@
 #    By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/04 15:22:51 by bprunevi          #+#    #+#              #
-#    Updated: 2020/03/12 13:26:47 by bprunevi         ###   ########.fr        #
+#    Updated: 2020/05/08 12:18:44 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -161,9 +161,11 @@ SOURCES			:=		transversal/program/main.c \
 						builtins/builtin_cd/ft_pcderror.c \
 						builtins/builtin_cd/ft_simplify_path.c \
 						builtins/builtin_cd/path_tools.c \
+						builtins/builtin_setenv.c \
 						builtins/builtin_set/main.c \
 						builtins/builtin_set/positional_parameters.c \
 						builtins/builtin_unset.c \
+						builtins/builtin_unsetenv.c \
 						builtins/builtin_echo.c \
 						builtins/builtin_type.c \
 						builtins/builtin_exit.c \
