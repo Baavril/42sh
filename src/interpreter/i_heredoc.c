@@ -17,14 +17,6 @@
 #include "prompt.h"
 #include <unistd.h>
 
-static char	*find_firstchar(char *str)
-{
-	if (str)
-		while (ft_isspace(*str))
-			str++;
-	return (str);
-}
-
 int			i_dless(t_elem left, t_elem right)
 {
 	int			pipe_fd[2];
@@ -41,6 +33,7 @@ int			i_dless(t_elem left, t_elem right)
 
 int			i_dlessdash(t_elem left, t_elem right)
 {
+	/*
 	t_cursor	cursor;
 	char		*buff;
 	int			pipe_fd[2];
@@ -60,5 +53,8 @@ int			i_dlessdash(t_elem left, t_elem right)
 	}
 	close(pipe_fd[1]);
 	set_termcaps(TC_RESTORE);
-	return (dup2(pipe_fd[0], 0));
+	*/
+	(void)left;
+	ft_printf("(%s)\n", right.c);
+	return (0);
 }

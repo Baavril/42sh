@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 08:40:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/08 14:12:41 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/09 17:06:08 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 #include "expansions.h"
 #include "builtins.h"
 #include "curjob.h"
+#include "prompt.h"
+#include "input.h"
+#include "termcaps.h"
+#include <unistd.h>
 
 int				shape(t_node *node)
 {
@@ -65,7 +69,30 @@ int				astdel(t_node *node)
 	return (0);
 }
 
-int				expand_tree(t_node *node)
+void				process_heredoc(char **area)
+{
+	char *name;
+	char *line;
+	t_cursor	cursor;
+
+	name = *area;
+	*area = ft_strdup("");
+	line = ft_strdup("");
+	set_termcaps(TC_INPUT);
+	while (!line || !name || ft_strcmp(line, name))
+	{
+		*area = ft_strjoinfree(*area, line);
+		if (**area)
+			*area = ft_strjoinfree(*area, ft_strdup("\n"));
+		ft_init_cursor(&cursor);
+		mkprompt_quote("\'", &(cursor.prompt), &(cursor.prompt_len));
+		get_stdin(&cursor, &line);
+		write(1, "\n", 1);
+	}
+	set_termcaps(TC_RESTORE);
+}	
+
+int				expand_tree(t_node *node, int fork_builtin)
 {
 	int node_type;
 
@@ -84,6 +111,9 @@ int				expand_tree(t_node *node)
 	{
 		if ((node_type & 0b01) && !(curjob_cat(node->right.c)))
 			expansions_treatment(&(node->right.c));
+			if (node->f == i_dless)
+				process_heredoc(&(node->right.c));
+		}
 		else
 			expand_tree(node->right.v);
 	}
