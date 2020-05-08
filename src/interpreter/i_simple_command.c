@@ -60,7 +60,13 @@ int		i_exec(t_elem left, t_elem right)
 	g_argv[0] = left.c;
 	g_argv[1] = NULL;
 	if (!right.v || right.v->f(right.v->left, right.v->right) != -1)
-		execve(g_argv[0], g_argv, environ);
+	{
+		ft_dprintf(2, "hello from %s running in %d !\n", g_argv[0], getpid());
+		if (is_a_builtin(g_argv[0]))
+			ft_clean_exit(NULL, builtins_dispatcher(g_argv));
+		else
+			execve(g_argv[0], g_argv, environ);
+	}
 	free(g_argv);
 	g_retval = 1;
 	return (1);
