@@ -37,16 +37,17 @@ int			i_dless(t_elem left, t_elem right)
 	buff = NULL;
 	pipe(pipe_fd);
 	i = 0;
+	(void)i;
 	while (!buff || (write(1, "\n", 1) && ft_strcmp(right.c, buff)))
 	{
-		while (i--)
-			ft_putstr_fd("\n", pipe_fd[1]);
+		//while (i--)
+		//ft_putstr_fd("\n", pipe_fd[1]);
 		ft_putstr_fd(buff, pipe_fd[1]);
 		ft_strdel(&buff);
 		ft_init_cursor(&cursor);
 		mkprompt_quote("\'", &(cursor.prompt), &(cursor.prompt_len));
 		get_stdin(&cursor, &buff);
-		i++;
+		//i++;
 	}
 	close(pipe_fd[1]);
 	set_termcaps(TC_RESTORE);

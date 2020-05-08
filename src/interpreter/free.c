@@ -89,7 +89,14 @@ int				expand_tree(t_node *node, int fork_builtin)
 	if (node->right.c || node->right.v)
 	{
 		if ((node_type & 0b01) && !(curjob_cat(node->right.c)))
+		{
 			expansions_treatment(&(node->right.c));
+			if (node->f == i_dless)
+				{
+					ft_strdup(node->right.c)
+					node->right.c = ft_strdup("TEXTE\nTEXTE\nTEXTE\n")
+				}
+		}
 		else
 			expand_tree(node->right.v, fork_builtin);
 	}
