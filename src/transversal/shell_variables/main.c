@@ -78,6 +78,7 @@ static void		init_intern_vars(void)
 	}
 	setenvvar(ft_strdup(HISTSIZE), ft_strdup(HISTSIZEV));
 	setenvvar(ft_strdup(HISTSIZE), ft_strdup(HISTSIZEV));
+	setenvvar(ft_strdup(HISTFILESIZE), ft_strdup(HISTFILESIZEV));
 	setenvvar(ft_strdup(HISTFILE), ft_strjoin(tmp, HISTFILEV));
 	ft_strdel(&tmp);
 }
