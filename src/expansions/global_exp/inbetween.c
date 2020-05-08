@@ -56,8 +56,10 @@ char			*dupbtwq(char *str)
 	return (ret);
 }
 
-char			*ft_getbtw(char *tokens, int type)
+char			*getbtw(char *tokens, int type, int flag)
 {
+	if (ft_isin(OP_BRACE, tokens))
+		++flag;
 	if (type == MATHS_EXP)
 		return (ft_strdup(&(tokens[maths_len(tokens) + 2])));
 	if (*tokens != DOLLAR)
@@ -68,17 +70,17 @@ char			*ft_getbtw(char *tokens, int type)
 	while (*tokens && (*tokens == DOLLAR || *tokens == OP_BRACE
 	|| *tokens == STAR || *tokens == AROB || *tokens == SHARP
 	|| *tokens == WHY || *tokens == DASH || *tokens == EXCLAM))
-		tokens++;
+		++tokens;
 	while (type == DIRECT_EXP && *tokens && (ft_isalpha(*tokens)
 	|| ft_isdigit(*tokens) || *tokens == AMPER || *tokens == UNDERSCORE))
-		tokens++;
+		++tokens;
 	while (type != DIRECT_EXP && *tokens && *tokens != CL_BRACE)
 	{
-		tokens++;
+		++tokens;
 		if (*(tokens + 1) == AMPER)
 			++tokens;
 	}
-	if (*tokens == CL_BRACE)
+	if (flag && *tokens == CL_BRACE)
 		++tokens;
 	return (ft_strdup(tokens));
 }

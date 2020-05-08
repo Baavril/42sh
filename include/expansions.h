@@ -144,7 +144,7 @@ char				**ft_expsplit(char *str, char c);
 char				*ft_setbslash(char *tokens, int nb);
 int					ft_back_slashed(char **tokens);
 char				*ft_set_slashed(char **tokens);
-char				*ft_getbtw(char *tokens, int type);
+char				*getbtw(char *tokens, int type, int flag);
 char				*token_quotes_generator(char *str);
 void				setquotenod(struct s_quoted *new_back);
 
