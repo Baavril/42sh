@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   expansions_checker.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bprunev <bprunev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/03/03 19:52:56 by yberramd         ###   ########.fr       */
+/*   Created: 2019/07/06 20:52:32 by bprunev           #+#    #+#             */
+/*   Updated: 2020/03/04 16:41:54 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "shell_variables.h"
-#include "builtin_test.h"
 #include "expansions.h"
 #include "libft.h"
 #include <dirent.h>

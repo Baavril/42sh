@@ -3,21 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   expansions_bslash.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bprunev <bprunev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/03/01 12:09:58 by tgouedar         ###   ########.fr       */
+/*   Created: 2019/07/06 20:52:32 by bprunev           #+#    #+#             */
+/*   Updated: 2020/03/04 16:42:04 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "shell_variables.h"
-#include "builtin_test.h"
 #include "expansions.h"
 #include "libft.h"
 #include <dirent.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+
+char			*dupbtwqlim(char *str, int lim)
+{
+	int		i;
+	char	*ret;
+
+	i = 0;
+	if (lim > 1 && str[lim] != DQUOTES && str[lim] != SQUOTES)
+		++lim;
+	if (!(ret = (char*)ft_memalloc(sizeof(char) * (lim + 2))))
+		return (NULL);
+	while (i < lim && str[i])
+	{
+		ret[i] = str[i];
+		++i;
+	}
+	return (ret);
+}
+
+char			*dupbtwq(char *str)
+{
+	int		i;
+	char	*ret;
+
+	i = 0;
+	ret = NULL;
+	while (str[i] && (str[i] != DQUOTES && str[i] != SQUOTES))
+		++i;
+	if (!(ret = (char*)ft_memalloc(sizeof(char) * (i + 1))))
+		return (NULL);
+	i = 0;
+	while (str[i] && (str[i] != DQUOTES && str[i] != SQUOTES))
+	{
+		ret[i] = str[i];
+		++i;
+	}
+	return (ret);
+}
 
 char			*ft_getbtw(char *tokens, int type)
 {

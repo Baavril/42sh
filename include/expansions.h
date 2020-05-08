@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/02/02 15:40:06 by baavril          ###   ########.fr       */
+/*   Updated: 2020/03/08 17:59:16 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@
 # define DPERCENT_EXP 12
 # define MATHS_EXP 13
 
-typedef struct	s_symexp
+typedef struct		s_symexp
 {
-	int			sym;
-	int			(*expand)(char **);
-}				t_symexp;
+	int				sym;
+	int				(*expand)(char **);
+}					t_symexp;
 
 struct				s_quoted
 {
@@ -77,56 +77,87 @@ struct				s_quoted
 	struct s_quoted	*next;
 };
 
-typedef struct	s_expand
+typedef struct		s_expand
 {
-	int			j;
-	int			nb;
-	int			type;
-	char		*tmp;
-	char		*btw;
-	char		*ptm;
-	char		*keep;
-	char		**tokens;
-}				t_expand;
+	int				j;
+	int				nb;
+	int				type;
+	char			*tmp;
+	char			*btw;
+	char			*ptm;
+	char			*keep;
+	char			**tokens;
+}					t_expand;
 
-int				expansions_treatment(char **tokens);
+typedef struct		s_params
+{
+	char			*tmp1;
+	char			*tmp2;
+	char			*tmp3;
+	char			*tmp4;
+	int				len;
+	char			*esc;
+}					t_params;
 
-int				direct_exp(char **token);
-int				simple_exp(char **token);
-int				why_exp(char **token);
-int				plus_exp(char **token);
-int				dash_exp(char **token);
-int				equal_exp(char **token);
-int				bsharp_exp(char **token);
-int				osharp_exp(char **token);
-int				dsharp_exp(char **token);
-int				opercent_exp(char **token);
-int				dpercent_exp(char **token);
-int				maths_exp(char **token);
-int				tilde_exp(char **token);
+typedef struct		s_rev
+{
+	int				i;
+	int				len;
+	int				flag;
+	char			*tmp1;
+}					t_rev;
 
-int				ft_strpchr(char *str, char c);
-size_t			maths_len(char *token);
+int					expansions_treatment(char **tokens);
+int					expansions_launcher(t_expand *vars, int expand);
+char				*expansions_management(char **tokens, int expand);
 
-char			**ft_expsplit(char *str, char c);
-char			*ft_setbslash(char *tokens, int nb);
-int				ft_back_slashed(char **tokens);
-char			*ft_set_slashed(char **tokens);
-char			*ft_getbtw(char *tokens, int type);
-char			*ft_quoted(char *tokens);
-char			*ft_unset_quoted(char *tokens, char c);
-char			*token_quotes_generator(char *str);
+int					direct_exp(char **token);
+int					simple_exp(char **token);
+int					why_exp(char **token);
+int					plus_exp(char **token);
+int					dash_exp(char **token);
+int					equal_exp(char **token);
+int					bsharp_exp(char **token);
+int					osharp_exp(char **token);
+int					dsharp_exp(char **token);
+int					opercent_exp(char **token);
+int					dpercent_exp(char **token);
+int					maths_exp(char **token);
+int					tilde_exp(char **token);
 
-int				identifier(char *token);
+int					ret_value(char **token);
+int					reach_pos_params(char **token);
+int					count_pos_params(char **token);
+int					view_pos_param(char **token);
+int					script_param(char **token);
+char				*get_var_value(char *var_name);
 
-int				check_braces(char *token);
-int				check_colon(char *token);
-int				check_colon_symbol(char *token);
-int				check_symbol(char *token);
-int				check_maths(char *token);
+int					ft_strpchr(char *str, char c);
+size_t				maths_len(char *token);
 
-int				check_next_var(char *var, char **token, int flag);
-char			*ft_strcdup(char *token, char c);
-char			*setasvar(char *token);
+int					getquotelim(char *str);
+int					isexpandable(char *str, int lim);
+int					counter_quoted_words(char *str);
+char				*dupbtwq(char *str);
+char				*dupbtwqlim(char *str, int lim);
+char				**ft_expsplit(char *str, char c);
+char				*ft_setbslash(char *tokens, int nb);
+int					ft_back_slashed(char **tokens);
+char				*ft_set_slashed(char **tokens);
+char				*ft_getbtw(char *tokens, int type);
+char				*token_quotes_generator(char *str);
+void				setquotenod(struct s_quoted *new_back);
+
+int					identifier(char *token);
+
+int					check_braces(char *token);
+int					check_colon(char *token);
+int					check_colon_symbol(char *token);
+int					check_symbol(char *token);
+int					check_maths(char *token);
+
+int					check_next_var(char *var, char **token, int flag);
+char				*ft_strcdup(char *token, char c);
+char				*setasvar(char *token);
 
 #endif
