@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 08:40:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/04 13:59:54 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/05/08 15:58:47 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ int				expand_tree(t_node *node, int fork_builtin)
 			expansions_treatment(&(node->right.c));
 			if (node->f == i_dless)
 				{
-					ft_strdup(node->right.c)
-					node->right.c = ft_strdup("TEXTE\nTEXTE\nTEXTE\n")
+					ft_strdel(&(node->right.c));
+					node->right.c = ft_strdup("TEXTE\nTEXTE\nTEXTE\n");
 				}
 		}
 		else
