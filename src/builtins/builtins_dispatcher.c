@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/08 12:19:34 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/08 13:28:00 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ const t_builtins	g_builtins[] =
 	{ "setenv", &cmd_setenv},
 	{ "unset", &cmd_unset},
 	{ "unsetenv", &cmd_unsetenv},
+	{ "env", &cmd_env},
 	{ "export", &cmd_export},
 	{ "\0", NULL}
 };

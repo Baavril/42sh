@@ -6,7 +6,7 @@
 #    By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/04 15:22:51 by bprunevi          #+#    #+#              #
-#    Updated: 2020/05/08 12:18:44 by user42           ###   ########.fr        #
+#    Updated: 2020/05/08 13:29:16 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -167,6 +167,7 @@ SOURCES			:=		transversal/program/main.c \
 						builtins/builtin_unset.c \
 						builtins/builtin_unsetenv.c \
 						builtins/builtin_echo.c \
+						builtins/builtin_env.c \
 						builtins/builtin_type.c \
 						builtins/builtin_exit.c \
 						builtins/builtin_hash.c \
