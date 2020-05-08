@@ -14,6 +14,8 @@
 
 int	ft_swap_2(t_history **history, char *cmd)
 {
+	if (cmd == NULL)
+		return (0);
 	ft_strdel(&(*history)->str);
 	if (!((*history)->str = ft_strdup(cmd)))
 		return (-1);

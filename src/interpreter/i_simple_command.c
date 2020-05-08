@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "history.h"
 #include "builtins.h"
 #include "shell_variables.h"
 #include "expansions.h"
@@ -28,6 +29,8 @@ int		i_prefix(t_elem left, t_elem right)
 
 	if (!(token = ft_strdup(left.c)))
 		return (0);
+	if (ft_strfchr("HISTFILE=", token) == 1)
+		history(NEW_HIST, NULL, NULL);
 	expansions_treatment(&(token));
 	if (checkvarlst(token))
 		setenvnod(newnodshell(token, 0));

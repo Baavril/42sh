@@ -15,22 +15,24 @@
 
 struct s_var	*g_svar;
 
-static int	error_clean(int fd, char **get_line)
+static int	error_clean(int fd, char **get_line, char *home)
 {
 	ft_dprintf(2, "cannot allocate memory\n");
+	ft_strdel(&home);
 	close(fd);
 	ft_strdel(get_line);
 	return (0);
 }
 
-static int	init_clean(int fd, char **get_line)
+static int	init_clean(int fd, char **get_line, char *home)
 {
 	close(fd);
+	ft_strdel(&home);
 	ft_strdel(get_line);
 	return (1);
 }
 
-static int	assign_file_history(int fd, t_history *history, int max)
+static int	assign_file_history(int fd, t_history *history, int max, char *home)
 {
 	int		len;
 	char		*get_line;
@@ -40,9 +42,9 @@ static int	assign_file_history(int fd, t_history *history, int max)
 	while (get_next_line(fd, &get_line) > 0 && len < max)
 	{
 		if (!(history->str = ft_strdup(get_line)))
-			return (error_clean(fd, &get_line));
+			return (error_clean(fd, &get_line, home));
 		if (!(history->next = (t_history*)malloc(sizeof(t_history))))
-			return (error_clean(fd, &get_line));
+			return (error_clean(fd, &get_line, home));
 		history->next->previous = history;
 		history = history->next;
 		ft_strdel(&get_line);
@@ -54,32 +56,36 @@ static int	assign_file_history(int fd, t_history *history, int max)
 		free(history->next);
 		history->next = NULL;
 	}
-	return (init_clean(fd, &get_line));
+	return (init_clean(fd, &get_line, home));
 }
 
-int			init_history(t_history *history, char **home, int *max)
+int			init_history(t_history *history)
 {
 	int		fd;
+	int		max;
 	char		*nbr;
+	char		*home;
 
 	if (!(nbr = getshvar(HISTSIZE)))
 	{
 		ft_dprintf(2, "cannot allocate memory\n");
 		return (0);
 	}
-	*max = ft_atoi(nbr);
+	max = ft_atoi(nbr);
 	ft_strdel(&nbr);
-	if (!(*home = getshvar(HISTFILE)))
+	if (!(home = getshvar(HISTFILE)))
 	{
 		ft_dprintf(2, "cannot allocate memory\n");
 		return (0);
 	}
-	if (*home[0] != '\0' && (fd = open(*home, O_RDONLY | O_CREAT, 0600)) != -1)
-		return (assign_file_history(fd, history, *max));
-	if (*home == NULL || *home[0] != '\0')
+	if (home[0] != '\0' && (fd = open(home, O_RDONLY | O_CREAT, 0600)) != -1)
+		return (assign_file_history(fd, history, max, home));
+	if (home == NULL || home[0] != '\0')
 	{
-		ft_dprintf(2, "history: can't open %s\n", *home);
+		ft_dprintf(2, "history: can't open %s\n", home);
+		ft_strdel(&home);
 		return (0);
 	}
+	ft_strdel(&home);
 	return (1);
 }

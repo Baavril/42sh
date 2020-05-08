@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 14:21:08 by yberramd          #+#    #+#             */
-/*   Updated: 2020/02/29 15:58:12 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/08 02:21:53 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,41 @@ static int	w_history(const char *line, int fd)
 	return (1);
 }
 
-static int	write_history(t_history *history, char *home, int max)
+static void	mv_hist(t_history **history, int new_hist, int max)
 {
 	int len;
+	int len_new_hist;
+	
+	len = 0;
+	len_new_hist = 0;
+	if (new_hist == 0)
+	{
+		while ((*history) && (*history)->next)
+			(*history) = (*history)->next;
+		while ((*history) && (*history)->previous && len++ < (max - 1))
+			(*history) = (*history)->previous;
+	}
+	else if (new_hist == 1)
+	{
+		while ((*history) && (*history)->next)
+		{
+			(*history) = (*history)->next;
+			len_new_hist++;
+		}
+		while ((*history) && (*history)->previous && len++ < (max - 1) && len <= len_new_hist)
+			(*history) = (*history)->previous;
+	}
+}
+
+static int	write_history(t_history *history, char *home, int max, int new_hist)
+{
 	int fd;
 
-	len = 0;
-	if ((fd = open(home, O_WRONLY | O_CREAT | O_TRUNC, 0600)) == -1)
+	if (new_hist == 0 && (fd = open(home, O_WRONLY | O_CREAT | O_TRUNC, 0600)) == -1)
 		return (-1);
-	while (history && history->next)
-		history = history->next;
-	while (history && history->previous && len++ < (max - 1))
-		history = history->previous;
+	if (new_hist == 1 && (fd = open(home, O_WRONLY | O_CREAT | O_APPEND, 0600)) == -1)
+		return (-1);
+	mv_hist(&history, new_hist, max);
 	while (history && history->next)
 	{
 		if (w_history(history->str, fd) == -1)
@@ -77,11 +100,36 @@ static int	write_history(t_history *history, char *home, int max)
 	return (1);
 }
 
-int			delete(t_history *history, char *home, int max)
+int			delete(t_history *history2, int flag)
 {
-	if (*home != '\0')
+	int	max;
+	char	*home;
+	char	*nbr;
+	static t_history	*history = NULL;
+	static int		new_hist = 0;
+
+	if (history == NULL)
+		history = history2;
+	if (flag == NEW_HIST)
 	{
-		if (write_history(history, home, max) == -1)
+		new_hist = 1;
+		return (new_history(&history));
+	}
+	if (!(nbr = getshvar(HISTSIZE)))
+	{
+		ft_dprintf(2, "cannot allocate memory\n");
+		return (0);
+	}
+	max = ft_atoi(nbr);
+	ft_strdel(&nbr);
+	if (!(home = getshvar(HISTFILE)))
+	{
+		ft_dprintf(2, "cannot allocate memory\n");
+		return (0);
+	}
+	if (home[0] != '\0')
+	{
+		if (write_history(history, home, max, new_hist) == -1)
 			ft_dprintf(2, "history: can't open %s\n", home);
 	}
 	ft_strdel(&home);

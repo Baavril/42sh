@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/08 19:21:38 by yberramd         ###   ########.fr        #
+#    Updated: 2020/05/08 02:22:43 by yberramd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,6 +70,7 @@ SOURCES			:=		transversal/program/main.c \
 						input/history/clean.c \
 						input/history/exclamation.c \
 						input/history/exclamation2.c \
+						input/history/new_history.c \
 						input/history/search_exclamation.c \
 						input/history/ft_atoi_history.c \
 						input/keys/autocompletion.c \

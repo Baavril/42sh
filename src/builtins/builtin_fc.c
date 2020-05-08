@@ -55,28 +55,27 @@ static int		ft_atoi_history(const char *str)
 ** boucle infini sur fc -s // ajout du seaarch sur fc
 */
 
-static int		fc_s_no_option(void)
+static int		fc_exec_cmd(void)
 {
 	char *cmd;
 	char *input;
 
-	history(LAST, NULL, &cmd);
-	history(BACKWARD, NULL, &input);
-	history(FORWARD, NULL, &cmd);
-	history(SWAP, NULL, &input);
-	history(GET, NULL, &cmd);
+	if (history(BACKWARD, NULL, &input) <= 0)
+		return (0);
+	if (history(FORWARD, NULL, &cmd) <= 0)
+		return (0);
+	if (history(SWAP, NULL, &input) <= 0)
+		return (0);
+	if (history(GET, NULL, &cmd) <= 0)
+		return (0);
 	if (!(input = ft_strdup(cmd)))
 		return (0);
 	ft_printf("%s\n", input);
-	execute(input);
+	execute(input);//double free si la commande n'est pas valide
 	ft_strdel(&input);
 	update_intern_vars();
 	return (1);
 }
-
-//probleme de compilation et de logique avec la fonction suivante
-// le passage commenté est la fonction originale, la ligne rajoutée est pour 
-//compiler a la zeub
 
 static int		fc_s_option(char *str_nbr)
 {
@@ -89,8 +88,14 @@ static int		fc_s_option(char *str_nbr)
 
 static int		ft_execute(char **option)
 {
+	char	*cmd;
+
 	if (option[0] == NULL)
-		return (fc_s_no_option());
+	{
+		if (history(LAST, NULL, &cmd) <= 0)
+			return (0);
+		return (fc_exec_cmd());
+	}
 	else
 		return (fc_s_option(option[0]));
 }
