@@ -179,6 +179,7 @@ SOURCES			:=		transversal/program/main.c \
 						builtins/builtin_export/main.c \
 						builtins/builtin_export/tools.c \
 						builtins/builtin_export/var_checker.c \
+						builtins/builtin_export/var_checker_env.c \
 						builtins/builtin_jcont/cmd_bg.c \
 						builtins/builtin_jcont/cmd_fg.c \
 						builtins/builtin_jcont/cmd_jobs.c \
