@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bprunev <bprunev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/03 16:21:48 by baavril           #+#    #+#             */
-/*   Updated: 2020/03/03 19:50:02 by yberramd         ###   ########.fr       */
+/*   Created: 2019/12/03 16:21:48 by bprunev           #+#    #+#             */
+/*   Updated: 2020/03/07 16:19:31 by baavril          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,92 +20,43 @@
 
 struct s_svar	*g_svar;
 
-int				update_intern_vars(void)
+char			*ret_prompt_value(char *str)
 {
-	int				i;
-	int				len;
-	extern char		**environ;
-	struct s_svar	*voyager;
-
-	i = 0;
-	voyager = g_svar;
-	len = ft_tablen(environ);
-	while (i < len)
-	{
-		if (!ft_strncmp(environ[i], "PWD=", 4))
-		{
-			while (voyager)
-			{
-				if (!ft_strncmp(environ[i], voyager->key, 4))
-				{
-					if (ft_strcmp(environ[i], voyager->str))
-					{
-						ft_strdel(&voyager->value);
-						ft_strdel(&voyager->str);
-						voyager->value = ft_strdupfm(environ[i], '=');
-						voyager->str = ft_strdup(environ[i]);
-					}
-				}
-				voyager = voyager->next;
-			}
-			voyager = g_svar;
-		}
-		else if (!ft_strncmp(environ[i], "OLDPWD=", 7))
-		{
-			while (voyager)
-			{
-				if (!ft_strncmp(environ[i], voyager->key, 4))
-				{
-					if (ft_strcmp(environ[i], voyager->str))
-					{
-						ft_strdel(&voyager->value);
-						ft_strdel(&voyager->str);
-						voyager->value = ft_strdupfm(environ[i], '=');
-						voyager->str = ft_strdup(environ[i]);
-					}
-				}
-				voyager = voyager->next;
-			}
-			voyager = g_svar;
-		}
-		++i;
-	}
-	return (0);
-}
-
-char				*get_prompt_value(void)
-{
-	int				i;
-	int				j;
-	char			*ret;
-	struct s_svar	*voyager;
+	int		i;
+	int		j;
+	char	*ret;
 
 	i = 0;
 	j = 0;
+	if (!(ret = (char*)ft_memalloc(sizeof(char)
+	* (ft_strplen(str) + 1))))
+		return (0);
+	while (str[i])
+	{
+		if (str[i] == '\033')
+		{
+			while (str[i] != 'm')
+				++i;
+			++i;
+		}
+		if (ft_isprint(str[i]))
+			ret[j++] = str[i];
+		++i;
+		if (str[i] == ' ')
+			break ;
+	}
+	return (ret);
+}
+
+char			*get_prompt_value(void)
+{
+	struct s_svar	*voyager;
+
 	voyager = g_svar;
 	while (voyager)
 	{
 		if (!(ft_strcmp(voyager->key, PS1)))
-		{
-			if (!(ret = (char*)ft_memalloc(sizeof(char)
-			* (ft_strplen(voyager->value) + 1))))
-				return (0);
-			while (voyager->value[i])
-			{
-				if (voyager->value[i] == '\033')
-				{
-					while (voyager->value[i] != 'm')
-						++i;
-					++i;
-				}
-				if (ft_isprint(voyager->value[i]))
-					ret[j++] = voyager->value[i];
-				++i;
-				if (voyager->value[i] == ' ')
-					break ;
-			}
-			return (ret);
-		}
+			return (ret_prompt_value(voyager->value));
 		voyager = voyager->next;
 	}
 	return (NULL);
