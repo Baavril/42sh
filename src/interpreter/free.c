@@ -95,7 +95,6 @@ int				expand_tree(t_node *node, int fork_builtin)
 	}
 	if (node->f == i_exec)
 	{
-		ft_printf("creating proces from %d...\n", getpid());
 		if (is_a_builtin(node->left.c))
 		{
 			if (!fork_builtin)
