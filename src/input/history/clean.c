@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 14:21:08 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/09 02:22:03 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/09 18:46:36 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 struct s_var	*g_svar;
 
-int		delete_history(t_history *history)
+int			delete_history(t_history *history)
 {
 	t_history	*tmp;
 
@@ -101,11 +101,11 @@ static int	write_history(t_history *history, char *home, int max, int new_hist)
 
 int			delete(t_history *history2, int flag)
 {
-	int			max;
-	int			ret;
-	char			*home;
+	int					max;
+	int					ret;
+	char				*home;
 	static t_history	*history = NULL;
-	static int		new_hist = 0;
+	static int			new_hist = 0;
 
 	if (history == NULL)
 		history = history2;
