@@ -6,17 +6,13 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 18:39:26 by yberramd          #+#    #+#             */
-/*   Updated: 2020/03/08 18:40:03 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/09 23:32:15 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "auto_completion.h"
 
-int						realloc_n;
-
-/*
-** PAS ENCORE FINIT
-*/
+int	realloc_n;
 
 static char		**ft_realloc(char **words)
 {
@@ -59,7 +55,7 @@ static char		*ft_last_back_slash(char *input)
 static char		*ft_add_bslash(int directory, char *d_name)
 {
 	int		i;
-	int 	y;
+	int		y;
 	int		space;
 	char	*tmp;
 
@@ -126,8 +122,8 @@ static int		ft_pointchr(char *str1, char *str2)
 static char		*ft_strdup_bslash(char *input, int length)
 {
 	char	*tmp;
-	int	i;
-	int	y;
+	int		i;
+	int		y;
 
 	i = 0;
 	y = 0;
@@ -143,15 +139,14 @@ static char		*ft_strdup_bslash(char *input, int length)
 	}
 	tmp[y] = '\0';
 	return (tmp);
-
 }
 
 static char		*ft_dirchr(char *input)
 {
 	char	*cur_dir;
 	char	*last_bslash;
-	int	i;
-	int	length;
+	int		i;
+	int		length;
 
 	i = 0;
 	length = 0;
@@ -181,7 +176,7 @@ static char		*ft_dirchr(char *input)
 	return (cur_dir);
 }
 
-char		**ft_path(char *input)
+char			**ft_path(char *input)
 {
 	int				i;
 	char			**words;
@@ -222,7 +217,8 @@ char		**ft_path(char *input)
 					if (ft_strcmp("..", dirent->d_name)
 							&& ft_strcmp(".", dirent->d_name))
 					{
-						if (!(words[i] = ft_add_bslash(dirent->d_type, dirent->d_name)))
+						if (!(words[i] = ft_add_bslash(dirent->d_type,
+								dirent->d_name)))
 						{
 							del_double_char(words);
 							return (NULL);
@@ -232,7 +228,8 @@ char		**ft_path(char *input)
 				}
 				else if (dirent->d_type == 4 || dirent->d_type == 8)
 				{
-					if (!(words[i] = ft_add_bslash(dirent->d_type, dirent->d_name)))
+					if (!(words[i] = ft_add_bslash(dirent->d_type,
+								dirent->d_name)))
 					{
 						del_double_char(words);
 						return (NULL);

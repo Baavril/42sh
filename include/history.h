@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 18:26:13 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/09 02:19:39 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/09 19:43:16 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ int						init_history(t_history *history);
 int						modif_hist(t_history **history, int max);
 int						delete_history(t_history *history);
 
-int						assign_file_history(int fd, t_history *history, int max, char *home);
+int						assign_file_history(int fd, t_history *history,
+							int max, char *home);
 int						ft_swap_2(t_history **history, char *cmd);
 int						get_first(t_history **history, char **cmd);
 int						get_last(t_history **history, char **cmd);

@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/09 02:42:18 by yberramd         ###   ########.fr        #
+#    Updated: 2020/05/09 23:34:57 by yberramd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,10 @@ SOURCES			:=		transversal/program/main.c \
 						input/update_buffer.c \
 						input/auto_completion/auto_completion.c \
 						input/auto_completion/tst.c \
+						input/auto_completion/binary.c \
+						input/auto_completion/env_var.c \
+						input/auto_completion/assign_binary.c \
+						input/auto_completion/create_binary.c \
 						input/auto_completion/path.c \
 						input/termcaps/termcaps.c \
 						input/history/history.c \
