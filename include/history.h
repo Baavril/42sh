@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hisotry.h                                          :+:      :+:    :+:   */
+/*   history.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 18:26:13 by yberramd          #+#    #+#             */
-/*   Updated: 2020/02/29 19:47:31 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/09 02:19:39 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ enum {
 	LAST,
 	RESET,
 	SWAP,
+	NEW_HIST,
 };
 
 enum {
@@ -66,13 +67,19 @@ typedef struct			s_history
 }						t_history;
 
 int						history(int flag, char **line, char **cmd);
-int						init_history(t_history *history, char **home);
+int						init_history(t_history *history);
+int						modif_hist(t_history **history, int max);
+int						delete_history(t_history *history);
+
+int						assign_file_history(int fd, t_history *history, int max, char *home);
 int						ft_swap_2(t_history **history, char *cmd);
 int						get_first(t_history **history, char **cmd);
 int						get_last(t_history **history, char **cmd);
 int						get_next(t_history **history, char **cmd);
 int						get_previous(t_history **history, char **cmd);
-int						delete(t_history *history, char *home);
+int						new_history(t_history **history);
+int						assign_max_home(int *max, char **home);
+int						delete(t_history *history, int flag);
 int						s_exclamation(char **line, t_history *history, int *ret,
 																	char *cmd);
 int						ft_isseparator(char *str);

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "history.h"
 #include "builtins.h"
 #include "shell_variables.h"
 #include "expansions.h"
@@ -24,14 +25,10 @@ extern int	g_retval;
 
 int		i_prefix(t_elem left, t_elem right)
 {
-	char	*token;
-
-	if (!(token = ft_strdup(left.c)))
-		return (0);
-	expansions_treatment(&(token));
-	if (checkvarlst(token))
-		setenvnod(newnodshell(token, 0));
-	ft_strdel(&token);
+	if (ft_strfchr("HISTFILE=", left.c) == 1)
+		history(NEW_HIST, NULL, NULL);
+	if (checkvarlst(left.c))
+		setenvnod(newnodshell(left.c, 0));
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
 	return (0);
@@ -57,7 +54,12 @@ int		i_exec(t_elem left, t_elem right)
 	g_argv[0] = left.c;
 	g_argv[1] = NULL;
 	if (!right.v || right.v->f(right.v->left, right.v->right) != -1)
-		execve(g_argv[0], g_argv, environ);
+	{
+		if (is_a_builtin(g_argv[0]))
+			ft_clean_exit(NULL, builtins_dispatcher(g_argv));
+		else
+			execve(g_argv[0], g_argv, environ);
+	}
 	free(g_argv);
 	g_retval = 1;
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 08:40:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/09 17:06:08 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/08 15:58:47 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int				astdel(t_node *node)
 	if (node->left.c || node->left.v)
 	{
 		if (node_type & 0b10)
-			ft_strdel(&(node->left.c));
+			free(node->left.c);
 		else
 			astdel(node->left.v);
 		node->left.c = NULL;
@@ -60,7 +60,7 @@ int				astdel(t_node *node)
 	if (node->right.c || node->right.v)
 	{
 		if (node_type & 0b01)
-			ft_strdel(&(node->right.c));
+			free(node->right.c);
 		else
 			astdel(node->right.v);
 		node->right.c = NULL;
@@ -87,6 +87,7 @@ void				process_heredoc(char **area)
 		ft_init_cursor(&cursor);
 		mkprompt_quote("\'", &(cursor.prompt), &(cursor.prompt_len));
 		get_stdin(&cursor, &line);
+		expansions_treatment(area, 1);
 		write(1, "\n", 1);
 	}
 	set_termcaps(TC_RESTORE);
@@ -99,26 +100,39 @@ int				expand_tree(t_node *node, int fork_builtin)
 	if (!node)
 		return (1);
 	node_type = shape(node);
+	if (node->f == i_pipe_sequence)
+	{
+		ft_printf("pipe!\n");
+		fork_builtin = 1;
+	}
 	if (node->left.c || node->left.v)
 	{
 		if ((node_type & 0b10) && !(curjob_cat(node->left.c)))
-			expansions_treatment(&(node->left.c));
+			expansions_treatment(&(node->left.c), 0);
 		else
-			expand_tree(node->left.v);
+			expand_tree(node->left.v, fork_builtin);
 	}
 	curjob_add(node);
 	if (node->right.c || node->right.v)
 	{
 		if ((node_type & 0b01) && !(curjob_cat(node->right.c)))
-			expansions_treatment(&(node->right.c));
+		{
+			expansions_treatment(&(node->right.c), 0);
 			if (node->f == i_dless)
 				process_heredoc(&(node->right.c));
 		}
 		else
-			expand_tree(node->right.v);
+			expand_tree(node->right.v, fork_builtin);
 	}
 	if (node->f == i_exec)
-		if (is_a_builtin(node->left.c) || eval_command(&node->left.c))
+	{
+		if (is_a_builtin(node->left.c))
+		{
+			if (!fork_builtin)
+				node->f = i_builtin;
+		}
+		else if (eval_command(&node->left.c))
 			node->f = i_builtin;
+	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/04 15:22:51 by bprunevi          #+#    #+#              #
-#    Updated: 2020/05/08 13:29:16 by user42           ###   ########.fr        #
+#    Updated: 2020/05/09 17:41:28 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,7 @@ SOURCES			:=		transversal/program/main.c \
 						input/history/history.c \
 						input/history/history_search.c \
 						input/history/init_history.c \
+						input/history/new_history.c \
 						input/history/mv_history.c \
 						input/history/clean.c \
 						input/history/exclamation.c \
