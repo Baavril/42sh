@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 14:21:08 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/09 02:22:03 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/09 18:03:34 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 struct s_var	*g_svar;
 
-int		delete_history(t_history *history)
+int				delete_history(t_history *history)
 {
 	t_history	*tmp;
 
@@ -35,7 +35,7 @@ int		delete_history(t_history *history)
 	return (1);
 }
 
-static int	w_history(const char *line, int fd)
+static int		w_history(const char *line, int fd)
 {
 	int	len;
 
@@ -53,7 +53,7 @@ static int	w_history(const char *line, int fd)
 	return (1);
 }
 
-static int	mv_hist(t_history **history, int new_hist, int max)
+static int		mv_hist(t_history **history, int new_hist, int max)
 {
 	int	len;
 	int	ret;
@@ -78,7 +78,8 @@ static int	mv_hist(t_history **history, int new_hist, int max)
 	return (1);
 }
 
-static int	write_history(t_history *history, char *home, int max, int new_hist)
+static int		write_history(t_history *history, char *home, int max,
+																int new_hist)
 {
 	int	fd;
 	int	ret;
@@ -99,13 +100,13 @@ static int	write_history(t_history *history, char *home, int max, int new_hist)
 	return (1);
 }
 
-int			delete(t_history *history2, int flag)
+int				delete(t_history *history2, int flag)
 {
-	int			max;
-	int			ret;
-	char			*home;
+	int					max;
+	int					ret;
+	char				*home;
 	static t_history	*history = NULL;
-	static int		new_hist = 0;
+	static int			new_hist = 0;
 
 	if (history == NULL)
 		history = history2;

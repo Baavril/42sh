@@ -6,19 +6,19 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 08:40:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/08 15:58:47 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/09 17:49:00 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "parser.h"
+#include <unistd.h>
 #include "expansions.h"
+#include "termcaps.h"
 #include "builtins.h"
 #include "curjob.h"
 #include "prompt.h"
+#include "parser.h"
 #include "input.h"
-#include "termcaps.h"
-#include <unistd.h>
+#include "libft.h"
 
 int				shape(t_node *node)
 {
@@ -69,10 +69,10 @@ int				astdel(t_node *node)
 	return (0);
 }
 
-void				process_heredoc(char **area)
+void			process_heredoc(char **area)
 {
-	char *name;
-	char *line;
+	char		*name;
+	char		*line;
 	t_cursor	cursor;
 
 	name = *area;
@@ -91,7 +91,7 @@ void				process_heredoc(char **area)
 		write(1, "\n", 1);
 	}
 	set_termcaps(TC_RESTORE);
-}	
+}
 
 int				expand_tree(t_node *node, int fork_builtin)
 {
@@ -101,10 +101,7 @@ int				expand_tree(t_node *node, int fork_builtin)
 		return (1);
 	node_type = shape(node);
 	if (node->f == i_pipe_sequence)
-	{
-		ft_printf("pipe!\n");
 		fork_builtin = 1;
-	}
 	if (node->left.c || node->left.v)
 	{
 		if ((node_type & 0b10) && !(curjob_cat(node->left.c)))

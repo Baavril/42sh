@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 12:09:54 by user42            #+#    #+#             */
-/*   Updated: 2020/05/08 12:31:28 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/09 18:02:40 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 #include "libft.h"
 
 extern char	*g_progname;
-static void	ft_printenv()
+
+static void	ft_printenv(void)
 {
 	extern char		**environ;
 
 	ft_print_tables(environ);
 }
+
 int			cmd_setenv(int ac, char **av)
 {
 	char	*value;

@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 12:42:49 by user42            #+#    #+#             */
-/*   Updated: 2020/05/08 14:44:31 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/09 17:57:08 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static int		ft_construct_tmp_env(char **av, int cmd)
 	return (0);
 }
 
-static int	ft_cmd_start(char **av)
+static int		ft_cmd_start(char **av)
 {
 	int		i;
 
@@ -98,7 +98,7 @@ static int	ft_cmd_start(char **av)
 	return (i);
 }
 
-int		cmd_env(int ac, char **av)
+int				cmd_env(int ac, char **av)
 {
 	extern char **environ;
 	char		**save_env;

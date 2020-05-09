@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 11:25:19 by user42            #+#    #+#             */
-/*   Updated: 2020/05/08 12:22:07 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/09 17:57:40 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ int			cmd_unsetenv(int ac, char **av)
 	{
 		if (ft_unsetenv(av[1]) == -1)
 			ft_dprintf(STDERR_FILENO,
-						"%s: unsetenv: %s: No such variable in environnement.\n",
+					"%s: unsetenv: %s: No such variable in environnement.\n",
 												g_progname, av[1]);
 		return (0);
 	}
 	if (ac < 2)
 		ft_dprintf(STDERR_FILENO,
-						"%s: unsetenv: %s: Too few arguments.",
+					"%s: unsetenv: %s: Too few arguments.",
 												g_progname, av[1]);
 	return (1);
 }
