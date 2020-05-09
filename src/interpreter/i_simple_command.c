@@ -25,16 +25,10 @@ extern int	g_retval;
 
 int		i_prefix(t_elem left, t_elem right)
 {
-	char	*token;
-
-	if (!(token = ft_strdup(left.c)))
-		return (0);
-	if (ft_strfchr("HISTFILE=", token) == 1)
+	if (ft_strfchr("HISTFILE=", left.c) == 1)
 		history(NEW_HIST, NULL, NULL);
-	expansions_treatment(&(token), 0);
-	if (checkvarlst(token))
-		setenvnod(newnodshell(token, 0));
-	ft_strdel(&token);
+	if (checkvarlst(left.c))
+		setenvnod(newnodshell(left.c, 0));
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
 	return (0);
