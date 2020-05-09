@@ -41,7 +41,7 @@ int						set_termcaps(int arg)
 	{
 		term = input_termcaps(term);
 		tmp = ft_getenv("TERM");
-		if (tgetent(NULL, tmp) != 1)
+		if (tgetent(NULL, tmp ? tmp : "dumb") != 1)
 		{
 			ft_strdel(&tmp);
 			return (1);
