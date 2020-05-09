@@ -31,7 +31,7 @@ int		i_prefix(t_elem left, t_elem right)
 		return (0);
 	if (ft_strfchr("HISTFILE=", token) == 1)
 		history(NEW_HIST, NULL, NULL);
-	expansions_treatment(&(token));
+	expansions_treatment(&(token), 0);
 	if (checkvarlst(token))
 		setenvnod(newnodshell(token, 0));
 	ft_strdel(&token);

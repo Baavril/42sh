@@ -87,6 +87,7 @@ void				process_heredoc(char **area)
 		ft_init_cursor(&cursor);
 		mkprompt_quote("\'", &(cursor.prompt), &(cursor.prompt_len));
 		get_stdin(&cursor, &line);
+		expansions_treatment(area, 1);
 		write(1, "\n", 1);
 	}
 	set_termcaps(TC_RESTORE);
@@ -107,7 +108,7 @@ int				expand_tree(t_node *node, int fork_builtin)
 	if (node->left.c || node->left.v)
 	{
 		if ((node_type & 0b10) && !(curjob_cat(node->left.c)))
-			expansions_treatment(&(node->left.c));
+			expansions_treatment(&(node->left.c), 0);
 		else
 			expand_tree(node->left.v, fork_builtin);
 	}
@@ -116,7 +117,7 @@ int				expand_tree(t_node *node, int fork_builtin)
 	{
 		if ((node_type & 0b01) && !(curjob_cat(node->right.c)))
 		{
-			expansions_treatment(&(node->right.c));
+			expansions_treatment(&(node->right.c), 0);
 			if (node->f == i_dless)
 				process_heredoc(&(node->right.c));
 		}

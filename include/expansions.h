@@ -107,7 +107,7 @@ typedef struct		s_rev
 	char			*tmp1;
 }					t_rev;
 
-int					expansions_treatment(char **tokens);
+int					expansions_treatment(char **tokens, int flag);
 int					expansions_launcher(t_expand *vars, int expand);
 char				*expansions_management(char **tokens, int expand);
 

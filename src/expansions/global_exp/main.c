@@ -68,15 +68,15 @@ static int	expansions_quoted_treatment(char **tokens, char **splitok)
 	return (0);
 }
 
-int			expansions_treatment(char **tokens)
+int			expansions_treatment(char **tokens, int flag)
 {
 	char **splitok;
 
 	splitok = NULL;
-	if (**tokens == TILDE)
+	if (!flag && **tokens == TILDE)
 		tilde_exp(tokens);
-	if (*tokens && (ft_isin(DQUOTES, *tokens)
-	|| ft_isin(SQUOTES, *tokens)))
+	if (!flag && (*tokens && ((ft_isin(DQUOTES, *tokens))
+	|| ft_isin(SQUOTES, *tokens))))
 	{
 		expansions_quoted_treatment(tokens, splitok);
 		free_quoted_token_lst();
