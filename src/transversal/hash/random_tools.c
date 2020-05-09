@@ -23,7 +23,7 @@ unsigned int		ft_random_get(void)
 	if (curr % LIST_SIZE == 0)
 	{
 		curr = 0;
-		fd = open("/dev/random", O_RDONLY);
+		fd = open("/dev/urandom", O_RDONLY);
 		read(fd, nums, sizeof(unsigned int) * LIST_SIZE);
 		close(fd);
 	}
