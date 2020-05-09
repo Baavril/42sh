@@ -12,6 +12,7 @@
 
 #include "libft.h"
 #include "input.h"
+#include "termcaps.h"
 
 #include <unistd.h>
 #include <term.h>
@@ -93,8 +94,7 @@ int				display(char *str, t_cursor *c)
 	int			backup;
 	static int	lines_offset = 0;
 
-	if (tgetent(NULL, getenv("TERM")) != 1)
-		return (1);
+	set_termcaps(TC_INPUT);
 	x = 0;
 	col = tgetnum("co");
 	backup = c->end;
