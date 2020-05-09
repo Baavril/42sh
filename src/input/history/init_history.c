@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 13:50:19 by yberramd          #+#    #+#             */
-/*   Updated: 2020/03/08 19:30:07 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/09 02:29:49 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ static int	init_clean(int fd, char **get_line, char *home)
 	return (1);
 }
 
-static int	assign_file_history(int fd, t_history *history, int max, char *home)
+int		assign_file_history(int fd, t_history *history, int max, char *home)
 {
 	int		len;
-	char		*get_line;
+	char	*get_line;
 
 	len = 0;
 	get_line = NULL;
@@ -63,23 +63,12 @@ int			init_history(t_history *history)
 {
 	int		fd;
 	int		max;
-	char		*nbr;
-	char		*home;
+	char	*home;
 
-	if (!(nbr = getshvar(HISTSIZE)))
-	{
-		ft_dprintf(2, "cannot allocate memory\n");
+	if (assign_max_home(&max, &home) == 0)
 		return (0);
-	}
-	max = ft_atoi(nbr);
-	ft_strdel(&nbr);
-	if (!(home = getshvar(HISTFILE)))
-	{
-		ft_dprintf(2, "cannot allocate memory\n");
-		return (0);
-	}
 	if (home[0] != '\0' && (fd = open(home, O_RDONLY | O_CREAT, 0600)) != -1)
-		return (assign_file_history(fd, history, max, home));
+		return(assign_file_history(fd, history, max, home));
 	if (home == NULL || home[0] != '\0')
 	{
 		ft_dprintf(2, "history: can't open %s\n", home);

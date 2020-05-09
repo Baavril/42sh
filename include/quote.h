@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 15:48:33 by bprunevi          #+#    #+#             */
-/*   Updated: 2019/09/29 11:20:01 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/05/08 16:37:51 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # define ERR		0
 # define NO_ERR		1
 # define ESC_NL		2
-
 
 void		ft_lst_strdel(void *content, size_t content_size);
 int			quote_prompt(t_list **unclosed_inhib, char *command);
