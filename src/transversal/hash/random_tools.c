@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 21:48:28 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/13 21:52:08 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/05/09 15:46:08 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ unsigned int		ft_random_get(void)
 	if (curr % LIST_SIZE == 0)
 	{
 		curr = 0;
-		fd = open("/dev/random", O_RDONLY);
+		fd = open("/dev/urandom", O_RDONLY);
 		read(fd, nums, sizeof(unsigned int) * LIST_SIZE);
 		close(fd);
 	}
