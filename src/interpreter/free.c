@@ -71,6 +71,7 @@ int				astdel(t_node *node)
 
 void				process_heredoc(char **area)
 {
+	extern char *g_input;
 	char *name;
 	char *line;
 	char *buff;
@@ -95,8 +96,11 @@ void				process_heredoc(char **area)
 			write(1, "\n", 1);
 		}
 	}
-	ft_strdel(&name);
 	ft_strdel(&line);
+	line = g_input;
+	g_input = ft_strnjoin(4, g_input, "\n", *area, name);
+	ft_strdel(&line);
+	ft_strdel(&name);
 	set_termcaps(TC_RESTORE);
 }	
 
