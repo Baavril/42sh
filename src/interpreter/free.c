@@ -75,18 +75,17 @@ void			process_heredoc(char **area)
 	char		*line;
 	t_cursor	cursor;
 
-	name = *area;
+	name = ft_strjoinfree(*area, ft_strdup("\n"));
 	*area = ft_strdup("");
 	line = ft_strdup("");
 	set_termcaps(TC_INPUT);
 	while (!line || !name || ft_strcmp(line, name))
 	{
 		*area = ft_strjoinfree(*area, line);
-		if (**area)
-			*area = ft_strjoinfree(*area, ft_strdup("\n"));
 		ft_init_cursor(&cursor);
 		mkprompt_quote("\'", &(cursor.prompt), &(cursor.prompt_len));
 		get_stdin(&cursor, &line);
+		line = ft_strjoinfree(line, ft_strdup("\n"));
 		expansions_treatment(&line, 1);
 		write(1, "\n", 1);
 	}
