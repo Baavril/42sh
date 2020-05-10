@@ -18,9 +18,9 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-static char	*ft_dupslash(char **tokens, int j, int i, int ret)
+static char	*dup_slash(char **tokens, int j, int i, int ret)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = NULL;
 	if (i > 0)
@@ -43,28 +43,48 @@ static char	*ft_dupslash(char **tokens, int j, int i, int ret)
 	return (tmp);
 }
 
-char		*ft_set_slashed(char **tokens)
+static char	*dup_hdc_slash(char **tokens, int j, int i)
+{
+	char	*tmp;
+
+	tmp = NULL;
+	if (i > 0)
+	{
+		tmp = ft_strdup((*tokens) + (i - j));
+		ft_strdel(tokens);
+		return (tmp);
+	}
+	tmp = ft_strdup(*tokens);
+	ft_strdel(tokens);
+	return (tmp);
+}
+
+char		*set_slash(char **tokens, int flag)
 {
 	int	i;
 	int	j;
 	int	ret;
+	int	exp;
 
 	i = 0;
 	j = 0;
 	ret = 0;
+	exp = ft_isin(DOLLAR, *tokens);
 	while (*((*tokens) + i) && *((*tokens) + i) == BSLASH)
 		++i;
 	j = i;
 	if (j % 2)
 	{
-		j--;
+		j = (flag && !exp) ? j + 1 : j - 1;
 		ret = -1;
 	}
 	j /= 2;
-	return (ft_dupslash(tokens, j, i, ret));
+	if (flag && !exp && ret == -1)
+		return (dup_hdc_slash(tokens, j, i));
+	return (dup_slash(tokens, j, i, ret));
 }
 
-int			ft_back_slashed(char **tokens)
+int			back_slashed(char **tokens)
 {
 	int	i;
 	int	j;
@@ -74,13 +94,11 @@ int			ft_back_slashed(char **tokens)
 	j = 0;
 	ret = 0;
 	while (*((*tokens) + i) && *((*tokens) + i) == BSLASH)
-	{
 		++i;
-	}
 	j = i;
 	if (j % 2)
 	{
-		j--;
+		--j;
 		ret = -1;
 	}
 	j /= 2;
@@ -89,7 +107,7 @@ int			ft_back_slashed(char **tokens)
 	return (ret);
 }
 
-char		*ft_setbslash(char *tokens, int nb)
+char		*set_back_slash(char *tokens, int nb)
 {
 	int		i;
 	char	*tmp;

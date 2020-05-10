@@ -44,7 +44,8 @@ char				**ft_binary(t_tst *tst, char *input);
 char				**create_binary(char **path_dir);
 int					go_to_char(t_tst **tst, char *input);
 int					ft_env_var(char *input, int dollar, char ***words);
-int					assign_words(t_tst *tst, char **words, char *input, int len);
+int					assign_words(t_tst *tst, char **words, char *input,
+																	int len);
 int					del_tst(t_tst *tst);
 int					search_tst(t_tst *tst, char *str);
 int					ft_auto_completion(t_tst *tst, char *input, char ***words,
