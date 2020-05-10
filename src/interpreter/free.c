@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 08:40:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/10 15:02:43 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/10 15:11:11 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ int				astdel(t_node *node)
 
 void			process_heredoc(char **area)
 {
-	char *name;
-	char *line;
-	char *buff;
+	char		*name;
+	char		*line;
+	char		*buff;
 	t_cursor	cursor;
 
 	name = ft_strjoinfree(*area, ft_strdup("\n"));
@@ -84,7 +84,7 @@ void			process_heredoc(char **area)
 	{
 		*area = ft_strjoinfree(*area, line);
 		line = ft_strdup("");
-		while(!*line || line[ft_strlen(line) - 1] != '\n')
+		while (!*line || line[ft_strlen(line) - 1] != '\n')
 		{
 			ft_init_cursor(&cursor);
 			mkprompt_quote("\'", &(cursor.prompt), &(cursor.prompt_len));
