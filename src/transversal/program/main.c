@@ -38,6 +38,7 @@ int					g_retval;
 extern int			g_mode;
 extern int			g_alias_treated;
 struct termios		g_old_termios;
+char			*g_input;
 
 static int	set_minimal_env(void)
 {
@@ -106,26 +107,25 @@ char *parse_argv(int argc, char **argv)
 
 int			main(int argc, char **argv)
 {
-	char			*input;
 	int				status;
 
 	g_progname = argv[0];
-	input = parse_argv(argc, argv);
+	g_input = parse_argv(argc, argv);
 	if (ft_shell_init() == e_cannot_allocate_memory)
 		return (alloc_error());
-	while ( (argc > 0) && ((input != NULL && (argc = -1))
-						|| (argc == 1 && !read_command(&input))
-						|| get_next_line(0, &input)))
+	while ( (argc > 0) && ((g_input != NULL && (argc = -1))
+						|| (argc == 1 && !read_command(&g_input))
+						|| get_next_line(0, &g_input)))
 	{
 		g_alias_treated = 0;
-		if (!(status = history(ADD_CMD, &input, NULL)))
-			return (alloc_error());
-		if (status != -1 && input[0])
-			execute(input);
+		if (status != -1 && g_input[0])
+			execute(g_input);
 		ft_check_bgstatus();
 		if (g_mode & FORK_SHELL)
 			break ;
-		ft_strdel(&input);
+		if (!(status = history(ADD_CMD, &g_input, NULL)))
+			return (alloc_error());
+		ft_strdel(&g_input);
 		update_intern_vars();
 		if (getppid() != g_ppid)
 			break ;
