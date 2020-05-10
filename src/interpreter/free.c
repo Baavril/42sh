@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 08:40:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/09 17:49:00 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/10 15:02:43 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,24 +71,32 @@ int				astdel(t_node *node)
 
 void			process_heredoc(char **area)
 {
-	char		*name;
-	char		*line;
+	char *name;
+	char *line;
+	char *buff;
 	t_cursor	cursor;
 
 	name = ft_strjoinfree(*area, ft_strdup("\n"));
-	*area = ft_strdup("");
 	line = ft_strdup("");
+	*area = ft_strdup("");
 	set_termcaps(TC_INPUT);
-	while (!line || !name || ft_strcmp(line, name))
+	while (ft_strcmp(line, name))
 	{
 		*area = ft_strjoinfree(*area, line);
-		ft_init_cursor(&cursor);
-		mkprompt_quote("\'", &(cursor.prompt), &(cursor.prompt_len));
-		get_stdin(&cursor, &line);
-		line = ft_strjoinfree(line, ft_strdup("\n"));
-		expansions_treatment(&line, 1);
-		write(1, "\n", 1);
+		line = ft_strdup("");
+		while(!*line || line[ft_strlen(line) - 1] != '\n')
+		{
+			ft_init_cursor(&cursor);
+			mkprompt_quote("\'", &(cursor.prompt), &(cursor.prompt_len));
+			get_stdin(&cursor, &buff);
+			buff = ft_strjoinfree(buff, ft_strdup("\n"));
+			expansions_treatment(&buff, 1);
+			line = ft_strjoinfree(line, buff);
+			write(1, "\n", 1);
+		}
 	}
+	ft_strdel(&name);
+	ft_strdel(&line);
 	set_termcaps(TC_RESTORE);
 }
 
