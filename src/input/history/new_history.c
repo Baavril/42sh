@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 21:13:34 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/09 18:44:18 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/10 19:53:44 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,11 @@ int			assign_max_home(int *max, char **home)
 	char	*nbr;
 
 	if (!(nbr = getshvar(HISTSIZE)))
-	{
-		ft_dprintf(2, "cannot allocate memory\n");
 		return (0);
-	}
 	*max = ft_atoi(nbr);
 	ft_strdel(&nbr);
 	if (!(*home = getshvar(HISTFILE)))
-	{
-		ft_dprintf(2, "cannot allocate memory\n");
 		return (0);
-	}
 	return (1);
 }
 
