@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 16:00:13 by yberramd          #+#    #+#             */
-/*   Updated: 2020/02/29 16:00:45 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/10 15:12:36 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,28 @@ static int	add_exclamation_string(int ret, char **line, char *cmd, int i)
 	return (1);
 }
 
+static int	ft_simple_quote(char **line, int i, int b)
+{
+	if ((*line)[i] == '\'')
+		b ^= 1;
+	return (b);
+}
+
 int			s_exclamation(char **line, t_history *history, int *ret, char *cmd)
 {
 	int		i;
-	int		a;
+	int		b;
+	int		q;
 
-	a = 0;
+	b = 0;
+	q = 0;
 	i = 0;
 	while ((*line)[i] != '\0')
 	{
-		a = brackets(line, i, a);
+		b = brackets(line, i, b);
+		q = ft_simple_quote(line, i, q);
 		if ((*line)[i] == '!' && (*line)[i + 1] != '\0'
-				&& !ft_isseparator(&(*line)[i + 1]) && a == 0)
+				&& !ft_isseparator(&(*line)[i + 1]) && b == 0 && q == 0)
 		{
 			if ((*ret = exclamation_point(&line[0][i], history, &cmd)) != -1)
 			{
@@ -75,6 +85,8 @@ int			s_exclamation(char **line, t_history *history, int *ret, char *cmd)
 				break ;
 			}
 		}
+		if ((*line)[i] == '\\')
+			i++;
 		i++;
 	}
 	return (1);

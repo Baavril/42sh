@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 13:53:47 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/08 01:53:11 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/10 17:05:03 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	add_history(const char *line, t_history *history)
 	return (1);
 }
 
-static int	add_cmd(const char *line, t_history *history)
+static int	add_cmd(char *line, t_history *history)
 {
 	int len;
 
@@ -59,7 +59,7 @@ static int	add_cmd(const char *line, t_history *history)
 	return (0);
 }
 
-static int	history_cmd(char **line, t_history *history)
+static int	init_exclamation(char **line, t_history *history)
 {
 	int		ret;
 	char	*cmd;
@@ -70,8 +70,6 @@ static int	history_cmd(char **line, t_history *history)
 		return (0);
 	if (ret == 2 && *line)
 		ft_printf("%s\n", *line);
-	if (ret != -1)
-		add_cmd(*line, history);
 	return (ret);
 }
 
@@ -116,10 +114,12 @@ int			history(int flag, char **line, char **cmd)
 	if (flag == DELETE || flag == NEW_HIST)
 		return (delete(&history, flag));
 	if (flag == ADD_CMD)
-		return (history_cmd(line, &history));
+		return (add_cmd(*line, &history));
 	if (flag == SEARCH || flag == RESET)
 		return (ft_search(&history, *line, cmd, flag));
 	if (flag == HISTORY_SEARCH)
 		return (search_history(&history, *line, cmd));
+	if (flag == EXCLAMATION)
+		return (init_exclamation(line, &history));
 	return (0);
 }
