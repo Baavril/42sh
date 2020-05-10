@@ -60,8 +60,7 @@ int				get_stdin(t_cursor *cursor, char **buff)
 	int			ret;
 	union u_tc	term;
 
-	if (ft_init_tab() == 1)
-		return (1);
+	init_key_tab();
 	g_inside_history = NULL;
 	*buff = ft_strdup("");
 	ft_bzero(term.buff, COUNT_KEY + 1);

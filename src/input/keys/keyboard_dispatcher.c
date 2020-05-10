@@ -55,10 +55,11 @@ static char		*g_keylist[] = {
 		NULL
 };
 
-int		init_tab(void)
+int		init_key_tab(void)
 {
-	char *buff;
-	int i;
+	int		i;
+	char	*buff;
+
 	i = 0;
 	buff = NULL;
 	while (g_keylist[i])
