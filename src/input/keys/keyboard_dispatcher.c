@@ -86,7 +86,6 @@ int		keyboard_dispatcher(union u_tc *term, char **buff, t_cursor *cursor)
 		i = 0;
 		while (g_dispatch_keys[i].key_path != NULL)
 		{
-		ft_printf("%s\n", g_dispatch_keys[i].key_path);	
 			if (ft_strncmp(g_dispatch_keys[i].key_path, &term->buff[2],
 								ft_strlen(g_dispatch_keys[i].key_path)) == 0)
 			{
