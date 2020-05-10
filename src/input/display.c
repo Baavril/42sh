@@ -68,7 +68,7 @@ static int		display_all(char *str, t_cursor *cursor)
 	ft_putstr(cursor->prompt);
 	if (cursor->in == SIZE_MAX || cursor->in > cursor->end)
 		ft_putnstr(str, cursor->end);
-	else
+	else if (str)
 		display_select(str, cursor);
 	if (!((cursor->end + cursor->prompt_len) % col) && cursor->prompt_len)
 		write(1, "\n", 1);
@@ -80,7 +80,7 @@ static void		place_cursor(char *str, int col, int prompt_len, int start)
 	int	rtn;
 
 	rtn = 0;
-	while (start && *(str + --start) != '\n')
+	while (start && str && *(str + --start) != '\n')
 		rtn++;
 	if (!start)
 		rtn += prompt_len;
@@ -102,7 +102,7 @@ int				display(char *str, t_cursor *c)
 			+ col * tgetnum("li") - c->prompt_len - 1)
 		c->end = c->start - (c->start % col)
 			+ col * tgetnum("li") - c->prompt_len - 1;
-	if (lines_offset < 0 || (c->end == c->start && c->end == 0))
+	if (!str)
 		lines_offset = c->prompt_len / col;
 	while (lines_offset-- > 0)
 		ft_putstr(tgetstr("up", NULL));
