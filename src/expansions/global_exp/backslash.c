@@ -50,7 +50,7 @@ static char	*dup_hdc_slash(char **tokens, int j, int i)
 	tmp = NULL;
 	if (i > 0)
 	{
-		if (i == 1)
+		if (i == 1 && (*tokens)[1] == '\n')
 		{
 			ft_strdel(tokens);
 			return (ft_strdup(EMPTY_STR));
