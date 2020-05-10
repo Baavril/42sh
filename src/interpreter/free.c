@@ -87,7 +87,7 @@ void			process_heredoc(char **area)
 		ft_init_cursor(&cursor);
 		mkprompt_quote("\'", &(cursor.prompt), &(cursor.prompt_len));
 		get_stdin(&cursor, &line);
-		expansions_treatment(area, 1);
+		expansions_treatment(&line, 1);
 		write(1, "\n", 1);
 	}
 	set_termcaps(TC_RESTORE);
