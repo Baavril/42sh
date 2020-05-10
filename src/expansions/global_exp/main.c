@@ -40,7 +40,7 @@ static int	quoted_linker(char **tokens, char **splitok)
 
 	tmp_to_free = ft_strdup(*tokens);
 	ft_strdel(&(*tokens));
-	tmp_to_free_2 = expansions_management(splitok, g_quoted->expand);
+	tmp_to_free_2 = expansions_management(splitok, g_quoted->expand, 0);
 	*tokens = ft_strjoin(tmp_to_free, tmp_to_free_2);
 	ft_strdel(&tmp_to_free);
 	ft_strdel(&tmp_to_free_2);
@@ -59,7 +59,7 @@ static int	expansions_quoted_treatment(char **tokens, char **splitok)
 		if (!(splitok = ft_expsplit(g_quoted->token, DOLLAR)))
 			return (ERROR);
 		if (*tokens == NULL)
-			*tokens = expansions_management(splitok, g_quoted->expand);
+			*tokens = expansions_management(splitok, g_quoted->expand, 0);
 		else
 			quoted_linker(tokens, splitok);
 		g_quoted = g_quoted->next;
@@ -86,7 +86,7 @@ int			expansions_treatment(char **tokens, int flag)
 		if (!(splitok = ft_expsplit(*tokens, DOLLAR)))
 			return (ERROR);
 		ft_strdel(tokens);
-		*tokens = expansions_management(splitok, 0);
+		*tokens = expansions_management(splitok, 0, flag);
 	}
 	return (SUCCESS);
 }
