@@ -74,7 +74,7 @@ static void			expand_tree_function(t_node *node, int data)
 	{
 		if (is_a_builtin(node->left.c))
 		{
-			if (!data)
+			if (!(data & 0b001))
 				node->f = i_builtin;
 		}
 		else if (eval_command(&node->left.c))
