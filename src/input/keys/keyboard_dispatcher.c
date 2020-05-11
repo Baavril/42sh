@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   keyboard.c                                         :+:      :+:    :+:   */
+/*   keyboard_dispatcher.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bprunev <bprunev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 12:42:22 by bprunev           #+#    #+#             */
-/*   Updated: 2020/03/01 11:22:57 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/05/11 14:47:15 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,21 @@ t_dispatch_keys		g_dispatch_keys[] =
 	{NULL, &paste_key},
 	{NULL, NULL}
 };
+
 static char		*g_keylist[] = {
-		"kl",
-		"kr",
-		"ku",
-		"kd",
-		"kD",
-		"kh",
-		"kN",
-		"kP",
-		NULL,
-		"F\0",
-		"1;2A",
-		"1;2B",
-		NULL
+	"kl",
+	"kr",
+	"ku",
+	"kd",
+	"kD",
+	"kh",
+	"kN",
+	"kP",
+	NULL,
+	"F\0",
+	"1;2A",
+	"1;2B",
+	NULL
 };
 
 int		init_key_tab(void)

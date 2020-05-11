@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 11:36:54 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/09 17:59:19 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/11 14:48:08 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void			get_heredoc_line(char **line)
 {
 	t_cursor	cursor;
 	char		*buff;
+
 	while (!**line || (*line)[ft_strlen(*line) - 1] != '\n')
 	{
 		ft_init_cursor(&cursor);

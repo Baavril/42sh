@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 12:42:49 by user42            #+#    #+#             */
-/*   Updated: 2020/05/11 14:23:37 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/11 14:47:48 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static int		ft_env_exec(char *to_exec, char **av)
 	if (father == 0)
 	{
 		set_signals(CHILD);
-
 		execve(to_exec, av, environ);
 	}
 	else if (father > 0)
