@@ -70,9 +70,10 @@ int		init_key_tab(void)
 			g_dispatch_keys[i].key_path = NULL;
 		i++;
 	}
+	++i;
 	while (g_keylist[i])
 	{
-		g_dispatch_keys[i].key_path = g_keylist[i];
+		g_dispatch_keys[i - 1].key_path = g_keylist[i];
 		i++;
 	}
 	return (0);
