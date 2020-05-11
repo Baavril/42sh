@@ -6,12 +6,13 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 12:42:49 by user42            #+#    #+#             */
-/*   Updated: 2020/05/09 17:57:08 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/11 14:23:37 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <sys/wait.h>
+#include "sig_handler.h"
 #include "parser.h"
 #include "error.h"
 #include "libft.h"
@@ -26,9 +27,18 @@ static int		ft_env_exec(char *to_exec, char **av)
 
 	father = fork();
 	if (father == 0)
+	{
+		set_signals(CHILD);
+
 		execve(to_exec, av, environ);
+	}
 	else if (father > 0)
+	{
+		setpgid(father, father);
+		tcsetpgrp(STDIN_FILENO, father);
 		wait(&status);
+		tcsetpgrp(STDIN_FILENO, getpid());
+	}
 	ft_setenv("_", av[0]);
 	ft_strdel(&to_exec);
 	return (status);
