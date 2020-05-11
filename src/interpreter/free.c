@@ -20,7 +20,7 @@
 #include "input.h"
 #include "libft.h"
 
-int				shape(t_node *node)
+int					shape(t_node *node)
 {
 	if (node->f == i_less
 	|| node->f == i_dless
@@ -32,17 +32,17 @@ int				shape(t_node *node)
 	|| node->f == i_dlessdash
 	|| node->f == i_clobber
 	|| node->f == i_andgreat)
-		return (0b11);
+		return (0b110);
 	if (node->f == i_prefix
 	|| node->f == i_suffix_word
 	|| node->f == i_builtin
 	|| node->f == i_exec)
-		return (0b10);
+		return (0b100);
 	else
-		return (0b00);
+		return (0b000);
 }
 
-int				astdel(t_node *node)
+int					astdel(t_node *node)
 {
 	int node_type;
 
@@ -51,7 +51,7 @@ int				astdel(t_node *node)
 	node_type = shape(node);
 	if (node->left.c || node->left.v)
 	{
-		if (node_type & 0b10)
+		if (node_type & 0b100)
 			free(node->left.c);
 		else
 			astdel(node->left.v);
@@ -59,7 +59,7 @@ int				astdel(t_node *node)
 	}
 	if (node->right.c || node->right.v)
 	{
-		if (node_type & 0b01)
+		if (node_type & 0b010)
 			free(node->right.c);
 		else
 			astdel(node->right.v);
@@ -69,7 +69,7 @@ int				astdel(t_node *node)
 	return (0);
 }
 
-void			process_heredoc(char **area)
+void				process_heredoc(char **area)
 {
 	char		*name;
 	char		*line;
@@ -77,14 +77,12 @@ void			process_heredoc(char **area)
 	t_cursor	cursor;
 
 	name = ft_strjoinfree(*area, ft_strdup("\n"));
-	line = ft_strdup("");
 	*area = ft_strdup("");
 	set_termcaps(TC_INPUT);
-	while (ft_strcmp(line, name))
+	while (!line || (ft_strcmp(line, name) && !(line = NULL)))
 	{
 		*area = ft_strjoinfree(*area, line);
-		line = ft_strdup("");
-		while (!*line || line[ft_strlen(line) - 1] != '\n')
+		while (!line || line[ft_strlen(line) - 1] != '\n')
 		{
 			ft_init_cursor(&cursor);
 			mkprompt_quote("\'", &(cursor.prompt), &(cursor.prompt_len));
@@ -100,43 +98,43 @@ void			process_heredoc(char **area)
 	set_termcaps(TC_RESTORE);
 }
 
-int				expand_tree(t_node *node, int fork_builtin)
+static void			expand_tree_function(t_node *node, int data)
 {
-	int node_type;
+	if (node->f == i_exec)
+	{
+		if (is_a_builtin(node->left.c))
+		{
+			if (!data)
+				node->f = i_builtin;
+		}
+		else if (eval_command(&node->left.c))
+			node->f = i_builtin;
+	}
+}
 
+void				expand_tree(t_node *node, int data)
+{
 	if (!node)
-		return (1);
-	node_type = shape(node);
-	if (node->f == i_pipe_sequence)
-		fork_builtin = 1;
+		return ;
+	data = shape(node) | (data & 0b001) | (node->f == i_pipe_sequence);
 	if (node->left.c || node->left.v)
 	{
-		if ((node_type & 0b10) && !(curjob_cat(node->left.c)))
+		if ((data & 0b100) && !(curjob_cat(node->left.c)))
 			expansions_treatment(&(node->left.c), 0);
 		else
-			expand_tree(node->left.v, fork_builtin);
+			expand_tree(node->left.v, data);
 	}
 	curjob_add(node);
 	if (node->right.c || node->right.v)
 	{
-		if ((node_type & 0b01) && !(curjob_cat(node->right.c)))
+		if ((data & 0b010) && !(curjob_cat(node->right.c)))
 		{
 			expansions_treatment(&(node->right.c), 0);
 			if (node->f == i_dless)
 				process_heredoc(&(node->right.c));
 		}
 		else
-			expand_tree(node->right.v, fork_builtin);
+			expand_tree(node->right.v, data);
 	}
-	if (node->f == i_exec)
-	{
-		if (is_a_builtin(node->left.c))
-		{
-			if (!fork_builtin)
-				node->f = i_builtin;
-		}
-		else if (eval_command(&node->left.c))
-			node->f = i_builtin;
-	}
-	return (0);
+	expand_tree_function(node, data);
 }

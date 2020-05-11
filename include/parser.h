@@ -76,6 +76,6 @@ int				val_command(char **arg);
 int				open_on_fd(const char *path, int o_flags, mode_t mode,
 																int final_fd);
 int				astdel(t_node *node);
-int				expand_tree(t_node *node, int fork_builtin);
+void			expand_tree(t_node *node, int fork_builtin);
 
 #endif
