@@ -46,8 +46,7 @@ int					ft_env_var(char *input, int dollar, char ***words);
 int					assign_words(t_tst *tst, char **words, char *input,
 int					del_tst(t_tst *tst);
 int					search_tst(t_tst *tst, char *str);
-int					ft_auto_completion(t_tst *tst, char *input, char ***words,
-																	int start);
+int					ft_auto_completion(t_tst *t, char *i, char ***w, int s);
 char				**ft_path(char *input);
 
 #endif
