@@ -105,6 +105,6 @@ int					set_reader(union u_tc *term, char **buff, t_cursor *cursor);
 int					keyboard_enter(union u_tc *term, char **buff,
 															t_cursor *cursor);
 void				update_buff(char **buff, t_cursor *cursor);
-int					ft_init_tab(void);
+int					init_key_tab(void);
 
 #endif

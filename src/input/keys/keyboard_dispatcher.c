@@ -38,31 +38,42 @@ t_dispatch_keys		g_dispatch_keys[] =
 	{NULL, &paste_key},
 	{NULL, NULL}
 };
+static char		*g_keylist[] = {
+		"kl",
+		"kr",
+		"ku",
+		"kd",
+		"kD",
+		"kh",
+		"kN",
+		"kP",
+		NULL,
+		"F\0",
+		"1;2A",
+		"1;2B",
+		NULL
+};
 
-int		ft_init_tab(void)
+int		init_key_tab(void)
 {
-	if (!(g_dispatch_keys[0].key_path = tgetstr("kl", NULL) + 2))
-		return (1);
-	if (!(g_dispatch_keys[1].key_path = tgetstr("kr", NULL) + 2))
-		return (1);
-	if (!(g_dispatch_keys[2].key_path = tgetstr("ku", NULL) + 2))
-		return (1);
-	if (!(g_dispatch_keys[3].key_path = tgetstr("kd", NULL) + 2))
-		return (1);
-	if (!(g_dispatch_keys[4].key_path = tgetstr("kD", NULL) + 2))
-		return (1);
-	if (!(g_dispatch_keys[5].key_path = tgetstr("kh", NULL) + 2))
-		return (1);
-	if (!(g_dispatch_keys[6].key_path = tgetstr("kN", NULL) + 2))
-		return (1);
-	if (!(g_dispatch_keys[7].key_path = tgetstr("kP", NULL) + 2))
-		return (1);
-	if (!(g_dispatch_keys[8].key_path = "F\0"))
-		return (1);
-	if (!(g_dispatch_keys[9].key_path = "1;2A"))
-		return (1);
-	if (!(g_dispatch_keys[10].key_path = "1;2B"))
-		return (1);
+	int		i;
+	char	*buff;
+
+	i = 0;
+	buff = NULL;
+	while (g_keylist[i])
+	{
+		if ((buff = tgetstr(g_keylist[i], NULL)))
+			g_dispatch_keys[i].key_path = buff + 2;
+		else
+			g_dispatch_keys[i].key_path = NULL;
+		i++;
+	}
+	while (g_keylist[i])
+	{
+		g_dispatch_keys[i].key_path = g_keylist[i];
+		i++;
+	}
 	return (0);
 }
 
