@@ -45,7 +45,8 @@ static int		tilde_nude_exp(char **token, char *end, int flag)
 	tmp = NULL;
 	if (flag == 1 && (*(*token + flag) == SLASH || !(*(*token + flag))))
 	{
-		if (!(tmp = ft_getenv("HOME")))
+		tmp = ft_getenv("HOME");
+		if (!tmp || !ft_strcmp(tmp, EMPTY_STR))
 			tmp = ft_strdup(getpwuid(getuid())->pw_dir);
 		ft_strdel(token);
 		*token = ft_strjoin(tmp, end);
