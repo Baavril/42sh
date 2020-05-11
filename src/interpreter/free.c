@@ -11,14 +11,13 @@
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include "expansions.h"
-#include "termcaps.h"
 #include "builtins.h"
 #include "curjob.h"
 #include "prompt.h"
 #include "parser.h"
-#include "input.h"
 #include "libft.h"
+#include "heredoc.h"
+#include "expansions.h"
 
 int					shape(t_node *node)
 {
@@ -67,35 +66,6 @@ int					astdel(t_node *node)
 	}
 	free(node);
 	return (0);
-}
-
-void				process_heredoc(char **area)
-{
-	char		*name;
-	char		*line;
-	char		*buff;
-	t_cursor	cursor;
-
-	name = ft_strjoinfree(*area, ft_strdup("\n"));
-	*area = ft_strdup("");
-	set_termcaps(TC_INPUT);
-	while (!line || (ft_strcmp(line, name) && !(line = NULL)))
-	{
-		*area = ft_strjoinfree(*area, line);
-		while (!line || line[ft_strlen(line) - 1] != '\n')
-		{
-			ft_init_cursor(&cursor);
-			mkprompt_quote("\'", &(cursor.prompt), &(cursor.prompt_len));
-			get_stdin(&cursor, &buff);
-			buff = ft_strjoinfree(buff, ft_strdup("\n"));
-			expansions_treatment(&buff, 1);
-			line = ft_strjoinfree(line, buff);
-			write(1, "\n", 1);
-		}
-	}
-	ft_strdel(&name);
-	ft_strdel(&line);
-	set_termcaps(TC_RESTORE);
 }
 
 static void			expand_tree_function(t_node *node, int data)

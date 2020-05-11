@@ -12,12 +12,49 @@
 
 #include "libft.h"
 #include "input.h"
-#include "termcaps.h"
 #include "parser.h"
 #include "prompt.h"
 #include <unistd.h>
+#include "termcaps.h"
+#include "expansions.h"
 
-int			i_dless(t_elem left, t_elem right)
+static void			get_heredoc_line(char **line)
+{
+	t_cursor	cursor;
+	char		*buff;
+	while (!**line || (*line)[ft_strlen(*line) - 1] != '\n')
+	{
+		ft_init_cursor(&cursor);
+		mkprompt_quote("\'", &(cursor.prompt), &(cursor.prompt_len));
+		get_stdin(&cursor, &buff);
+		buff = ft_strjoinfree(buff, ft_strdup("\n"));
+		expansions_treatment(&buff, 1);
+		*line = ft_strjoinfree(*line, buff);
+		write(1, "\n", 1);
+	}
+}
+
+void				process_heredoc(char **area)
+{
+	char		*name;
+	char		*line;
+
+	name = ft_strjoinfree(*area, ft_strdup("\n"));
+	*area = ft_strdup("");
+	line = ft_strdup("");
+	set_termcaps(TC_INPUT);
+	while (!line || (ft_strcmp(line, name)))
+	{
+		*area = ft_strjoinfree(*area, line);
+		line = ft_strdup("");
+		get_heredoc_line(&line);
+	}
+	ft_strdel(&name);
+	ft_strdel(&line);
+	set_termcaps(TC_RESTORE);
+}
+
+int					i_dless(t_elem left, t_elem right)
 {
 	int			pipe_fd[2];
 
@@ -31,11 +68,7 @@ int			i_dless(t_elem left, t_elem right)
 	return (0);
 }
 
-/*
-**is the same as above, awaiting fix
-*/
-
-int			i_dlessdash(t_elem left, t_elem right)
+int					i_dlessdash(t_elem left, t_elem right)
 {
 	int			pipe_fd[2];
 
@@ -46,6 +79,5 @@ int			i_dlessdash(t_elem left, t_elem right)
 	if (dup2(pipe_fd[0], STDIN_FILENO) == -1)
 		return (1);
 	close(pipe_fd[1]);
-	return (0);
 	return (0);
 }
