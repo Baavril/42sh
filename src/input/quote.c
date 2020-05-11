@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/29 11:16:45 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/01 11:15:54 by tgouedar         ###   ########.fr       */
+/*   Created: 2019/07/29 11:16:45 by tgouedar          #+#    #+#             */
+/*   Updated: 2020/05/11 20:51:05 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,23 @@ static int				ft_close_match(char open, char inhib)
 {
 	if (open == inhib)
 		return (ft_isin(open, QUOTES));
-	if (open =='(')
+	if (open == '(')
 		return ((inhib == ')'));
-	if (open =='[')
+	if (open == '[')
 		return ((inhib == ']'));
-	if (open =='{')
+	if (open == '{')
 		return ((inhib == '}'));
 	return (0);
 }
 
-static int		ft_treat_inhib(t_list **unclosed_inhib, char inhib)
+static int				ft_treat_inhib(t_list **unclosed_inhib, char inhib)
 {
 	char	open;
 
 	open = (*unclosed_inhib) ? *((char*)((*unclosed_inhib)->content)) : 0;
-	if (ft_isin(open, CLOSE)) // check d'erreur pour voir si on a stacké une fermeture
+	if (ft_isin(open, CLOSE))
 		return (1);
-	if (!open && ft_isin(inhib, CLOSE)) // cas ou l'on stack une fermeture
+	if (!open && ft_isin(inhib, CLOSE))
 	{
 		ft_lstadd(unclosed_inhib, ft_lstnew(&inhib, 1));
 		return (1);
@@ -52,7 +52,7 @@ static int		ft_treat_inhib(t_list **unclosed_inhib, char inhib)
 	return (0);
 }
 
-int			quote_prompt(t_list **unclosed_inhib, char *command)
+int						quote_prompt(t_list **unclosed_inhib, char *command)
 {
 	while (*command)
 	{
@@ -61,15 +61,15 @@ int			quote_prompt(t_list **unclosed_inhib, char *command)
 			if (!(*unclosed_inhib)
 			|| *((char*)((*unclosed_inhib)->content)) != '\'')
 				command++;
-			if (!(*command)) // cas du '\' en fin de ligne
+			if (!(*command))
 				return (ESC_NL);
 		}
 		else if (*command == '$')
 		{
 			if (!(*unclosed_inhib
 			&& *((char*)((*unclosed_inhib)->content)) == '\'')
-			&& *(++command) == '{')
-				ft_lstadd(unclosed_inhib, ft_lstnew(command, 1));
+			&& *(command + 1) == '{')
+				ft_lstadd(unclosed_inhib, ft_lstnew(++command, 1));
 		}
 		else if (ft_isin(*command, INHIB))
 		{
