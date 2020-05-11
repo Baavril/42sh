@@ -1,0 +1,8 @@
+echo 1$USER//dfad\\asdfas//${USER}dsaf
+echo 2$USER//dfad\\asdfas//${USER}dsaf\\\\\sdfa${USER:+ok}
+echo 3$USER//dfad\${-=}\asdfas//${USER}dsaf\\\\\sdfa${USER:+}//da//asd//$//${LOGNAM:-incogg}adsfasd
+echo 4$USER//dfad\\asd/${ko:=}\\fas//${USER}dsaf\\\\\sdfa${USERiad:+ok}//da//asd//$//${ko:-incogg}adsfasd
+echo 5$USER//dfad\\asd/${ko:=}\\fas//${ko}dsaf\\\\\sdfa${no:+}re//da//asd//$//${ko543:-incogg}adsfasd//ouiii//$/$/${USER:?}_dsfage
+echo 6$USER//dfad\\asd/${ko:=man}\\fas//${ko}dsaf\\\\\sdfa${no:+}re//da//asd//$//${ko543:-incogg}adsfasd//ouiii//$/$/${USER:?incog}431sfage//${#USER}
+echo 7$USER//dfad\\asd/${ko:=man}\\fas//${ko}dsaf\\\\\sdfa${no:+}re//da//asd//$//${ko543:-incogg}adsfasd//ouiii//$/$/${USER:?incog}431sfage//${#USER}\\dsf\\\\${USER#[a-z]}
+echo 8$USER//dfad\\asd/${ko:=man}iadsfa\\fas//${ko}asaf\\\\\sdfa${no:+}re//da//asd//$//${ko543:-incogg}adsfasd//ouiii//$/$/${USER:?incog}431sfage//${#USER}\\dsf\\\\${USER#[a-z]}///dfa//${USER##*}

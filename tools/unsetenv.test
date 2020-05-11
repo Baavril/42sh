@@ -1,0 +1,25 @@
+unsetenv HOME
+unsetenv SHLVL
+unsetenv _
+unsetenv PWD
+setenv HOME /
+setenv TOTO ploplop
+unsetenv TOTO
+unsetenv TOTO
+unsetenv TOTO
+unsetenv TOTO
+unsetenv HOME
+env
+unsetenv
+unsetenv PATH
+env
+unsetenv /bin
+env
+unsetenv ""
+env
+unsetenv TOTO
+unsetenv "" ""
+unsetenv PATH ""
+unsetenv "" /bin
+unsetenv "" "" ""
+unsetenv PATH /bin TOTO ok
