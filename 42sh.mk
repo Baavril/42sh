@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/10 17:05:48 by yberramd         ###   ########.fr        #
+#    Updated: 2020/05/12 14:00:55 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,6 +85,7 @@ SOURCES			:=		transversal/program/main.c \
 						input/keys/keys_arrow.c \
 						input/keys/keys_copypaste.c \
 						input/keys/keys_navig.c \
+						lexer/ft_trim_comment.c \
 						lexer/lexer.c \
 						lexer/lexer_verbose.c \
 						lexer/get_token.c \
