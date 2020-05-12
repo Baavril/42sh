@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 17:12:27 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/04 14:09:55 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/05/12 15:44:53 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,6 @@
 #include "error.h"
 #include "shell_variables.h"
 
-#define COLOR "\033[96;m"
-#define ERR_COLOR "\033[31;m"
-#define RESET "\033[0m"
-
 extern struct s_svar	*g_svar;
 extern int				g_retval;
 
@@ -26,7 +22,7 @@ int		mkprompt_quote(char *input, char **prompt, size_t *len)
 {
 	t_list			*unclosed_inhib;
 	char			err[2];
-int				ret;
+	int				ret;
 
 	unclosed_inhib = NULL;
 	if ((ret = quote_prompt(&unclosed_inhib, input)) == ERR)
@@ -82,12 +78,12 @@ char	*mkprompt_outro(size_t *len)
 	if (!g_retval)
 	{
 		*len += 3;
-		return (ft_strdup(" "COLOR"~"RESET" "));
+		return (ft_strdup(" "COLOR"~"RESET_TC" "));
 	}
 	else
 	{
 		*len += 3;
-		return (ft_strdup(" "ERR_COLOR"~"RESET" "));
+		return (ft_strdup(" "ERR_COLOR"~"RESET_TC" "));
 	}
 }
 
