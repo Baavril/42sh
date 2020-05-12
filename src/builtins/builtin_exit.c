@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/28 17:13:43 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/10 21:25:19 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ extern char				*g_bgpid;
 extern struct s_svar	*g_svar;
 extern struct s_pos		*g_pos;
 extern t_job			g_curjob;
+extern char			*g_input;
 
 static void		ft_free_shvar(void)
 {
@@ -79,6 +80,8 @@ int				cmd_exit(int ac, char **av)
 	int		i;
 
 	exit_status = (unsigned char)g_retval;
+	if (!history(ADD_CMD, &g_input, NULL))
+		ft_dprintf(2 ,"cannot allocate memory\n");
 	if (ac > 1)
 	{
 		i = (!ft_strcmp("--", av[1]) && ac > 2) ? 2 : 1;
