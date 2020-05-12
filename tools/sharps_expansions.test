@@ -1,0 +1,101 @@
+echo 1 ${#LOGNAME}
+echo 2 ${#LOGNAM}
+echo 3 ${#LOGNAMeee}
+echo 201${no:=}
+echo 4 ${#no}
+echo 5 ${#}
+echo 6 ${#LOGNAMEeee}
+echo 7 ${#LOGNAME55555eee}
+echo 8${LOGNAME#b}
+echo 81${LOGNAME##b}
+echo 9${LOGNAME#a}
+echo 91${LOGNAME##a}
+echo 10${LOGNAME#ba}
+echo 101${LOGNAME##ba}
+echo 11${LOGNAME#ab}
+echo 111${LOGNAME##ab}
+echo 12${LOGNAME#bav}
+echo 121${LOGNAME##bav}
+echo 13${LOGNAME#avb}
+echo 131${LOGNAME##avb}
+echo 14${LOGNAME#bavril}
+echo 141${LOGNAME##bavril}
+echo 15${LOGNAME#livrab}
+echo 151${LOGNAME##livrab}
+echo 16${LOGNAME#incog}sdfa
+echo 161${LOGNAME#bav}sdfa
+echo 162${LOGNAME##incog}sdfa
+echo 163${LOGNAME##bav}sdfa
+echo 17${LOGNAME#incog}&sadfasdf
+echo 171${LOGNAME#bavr}&sadfasdf
+echo 172${LOGNAME##bavr}&sadfasdf
+echo 18${LOGNAME#}dsafsd
+echo 19${LOGNAME#}&dsafsd
+echo 20${LOGNAME#}_dsafsd
+echo 21${LOGNAM#incog}
+echo 22${LOGNAM#incog}asdfasd
+echo 23${LOGNAM#}
+echo 241${LOGNAM#}adsfasd
+echo 25${LOGNAMEee#incog}
+echo 26${LOGNAMEee#incog}fdsaads
+echo 27${LOGNAMEee#}
+echo 28${LOGNAMEee#}dsfad
+echo 29${LOGNAMEee#incog}
+echo 30${LOGNAMEee#incog}dsafasd
+echo 31${LOGNAMEee#incog}&dsafasd
+echo 32${LOGNAMEee#incog}_dsafasd
+echo 33${no#incog}
+echo 34${no#incog}fsdfads
+echo 35${no#}
+echo 36${no#}dsfadsf
+echo 37${#}
+echo 38${#}dsafadsf
+echo 39${#incog}
+echo 40${#incog}adsfasd
+
+echo 41${LOGNAME#*}
+echo 411${LOGNAM#*}
+echo 4111${LOGNAM#*}sdfa
+echo 412${LOGNAMEeee#*}
+echo 4121${LOGNAMEeee#*}ssdfw
+echo 42${LOGNAME#*}sdfa
+echo 47${LOGNAME#*****}sdfa
+echo 48${LOGNAME##*****}sdfa
+echo 49${LOGNAME##*****}
+
+echo 50${LOGNAME#?}
+echo 51${LOGNAME#??}
+echo 52${LOGNAME#?????}
+echo 53${LOGNAME#??????}
+echo 54${LOGNAME#?}sdfa
+echo 55${LOGNAME#??}sdfa
+echo 56${LOGNAME#?????}sdfa
+echo 57${LOGNAME#??????}sdfa
+echo 58${LOGNAME##?}
+echo 59${LOGNAME##??}
+echo 60${LOGNAME##?????}
+echo 61${LOGNAME##??????}
+echo 62${LOGNAME##?}sdfa
+echo 63${LOGNAME##??}sdfa
+echo 64${LOGNAME##?????}sdfa
+
+echo 65${LOGNAME#[a-z]}
+echo 66${LOGNAME#[a-d]}
+echo 67${LOGNAME#[d-z]}
+echo 68${LOGNAME#[a-de-z]}
+echo 69${LOGNAME#[a-d-z]}
+echo 70${LOGNAME#[d-de-a]}
+echo 701${LOGNAME#[d-de-a]}sdfa
+echo 702${LOGNAME#[^a-z]}sdfa
+echo 703${LOGNAME#[^a-de-z]}sdfa
+echo 704${LOGNAME#[^e-z]}sdfa
+echo 71${LOGNAME##[a-z]}
+echo 72${LOGNAME##[a-d]}
+echo 73${LOGNAME##[d-z]}
+echo 74${LOGNAME##[a-de-z]}
+echo 75${LOGNAME##[a-d-z]}
+echo 76${LOGNAME##[d-de-a]}
+echo 761${LOGNAME##[d-de-a]}sfda
+echo 762${LOGNAME##[^a-z]}sdfa
+echo 763${LOGNAME##[^a-de-z]}sdfa
+echo 764${LOGNAME##[^e-z]}sdfa

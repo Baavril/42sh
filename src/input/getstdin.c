@@ -62,9 +62,10 @@ int				get_stdin(t_cursor *cursor, char **buff)
 
 	init_key_tab();
 	g_inside_history = NULL;
-	*buff = ft_strdup("");
+	*buff = NULL;
 	ft_bzero(term.buff, COUNT_KEY + 1);
 	set_reader(&term, buff, cursor);
+	*buff = ft_strdup("");
 	while ((ret = ft_get_next_input(term.buff)) > 0)
 	{
 		if (!analyzer(cursor, buff, &term))

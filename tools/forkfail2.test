@@ -1,0 +1,1 @@
+env -i ./42sh < forkfail 

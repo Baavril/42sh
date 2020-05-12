@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/12 14:09:07 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/12 14:37:32 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@
 #include "error.h"
 #include "lexer.h"
 #include "jcont.h"
-#include "synt.h"
 #include "path.h"
 
 int					g_ppid;
@@ -38,7 +37,7 @@ int					g_retval;
 extern int			g_mode;
 extern int			g_alias_treated;
 struct termios		g_old_termios;
-char			*g_input;
+char				*g_input;
 
 static int	set_minimal_env(void)
 {
@@ -118,6 +117,7 @@ int			main(int argc, char **argv)
 						|| get_next_line(0, &g_input)))
 	{
 		g_alias_treated = 0;
+		ft_trim_comment();
 		if (!(status = history(ADD_CMD, &g_input, NULL)))
 			return (alloc_error());
 		if (status != -1 && g_input[0])

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tgouedar <tgouedar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/15 17:59:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/29 16:01:43 by tgouedar         ###   ########.fr       */
+/*   Created: 2019/07/15 17:59:53 by tgouedar          #+#    #+#             */
+/*   Updated: 2020/05/12 13:59:51 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "tokens.h"
 
+int					ft_trim_comment(void);
 int					ft_istoken(char *str);
 int					ft_is_quote(char c);
 char				**lexer_verbose(char **input);
