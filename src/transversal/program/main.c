@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/12 14:27:56 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/12 15:37:29 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,12 +117,11 @@ int			main(int argc, char **argv)
 						|| get_next_line(0, &g_input)))
 	{
 		g_alias_treated = 0;
-		if (!(status = history(EXCLAMATION, &g_input, NULL)) || ft_trim_comment())
+		ft_trim_comment();
+		if (!(status = history(ADD_CMD, &g_input, NULL)) || ft_trim_comment())
 			return (alloc_error());
 		if (status != -1 && g_input[0])
 			execute(g_input);
-		if (status != -1 && !(history(ADD_CMD, &g_input, NULL)))
-			return (alloc_error());
 		ft_check_bgstatus();
 		if (g_mode & FORK_SHELL)
 			break ;
