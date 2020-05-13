@@ -12,6 +12,7 @@
 
 #include "libft.h"
 #include "input.h"
+#include "termcaps.h"
 
 #include <unistd.h>
 #include <term.h>
@@ -21,19 +22,22 @@
 
 static int		display_select(char *str, t_cursor *cursor)
 {
-	size_t swap;
-
-	if (cursor->start > cursor->in)
+	if (cursor->start < cursor->in)
 	{
-		swap = cursor->start;
-		cursor->start = cursor->in;
-		cursor->in = swap;
+		write(1, str, cursor->start);
+		ft_putstr(tgetstr("mr", NULL));
+		write(1, &str[cursor->start], cursor->in - cursor->start);
+		ft_putstr(tgetstr("me", NULL));
+		ft_putstr(&str[cursor->in]);
 	}
-	write(1, str, cursor->start);
-	ft_putstr(tgetstr("mr", NULL));
-	write(1, &str[cursor->start], cursor->in - cursor->start);
-	ft_putstr(tgetstr("me", NULL));
-	ft_putstr(&str[cursor->in]);
+	else
+	{
+		write(1, str, cursor->in);
+		ft_putstr(tgetstr("mr", NULL));
+		write(1, &str[cursor->in], cursor->start - cursor->in);
+		ft_putstr(tgetstr("me", NULL));
+		ft_putstr(&str[cursor->start]);
+	}
 	return (0);
 }
 
@@ -93,8 +97,7 @@ int				display(char *str, t_cursor *c)
 	int			backup;
 	static int	lines_offset = 0;
 
-	if (tgetent(NULL, getenv("TERM")) != 1)
-		return (1);
+	set_termcaps(TC_INPUT);
 	x = 0;
 	col = tgetnum("co");
 	backup = c->end;

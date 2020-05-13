@@ -6,7 +6,7 @@
 #    By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/04 15:22:51 by bprunevi          #+#    #+#              #
-#    Updated: 2020/03/12 13:26:47 by bprunevi         ###   ########.fr        #
+#    Updated: 2020/05/09 17:41:28 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,7 @@ SOURCES			:=		transversal/program/main.c \
 						input/history/history.c \
 						input/history/history_search.c \
 						input/history/init_history.c \
+						input/history/new_history.c \
 						input/history/mv_history.c \
 						input/history/clean.c \
 						input/history/exclamation.c \
@@ -161,10 +162,13 @@ SOURCES			:=		transversal/program/main.c \
 						builtins/builtin_cd/ft_pcderror.c \
 						builtins/builtin_cd/ft_simplify_path.c \
 						builtins/builtin_cd/path_tools.c \
+						builtins/builtin_setenv.c \
 						builtins/builtin_set/main.c \
 						builtins/builtin_set/positional_parameters.c \
 						builtins/builtin_unset.c \
+						builtins/builtin_unsetenv.c \
 						builtins/builtin_echo.c \
+						builtins/builtin_env.c \
 						builtins/builtin_type.c \
 						builtins/builtin_exit.c \
 						builtins/builtin_hash.c \
@@ -229,4 +233,4 @@ CFLAGS += -Wall -Wextra -Werror -ansi -D_DEFAULT_SOURCE -D_POSIX_C_SOURCE=200809
 
 #CFLAGS += -fno-builtin -O2
 
-CDEBUG += -g# -fsanitize=address -fno-optimize-sibling-calls
+CDEBUG += -g #-fsanitize=address -fno-optimize-sibling-calls

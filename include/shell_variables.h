@@ -34,7 +34,9 @@
 # define OPTIND			"OPTIND="
 # define HISTSIZE		"HISTSIZE="
 # define HISTFILE		"HISTFILE="
+# define HISTFILESIZE	"HISTFILESIZE="
 # define PWD			"PWD="
+# define HOME			"HOME="
 
 /*
 ** Values of internal variables
@@ -46,7 +48,8 @@
 # define PS4V			"$> "
 # define OPTERRV		"1"
 # define OPTINDV		"1"
-# define HISTSIZEV		"1000"
+# define HISTSIZEV		"500"
+# define HISTFILESIZEV	"500"
 # define HISTFILEV		"/.42sh_history"
 
 struct					s_svar

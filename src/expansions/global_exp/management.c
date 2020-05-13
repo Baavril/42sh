@@ -66,15 +66,19 @@ static int	expansions_linker(t_expand *vars)
 	return (SUCCESS);
 }
 
-char		*expansions_management(char **splitok, int expand)
+char		*expansions_management(char **splitok, int expand, int flag)
 {
+	int			i;
+	int			lim;
 	t_expand	vars;
 
+	i = 0;
 	initexpvars(&vars);
+	lim = ft_tablen(splitok);
 	vars.tokens = splitok;
-	while (*(vars.tokens))
+	while (i < lim)
 	{
-		if (expansions_launcher(&vars, expand) == ERROR)
+		if (expansions_launcher(&vars, expand, flag) == ERROR)
 		{
 			ft_dprintf(2, "42sh: %s: bad substitution", *vars.tokens);
 			ft_tabdel(&splitok);
@@ -83,7 +87,8 @@ char		*expansions_management(char **splitok, int expand)
 			return (ft_strdup(EMPTY_STR));
 		}
 		expansions_linker(&vars);
-		vars.tokens++;
+		++vars.tokens;
+		++i;
 	}
 	ft_tabdel(&splitok);
 	return (vars.tmp);

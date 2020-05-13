@@ -6,13 +6,14 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 12:08:47 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/12 13:24:47 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/03/07 14:50:39 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "libft.h"
 #include <unistd.h>
+#include <fcntl.h>
 
 extern int g_prefix;
 
@@ -35,7 +36,7 @@ int	i_less(t_elem left, t_elem right)
 		ft_dprintf(STDERR_FILENO, "42sh: %s: Redirection ambigue\n", right.c);
 	else if (!access(right.c, R_OK))
 	{
-		if (is_not_a_dir(right.c))
+		if (is_regfile(right.c))
 			return (open_on_fd(right.c, O_RDONLY, 0, fd1));
 		ft_dprintf(STDERR_FILENO, "42sh: %s: not a valid file\n", right.c);
 	}
@@ -57,7 +58,7 @@ int	i_great(t_elem left, t_elem right)
 		ft_dprintf(STDERR_FILENO, "42sh: %s: Redirection ambigue\n", right.c);
 	else if (!access(right.c, W_OK))
 	{
-		if (is_not_a_dir(right.c))
+		if (is_regfile(right.c))
 			return (open_on_fd(right.c, O_WRONLY | O_TRUNC, 0, fd1));
 		ft_dprintf(STDERR_FILENO, "42sh: %s: not a valid file\n", right.c);
 	}

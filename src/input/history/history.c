@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 13:53:47 by yberramd          #+#    #+#             */
-/*   Updated: 2020/03/08 16:13:29 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/08 01:53:11 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ static int	history_move(t_history *history_2, char **cmd, int flag)
 {
 	static t_history *history = NULL;
 
+	if (cmd == NULL)
+		return (0);
 	if (!history)
 		history = history_2;
 	if (history)
@@ -105,15 +107,14 @@ static int	history_move(t_history *history_2, char **cmd, int flag)
 int			history(int flag, char **line, char **cmd)
 {
 	static t_history	history = {NULL, NULL, NULL};
-	static char			*home = NULL;
 
 	if (flag == BACKWARD || flag == FORWARD || flag == GET
 			|| flag == FIRST || flag == LAST || flag == SWAP)
 		return (history_move(&history, cmd, flag));
 	if (flag == INIT)
-		return (init_history(&history, &home));
-	if (flag == DELETE)
-		return (delete(&history, home));
+		return (init_history(&history));
+	if (flag == DELETE || flag == NEW_HIST)
+		return (delete(&history, flag));
 	if (flag == ADD_CMD)
 		return (history_cmd(line, &history));
 	if (flag == SEARCH || flag == RESET)

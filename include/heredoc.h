@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   curjob.h                                           :+:      :+:    :+:   */
+/*   heredoc.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/04 12:31:37 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/10 14:56:53 by user42           ###   ########.fr       */
+/*   Created: 2019/11/26 16:02:57 by bprunevi          #+#    #+#             */
+/*   Updated: 2020/03/04 13:03:00 by bprunevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CURJOB_H
-# define CURJOB_H
+#ifndef HEREDOC_H
+# define HEREDOC_H
 
-# include "parser.h"
-# include "libft.h"
-
-typedef int		(*t_flist)(t_elem left, t_elem right);
-
-int				curjob_add(t_node *node);
-int				curjob_cat(char *str);
+void				process_heredoc(char **area);
 
 #endif

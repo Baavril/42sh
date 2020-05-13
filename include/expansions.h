@@ -107,9 +107,9 @@ typedef struct		s_rev
 	char			*tmp1;
 }					t_rev;
 
-int					expansions_treatment(char **tokens);
-int					expansions_launcher(t_expand *vars, int expand);
-char				*expansions_management(char **tokens, int expand);
+int					expansions_treatment(char **tokens, int flag);
+int					expansions_launcher(t_expand *vars, int expand, int flag);
+char				*expansions_management(char **tokens, int expand, int flag);
 
 int					direct_exp(char **token);
 int					simple_exp(char **token);
@@ -141,10 +141,10 @@ int					counter_quoted_words(char *str);
 char				*dupbtwq(char *str);
 char				*dupbtwqlim(char *str, int lim);
 char				**ft_expsplit(char *str, char c);
-char				*ft_setbslash(char *tokens, int nb);
-int					ft_back_slashed(char **tokens);
-char				*ft_set_slashed(char **tokens);
-char				*ft_getbtw(char *tokens, int type);
+int					back_slashed(char **tokens);
+char				*set_slash(char **tokens, int flag);
+char				*set_back_slash(char *tokens, int nb);
+char				*getbtw(char *tokens, int type, int flag);
 char				*token_quotes_generator(char *str);
 void				setquotenod(struct s_quoted *new_back);
 

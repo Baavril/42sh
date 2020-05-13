@@ -30,25 +30,27 @@ t_symexp	g_symexp[] =
 	{0, NULL}
 };
 
-int	expansions_launcher(t_expand *vars, int expand)
+int	expansions_launcher(t_expand *vars, int expand, int flag)
 {
 	vars->j = 0;
-	if (!(expand) && ((vars->nb = ft_back_slashed(vars->tokens)) >= 0))
+	if (!(expand) && ((vars->nb = back_slashed(vars->tokens)) >= 0))
 	{
-		*(vars->tokens) = ft_set_slashed(vars->tokens);
+		*(vars->tokens) = set_slash(vars->tokens, flag);
 		vars->type = identifier(*(vars->tokens));
-		vars->btw = ft_getbtw(*(vars->tokens), vars->type);
+		vars->btw = getbtw(*(vars->tokens), vars->type, 0);
 		while (g_symexp[vars->j].expand)
 		{
 			if (g_symexp[vars->j].sym == vars->type)
+			{
 				if (g_symexp[vars->j].expand(vars->tokens) == ERROR)
 					return (ERROR);
+			}
 			vars->j++;
 		}
 		if (vars->nb > 0)
-			*(vars->tokens) = ft_setbslash(*(vars->tokens), vars->nb);
+			*(vars->tokens) = set_back_slash(*(vars->tokens), vars->nb);
 	}
 	else
-		*(vars->tokens) = ft_set_slashed(vars->tokens);
+		*(vars->tokens) = set_slash(vars->tokens, flag);
 	return (SUCCESS);
 }
