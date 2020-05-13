@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/12 16:32:23 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/12 16:38:25 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ int			main(int argc, char **argv)
 						|| get_next_line(0, &g_input)))
 	{
 		g_alias_treated = 0;
-		ft_trim_comment();
 		if (!(status = history(ADD_CMD, &g_input, NULL)) || ft_trim_comment())
 			return (alloc_error());
 		if (status != -1 && g_input[0])

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 09:48:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/29 16:30:37 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/05/12 15:43:56 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@
 # define HISTFILESIZE	"HISTFILESIZE="
 # define PWD			"PWD="
 # define HOME			"HOME="
+
+# define COLOR			"\033[96;m"
+# define ERR_COLOR		"\033[31;m"
+# define RESET_TC		"\033[0m"
 
 /*
 ** Values of internal variables
