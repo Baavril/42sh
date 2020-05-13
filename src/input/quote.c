@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 11:16:45 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/05/12 16:35:24 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/13 17:36:40 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int				ft_close_match(char open, char inhib)
 
 int						ft_treat_inhib(t_list **unclosed_inhib, char inhib)
 {
-	char	*open;
+	char	open;
 
 	open = (*unclosed_inhib) ? *((char*)((*unclosed_inhib)->content)) : 0;
 	if (ft_isin(open, CLOSE))

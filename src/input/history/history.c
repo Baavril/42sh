@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 13:53:47 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/13 16:24:56 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/13 19:53:01 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ static int	add_cmd(char *line, t_history *history2)
 
 static int	init_exclamation(char **line, t_history *history2)
 {
-	int		ret;
-	char	*cmd;
+	int			ret;
+	char		*cmd;
 	static int	first = 0;
 
 	ret = 1;

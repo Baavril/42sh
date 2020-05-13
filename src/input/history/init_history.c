@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 13:50:19 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/13 16:20:32 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/13 19:52:11 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	init_clean(int fd, char **get_line, char *home)
 	return (1);
 }
 
-int			assign_file_history(int fd, t_history *history2, int max, char *home)
+int			assign_file_history(int fd, t_history *hist, int max, char *home)
 {
 	int		len;
 	char	*get_line;
@@ -41,20 +41,20 @@ int			assign_file_history(int fd, t_history *history2, int max, char *home)
 	get_line = NULL;
 	while (get_next_line(fd, &get_line) > 0 && len < max)
 	{
-		if (!(history2->str = ft_strdup(get_line)))
+		if (!(hist->str = ft_strdup(get_line)))
 			return (error_clean(fd, &get_line, home));
-		if (!(history2->next = (t_history*)malloc(sizeof(t_history))))
+		if (!(hist->next = (t_history*)malloc(sizeof(t_history))))
 			return (error_clean(fd, &get_line, home));
-		history2->next->previous = history2;
-		history2 = history2->next;
+		hist->next->previous = hist;
+		hist = hist->next;
 		ft_strdel(&get_line);
 		len++;
 	}
-	if (history2->previous)
+	if (hist->previous)
 	{
-		history2 = history2->previous;
-		free(history2->next);
-		history2->next = NULL;
+		hist = hist->previous;
+		free(hist->next);
+		hist->next = NULL;
 	}
 	return (init_clean(fd, &get_line, home));
 }
