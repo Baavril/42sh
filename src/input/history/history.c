@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 13:53:47 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/12 14:07:41 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/13 16:24:56 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,22 @@ static int	add_history(const char *line, t_history *history)
 	return (1);
 }
 
-static int	add_cmd(char *line, t_history *history)
+static int	add_cmd(char *line, t_history *history2)
 {
 	int len;
 
 	len = 0;
 	if (line != NULL)
 	{
-		while (history->next)
+		while (history2->next)
 		{
-			history = history->next;
+			history2 = history2->next;
 			len++;
 		}
-		if ((history->str == NULL || ft_strcmp(line, history->str) != 0)
-				&& ft_isspace(line[0]) != 1 && line[0] != '\0')
+		if ((history2->str == NULL || ft_strcmp(line, history2->str) != 0)
+				&& line[0] != '\0')
 		{
-			if (add_history(line, history) == -1)
+			if (add_history(line, history2) == -1)
 			{
 				ft_dprintf(2, "cannot allocate memory\n");
 				return (0);
@@ -59,19 +59,23 @@ static int	add_cmd(char *line, t_history *history)
 	return (0);
 }
 
-static int	init_exclamation(char **line, t_history *history)
+static int	init_exclamation(char **line, t_history *history2)
 {
 	int		ret;
 	char	*cmd;
+	static int	first = 0;
 
 	ret = 1;
 	cmd = NULL;
-	if (!(s_exclamation(line, history, &ret, cmd)))
+	if (!(s_exclamation(line, history2, &ret, cmd)))
 		return (0);
 	if (ret == 2 && *line)
 		ft_printf("%s\n", *line);
 	if (ret != -1)
-		return (add_cmd((*line), history));
+		add_cmd((*line), history2);
+	if (first == 0)
+		history(NEW_HIST, NULL, NULL);
+	first++;
 	return (ret);
 }
 

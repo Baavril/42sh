@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:43:35 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/12 16:26:53 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/13 14:55:21 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ extern int	g_retval;
 
 int		i_prefix(t_elem left, t_elem right)
 {
-	if (ft_strfchr("HISTFILE=", left.c) == 1)
-		history(NEW_HIST, NULL, NULL);
 	if (checkvarlst(left.c))
 		setenvnod(newnodshell(left.c, 0));
 	if (right.v)

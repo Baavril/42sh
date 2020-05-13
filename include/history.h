@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 18:26:13 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/12 14:08:22 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/13 16:27:35 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ typedef struct			s_history
 
 int						history(int flag, char **line, char **cmd);
 int						init_history(t_history *history);
-int						modif_hist(t_history **history, int max);
 int						delete_history(t_history *history);
 
 int						assign_file_history(int fd, t_history *history,

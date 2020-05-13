@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 21:25:19 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/13 14:46:18 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,6 @@ int				cmd_exit(int ac, char **av)
 	int		i;
 
 	exit_status = (unsigned char)g_retval;
-	if (!history(ADD_CMD, &g_input, NULL))
-		ft_dprintf(2 ,"cannot allocate memory\n");
 	if (ac > 1)
 	{
 		i = (!ft_strcmp("--", av[1]) && ac > 2) ? 2 : 1;
