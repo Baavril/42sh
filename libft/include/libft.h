@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/01 12:10:29 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/16 19:23:35 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ char				*ft_strchr(const char *s, int c) __attribute__
 
 char				*ft_strrchr(const char *s, int c) __attribute__
 					((nonnull(1)));
+
+size_t				ft_strcspn(const char *s, const char *charset);
 
 int					ft_strqchr(char *token, char c) __attribute__((nonnull(1)));
 
