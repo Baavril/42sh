@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 15:06:39 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/14 21:09:15 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/15 16:48:54 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 
 int		ft_print_history(char **argv);
 int		ft_atoi_history(const char *str);
+int		ft_execute(char **option);
+int		ft_fc(char **option);
 int		ft_strisnbr(char *str);
 int		ft_parser(int argc, char **argv, char *optstring,
 						char **option);
