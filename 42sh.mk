@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/14 21:10:39 by yberramd         ###   ########.fr        #
+#    Updated: 2020/05/15 16:53:57 by yberramd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -183,6 +183,8 @@ SOURCES			:=		transversal/program/main.c \
 						builtins/builtin_fc/builtin_fc.c \
 						builtins/builtin_fc/print_history.c \
 						builtins/builtin_fc/ft_number.c \
+						builtins/builtin_fc/ft_execute.c \
+						builtins/builtin_fc/fc_no_option.c \
 						builtins/builtin_fc/ft_parser.c \
 						builtins/builtin_export/main.c \
 						builtins/builtin_export/tools.c \
