@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:43:35 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/13 14:55:21 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/16 21:20:13 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,8 @@ int		i_builtin(t_elem left, t_elem right)
 	g_argv[1] = NULL;
 	if (!right.v || right.v->f(right.v->left, right.v->right) != -1)
 		if ((g_retval = builtins_dispatcher(g_argv)) == 127)
-			ft_dprintf(STDERR_FILENO, "unknown command : %s\n", g_argv[0]);
-	if (g_retval != 127)
-		free(g_argv);
+			psherror(e_command_not_found, g_argv[0], e_cmd_type);
+	free(g_argv);
 	return (g_retval);
 }
 
