@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/05 15:30:37 by bprunevi         ###   ########.fr        #
+#    Updated: 2020/05/16 20:17:38 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -201,6 +201,7 @@ SOURCES	:=	btree_apply_infix.c \
 		ft_strndup.c \
 		ft_strnstr.c \
 		ft_strrchr.c \
+		ft_strcspn.c \
 		ft_strqchr.c \
 		ft_strsep.c \
 		ft_strstr.c \
@@ -223,4 +224,4 @@ DEPENDS := $(patsubst %.c,%.d,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
 ARFLAGS := rc
 
-CFLAGS += -Wall -Werror -Wextra -ansi -std=c99 #-D_POSIX_C_SOURCE -fno-builtin -O2
+CFLAGS += -Wall -Werror -Wextra -ansi -std=c99 # -fsanitize=address -fno-optimize-sibling-calls

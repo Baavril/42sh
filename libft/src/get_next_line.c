@@ -3,100 +3,114 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/23 12:01:41 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/05 14:22:15 by tgouedar         ###   ########.fr       */
+/*   Created: 2018/11/26 11:00:03 by tgouedar          #+#    #+#             */
+/*   Updated: 2018/11/26 23:21:49 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-
-#include "libft.h"
 #include "get_next_line.h"
 
-#define CHR_SRCH '\n'
-
-static inline t_list	*lst_select(int fd)
+static void			ft_strappend(char **dest, char **src)
 {
-	static t_list	*lst;
-	t_list			*fd_lst;
+	char	*tmp;
+	size_t	i;
 
-	if (!lst)
-		lst = ft_lstnew("", fd);
-	fd_lst = lst;
-	while ((int)(fd_lst->content_size) != fd)
-	{
-		if (!fd_lst->next)
-		{
-			fd_lst->next = ft_lstnew("", fd);
-			return (fd_lst->next);
-		}
-		else if (fd_lst->next)
-			fd_lst = fd_lst->next;
-	}
-	return (fd_lst);
+	i = ft_strlen(*dest) + ft_strlen(*src) + 1;
+	if (!(tmp = (char*)malloc(i)))
+		return ;
+	ft_memcpy(tmp, *dest, ft_strlen(*dest) + 1);
+	tmp = ft_strcat(tmp, *src);
+	ft_memdel((void**)dest);
+	ft_memdel((void**)src);
+	*dest = tmp;
 }
 
-static inline int		feedline(t_list *lst, int ret, char **line, int has_chr)
+static t_list_fd	*ft_lstfind_fd(t_list_fd **list, int fd)
 {
-	char	*location;
-	char	*tmp;
+	t_list_fd	*voyager;
 
-	if (has_chr || (!ret && ft_isempty(lst->content)))
+	if (!(*list))
 	{
-		*line = ft_strsub(lst->content, 0, ft_strclen(lst->content, CHR_SRCH));
-		if (!ret && ft_isempty(lst->content))
-		{
-			ft_strclr(lst->content);
-			return (0);
-		}
-		tmp = lst->content;
-		location = ft_strchr(lst->content, CHR_SRCH) + 1;
-		lst->content = ft_strndup(location, ft_strlen(location));
-		ft_memdel((void**)&tmp);
+		*list = (t_list_fd*)malloc(sizeof(t_list_fd));
+		(*list)->fd = fd;
+		(*list)->rd = NULL;
+		(*list)->next = NULL;
 	}
-	return (1);
+	voyager = *list;
+	while ((voyager->fd - fd) && voyager->next)
+		voyager = voyager->next;
+	if ((voyager->fd - fd) && !(voyager->next))
+	{
+		voyager->next = (t_list_fd*)malloc(sizeof(t_list_fd));
+		voyager = voyager->next;
+		voyager->fd = fd;
+		voyager->rd = NULL;
+		voyager->next = NULL;
+	}
+	return (voyager);
 }
 
-static inline int		readl(t_list *lst, int fd, char **line)
+static void			ft_lstfree(t_list_fd **cur, t_list_fd **stock)
 {
-	int		ret;
-	int		has_chr;
-	char	buffer[BUFF_SIZE + 1];
-	char	*tmp;
+	t_list_fd *voyager;
 
-	ret = 1;
-	while (!(has_chr = ft_chrsearch(lst->content, CHR_SRCH)))
+	voyager = *stock;
+	if (*cur == voyager)
+		*stock = (*stock)->next;
+	else
 	{
-		ft_bzero(buffer, BUFF_SIZE + 1);
-		if ((ret = read(fd, buffer, BUFF_SIZE)) < 0)
-			return (-1);
-		else if (!ret && !ft_isempty(lst->content))
-			return (0);
-		tmp = lst->content;
-		lst->content = ft_strjoin(lst->content, buffer);
-		ft_memdel((void**)&tmp);
-		if (!ret)
+		while (voyager->next != *cur)
+			voyager = voyager->next;
+		voyager->next = (voyager->next)->next;
+	}
+	ft_memdel((void**)(&((*cur)->rd)));
+	free(*cur);
+}
+
+static int			ft_read_fd(int fd, t_list_fd **cur, t_list_fd **stock)
+{
+	char	buf[BUFF_SIZE + 1];
+	int		buf_read;
+
+	(void)stock;
+	if ((buf_read = read(fd, buf, BUFF_SIZE)) > 0)
+	{
+		free((*cur)->rd);
+		buf[buf_read] = 0;
+		(*cur)->rd = ft_strdup(buf);
+		return (1);
+	}
+	ft_lstfree(cur, stock);
+	return (buf_read);
+}
+
+int					get_next_line(const int fd, char **line)
+{
+	static t_list_fd	*stk = NULL;
+	t_list_fd			*cur;
+	char				*tmp;
+	int					j;
+	size_t				i;
+
+	if (!line || fd < 0 || !(*line = ft_strnew(1)))
+		return (-1);
+	cur = ft_lstfind_fd(&stk, fd);
+	if ((!(cur->rd) || !(*(cur->rd))) && ((j = ft_read_fd(fd, &cur, &stk)) < 1))
+		return (j);
+	while (((i = ft_strcspn(cur->rd, "\n")) || 1) && i == ft_strlen(cur->rd))
+	{
+		ft_strappend(line, &cur->rd);
+		if ((j = ft_read_fd(fd, &cur, &stk)) < 1)
 			break ;
 	}
-	if (!(feedline(lst, ret, line, has_chr)))
-		return (1);
+	if (cur->rd)
+	{
+		tmp = ft_strndup(cur->rd, i);
+		ft_strappend(line, &tmp);
+		if (cur->rd[i] == '\n')
+			ft_memmove(cur->rd, cur->rd + i + 1, ft_strlen(cur->rd) - i);
+	}
 	return (1);
-}
-
-int						get_next_line(const int fd, char **line)
-{
-	int		ret;
-	int		isempty;
-	t_list	*lst;
-
-	lst = lst_select(fd);
-	if (fd < 0 || !line || BUFF_SIZE < 0)
-		return (-1);
-	else if (!BUFF_SIZE || (!(ret = readl(lst, fd, line))
-				&& !(isempty = ft_isempty(lst->content))))
-		return (0);
-	else
-		return (ret);
 }
