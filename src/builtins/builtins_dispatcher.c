@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/16 20:41:09 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/17 19:12:27 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 #include "builtins.h"
 #include "error.h"
 #define EXIT_STATUS 127
+
+extern int			g_exit_try;
 
 const t_builtins	g_builtins[] =
 {
@@ -78,9 +80,13 @@ static void			*dispatcher(char *cmd)
 int					is_a_builtin(char *cmd)
 {
 	if (dispatcher(cmd))
+	{
+		if (!ft_strcmp(cmd, "exit"))
+			g_exit_try++;
 		return (1);
-	else
-		return (0);
+	}
+	g_exit_try = 0;
+	return (0);
 }
 
 int					builtins_dispatcher(char **argv)
