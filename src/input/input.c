@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/17 19:40:15 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/17 20:18:01 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,28 +35,6 @@ void					ft_init_cursor(t_cursor *cursor)
 	cursor->prompt_len = 0;
 	cursor->ctrl_r = 0;
 	cursor->on = 0;
-}
-
-int						ft_strplen(char *str)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (str[i])
-	{
-		if (str[i] == '\033')
-		{
-			while (str[i] != 'm')
-				++i;
-			++i;
-		}
-		if (ft_isprint(str[i]))
-			++j;
-		++i;
-	}
-	return (j);
 }
 
 static void				ft_agregate_line(t_cursor *cursor, char **buff)

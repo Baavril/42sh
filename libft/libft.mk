@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/16 20:17:38 by tgouedar         ###   ########.fr        #
+#    Updated: 2020/05/17 14:35:09 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -195,6 +195,7 @@ SOURCES	:=	btree_apply_infix.c \
 		ft_strdup.c \
 		ft_strlcat.c \
 		ft_strlen.c \
+		ft_display_len.c \
 		ft_strncat.c \
 		ft_strncmp.c \
 		ft_strncpy.c \

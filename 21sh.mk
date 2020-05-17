@@ -6,7 +6,7 @@
 #    By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/04 15:22:51 by bprunevi          #+#    #+#              #
-#    Updated: 2020/05/09 17:41:28 by user42           ###   ########.fr        #
+#    Updated: 2020/05/17 20:23:31 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ SOURCES			:=		transversal/program/main.c \
 						transversal/pattern_matching/deployement/maker.c \
 						input/input.c \
 						input/prompt.c \
+						input/prompt_grammar.c \
 						input/search_prompt.c \
 						input/quote.c \
 						input/display.c \

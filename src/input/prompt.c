@@ -6,13 +6,14 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 17:12:27 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/17 19:40:32 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/17 20:21:13 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "quote.h"
 #include "error.h"
+#include "prompt.h"
 #include "shell_variables.h"
 
 #define COLOR "\033[96;m"
@@ -73,7 +74,6 @@ char	*mkprompt_outro(size_t *len)
 	}
 }
 
-char		*mkprompt_expand(const char *ps1, size_t *len);
 size_t	mkprompt(char **prompt)
 {
 	char			*tmp;
