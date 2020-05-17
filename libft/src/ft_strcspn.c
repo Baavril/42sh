@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strcspn.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/16 16:20:25 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/05/16 19:15:40 by tgouedar         ###   ########.fr       */
+/*   Created: 2018/11/17 14:52:02 by tgouedar          #+#    #+#             */
+/*   Updated: 2018/11/17 19:25:36 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include <sys/types.h>
-# include <sys/uio.h>
-# include <unistd.h>
-# include "libft.h"
-# define BUFF_SIZE 5
-
-typedef struct			s_list_fd
+size_t	ft_strcspn(const char *s, const char *charset)
 {
-	struct s_list_fd	*next;
-	char				*rd;
-	int					fd;
-}						t_list_fd;
+	size_t	i;
 
-int						get_next_line(const int fd, char **line);
-
-#endif
+	i = 0;
+	while (s[i] && !(ft_isin(s[i], charset)))
+		i++;
+	return (i);
+}
