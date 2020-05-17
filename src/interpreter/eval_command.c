@@ -13,6 +13,7 @@
 #include "libft.h"
 #include "builtins.h"
 #include "hash_module.h"
+#include "shell_variables.h"
 #include "parser.h"
 #include <unistd.h>
 
@@ -27,32 +28,17 @@ char			*path_join(char *str1, char *str2)
 	return (rtn);
 }
 
-char			**ft_agetenv(char *name)
-{
-	extern char	**environ;
-	int			i;
-	int			j;
-
-	i = -1;
-	if (environ)
-		while (environ[++i] && !(j = 0))
-			while (name[j] == environ[i][j])
-				if (environ[i][++j] == '=' && !name[j])
-					return (&environ[i]);
-	return (NULL);
-}
-
 char			*check_bin(char **argv)
 {
-	char		**path;
+	char		*path;
 	char		**path_split;
 	char		*tmp;
 	int			i;
 
 	i = -1;
-	if ((path = ft_agetenv("PATH")))
+	if ((path = ft_getenv("PATH")) || (path = getshvar("PATH")))
 	{
-		path_split = ft_strsplit(&(*path)[5], ":");
+		path_split = ft_strsplit(&(path[5]), ":");
 		while (path_split[++i])
 		{
 			if ((tmp = path_join(path_split[i], *argv))
