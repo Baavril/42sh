@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:21:48 by baavril           #+#    #+#             */
-/*   Updated: 2020/03/01 19:00:30 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/05/17 15:37:42 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,7 @@ static void		init_intern_vars(void)
 {
 	char *tmp;
 
-	tmp = NULL;
-	mkprompt(&tmp);
-	setenvvar(ft_strdup(PS1), tmp);
+	setenvvar(ft_strdup(PS1), ft_strdup(PS1V));
 	setenvvar(ft_strdup(PS2), ft_strdup(PS2V));
 	setenvvar(ft_strdup(PS3), ft_strdup(PS3V));
 	setenvvar(ft_strdup(PS4), ft_strdup(PS4V));
