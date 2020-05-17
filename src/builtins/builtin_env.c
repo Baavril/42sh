@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 12:42:49 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/05/16 20:20:07 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/17 19:26:33 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static int		ft_env_exec(char *to_exec, char **av)
 	int			father;
 	int			status;
 
+	status = 0;
 	father = fork();
 	if (father == 0)
 	{
