@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 17:12:27 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/12 15:44:53 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/17 16:29:28 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,24 +55,6 @@ char	*mkprompt_intro(size_t *len)
 	}
 }
 
-char	*mkprompt_getcwd(size_t *len)
-{
-	struct s_svar	*voyager;
-
-	voyager = g_svar;
-	while (voyager)
-	{
-		if (!(ft_strcmp(voyager->key, PWD)))
-		{
-			*len += ft_strlen(voyager->value);
-			return (ft_strdup(voyager->value));
-		}
-		voyager = voyager->next;
-	}
-	*len = 0;
-	return (ft_strdup(""));
-}
-
 char	*mkprompt_outro(size_t *len)
 {
 	if (!g_retval)
@@ -87,14 +69,30 @@ char	*mkprompt_outro(size_t *len)
 	}
 }
 
+char		*mkprompt_expand(const char *ps1, size_t *len);
 size_t	mkprompt(char **prompt)
 {
-	size_t len;
+	char			*tmp;
+	struct s_svar	*voyager;
+	size_t			len;
 
+	tmp = NULL;
+	voyager = g_svar;
+	while (voyager)
+	{
+		if (!(ft_strcmp(voyager->key, PS1)))
+		{
+			tmp = voyager->value;
+			break ;
+		}	
+		voyager = voyager->next;
+	}
+	if (!tmp)
+		tmp = "";
 	len = 0;
 	*prompt = ft_strnjoinfree(3,
 			mkprompt_intro(&len),
-			mkprompt_getcwd(&len),
+			mkprompt_expand(tmp, &len),
 			mkprompt_outro(&len));
 	return (len);
 }
