@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/17 20:18:01 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/17 16:32:45 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 extern struct s_svar	*g_svar;
 
-void					ft_init_cursor(t_cursor *cursor)
+void				ft_init_cursor(t_cursor *cursor)
 {
 	cursor->prompt = NULL;
 	cursor->match = NULL;
@@ -37,6 +37,28 @@ void					ft_init_cursor(t_cursor *cursor)
 	cursor->on = 0;
 }
 
+int					ft_strplen(char *str)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (str[i] == '\033')
+		{
+			while (str[i] != 'm')
+				++i;
+			++i;
+		}
+		if (ft_isprint(str[i]))
+			++j;
+		++i;
+	}
+	return (j);
+}
+
 static void				ft_agregate_line(t_cursor *cursor, char **buff)
 {
 	char		*tmp;
@@ -47,9 +69,10 @@ static void				ft_agregate_line(t_cursor *cursor, char **buff)
 	ft_strdel(&(cursor->prompt));
 	write(1, "\n", 1);
 	ft_init_cursor(cursor);
+	
 }
 
-int						read_command(char **buff)
+int					read_command(char **buff)
 {
 	int			ret;
 	t_cursor	cursor;
@@ -64,8 +87,8 @@ int						read_command(char **buff)
 	write(1, "\n", 1);
 	ft_strdel(&(cursor.prompt));
 	ft_init_cursor(&cursor);
-	while (**buff && (ret =
-			mkprompt_quote(*buff, &(cursor.prompt), &(cursor.prompt_len))) == 1)
+	while (**buff
+	&& (ret = mkprompt_quote(*buff, &(cursor.prompt), &(cursor.prompt_len))) == 1)
 		ft_agregate_line(&cursor, buff);
 	if (ret == -1)
 	{
