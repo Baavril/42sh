@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 22:47:47 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/03/07 14:08:19 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/17 18:21:16 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ t_sig			g_sigdispatcher[] =
 	{SIGQUIT, {SIG_IGN, SIG_DFL, &ft_transferkill}},
 	{SIGILL, {SIG_IGN, SIG_DFL, &ft_transferkill}},
 	{SIGTRAP, {SIG_IGN, SIG_DFL, &ft_transferkill}},
-	{SIGABRT, {SIG_IGN, SIG_DFL, &ft_transferkill}},
+	{SIGABRT, {SIG_DFL, SIG_DFL, &ft_transferkill}},
 	{SIGFPE, {SIG_IGN, SIG_DFL, &ft_transferkill}},
-	{SIGBUS, {SIG_IGN, SIG_DFL, &ft_transferkill}},
-	{SIGSEGV, {SIG_IGN, SIG_DFL, &ft_transferkill}},
+	{SIGBUS, {SIG_DFL, SIG_DFL, &ft_transferkill}},
+	{SIGSEGV, {SIG_DFL, SIG_DFL, &ft_transferkill}},
 	{SIGSYS, {SIG_IGN, SIG_DFL, &ft_transferkill}},
 	{SIGPIPE, {SIG_IGN, SIG_DFL, &ft_transferkill}},
 	{SIGALRM, {SIG_IGN, SIG_DFL, &ft_transferkill}},
