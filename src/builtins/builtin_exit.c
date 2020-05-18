@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/28 17:13:43 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/05/18 14:09:00 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,10 @@ int				ft_clean_exit(char **av, int exit_status)
 	}
 	else if (!(av))
 		ft_free_jcont(NO_CHECK);
+	history(DELETE, NULL, NULL);
 	ft_free_shvar();
 	ft_tabdel(&av);
 	ft_tabdel(&environ);
-	history(DELETE, NULL, NULL);
 	ft_free_bintable();
 	set_termcaps(TC_RESTORE);
 	ft_strdel(&g_bgpid);

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 09:48:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/29 16:30:37 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/05/18 14:10:51 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@
 # define OPTINDV		"1"
 # define HISTSIZEV		"500"
 # define HISTFILESIZEV	"500"
-# define HISTFILEV		"/.42sh_history"
+# define HISTFILEV		"/.21sh_history"
 
 struct					s_svar
 {

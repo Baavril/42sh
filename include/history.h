@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 18:26:13 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/09 18:06:51 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/18 14:16:24 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ typedef struct			s_history
 
 int						history(int flag, char **line, char **cmd);
 int						init_history(t_history *history);
-int						modif_hist(t_history **history, int max);
 int						delete_history(t_history *history);
 
 int						assign_file_history(int fd, t_history *history,
@@ -79,7 +78,7 @@ int						get_last(t_history **history, char **cmd);
 int						get_next(t_history **history, char **cmd);
 int						get_previous(t_history **history, char **cmd);
 int						new_history(t_history **history);
-int						assign_max_home(int *max, char **home);
+void					assign_max_home(int *max, char **home);
 int						delete(t_history *history, int flag);
 int						s_exclamation(char **line, t_history *history, int *ret,
 																	char *cmd);
