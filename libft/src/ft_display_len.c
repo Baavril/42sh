@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstpop.c                                        :+:      :+:    :+:   */
+/*   ft_display_len.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgouedar <tgouedar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/03 15:08:13 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/05/16 20:22:12 by tgouedar         ###   ########.fr       */
+/*   Created: 2019/08/22 12:18:59 by tgouedar          #+#    #+#             */
+/*   Updated: 2020/05/17 15:02:17 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void		ft_lstpop(t_list **alist, void (*del)(void *, size_t))
+size_t	ft_display_len(char *str)
 {
-	t_list	*to_pop;
+	size_t	len;
+	size_t	i;
 
-	if (!alist || !*alist)
-		return ;
-	to_pop = *alist;
-	*alist = (*alist)->next;
-	ft_lstdelone(&to_pop, del);
+	i = 0;
+	len = 0;
+	while (str[i])
+	{
+		if (!((str[i] & 0x80) && !(str[i] & 0x40)))
+			len++;
+		i++;
+	}
+	return (len);
 }

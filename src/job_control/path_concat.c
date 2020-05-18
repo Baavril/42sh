@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 13:03:13 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/05 17:37:50 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/05/16 20:07:49 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ int		path_concat(char **bin)
 		return (e_command_not_found);
 	}
 	dirs = ft_strsplit(path, ":");
+	ft_strdel(&path);
 	return (ft_try_dirs(dirs, bin));
 }

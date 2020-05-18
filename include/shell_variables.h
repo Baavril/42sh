@@ -6,7 +6,11 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 09:48:01 by abarthel          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2020/05/18 14:10:51 by yberramd         ###   ########.fr       */
+=======
+/*   Updated: 2020/05/17 20:14:05 by tgouedar         ###   ########.fr       */
+>>>>>>> e8b6a7cbec7d492934760c2cf7c72efe77d9c79a
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +46,7 @@
 ** Values of internal variables
 */
 
-# define PS1V			"42sh> "
+# define PS1V			"\\w "
 # define PS2V			"> "
 # define PS3V			"#? "
 # define PS4V			"$> "

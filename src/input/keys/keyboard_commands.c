@@ -5,12 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bprunev <bprunev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/19 12:41:28 by bprunev           #+#    #+#             */
-/*   Updated: 2020/03/04 15:53:05 by bprunevi         ###   ########.fr       */
+/*   Created: 2019/11/19 12:41:28 by bprunevi          #+#    #+#             */
+/*   Updated: 2020/05/17 19:33:43 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keys.h"
+#include "display.h"
 #include "prompt.h"
 #include "history.h"
 
@@ -41,6 +42,8 @@ int			keyboard_enter(union u_tc *term, char **buff, t_cursor *cursor)
 			history(RESET, buff, NULL);
 			return (0);
 		}
+		cursor->start = ft_strlen(*buff);
+		display(*buff, cursor); 
 		return (0);
 	}
 	return (1);

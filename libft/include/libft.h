@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/01 12:10:29 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/17 14:38:15 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int					ft_memcmp(const void *s1, const void *s2,
 								size_t n) __attribute__((nonnull(1,2)));
 
 size_t				ft_strlen(const char *s) __attribute__((nonnull(1)));
+
+size_t				ft_display_len(char *str) __attribute__((nonnull(1)));
 
 int					ft_numlen(unsigned int nb);
 
@@ -109,6 +111,8 @@ char				*ft_strchr(const char *s, int c) __attribute__
 
 char				*ft_strrchr(const char *s, int c) __attribute__
 					((nonnull(1)));
+
+size_t				ft_strcspn(const char *s, const char *charset);
 
 int					ft_strqchr(char *token, char c) __attribute__((nonnull(1)));
 

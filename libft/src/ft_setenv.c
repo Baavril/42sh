@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 15:49:03 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/23 16:21:29 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/17 11:21:24 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	append_environ(const char *name, const char *value)
 		new_env[nb + 1] = environ[nb];
 		--nb;
 	}
-	new_env[0] = (char*)ft_memalloc(ft_strlen(name) + 1 + ft_strlen(value));
+	new_env[0] = (char*)ft_memalloc(ft_strlen(name) + 2 + ft_strlen(value));
 	tmp = ft_strendcpy(new_env[0], name);
 	tmp = ft_strendcpy(tmp, "=");
 	tmp = ft_strendcpy(tmp, value);

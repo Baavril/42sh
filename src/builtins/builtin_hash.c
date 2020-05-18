@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 17:13:25 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/18 12:24:38 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/05/16 20:15:39 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ static int		ft_find_and_hash(char *bin_name)
 		return (1);
 	}
 	ft_insert_bintable(bin_name, bin_path, NO_HIT);
+	ft_strdel(&bin_path);
 	return (0);
 }
 
