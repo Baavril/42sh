@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 16:12:14 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/09 23:45:17 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/19 14:26:36 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,18 @@ void			print_double_char(char **tab)
 	{
 		ft_putendl(tab[i]);
 		i++;
+	}
+}
+
+static void		ft_separator(int i, char *input, int *new_w, int *tmp)
+{
+	if (ft_isspace(input[i]) || input[i] == '|' || input[i] == '&'
+			|| input[i] == ';')
+		*new_w = 0;
+	else if (*new_w == 0)
+	{
+		*tmp = i;
+		*new_w = 1;
 	}
 }
 
@@ -45,16 +57,7 @@ static int		pos_start(char *input, int start)
 			i++;
 		}
 		else
-		{
-			if (ft_isspace(input[i]) || input[i] == '|' || input[i] == '&'
-					|| input[i] == ';')
-				new_w = 0;
-			else if (new_w == 0)
-			{
-				tmp = i;
-				new_w = 1;
-			}
-		}
+			ft_separator(i, input, &new_w, &tmp);
 		i++;
 	}
 	if (new_w == 1)
@@ -83,7 +86,6 @@ int				ft_restart(char *input, int start)
 int				ft_auto_completion(t_tst *t, char *input, char ***w, int start)
 {
 	int		cursor;
-	int		ret;
 	char	tmp;
 
 	cursor = start;
@@ -92,38 +94,18 @@ int				ft_auto_completion(t_tst *t, char *input, char ***w, int start)
 	input[cursor] = '\0';
 	if (input[start] == '$')
 	{
-		ret = 1;
-		ft_putchar('\n');
-		if (input[start + 1] == '{')
-			ret = 2;
-		if (ft_env_var(&input[start + ret], ret, w) == 0)
-		{
-			input[cursor] = tmp;
-			return (0);
-		}
+		if (init_w_dollar(start, input, w) == 0)
+			return (reinitialize_input(input, cursor, tmp, 0));
 	}
 	else if (start == 0 || ft_restart(input, cursor))
 	{
 		if (((*w) = ft_binary(t, &input[start])) == NULL)
 			if (((*w) = ft_path(&input[start])) == NULL)
-			{
-				input[cursor] = tmp;
-				return (0);
-			}
+				return (reinitialize_input(input, cursor, tmp, 0));
 	}
-	else
-	{
-		if (((*w) = ft_path(&input[start])) == NULL)
-		{
-			input[cursor] = tmp;
-			return (0);
-		}
-	}
+	else if (((*w) = ft_path(&input[start])) == NULL)
+		return (reinitialize_input(input, cursor, tmp, 0));
 	if ((*w) && (*w)[0] != NULL && (*w)[1] == NULL)
-	{
-		input[cursor] = tmp;
-		return (2);
-	}
-	input[cursor] = tmp;
-	return (3);
+		return (reinitialize_input(input, cursor, tmp, 2));
+	return (reinitialize_input(input, cursor, tmp, 3));
 }

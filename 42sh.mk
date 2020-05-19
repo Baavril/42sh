@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/15 16:53:57 by yberramd         ###   ########.fr        #
+#    Updated: 2020/05/19 13:46:50 by yberramd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,7 @@ SOURCES			:=		transversal/program/main.c \
 						input/update_buffer.c \
 						input/auto_completion/auto_completion.c \
 						input/auto_completion/tst.c \
+						input/auto_completion/init.c \
 						input/auto_completion/binary.c \
 						input/auto_completion/env_var.c \
 						input/auto_completion/assign_binary.c \
@@ -70,11 +71,11 @@ SOURCES			:=		transversal/program/main.c \
 						input/history/history.c \
 						input/history/history_search.c \
 						input/history/init_history.c \
+						input/history/new_history.c \
 						input/history/mv_history.c \
 						input/history/clean.c \
 						input/history/exclamation.c \
 						input/history/exclamation2.c \
-						input/history/new_history.c \
 						input/history/search_exclamation.c \
 						input/history/ft_atoi_history.c \
 						input/keys/autocompletion.c \
@@ -178,7 +179,6 @@ SOURCES			:=		transversal/program/main.c \
 						builtins/builtin_type.c \
 						builtins/builtin_exit.c \
 						builtins/builtin_hash.c \
-						builtins/builtin_history.c \
 						builtins/builtin_truefalse.c \
 						builtins/builtin_fc/builtin_fc.c \
 						builtins/builtin_fc/print_history.c \

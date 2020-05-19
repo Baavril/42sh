@@ -6,7 +6,7 @@
 /*   By: tgouedar <tgouedar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 13:37:02 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/05/12 16:35:19 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/18 17:23:39 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static int			ft_update_trig(char *command)
 	return (unclosed_inhib && *(char*)(unclosed_inhib->content) == '#');
 }
 
-
 static size_t		ft_new_input_len(void)
 {
 	size_t		i;
@@ -66,12 +65,11 @@ static size_t		ft_new_input_len(void)
 	return (len);
 }
 
-
 int					ft_trim_comment(void)
 {
 	size_t		i;
 	size_t		j;
-	_Bool		trig;	
+	_Bool		trig;
 	char		*new_input;
 
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: yberramd <yberramd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 23:34:34 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/09 23:45:15 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/19 13:53:09 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static char		*ft_assign_words(char *str, int dollar)
 	return (tmp);
 }
 
-static int		ft_cmp_str(char *str1, char *str2)
+int				ft_cmp_str(char *str1, char *str2)
 {
 	int	i;
 
@@ -98,28 +98,12 @@ int				ft_env_var(char *input, int dollar, char ***words)
 	int				i;
 	int				y;
 	struct s_svar	*tmp;
-	struct s_svar	*tmp2;
 
 	i = 0;
-	y = 0;
 	tmp = g_svar;
-	tmp2 = g_svar;
-	while (tmp2)
-	{
-		if (ft_cmp_str(input, tmp2->key))
-			i++;
-		tmp2 = tmp2->next;
-	}
-	if (i == 0)
-	{
-		(*words) = NULL;
-		return (1);
-	}
-	if (!((*words) = (char**)malloc(sizeof(char*) * (i + 1))))
-	{
-		(*words) = NULL;
-		return (0);
-	}
+	if ((y = ft_init_words(&i, words, input)) < 2)
+		return (y);
+	y = 0;
 	while (tmp)
 	{
 		if (ft_cmp_str(input, tmp->key))

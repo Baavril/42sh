@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 14:21:08 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/13 16:31:36 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/17 15:45:17 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,27 +53,24 @@ static int	w_history(const char *line, int fd)
 	return (1);
 }
 
-static int	mv_hist(t_history **history, int max)
+static void	mv_hist(t_history **history, int max)
 {
 	int	len;
-	int	ret;
+	int	prv;
 
 	len = 0;
-	ret = 0;
-	while ((*history) && (*history)->next && ret++)
+	prv = 0;
+	while ((*history) && (*history)->next && prv++)
 		(*history) = (*history)->next;
-	while ((*history) && (*history)->previous && len++ < (max - 1) && len < ret)
+	while ((*history) && (*history)->previous && len++ < (max - 1) && len < prv)
 		(*history) = (*history)->previous;
-	return (1);
 }
 
 static int	write_history(t_history *history, char *home, int max)
 {
 	int	fd;
-	int	ret;
 
-	if ((ret = mv_hist(&history, max)) <= 0)
-		return (ret);
+	mv_hist(&history, max);
 	if ((fd = open(home, O_WRONLY | O_CREAT | O_APPEND, 0600)) == -1)
 		return (-1);
 	while (history && history->next)
@@ -91,7 +88,6 @@ static int	write_history(t_history *history, char *home, int max)
 int			delete(t_history *history2, int flag)
 {
 	int					max;
-	int					ret;
 	char				*home;
 	static t_history	*history = NULL;
 
@@ -102,12 +98,8 @@ int			delete(t_history *history2, int flag)
 	if (assign_max_home(&max, &home) == 0)
 		return (0);
 	if (home[0] != '\0')
-	{
-		if ((ret = write_history(history, home, max)) == -1)
+		if (write_history(history, home, max) == -1)
 			ft_dprintf(2, "history: can't open %s\n", home);
-		else if (ret == 0)
-			ft_dprintf(2, "cannot allocate memory\n");
-	}
 	ft_strdel(&home);
 	delete_history(history);
 	return (1);

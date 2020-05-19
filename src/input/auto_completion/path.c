@@ -6,13 +6,13 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 18:39:26 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/09 23:32:15 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/19 14:31:51 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "auto_completion.h"
 
-int	realloc_n;
+int	g_realloc;
 
 static char		**ft_realloc(char **words)
 {
@@ -20,8 +20,8 @@ static char		**ft_realloc(char **words)
 	int		i;
 
 	i = 0;
-	realloc_n *= 2;
-	if (!(tmp = (char**)malloc(sizeof(char*) * realloc_n)))
+	g_realloc *= 2;
+	if (!(tmp = (char**)malloc(sizeof(char*) * g_realloc)))
 		return (NULL);
 	while (words[i] != NULL)
 	{
@@ -186,8 +186,8 @@ char			**ft_path(char *input)
 
 	i = 0;
 	dir = NULL;
-	realloc_n = 64;
-	if (!(words = (char**)malloc(sizeof(char*) * realloc_n)))
+	g_realloc = 64;
+	if (!(words = (char**)malloc(sizeof(char*) * g_realloc)))
 		return (NULL);
 	words[0] = NULL;
 	if (input)
@@ -207,7 +207,7 @@ char			**ft_path(char *input)
 		{
 			if (ft_pointchr(point, dirent->d_name))
 			{
-				if (i == realloc_n - 1 && !(words = ft_realloc(words)))
+				if (i == g_realloc - 1 && !(words = ft_realloc(words)))
 				{
 					del_double_char(words);
 					return (NULL);
