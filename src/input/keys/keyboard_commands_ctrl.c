@@ -98,3 +98,22 @@ int			keyboard_ctrl_d(union u_tc *term, char **buff, t_cursor *cursor)
 	}
 	return (1);
 }
+
+int			keyboard_ctrl_search(union u_tc *term, char **buff, t_cursor *cursor)
+{
+	if (term->key == CTRL_D)
+	{
+		if (!**buff)
+			return (keyboard_ctrl_d(term, buff, cursor));
+	}
+	if (term->key == CTRL_C || term->key == CTRL_D)
+	{
+		update_buff(buff, cursor);
+		ft_strdel(&(cursor->prompt));
+		cursor->prompt_len = mkprompt(&(cursor->prompt));
+		cursor->start = ft_strlen(*buff);
+		keyboard_ctrl_c_wiper(buff, cursor);
+		return (0);
+	}
+	return (1);
+}

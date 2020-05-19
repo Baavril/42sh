@@ -67,7 +67,7 @@ int			search_analyzer(union u_tc *term, char **buff, t_cursor *cursor)
 	if (!(keyboard_enter(term, buff, cursor)))
 		return (0);
 	else if (keyboard_ctrl_l(term, buff, cursor) == 0
-	|| keyboard_ctrl_d(term, buff, cursor) == 0
+	|| keyboard_ctrl_search(term, buff, cursor) == 0
 	|| keyboard_ctrl_c(term, buff, cursor) == 0
 	|| keyboard_dispatcher(term, buff, cursor) >= 0)
 	{

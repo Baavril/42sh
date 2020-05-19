@@ -91,6 +91,8 @@ int					keyboard_ctrl_c(union u_tc *term, char **buff,
 															t_cursor *cursor);
 int					keyboard_ctrl_d(union u_tc *term, char **buff,
 															t_cursor *cursor);
+int					keyboard_ctrl_search(union u_tc *term, char **buff,
+															t_cursor *cursor);
 int					keyboard_ctrl_l(union u_tc *term, char **buff,
 															t_cursor *cursor);
 int					keyboard_normal_char(union u_tc *term, char **buff,
