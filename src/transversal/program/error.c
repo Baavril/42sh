@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:56:23 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/15 15:29:26 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/05/19 16:10:57 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ const struct s_error_desc	g_errordesc[] =
 	{ 1, "bad substitution" },
 	{ 1, "cannot assign list to array member" },
 	{ 1, "not found" },
+	{ 1, "event not found" },
 	{ 2, "filename argument required\n.: usage: . filename [arguments]" },
 	{ 2, "cannot allocate memory" },
 	{ 2, "system call error" },

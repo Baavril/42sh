@@ -6,14 +6,16 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 12:08:47 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/07 14:50:39 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/05/19 16:18:34 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "libft.h"
 #include <unistd.h>
+#include "error.h"
 #include <fcntl.h>
+
 
 extern int g_prefix;
 
@@ -41,7 +43,7 @@ int	i_less(t_elem left, t_elem right)
 		ft_dprintf(STDERR_FILENO, "42sh: %s: not a valid file\n", right.c);
 	}
 	else if (!access(right.c, F_OK))
-		ft_dprintf(STDERR_FILENO, "42sh: %s: Premission denied\n", right.c);
+		psherror(e_permission_denied, right.c, e_cmd_type);
 	else
 		ft_dprintf(STDERR_FILENO, "42sh: %s: No such file or directory\n",
 		right.c);
@@ -63,12 +65,12 @@ int	i_great(t_elem left, t_elem right)
 		ft_dprintf(STDERR_FILENO, "42sh: %s: not a valid file\n", right.c);
 	}
 	else if (!access(right.c, F_OK))
-		ft_dprintf(STDERR_FILENO, "42sh: %s: Premission denied\n", right.c);
+		psherror(e_permission_denied, right.c, e_cmd_type);
 	else if ((resfd = open_on_fd(right.c, O_WRONLY | O_CREAT | O_TRUNC,
 			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH, fd1)) != -1)
 		return (resfd);
 	else
-		ft_dprintf(STDERR_FILENO, "42sh: %s: Premission denied\n", right.c);
+		psherror(e_permission_denied, right.c, e_cmd_type);
 	return (-1);
 }
 

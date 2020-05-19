@@ -6,11 +6,12 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 16:00:13 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/10 15:12:36 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/19 16:07:25 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "history.h"
+#include "error.h"
 
 static int	close_bracket(char *line)
 {
@@ -44,7 +45,7 @@ static int	add_exclamation_string(int ret, char **line, char *cmd, int i)
 	(*line)[i] = '\0';
 	if (!(*line = ft_strjoinfree(*line, cmd)))
 	{
-		ft_dprintf(2, "cannot allocate memory\n");
+		psherror(e_cannot_allocate_memory, NULL, e_invalid_type);
 		ft_strdel(&cmd);
 		return (0);
 	}
@@ -81,7 +82,7 @@ int			s_exclamation(char **line, t_history *history, int *ret, char *cmd)
 			}
 			else
 			{
-				ft_dprintf(2, "42sh: %s: event not found\n", &(*line)[i]);
+				psherror(e_event_not_found, &(*line)[i], e_cmd_type);
 				break ;
 			}
 		}

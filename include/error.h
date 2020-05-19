@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:51:41 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/02/12 15:11:52 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/05/19 16:05:34 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ enum							e_minishell_error
 	e_bad_substitution,
 	e_cannot_assign_list_to_array_member,
 	e_not_found,
+	e_event_not_found,
 	e_filename_arg_required,
 	e_cannot_allocate_memory,
 	e_system_call_error,

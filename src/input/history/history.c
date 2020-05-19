@@ -6,12 +6,13 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 13:53:47 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/13 19:53:01 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/19 15:27:54 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "history.h"
+#include "error.h"
 
 static int	add_history(const char *line, t_history *history)
 {
@@ -50,7 +51,8 @@ static int	add_cmd(char *line, t_history *history2)
 		{
 			if (add_history(line, history2) == -1)
 			{
-				ft_dprintf(2, "cannot allocate memory\n");
+				psherror(e_cannot_allocate_memory, NULL,
+					e_invalid_type);
 				return (0);
 			}
 		}

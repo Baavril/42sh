@@ -6,11 +6,12 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 14:21:08 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/18 14:28:08 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/19 14:58:17 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "history.h"
+#include "error.h"
 
 struct s_var	*g_svar;
 
@@ -98,7 +99,7 @@ int			delete(t_history *history2, int flag)
 	assign_max_home(&max, &home);
 	if (home != NULL && home[0] != '\0')
 		if (write_history(history, home, max) == -1)
-			ft_dprintf(2, "history: can't open %s\n", home);
+			psherror(e_permission_denied, home, e_cmd_type);
 	ft_strdel(&home);
 	delete_history(history);
 	return (1);

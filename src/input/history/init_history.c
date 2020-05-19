@@ -6,18 +6,19 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 13:50:19 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/18 14:27:51 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/19 15:35:03 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "history.h"
 #include "shell_variables.h"
+#include "error.h"
 
 struct s_var	*g_svar;
 
 static int	error_clean(int fd, char **get_line, char *home)
 {
-	ft_dprintf(2, "cannot allocate memory\n");
+	psherror(e_cannot_allocate_memory, NULL, e_invalid_type);
 	ft_strdel(&home);
 	close(fd);
 	ft_strdel(get_line);
@@ -71,7 +72,7 @@ int			init_history(t_history *history)
 		return (assign_file_history(fd, history, max, home));
 	if (home == NULL || home[0] != '\0')
 	{
-		ft_dprintf(2, "history: can't open %s\n", home);
+		psherror(e_permission_denied, home, e_cmd_type);
 		ft_strdel(&home);
 		return (0);
 	}
