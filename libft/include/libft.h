@@ -135,6 +135,8 @@ void				ft_putstr(char const *s);
 
 void				ft_putnstr(char const *s, size_t n);
 
+void				ft_putnstr_fd(char const *s, size_t n, int fd);
+
 void				ft_putendl(char const *s);
 
 void				ft_putnbr(int n);

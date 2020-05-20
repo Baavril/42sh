@@ -31,7 +31,7 @@ static void			get_heredoc_line(char **line)
 		buff = ft_strjoinfree(buff, ft_strdup("\n"));
 		expansions_treatment(&buff, 1);
 		*line = ft_strjoinfree(*line, buff);
-		write(1, "\n", 1);
+		write(0, "\n", 1);
 	}
 }
 

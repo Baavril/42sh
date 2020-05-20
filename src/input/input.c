@@ -67,7 +67,7 @@ static void				ft_agregate_line(t_cursor *cursor, char **buff)
 	*buff = ft_strjoinfree(*buff, ft_strdup("\n"));
 	*buff = ft_strjoinfree(*buff, tmp);
 	ft_strdel(&(cursor->prompt));
-	write(1, "\n", 1);
+	write(0, "\n", 1);
 	ft_init_cursor(cursor);
 	
 }
@@ -78,13 +78,13 @@ int					read_command(char **buff)
 	t_cursor	cursor;
 
 	ft_init_cursor(&cursor);
-	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO))
+	if (!isatty(STDIN_FILENO))
 		return (1);
 	if (set_termcaps(TC_INPUT))
 		return (2);
 	cursor.prompt_len = mkprompt(&(cursor.prompt));
 	get_stdin(&cursor, buff);
-	write(1, "\n", 1);
+	write(0, "\n", 1);
 	ft_strdel(&(cursor.prompt));
 	ft_init_cursor(&cursor);
 	while (**buff

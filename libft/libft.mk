@@ -101,6 +101,7 @@ SOURCES	:=	btree_apply_infix.c \
 		ft_putnbr_upphexa.c \
 		ft_putstr.c \
 		ft_putnstr.c \
+		ft_putnstr_fd.c \
 		ft_putstr_fd.c \
 		ft_putuint.c \
 		ft_putuint_octal.c \
