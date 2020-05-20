@@ -39,6 +39,7 @@ char			*check_bin(char **argv)
 	if ((path = ft_getenv("PATH")) || (path = getshvar("PATH")))
 	{
 		path_split = ft_strsplit(&(path[5]), ":");
+		ft_strdel(&path);
 		while (path_split[++i])
 		{
 			if ((tmp = path_join(path_split[i], *argv))
