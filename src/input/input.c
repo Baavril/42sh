@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/08 18:04:26 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/17 16:32:45 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,26 +59,6 @@ int					ft_strplen(char *str)
 	return (j);
 }
 
-int					init_prompt(t_cursor *cursor)
-{
-	struct s_svar	*voyager;
-
-	update_prompt_var();
-	voyager = g_svar;
-	while (voyager)
-	{
-		if (!(ft_strcmp(voyager->key, PS1)))
-		{
-			cursor->prompt_len = ft_strplen(voyager->value);
-			cursor->prompt = ft_strdup(voyager->value);
-			return (0);
-		}
-		voyager = voyager->next;
-	}
-	cursor->prompt_len = 0;
-	return (0);
-}
-
 static void				ft_agregate_line(t_cursor *cursor, char **buff)
 {
 	char		*tmp;
@@ -102,7 +82,7 @@ int					read_command(char **buff)
 		return (1);
 	if (set_termcaps(TC_INPUT))
 		return (2);
-	init_prompt(&cursor);
+	cursor.prompt_len = mkprompt(&(cursor.prompt));
 	get_stdin(&cursor, buff);
 	write(1, "\n", 1);
 	ft_strdel(&(cursor.prompt));

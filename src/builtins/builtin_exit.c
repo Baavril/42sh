@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/13 14:46:18 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/17 19:11:51 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,13 @@
 #include "error.h"
 #include "jcont.h"
 
+int						g_exit_try = 0;
 extern int				g_retval;
 extern char				*g_bgpid;
 extern struct s_svar	*g_svar;
 extern struct s_pos		*g_pos;
 extern t_job			g_curjob;
-extern char			*g_input;
+extern char				*g_input;
 
 static void		ft_free_shvar(void)
 {
@@ -56,7 +57,8 @@ int				ft_clean_exit(char **av, int exit_status)
 {
 	extern char		**environ;
 
-	if ((av) && ft_free_jcont(STOP_CHECK))
+	ft_putstr("exit\n");
+	if ((av) && ft_free_jcont(STOP_CHECK) && g_exit_try < 2)
 	{
 		ft_dprintf(STDERR_FILENO, "There are stopped jobs.\n");
 		return (1);

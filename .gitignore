@@ -1,0 +1,8 @@
+libft/libft.a
+*.o
+*.d
+tags
+21sh
+42sh
+*.swp
+*.swo
