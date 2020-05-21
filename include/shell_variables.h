@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 09:48:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/12 15:43:56 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/17 18:43:23 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 ** Values of internal variables
 */
 
-# define PS1V			"42sh> "
+# define PS1V			"\\w "
 # define PS2V			"> "
 # define PS3V			"#? "
 # define PS4V			"$> "

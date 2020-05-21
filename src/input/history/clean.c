@@ -6,11 +6,12 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 14:21:08 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/19 16:22:19 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/21 16:37:13 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "history.h"
+#include "error.h"
 
 struct s_var	*g_svar;
 
@@ -56,22 +57,24 @@ static int	w_history(const char *line, int fd)
 static void	mv_hist(t_history **history, int max)
 {
 	int	len;
-	int	prv;
 
 	len = 0;
-	prv = 0;
-	while ((*history) && (*history)->next && prv++)
+	while ((*history) && (*history)->next)
 		(*history) = (*history)->next;
-	while ((*history) && (*history)->previous && len++ < (max - 1) && len < prv)
+	while ((*history) && (*history)->previous && len++ < (max - 1))
 		(*history) = (*history)->previous;
 }
 
-static int	write_history(t_history *history, char *home, int max)
+static int	write_history(t_history *history, char *home, char *home2, int max)
 {
 	int	fd;
+	int	ret;
 
+	if (home2 == NULL || ft_strcmp(home, home2) != 0)
+		if ((ret = modif_hist(&history, max)) <= 0)
+			return (ret);
 	mv_hist(&history, max);
-	if ((fd = open(home, O_WRONLY | O_CREAT | O_APPEND, 0600)) == -1)
+	if ((fd = open(home, O_WRONLY | O_CREAT | O_TRUNC, 0600)) == -1)
 		return (-1);
 	while (history && history->next)
 	{
@@ -85,7 +88,7 @@ static int	write_history(t_history *history, char *home, int max)
 	return (1);
 }
 
-int			delete(t_history *history2, int flag)
+int			delete(t_history *history2, int flag, char *home2)
 {
 	int					max;
 	char				*home;
@@ -93,14 +96,17 @@ int			delete(t_history *history2, int flag)
 
 	if (history == NULL)
 		history = history2;
+	if (history == NULL)
+		return (0);
 	if (flag == NEW_HIST)
 		return (new_history(&history));
 	if (assign_max_home(&max, &home) == 0)
 		return (0);
 	if (home[0] != '\0')
-		if (write_history(history, home, max) == -1)
-			ft_dprintf(2, "history: can't open %s\n", home);
+		if (write_history(history, home, home2, max) == -1)
+			psherror(e_permission_denied, home, e_cmd_type);
 	ft_strdel(&home);
+	ft_strdel(&home2);
 	delete_history(history);
 	return (1);
 }

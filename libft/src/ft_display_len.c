@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   curjob.h                                           :+:      :+:    :+:   */
+/*   ft_display_len.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tgouedar <tgouedar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/04 12:31:37 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/16 20:33:49 by tgouedar         ###   ########.fr       */
+/*   Created: 2019/08/22 12:18:59 by tgouedar          #+#    #+#             */
+/*   Updated: 2020/05/17 15:02:17 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CURJOB_H
-# define CURJOB_H
-# include "libft.h"
+#include "libft.h"
 
-typedef int		(*t_flist)(t_elem left, t_elem right);
+size_t	ft_display_len(char *str)
+{
+	size_t	len;
+	size_t	i;
 
-int				curjob_add(t_node *node);
-int				curjob_cat(char *str);
-
-#endif
+	i = 0;
+	len = 0;
+	while (str[i])
+	{
+		if (!((str[i] & 0x80) && !(str[i] & 0x40)))
+			len++;
+		i++;
+	}
+	return (len);
+}

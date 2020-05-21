@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 18:26:13 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/16 20:36:47 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/21 17:20:08 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,19 +67,20 @@ typedef struct			s_history
 }						t_history;
 
 int						history(int flag, char **line, char **cmd);
-int						init_history(t_history *history);
+int						init_history(t_history *history, char **home);
 int						delete_history(t_history *history);
 
 int						assign_file_history(int fd, t_history *history,
-							int max, char *home);
+							int max);
 int						ft_swap_2(t_history **history, char *cmd);
 int						get_first(t_history **history, char **cmd);
+int						modif_hist(t_history **history, int max);
 int						get_last(t_history **history, char **cmd);
 int						get_next(t_history **history, char **cmd);
 int						get_previous(t_history **history, char **cmd);
 int						new_history(t_history **history);
 int						assign_max_home(int *max, char **home);
-int						delete(t_history *history, int flag);
+int						delete(t_history *history, int flag, char *home2);
 int						s_exclamation(char **line, t_history *history, int *ret,
 																	char *cmd);
 int						ft_isseparator(char *str);

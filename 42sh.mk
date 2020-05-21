@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/19 13:46:50 by yberramd         ###   ########.fr        #
+#    Updated: 2020/05/21 14:28:01 by yberramd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ SOURCES			:=		transversal/program/main.c \
 						transversal/pattern_matching/deployement/maker.c \
 						input/input.c \
 						input/prompt.c \
+						input/prompt_grammar.c \
 						input/search_prompt.c \
 						input/quote.c \
 						input/display.c \
