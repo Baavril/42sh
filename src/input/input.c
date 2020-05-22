@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/22 15:06:17 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/22 15:52:23 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include <unistd.h>
 #include <stdint.h>
 
+extern int				g_retval;
 extern struct s_svar	*g_svar;
 
 void					ft_init_cursor(t_cursor *cursor)
@@ -64,6 +65,13 @@ static void				ft_agregate_line(t_cursor *cursor, char **buff)
 	char		*tmp;
 
 	get_stdin(cursor, &tmp);
+	if (g_retval == 130)
+	{
+		ft_strdel(buff);
+		ft_strdel(&tmp);
+		*buff = ft_strdup("");
+		return ;
+	}
 	*buff = ft_strjoinfree(*buff, ft_strdup("\n"));
 	*buff = ft_strjoinfree(*buff, tmp);
 	ft_strdel(&(cursor->prompt));

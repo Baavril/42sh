@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:13:16 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/22 15:10:13 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/22 15:51:52 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,12 @@ int			keyboard_ctrl_l(union u_tc *term, char **buff, t_cursor *cursor)
 
 static int	keyboard_ctrl_c_wiper(char **buff, t_cursor *cursor)
 {
-	char	*tmp;
-	int		tmp_len;
-
-	tmp = NULL;
-	tmp_len = 0;
 	ft_strdel(buff);
+	ft_strdel(&(cursor->prompt));
 	*buff = ft_strdup("");
-	tmp = cursor->prompt;
-	tmp_len = cursor->prompt_len;
 	ft_init_cursor(cursor);
-	cursor->prompt = tmp;
-	cursor->prompt_len = tmp_len;
 	ft_putchar('\n');
+	cursor->prompt_len = mkprompt(&(cursor->prompt));
 	ft_check_bgstatus();
 	g_retval = 130;
 	return (0);
@@ -72,6 +65,7 @@ int			keyboard_ctrl_c(union u_tc *term, char **buff, t_cursor *cursor)
 			return (0);
 		}
 		keyboard_ctrl_c_wiper(buff, cursor);
+		return (0);
 	}
 	return (1);
 }
