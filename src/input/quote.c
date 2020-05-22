@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 11:16:45 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/05/13 17:36:40 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/22 12:03:18 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static int				ft_close_match(char open, char inhib)
 		return ((inhib == ']'));
 	if (open == '{')
 		return ((inhib == '}'));
+	if (open == '#')
+		return ((inhib == '\n'));
 	return (0);
 }
 
@@ -47,30 +49,42 @@ int						ft_treat_inhib(t_list **unclosed_inhib, char inhib)
 	}
 	if (ft_close_match(open, inhib))
 		ft_lstpop(unclosed_inhib, &ft_lst_strdel);
-	else if (open != '\'' && open != '\"')
+	else if (inhib == '#')
+	{
+		if (!ft_isin(open, INHIB_COM))
+			ft_lstadd(unclosed_inhib, ft_lstnew(&inhib, 1));
+	}
+	else if (!ft_isin(open, QUOTES) && inhib != '\n')
 		ft_lstadd(unclosed_inhib, ft_lstnew(&inhib, 1));
 	return (0);
 }
 
+void					ft_inhib_exception(t_list **unclosed_inhib,
+														char **command, char open)
+{
+	if (**command == '$' && open != '\'')
+	{
+		if (*(*command + 1) == '{' || *(*command + 1) == '(')
+			ft_lstadd(unclosed_inhib, ft_lstnew(++(*command), 1));
+	}
+}
+
 int						quote_prompt(t_list **unclosed_inhib, char *command)
 {
+	char	open;
+
 	while (*command)
 	{
+		open = ((*unclosed_inhib)) ? *((char*)((*unclosed_inhib)->content)) : 0;
 		if (*command == '\\')
 		{
-			if (!(*unclosed_inhib)
-			|| *((char*)((*unclosed_inhib)->content)) != '\'')
+			if (open != '\'')
 				command++;
 			if (!(*command))
 				return (ESC_NL);
 		}
 		else if (*command == '$')
-		{
-			if (!(*unclosed_inhib
-			&& *((char*)((*unclosed_inhib)->content)) == '\'')
-			&& *(command + 1) == '{')
-				ft_lstadd(unclosed_inhib, ft_lstnew(++command, 1));
-		}
+			ft_inhib_exception(unclosed_inhib, &command, open);
 		else if (ft_isin(*command, INHIB))
 		{
 			if (ft_treat_inhib(unclosed_inhib, *command) == 1)
@@ -78,5 +92,7 @@ int						quote_prompt(t_list **unclosed_inhib, char *command)
 		}
 		command++;
 	}
+	if (*unclosed_inhib && *((char*)((*unclosed_inhib)->content)) == '#')
+		ft_lstpop(unclosed_inhib, &ft_lst_strdel);
 	return (NO_ERR);
 }

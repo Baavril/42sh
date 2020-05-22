@@ -6,7 +6,7 @@
 /*   By: tgouedar <tgouedar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 13:37:02 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/05/12 16:35:19 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/22 12:00:28 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,25 @@ char				*g_input;
 static int			ft_update_trig(char *command)
 {
 	static t_list			*unclosed_inhib = NULL;
+	static _Bool			dollar;
+	char					open;
 
-	if (unclosed_inhib && *(char*)(unclosed_inhib->content) == '\\')
+	open = (unclosed_inhib) ? *((char*)(unclosed_inhib->content)) : 0;
+	if (open == '\\')
 	{
 		ft_lstpop(&unclosed_inhib, &ft_lst_strdel);
 		return (0);
 	}
-	if (ft_isin(*command, INHIB))
+	if (*command == '$')
+		dollar = (open != '\'');
+	else if (dollar)
 	{
-		if (!(unclosed_inhib && *(char*)(unclosed_inhib->content) == '#'))
-			ft_treat_inhib(&unclosed_inhib, *command);
+		if ((*command == '{' || *command == '(') && !(dollar = 0))
+			ft_lstadd(&unclosed_inhib, ft_lstnew(command, 1));
 	}
-	else if (*command == '\n')
-	{
-		if (unclosed_inhib && *(char*)(unclosed_inhib->content) == '#')
-			ft_lstpop(&unclosed_inhib, &ft_lst_strdel);
-	}
-	else if (*command == '\\' && !unclosed_inhib)
-		ft_lstadd(&unclosed_inhib, ft_lstnew(command, 1));
-	else if (*command == '#' && !unclosed_inhib)
+	else if (ft_isin(*command, INHIB))
+		ft_treat_inhib(&unclosed_inhib, *command);
+	else if (*command == '\\' && !ft_isin(open, QUOTES))
 		ft_lstadd(&unclosed_inhib, ft_lstnew(command, 1));
 	else if (!(*command))
 		ft_lstdel(&unclosed_inhib, &ft_lst_strdel);
