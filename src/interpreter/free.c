@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 08:40:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/16 20:48:04 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/22 13:35:31 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,7 @@ int				expand_tree(t_node *node, int fork_builtin)
 		return (1);
 	node_type = shape(node);
 	if (node->f == i_pipe_sequence)
-	{
-		ft_printf("pipe!\n");
 		fork_builtin = 1;
-	}
 	if (node->left.c || node->left.v)
 	{
 		if ((node_type & 0b10) && !(curjob_cat(node->left.c)))
