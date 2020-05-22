@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:56:23 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/19 16:10:57 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/22 16:27:47 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ const struct s_error_desc	g_errordesc[] =
 	{ 2, "filename argument required\n.: usage: . filename [arguments]" },
 	{ 2, "cannot allocate memory" },
 	{ 2, "system call error" },
+	{ 2, "unexpected End Of File token reached" },
 	{ 126, "permission denied" },
 	{ 126, "is a directory" },
 	{ 127, "command not found" },

@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:51:41 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/19 16:05:34 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/22 16:27:43 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ enum							e_minishell_error
 	e_filename_arg_required,
 	e_cannot_allocate_memory,
 	e_system_call_error,
+	e_eof_reached,
 	e_permission_denied,
 	e_is_a_directory,
 	e_command_not_found,

@@ -6,22 +6,24 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/22 15:52:23 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/22 16:33:22 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "keys.h"
 #include "libft.h"
 #include "input.h"
-#include "termcaps.h"
-#include "keys.h"
+#include "error.h"
 #include "prompt.h"
 #include "display.h"
 #include "history.h"
+#include "termcaps.h"
 #include "shell_variables.h"
 
 #include <unistd.h>
 #include <stdint.h>
 
+int						g_input_mode = 0;
 extern int				g_retval;
 extern struct s_svar	*g_svar;
 
@@ -64,9 +66,12 @@ static void				ft_agregate_line(t_cursor *cursor, char **buff)
 {
 	char		*tmp;
 
+	g_input_mode = QUOTE_INPUT;
 	get_stdin(cursor, &tmp);
-	if (g_retval == 130)
+	if (g_input_mode == STD_INPUT)
 	{
+		if (g_retval == 146)
+			psherror(e_eof_reached, "", e_invalid_type);
 		ft_strdel(buff);
 		ft_strdel(&tmp);
 		*buff = ft_strdup("");
@@ -90,6 +95,7 @@ int						read_command(char **buff)
 	if (set_termcaps(TC_INPUT))
 		return (2);
 	cursor.prompt_len = mkprompt(&(cursor.prompt));
+	g_input_mode = STD_INPUT;
 	get_stdin(&cursor, buff);
 	write(0, "\n", 1);
 	ft_strdel(&(cursor.prompt));

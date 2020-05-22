@@ -6,12 +6,13 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:13:16 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/22 15:51:52 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/22 16:34:13 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keys.h"
 #include "jcont.h"
+#include "input.h"
 #include "error.h"
 #include "prompt.h"
 
@@ -19,6 +20,7 @@
 #include <curses.h>
 
 extern int	g_retval;
+extern int	g_input_mode;
 
 int			keyboard_ctrl_l(union u_tc *term, char **buff, t_cursor *cursor)
 {
@@ -48,6 +50,7 @@ static int	keyboard_ctrl_c_wiper(char **buff, t_cursor *cursor)
 	cursor->prompt_len = mkprompt(&(cursor->prompt));
 	ft_check_bgstatus();
 	g_retval = 130;
+	g_input_mode = STD_INPUT;
 	return (0);
 }
 
@@ -83,12 +86,15 @@ int			keyboard_ctrl_d(union u_tc *term, char **buff, t_cursor *cursor)
 		}
 		if (*buff && **buff)
 			delete_key(buff, cursor);
-		else
+		else if (g_input_mode == STD_INPUT)
 		{
 			ft_putendl("exit");
 			if (ft_clean_exit(NULL, g_retval))
 				g_retval = 146;
 		}
+		keyboard_ctrl_c_wiper(buff, cursor);
+		g_retval = 146;
+		return (0);
 	}
 	return (1);
 }
