@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 13:04:49 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/19 14:22:56 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/22 14:49:07 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int					assign_words(t_tst *tst, char **words, char *input,
 int					del_tst(t_tst *tst);
 int					ft_cmp_str(char *str1, char *str2);
 int					init_w_dollar(int start, char *input, char ***w);
-int					reinitialize_input(char *input, int cursor, char tmp, int ret);
+int					reinitialize_input(char *input, int cursor, char tmp,
+																	int ret);
 int					search_tst(t_tst *tst, char *str);
 int					ft_init_words(int *i, char ***words, char *input);
 int					ft_auto_completion(t_tst *tst, char *input, char ***words,

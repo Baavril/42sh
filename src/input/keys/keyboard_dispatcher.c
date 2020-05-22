@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 12:42:22 by bprunev           #+#    #+#             */
-/*   Updated: 2020/05/16 20:46:28 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/22 14:52:36 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,19 @@ t_dispatch_keys		g_dispatch_keys[] =
 };
 
 static char		*g_keylist[] = {
-		"kl",
-		"kr",
-		"ku",
-		"kd",
-		"kD",
-		"kh",
-		"kN",
-		"kP",
-		NULL,
-		"F\0",
-		"1;2A",
-		"1;2B",
-		NULL
+	"kl",
+	"kr",
+	"ku",
+	"kd",
+	"kD",
+	"kh",
+	"kN",
+	"kP",
+	NULL,
+	"F\0",
+	"1;2A",
+	"1;2B",
+	NULL
 };
 
 int		init_key_tab(void)

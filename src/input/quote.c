@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 11:16:45 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/05/22 12:19:01 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/22 14:47:54 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int						ft_treat_inhib(t_list **unclosed_inhib, char inhib)
 }
 
 static void				ft_inhib_exception(t_list **unclosed_inhib,
-														char **command, char open)
+													char **command, char open)
 {
 	if (**command == '$' && open != '\'')
 	{

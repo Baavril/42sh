@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 12:41:28 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/17 13:49:06 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/22 14:53:50 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int			keyboard_enter(union u_tc *term, char **buff, t_cursor *cursor)
 			return (0);
 		}
 		cursor->start = ft_strlen(*buff);
-		display(*buff, cursor); 
+		display(*buff, cursor);
 		return (0);
 	}
 	return (1);
