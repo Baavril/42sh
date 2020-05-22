@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:13:16 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/05 15:20:12 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/22 15:10:13 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,8 @@ int			keyboard_ctrl_d(union u_tc *term, char **buff, t_cursor *cursor)
 	return (1);
 }
 
-int			keyboard_ctrl_search(union u_tc *term, char **buff, t_cursor *cursor)
+int			keyboard_ctrl_search(union u_tc *term, char **buff,
+														t_cursor *cursor)
 {
 	if (term->key == CTRL_D)
 	{
