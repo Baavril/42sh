@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/22 16:33:22 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/22 16:43:28 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,11 @@ int						read_command(char **buff)
 	t_cursor	cursor;
 
 	ft_init_cursor(&cursor);
-	if (!isatty(STDIN_FILENO))
+	if ((g_input_mode = STD_INPUT) && !isatty(STDIN_FILENO))
 		return (1);
 	if (set_termcaps(TC_INPUT))
 		return (2);
 	cursor.prompt_len = mkprompt(&(cursor.prompt));
-	g_input_mode = STD_INPUT;
 	get_stdin(&cursor, buff);
 	write(0, "\n", 1);
 	ft_strdel(&(cursor.prompt));
