@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_test_dispatchers.c                         :+:      :+:    :+:   */
+/*   test_dispatchers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/02/29 19:49:25 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/05/18 17:34:41 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ int				return_tests(int argc, char **argv)
 						E_SUCCESS) ? E_SUCCESS : ret);
 		if (argc > 2 && *argv[i + 1] == '-')
 			return (((ret = ft_dispatch_d_option(&argv[i], DOUBLE_OPT, argc)) ==
-						E_SUCCESS) ? E_SUCCESS : ret);
+					E_SUCCESS) ? E_SUCCESS : ret);
 		return (((ret = ft_string_tests(argc, &argv[i])) ==
 					E_SUCCESS) ? E_SUCCESS : ret);
 		// IMPORTANT: pourquoi le while si on return toujours au premier tour ???

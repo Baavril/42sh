@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/12 16:38:25 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/19 16:21:48 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,15 +93,15 @@ static int	alloc_error(void)
 	return (1);
 }
 
-char 		*parse_argv(int argc, char **argv)
+char		*parse_argv(int argc, char **argv)
 {
 	if (argc > 1)
 	{
 		if (!ft_strcmp(argv[1], "-c"))
-				return(ft_strdup(argv[2]));
+			return (ft_strdup(argv[2]));
 		open_on_fd(argv[1], O_RDONLY, 0, 0);
 	}
-	return(NULL);
+	return (NULL);
 }
 
 int			main(int argc, char **argv)
@@ -112,7 +112,7 @@ int			main(int argc, char **argv)
 	g_input = parse_argv(argc, argv);
 	if (ft_shell_init() == e_cannot_allocate_memory)
 		return (alloc_error());
-	while ( (argc > 0) && ((g_input != NULL && (argc = -1))
+	while ((argc > 0) && ((g_input != NULL && (argc = -1))
 						|| (argc == 1 && !read_command(&g_input))
 						|| get_next_line(0, &g_input)))
 	{

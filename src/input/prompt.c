@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 17:12:27 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/17 16:29:28 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/21 14:18:39 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ char	*mkprompt_outro(size_t *len)
 	}
 }
 
-char		*mkprompt_expand(const char *ps1, size_t *len);
 size_t	mkprompt(char **prompt)
 {
 	char			*tmp;

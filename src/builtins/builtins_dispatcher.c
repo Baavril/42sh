@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/17 19:12:27 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/19 16:24:12 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ const t_builtins	g_builtins[] =
 	{ "true", &cmd_true},
 	{ "false", &cmd_false},
 	{ "type", &cmd_type},
-	{ "history", &cmd_history},
 	{ "test", &cmd_test},
 	{ "fc", &cmd_fc},
 	{ "fg", &cmd_fg},
@@ -49,9 +48,9 @@ const t_builtins	g_builtins[] =
 _Bool				prior_builtin(char *str)
 {
 	const struct s_prior_builtin	pbuiltin_list[] =
-	{ {"alias"}, {"unalias"}, {"echo"}, {"exit"}, {"hash"}, {"cd"}, {"type"},
-		{"test"}, {"set"}, {"fc"}, {"fg"}, {"bg"}, {"jobs"}, {"export"},
-		{"unset"}, {"\0"} };
+	{ {"alias"}, {"unalias"}, {"echo"}, {"exit"}, {"hash"}, 
+		{"cd"}, {"type"}, {"test"}, {"set"}, {"fc"}, {"fg"},
+		{"bg"}, {"jobs"}, {"export"}, {"unset"}, {"\0"} };
 	int								i;
 
 	i = 0;
@@ -91,9 +90,9 @@ int					is_a_builtin(char *cmd)
 
 int					builtins_dispatcher(char **argv)
 {
-	int			(*f)(int, char**);
-	int			ret;
-	int			argc;
+	int		(*f)(int, char**);
+	int		ret;
+	int		argc;
 
 	argc = 0;
 	ret = EXIT_STATUS;

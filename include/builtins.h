@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/29 16:25:42 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/18 17:27:19 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int						cmd_env(int argc, char **argv);
 int						cmd_pwd(int argc, char **argv);
 int						cmd_hash(int argc, char **argv);
 int						cmd_cd(int argc, char **argv);
-int						cmd_history(int argc, char **argv);
 int						cmd_alias(int ac, char **av);
 int						cmd_unalias(int ac, char **av);
 int						cmd_set(int argc, char **argv);

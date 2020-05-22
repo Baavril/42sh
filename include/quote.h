@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 15:48:33 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/22 12:01:37 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/22 12:16:31 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 void		ft_lst_strdel(void *content, size_t content_size);
 int			quote_prompt(t_list **unclosed_inhib, char *command);
 int			ft_treat_inhib(t_list **unclosed_inhib, char inhib);
-void		ft_inhib_exception(t_list **unclosed_inhib,
-									char **command, char open);
+char		*mkprompt_expand(const char *ps1, size_t *len);
 
 #endif

@@ -6,33 +6,32 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 13:50:19 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/16 20:45:40 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/21 18:00:02 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "history.h"
+#include "error.h"
 #include "shell_variables.h"
 
 struct s_var	*g_svar;
 
-static int	error_clean(int fd, char **get_line, char *home)
+static int	error_clean(int fd, char **get_line)
 {
-	ft_dprintf(2, "cannot allocate memory\n");
-	ft_strdel(&home);
+	psherror(e_cannot_allocate_memory, NULL, e_invalid_type);
 	close(fd);
 	ft_strdel(get_line);
 	return (0);
 }
 
-static int	init_clean(int fd, char **get_line, char *home)
+static int	init_clean(int fd, char **get_line)
 {
 	close(fd);
-	ft_strdel(&home);
 	ft_strdel(get_line);
 	return (1);
 }
 
-int			assign_file_history(int fd, t_history *hist, int max, char *home)
+int			assign_file_history(int fd, t_history *hist, int max)
 {
 	int		len;
 	char	*get_line;
@@ -42,9 +41,9 @@ int			assign_file_history(int fd, t_history *hist, int max, char *home)
 	while (get_next_line(fd, &get_line) > 0 && len < max)
 	{
 		if (!(hist->str = ft_strdup(get_line)))
-			return (error_clean(fd, &get_line, home));
+			return (error_clean(fd, &get_line));
 		if (!(hist->next = (t_history*)malloc(sizeof(t_history))))
-			return (error_clean(fd, &get_line, home));
+			return (error_clean(fd, &get_line));
 		hist->next->previous = hist;
 		hist = hist->next;
 		ft_strdel(&get_line);
@@ -56,25 +55,23 @@ int			assign_file_history(int fd, t_history *hist, int max, char *home)
 		free(hist->next);
 		hist->next = NULL;
 	}
-	return (init_clean(fd, &get_line, home));
+	return (init_clean(fd, &get_line));
 }
 
-int			init_history(t_history *history)
+int			init_history(t_history *history, char **home)
 {
 	int		fd;
 	int		max;
-	char	*home;
 
-	if (assign_max_home(&max, &home) == 0)
+	if (assign_max_home(&max, home) == 0)
 		return (0);
-	if (home[0] != '\0' && (fd = open(home, O_RDONLY | O_CREAT, 0600)) != -1)
-		return (assign_file_history(fd, history, max, home));
-	if (home == NULL || home[0] != '\0')
+	if ((*home)[0] != '\0' && (fd = open((*home), O_RDONLY |
+			O_CREAT, 0600)) != -1)
+		return (assign_file_history(fd, history, max));
+	if ((*home) == NULL || (*home)[0] != '\0')
 	{
-		ft_dprintf(2, "history: can't open %s\n", home);
-		ft_strdel(&home);
+		psherror(e_permission_denied, (*home), e_cmd_type);
 		return (0);
 	}
-	ft_strdel(&home);
 	return (1);
 }
