@@ -6,13 +6,14 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:50:48 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/01/18 10:50:11 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/22 14:42:24 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "jcont.h"
 
 extern t_jcont		g_jcont;
+extern t_job		g_curjob;
 
 void				ft_sigchld_handler(int nbr)
 {
@@ -29,7 +30,8 @@ void				ft_sigchld_handler(int nbr)
 			job->status = ret_status | (BACKGROUND & job->status);
 			process = ft_get_process_from_job(job, pid);
 		}
-		else if (!(process = ft_get_process_pid(pid)))
+		else if (!(process = ft_get_process_pid(pid))
+				&& !(process = ft_get_process_from_job(&g_curjob, pid)))
 			continue ;
 		process->status = ret_status;
 	}
