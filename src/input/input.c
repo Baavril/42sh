@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/22 16:43:28 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/23 13:16:37 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int						read_command(char **buff)
 	int			ret;
 	t_cursor	cursor;
 
+	ret = 0;
 	ft_init_cursor(&cursor);
 	if ((g_input_mode = STD_INPUT) && !isatty(STDIN_FILENO))
 		return (1);
@@ -99,9 +100,8 @@ int						read_command(char **buff)
 	write(0, "\n", 1);
 	ft_strdel(&(cursor.prompt));
 	ft_init_cursor(&cursor);
-	while (**buff
-	&& (ret = mkprompt_quote(*buff, &(cursor.prompt),
-										&(cursor.prompt_len))) == 1)
+	while (**buff && (ret = mkprompt_quote(*buff,
+							&(cursor.prompt), &(cursor.prompt_len))) == 1)
 		ft_agregate_line(&cursor, buff);
 	if (ret == -1)
 	{
