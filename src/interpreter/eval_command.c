@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 16:26:31 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/20 17:20:45 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/23 18:18:09 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ char			*check_bin(char **argv)
 	int			i;
 
 	i = -1;
-	if ((path = ft_getenv("PATH")) || (path = getshvar("PATH")))
+	if ((path = ft_getenv("PATH"))
+	|| (path = getshvar("PATH")))
 	{
 		path_split = ft_strsplit(&(path[5]), ":");
 		ft_strdel(&path);

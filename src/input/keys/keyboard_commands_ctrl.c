@@ -6,12 +6,13 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:13:16 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/05 15:20:12 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/22 16:34:13 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keys.h"
 #include "jcont.h"
+#include "input.h"
 #include "error.h"
 #include "prompt.h"
 
@@ -19,6 +20,7 @@
 #include <curses.h>
 
 extern int	g_retval;
+extern int	g_input_mode;
 
 int			keyboard_ctrl_l(union u_tc *term, char **buff, t_cursor *cursor)
 {
@@ -40,21 +42,15 @@ int			keyboard_ctrl_l(union u_tc *term, char **buff, t_cursor *cursor)
 
 static int	keyboard_ctrl_c_wiper(char **buff, t_cursor *cursor)
 {
-	char	*tmp;
-	int		tmp_len;
-
-	tmp = NULL;
-	tmp_len = 0;
 	ft_strdel(buff);
+	ft_strdel(&(cursor->prompt));
 	*buff = ft_strdup("");
-	tmp = cursor->prompt;
-	tmp_len = cursor->prompt_len;
 	ft_init_cursor(cursor);
-	cursor->prompt = tmp;
-	cursor->prompt_len = tmp_len;
 	ft_putchar('\n');
+	cursor->prompt_len = mkprompt(&(cursor->prompt));
 	ft_check_bgstatus();
 	g_retval = 130;
+	g_input_mode = STD_INPUT;
 	return (0);
 }
 
@@ -72,6 +68,7 @@ int			keyboard_ctrl_c(union u_tc *term, char **buff, t_cursor *cursor)
 			return (0);
 		}
 		keyboard_ctrl_c_wiper(buff, cursor);
+		return (0);
 	}
 	return (1);
 }
@@ -89,17 +86,21 @@ int			keyboard_ctrl_d(union u_tc *term, char **buff, t_cursor *cursor)
 		}
 		if (*buff && **buff)
 			delete_key(buff, cursor);
-		else
+		else if (g_input_mode == STD_INPUT)
 		{
 			ft_putendl("exit");
 			if (ft_clean_exit(NULL, g_retval))
 				g_retval = 146;
 		}
+		keyboard_ctrl_c_wiper(buff, cursor);
+		g_retval = 146;
+		return (0);
 	}
 	return (1);
 }
 
-int			keyboard_ctrl_search(union u_tc *term, char **buff, t_cursor *cursor)
+int			keyboard_ctrl_search(union u_tc *term, char **buff,
+														t_cursor *cursor)
 {
 	if (term->key == CTRL_D)
 	{

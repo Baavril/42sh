@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 17:02:43 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/05/15 14:59:26 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/22 16:15:03 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <unistd.h>
 
 extern int		g_ppid;
+extern int		g_input_mode;
 
 static size_t	ft_get_input_len(char *input)
 {

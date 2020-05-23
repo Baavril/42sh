@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 12:11:17 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/01 17:10:25 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/22 16:11:55 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@
 # define CTRL_Z		0x1a
 # define ESC		'\033'
 # define INPUT_SIZE	256
+
+# define STD_INPUT		1
+# define QUOTE_INPUT	2
 
 char				*g_copybuff;
 char				*g_inside_history;

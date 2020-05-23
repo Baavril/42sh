@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 17:12:27 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/17 20:21:13 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/22 15:07:32 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ size_t	mkprompt(char **prompt)
 		{
 			tmp = voyager->value;
 			break ;
-		}	
+		}
 		voyager = voyager->next;
 	}
 	if (!tmp)
