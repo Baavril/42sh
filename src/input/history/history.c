@@ -6,13 +6,12 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 13:53:47 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/19 15:27:54 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/21 18:01:16 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "history.h"
-#include "error.h"
 
 static int	add_history(const char *line, t_history *history)
 {
@@ -51,8 +50,7 @@ static int	add_cmd(char *line, t_history *history2)
 		{
 			if (add_history(line, history2) == -1)
 			{
-				psherror(e_cannot_allocate_memory, NULL,
-					e_invalid_type);
+				ft_dprintf(2, "cannot allocate memory\n");
 				return (0);
 			}
 		}
@@ -113,14 +111,15 @@ static int	history_move(t_history *history_2, char **cmd, int flag)
 int			history(int flag, char **line, char **cmd)
 {
 	static t_history	history = {NULL, NULL, NULL};
+	static char			*home = NULL;
 
 	if (flag == BACKWARD || flag == FORWARD || flag == GET
 			|| flag == FIRST || flag == LAST || flag == SWAP)
 		return (history_move(&history, cmd, flag));
 	if (flag == INIT)
-		return (init_history(&history));
+		return (init_history(&history, &home));
 	if (flag == DELETE || flag == NEW_HIST)
-		return (delete(&history, flag));
+		return (delete(&history, flag, home));
 	if (flag == ADD_CMD)
 		return (init_exclamation(line, &history));
 	if (flag == SEARCH || flag == RESET)
