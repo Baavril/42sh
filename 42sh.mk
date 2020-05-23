@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/21 14:28:01 by yberramd         ###   ########.fr        #
+#    Updated: 2020/05/23 17:49:12 by yberramd         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,10 @@ SOURCES			:=		transversal/program/main.c \
 						input/analyzer.c \
 						input/update_buffer.c \
 						input/auto_completion/auto_completion.c \
+						input/auto_completion/ft_assign_char.c \
+						input/auto_completion/add_file.c \
+						input/auto_completion/new_word.c \
+						input/auto_completion/create_tst.c \
 						input/auto_completion/tst.c \
 						input/auto_completion/init.c \
 						input/auto_completion/binary.c \
@@ -80,6 +84,8 @@ SOURCES			:=		transversal/program/main.c \
 						input/history/search_exclamation.c \
 						input/history/ft_atoi_history.c \
 						input/keys/autocompletion.c \
+						input/keys/ft_string.c \
+						input/keys/dynamic_comp.c \
 						input/keys/keyboard_commands.c \
 						input/keys/keyboard_commands_ctrl.c \
 						input/keys/keyboard_dispatcher.c \

@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 14:30:55 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/09 21:20:01 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/23 15:27:52 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,25 +41,6 @@ int				del_tst(t_tst *tst)
 			del_tst(tst->left);
 		free(tst);
 		tst = NULL;
-	}
-	return (0);
-}
-
-int				search_tst(t_tst *tst, char *str)
-{
-	if (tst)
-	{
-		if ((*str) != '\0')
-		{
-			if ((*str) == tst->c)
-				return (search_tst(tst->middle, (str + 1)));
-			if ((*str) > tst->c)
-				return (search_tst(tst->right, str));
-			if ((*str) < tst->c)
-				return (search_tst(tst->left, str));
-		}
-		if (tst->end == true)
-			return (1);
 	}
 	return (0);
 }
@@ -109,143 +90,6 @@ static char		**create_dir(char *path_src, int i, int len)
 	}
 	ft_strdel(&cp);
 	return (dir);
-}
-
-static t_tst	*first_cpy(char *str, t_tst **tst, int i)
-{
-	t_tst	*cpy;
-
-	if (!(cpy = (t_tst*)malloc(sizeof(t_tst))))
-		return (NULL);
-	(*tst) = cpy;
-	cpy->left = NULL;
-	cpy->right = NULL;
-	cpy->middle = NULL;
-	cpy->c = str[i];
-	cpy->end = false;
-	return (cpy);
-}
-
-static int		assign_cpy(char *str, t_tst **cpy, int i)
-{
-	if (!((*cpy)->middle = (t_tst*)malloc(sizeof(t_tst))))
-		return (-1);
-	(*cpy) = (*cpy)->middle;
-	(*cpy)->left = NULL;
-	(*cpy)->right = NULL;
-	(*cpy)->middle = NULL;
-	(*cpy)->c = str[i];
-	(*cpy)->end = false;
-	return (1);
-}
-
-static int		new_word(char *str, t_tst **tst, int i)
-{
-	t_tst	*cpy;
-
-	if (str[i] != '\0')
-	{
-		if (!(cpy = first_cpy(str, tst, i)))
-			return (-1);
-		i++;
-	}
-	while (str[i] != '\0')
-	{
-		if (assign_cpy(str, &cpy, i++) == -1)
-			return (-1);
-	}
-	if (i != 0)
-	{
-		if (!(cpy->middle = (t_tst*)malloc(sizeof(t_tst))))
-			return (-1);
-		cpy = cpy->middle;
-		cpy->c = '\0';
-		cpy->end = true;
-		cpy->left = NULL;
-		cpy->right = NULL;
-		cpy->middle = NULL;
-	}
-	return (1);
-}
-
-static int		last_char(t_tst **tst)
-{
-	t_tst	*cpy;
-
-	cpy = NULL;
-	if ((*tst)->middle)
-		(*tst)->end = true;
-	else
-	{
-		if (!(cpy = (t_tst*)malloc(sizeof(t_tst))))
-			return (-1);
-		(*tst)->middle = cpy;
-		cpy->c = '\0';
-		cpy->end = true;
-		cpy->left = NULL;
-		cpy->middle = NULL;
-		cpy->right = NULL;
-	}
-	return (1);
-}
-
-static int		add_word(char *str, t_tst *tst)
-{
-	int		i;
-
-	i = 0;
-	while (str[i] != '\0' && tst->c != '\0')
-	{
-		if (str[i] == tst->c)
-		{
-			tst = tst->middle;
-			i++;
-		}
-		if (tst->c != '\0' && str[i] > tst->c && str[i] != '\0')
-		{
-			if (tst->right != NULL)
-				tst = tst->right;
-			else
-				return (new_word(str, &tst->right, i));
-		}
-		if (tst->c != '\0' && str[i] < tst->c && str[i] != '\0')
-		{
-			if (tst->left != NULL)
-				tst = tst->left;
-			else
-				return (new_word(str, &tst->left, i));
-		}
-	}
-	if (tst->c == '\0' && str[i] != '\0')
-	{
-		tst->c = str[i];
-		i++;
-	}
-	if (str[i] != '\0')
-		return (new_word(str, &tst->middle, i));
-	if (tst->c != '\0')
-		return (last_char(&tst));
-	return (1);
-}
-
-static int		create_tst(char **binaires, t_tst **tst)
-{
-	int		i;
-
-	i = 0;
-	if (binaires && binaires[i] != NULL)
-	{
-		if (new_word(binaires[i], tst, 0) == -1)
-			return (-1);
-		i++;
-	}
-	while (binaires && binaires[i] != NULL)
-	{
-		if (add_word(binaires[i], *tst) == -1)
-			return (-1);
-		i++;
-	}
-	return (1);
 }
 
 t_tst			*ft_tst(void)
