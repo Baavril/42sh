@@ -30,7 +30,7 @@ typedef struct	s_node
 }				t_node;
 
 int				g_parsingerr;
-void			execute(char *input);
+int			execute(char *input);
 int				is_potenti(t_token tok, int i);
 t_node			*io_redirect(t_token tok);
 t_node			*comp_list(t_token tok);

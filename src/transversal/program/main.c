@@ -121,7 +121,8 @@ int					main(int argc, char **argv)
 		if (!(status = history(ADD_CMD, &input, NULL)))
 			return (alloc_error());
 		if (status != -1 && input[0])
-			execute(input);
+			if (execute(input) && !isatty(STDIN_FILENO))
+				return (ft_clean_exit(NULL, g_retval));
 		ft_check_bgstatus();
 		if (g_mode & FORK_SHELL)
 			break ;
