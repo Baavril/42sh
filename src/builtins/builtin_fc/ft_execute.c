@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/15 16:28:34 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/15 16:46:03 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/24 16:27:54 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,11 @@ static int		fc_exec_cmd(void)
 	char *cmd;
 	char *input;
 
-	if (history(BACKWARD, NULL, &input) <= 0)
-		return (0);
-	if (history(FORWARD, NULL, &cmd) <= 0)
-		return (0);
+	history(BACKWARD, NULL, &input);
+	history(LAST, NULL, &cmd);
 	if (history(SWAP, NULL, &input) <= 0)
 		return (0);
-	if (history(GET, NULL, &cmd) <= 0)
-		return (0);
+	history(GET, NULL, &cmd);
 	if (!(input = ft_strdup(cmd)))
 		return (0);
 	ft_printf("%s\n", input);
@@ -65,9 +62,15 @@ static int		fc_exec_cmd(void)
 static int		fc_s_option(char *str_nbr)
 {
 	int		nbr;
+	char	*cmd;
 
 	nbr = ft_atoi_history(str_nbr);
-	(void)nbr;
+	while (nbr > 0)
+	{
+		history(FORWARD, NULL, &cmd);
+		nbr--;
+	}
+	fc_exec_cmd();
 	return (1);
 }
 
@@ -77,10 +80,12 @@ int				ft_execute(char **option)
 
 	if (option[0] == NULL)
 	{
-		if (history(LAST, NULL, &cmd) <= 0)
-			return (0);
+		history(LAST, NULL, &cmd);
 		return (fc_exec_cmd());
 	}
 	else
+	{
+		history(FIRST, NULL, &cmd);
 		return (fc_s_option(option[0]));
+	}
 }
