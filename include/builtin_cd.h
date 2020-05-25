@@ -34,6 +34,6 @@ int				ft_is_valid_dir(char *path);
 int				ft_get_abspath(char **new_pwd);
 int				ft_simplify_path(char **path, int opt_p);
 char			*ft_concatenate_path(char *src, char *rel_dst);
-int				ft_pcderror(int error_type, char *arg);
+int				ft_pcderror(int error_type);
 
 #endif

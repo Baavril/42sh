@@ -45,7 +45,19 @@ const struct s_error_desc	g_errordesc[] =
 	{ 1, "invalid variable name" },
 	{ 1, "invalid number" },
 	{ 1, "invalid arithmetic base" },
-	{ 1, "exponent less than zero" }
+	{ 1, "exponent less than zero" },
+	/* cd */
+	{ 1, "HOME not set" },
+	{ 1, "OLDPWD not set" },
+	{ 1, "Permission denied" },
+	{ 1, "Not a directory" },
+	{ 1, "No such file or directory" },
+	{ 1, "Too many levels of symbolic links" },
+	/* bg, fg */
+	{ 1, "No current job" },
+	{ 1, "Job is currently in background" },
+	{ 1, "Job has terminated" },
+	{ 1, "No such job" },
 };
 
 void	psherror(int e_error, char *str, int e_message_type)

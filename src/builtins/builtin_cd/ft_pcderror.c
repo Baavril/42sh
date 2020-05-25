@@ -13,27 +13,23 @@
 #include <unistd.h>
 #include "builtin_cd.h"
 #include "libft.h"
+#include "error.h"
 
 extern char		*g_progname;
 
-int				ft_pcderror(int error_type, char *arg)
+int				ft_pcderror(int error_type)
 {
 	if (error_type == UNSET_HOME)
-		ft_dprintf(STDERR_FILENO, "%s: cd: HOME not set.\n", g_progname);
+		psherror(27, "cd", e_builtin_type);
 	else if (error_type == UNSET_OLDPWD)
-		ft_dprintf(STDERR_FILENO, "%s: cd: OLDPWD not set.\n", g_progname);
+		psherror(28, "cd", e_builtin_type);
 	else if (error_type == NO_PERM)
-		ft_dprintf(STDERR_FILENO, \
-				"%s: cd: %s: Pemission denied.\n", g_progname, arg);
+		psherror(29, "cd", e_builtin_type);
 	else if (error_type == NOT_DIR)
-		ft_dprintf(STDERR_FILENO, \
-				"%s: cd: %s: Not a directory.\n", g_progname, arg);
+		psherror(30, "cd", e_builtin_type);
 	else if (error_type == TARGET_NOT_FOUND)
-		ft_dprintf(STDERR_FILENO, \
-				"%s: cd: %s: No such file or directory.\n", g_progname, arg);
+		psherror(31, "cd", e_builtin_type);
 	else if (error_type == EXCEED_LINK_LVL)
-		ft_dprintf(STDERR_FILENO, \
-				"%s: cd: %s: Too many levels of symbolic links.\n", \
-				g_progname, arg);
+		psherror(32, "cd", e_builtin_type);
 	return (1);
 }

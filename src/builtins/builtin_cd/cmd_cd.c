@@ -121,6 +121,6 @@ int				cmd_cd(int ac, char **av)
 		ft_setenv("_", var_value);
 	}
 	else
-		ret = ft_pcderror(ret, av[g_optind]);
+		ret = ft_pcderror(ret);
 	return (ret);
 }

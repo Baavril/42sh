@@ -13,6 +13,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include "jcont.h"
+#include "error.h"
 
 extern t_jcont		g_jcont;
 extern char			*g_progname;
@@ -22,16 +23,13 @@ static int			ft_bg_prio_job(void)
 	t_job		*job;
 
 	if (!(g_jcont.jobs))
-		ft_dprintf(STDERR_FILENO, "%s: bg: no current job.\n", g_progname);
+		psherror(31, "bg", e_builtin_type);
 	else if ((job = ft_get_job_nbr(g_jcont.active_jobs[0])))
 	{
 		if ((job->status & BACKGROUND) && (job->status & RUNNING))
-			ft_dprintf(STDERR_FILENO,
-							"%s: bg: job %i is already in background.\n",
-							g_progname, g_jcont.active_jobs[0]);
+			psherror(32, "bg", e_builtin_type);
 		else if (!WIFSTOPPED(job->status))
-			ft_dprintf(STDERR_FILENO,
-							"%s: bg: job has terminated.\n", g_progname);
+			psherror(33, "bg", e_builtin_type);
 		else
 			return (ft_resume_in_bg(job));
 	}
@@ -58,16 +56,12 @@ int					cmd_bg(int ac, char **av)
 			if (WIFSTOPPED(job->status))
 				ret += ft_resume_in_bg(job);
 			else if ((job->status & BACKGROUND) && (job->status & RUNNING))
-				ft_dprintf(STDERR_FILENO,
-							"%s: bg: job %s is already in background.\n",
-							g_progname, av[i]);
+				psherror(32, "bg", e_builtin_type);
 			else if (++ret)
-				ft_dprintf(STDERR_FILENO,
-							"%s: bg: job has terminated.\n", g_progname);
+				psherror(33, "bg", e_builtin_type);
 		}
 		else if (++ret)
-			ft_dprintf(STDERR_FILENO,
-							"%s: bg: %s: no such job.\n", g_progname, av[i]);
+			psherror(34, "bg", e_builtin_type);
 	}
 	return (ret ? 1 : 0);
 }
