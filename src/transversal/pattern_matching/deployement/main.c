@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   deploy_pattern_matching.c                          :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bprunev <bprunev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by bprunev           #+#    #+#             */
-/*   Updated: 2020/02/02 18:11:15 by bprunev          ###   ########.fr       */
+/*   Updated: 2020/05/25 13:35:42 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	islast(t_pattern *var, char *str, char c)
 	{
 		while (str[var->i])
 			++var->i;
-		while (str[var->i] != var->c)
+		while (var->i > 0 && str[var->i] != var->c)
 			--var->i;
 		++var->i;
 	}
