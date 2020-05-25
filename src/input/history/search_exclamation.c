@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 16:00:13 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/21 17:55:58 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/25 15:06:49 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	ft_simple_quote(char **line, int *i, int b, int flag)
 	}
 	else
 	{
-		if ((*line)[(*i)] == '\\')
+		if ((*line)[(*i)] == '\\' && ((*line)[*i + 1]))
 			(*i)++;
 		(*i)++;
 		return (1);
