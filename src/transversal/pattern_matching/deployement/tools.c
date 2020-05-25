@@ -6,7 +6,7 @@
 /*   By: bprunev <bprunev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 18:29:59 by bprunev           #+#    #+#             */
-/*   Updated: 2020/02/02 18:31:35 by bprunev          ###   ########.fr       */
+/*   Updated: 2020/05/25 12:44:31 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	get_btw_square(char **match)
 		tmp[i] = (*match)[i];
 		i++;
 	}
-	tmp[i + 1] = '\0';
+	tmp[i] = '\0';
 	free(*match);
 	*match = tmp;
 	return (SUCCESS);
