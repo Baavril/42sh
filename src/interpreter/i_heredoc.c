@@ -20,14 +20,19 @@
 
 static void			get_heredoc_line(char **line)
 {
-	t_cursor	cursor;
 	char		*buff;
 
 	while (!**line || (*line)[ft_strlen(*line) - 1] != '\n')
 	{
-		ft_init_cursor(&cursor);
-		mkprompt_quote("\'", &(cursor.prompt), &(cursor.prompt_len));
-		get_stdin(&cursor, &buff);
+		if (isatty(STDIN_FILENO))
+		{
+			t_cursor	cursor;
+			ft_init_cursor(&cursor);
+			mkprompt_quote("\'", &(cursor.prompt), &(cursor.prompt_len));
+			get_stdin(&cursor, &buff);
+		}
+		else
+			get_next_line(STDIN_FILENO, &buff);
 		buff = ft_strjoinfree(buff, ft_strdup("\n"));
 		expansions_treatment(&buff, 1);
 		*line = ft_strjoinfree(*line, buff);
