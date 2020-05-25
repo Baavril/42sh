@@ -13,6 +13,7 @@
 #include "tokens.h"
 #include "parser.h"
 #include "libft.h"
+#include "error.h"
 #include <unistd.h>
 
 extern int g_parsingerr;
@@ -32,7 +33,7 @@ static t_node	*pipe_sequence(t_token tok)
 			gnt(NULL, 0);
 			if (!(tmp2 = pipe_sequence(gnt(NULL, 0)))
 				&& (g_parsingerr = 1))
-				ft_dprintf(STDERR_FILENO, "parsing error near pipe\n");
+				psherror(2, "pipe", e_parsing_type);
 			node = malloc(sizeof(t_node));
 			node->left.v = tmp1;
 			node->right.v = tmp2;
@@ -64,7 +65,7 @@ t_node			*and_or(t_token tok)
 			gnt(NULL, 0);
 			if (!(tmp2 = and_or(gnt(NULL, 0)))
 				&& (g_parsingerr = 1))
-				ft_dprintf(STDERR_FILENO, "parsing error near logical op\n");
+				psherror(2, f == i_and_op ? "&&" : "||", e_parsing_type);
 			node = malloc(sizeof(t_node));
 			node->left.v = tmp1;
 			node->right.v = tmp2;
