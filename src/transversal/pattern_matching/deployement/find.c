@@ -6,7 +6,7 @@
 /*   By: bprunev <bprunev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 18:27:13 by bprunev           #+#    #+#             */
-/*   Updated: 2020/02/02 18:28:18 by bprunev          ###   ########.fr       */
+/*   Updated: 2020/05/25 14:42:12 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int			deploy_case(t_pattern *var, char **str, t_checker *elem)
 	char	c;
 
 	elem->len = ft_strlen(*str);
-	while (elem->tmp[elem->i] && elem->len > 0)
+	while (elem->i < elem->len && elem->tmp[elem->i] && elem->len > 0)
 	{
 		if (elem->flag == 1 && elem->tmp[elem->i] == **str)
 		{
