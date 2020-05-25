@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 19:28:12 by yberramd          #+#    #+#             */
-/*   Updated: 2020/02/29 19:41:29 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/25 15:06:10 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ void				ft_quote(char **s, int *i, char quote_t, _Bool open_q)
 			open_q ^= 1;
 			if (quote_t == -1 || quote_t == -2)
 				(*i)++;
-			continue;
+			continue ;
 		}
-		if ((*s)[*i] == '\\' && ((open_q && quote_t != '\'') || !open_q))
+		if ((*s)[*i] == '\\' && ((*s)[*i + 1]) && ((open_q && quote_t != '\'') || !open_q))
 			++(*i);
 		++(*i);
 	}
