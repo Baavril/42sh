@@ -77,6 +77,10 @@ static void				ft_agregate_line(t_cursor *cursor, char **buff)
 		*buff = ft_strdup("");
 		return ;
 	}
+	if ((*buff)[ft_strlen(*buff) - 1] == '\\')
+		(*buff)[ft_strlen(*buff) - 1] = '\0';
+	else
+		*buff = ft_strjoinfree(*buff, ft_strdup("\n"));
 	*buff = ft_strjoinfree(*buff, ft_strdup("\n"));
 	*buff = ft_strjoinfree(*buff, tmp);
 	ft_strdel(&(cursor->prompt));
