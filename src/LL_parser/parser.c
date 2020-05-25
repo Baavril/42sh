@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 14:29:21 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/10 17:38:12 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/25 15:32:27 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	execute(char *input)
 	g_parsingerr = 0;
 	while (tok.type != E_EOF)
 	{
-		if (tok.type == WORD)
+		if (tok.type == WORD || tok.type == ASSIGNMENT_WORD)
 			ft_strdel(&tok.symbol);
 		tok = gnt(NULL, 0);
 	}
