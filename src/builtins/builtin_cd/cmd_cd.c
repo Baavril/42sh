@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_cd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/23 17:14:44 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/11 17:44:36 by bprunevi         ###   ########.fr       */
+/*   Created: 2020/01/23 17:14:44 by tgouedar          #+#    #+#             */
+/*   Updated: 2020/05/27 16:11:32 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,9 @@ int				cmd_cd(int ac, char **av)
 	g_link_lvl = 0;
 	if ((ret = ft_parse_cd_opt(ac, av, &opt_p)))
 		return (ret);
-	if ((ret = ft_cd_exec(av[g_optind], opt_p)) == EXEC_SUCCESS)
+	if ((av[g_optind]) && (av[g_optind + 1]))
+		ret = ft_pcderror(TOO_MANY_ARG, av[g_optind]);
+	else if ((ret = ft_cd_exec(av[g_optind], opt_p)) == EXEC_SUCCESS)
 	{
 		if (!av[g_optind] || !ft_strcmp("-", av[g_optind]))
 			var_value = "cd";

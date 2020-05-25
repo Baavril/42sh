@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 16:34:46 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/03/11 17:42:27 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/05/27 16:10:41 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define NOT_DIR				4
 # define TARGET_NOT_FOUND		5
 # define EXCEED_LINK_LVL		6
+# define TOO_MANY_ARG			7
 # define STAT_ERROR				-1
 
 # define LINK_LVL				50
