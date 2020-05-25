@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 17:26:37 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/03/11 12:21:13 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/25 16:47:13 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ extern char		*g_progname;
 
 int				ft_pcderror(int error_type, char *arg)
 {
+	if (error_type == TOO_MANY_ARG)
+		ft_dprintf(STDERR_FILENO, "%s: cd: Too many arguments.\n", g_progname);
 	if (error_type == UNSET_HOME)
 		ft_dprintf(STDERR_FILENO, "%s: cd: HOME not set.\n", g_progname);
 	else if (error_type == UNSET_OLDPWD)
