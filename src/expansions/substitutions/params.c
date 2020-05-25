@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 18:17:00 by baavril           #+#    #+#             */
-/*   Updated: 2020/03/08 18:23:23 by baavril          ###   ########.fr       */
+/*   Updated: 2020/05/25 13:44:10 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,10 @@ int						view_pos_param(char **token)
 	t_params		vars;
 
 	init_param_vars(&vars);
-	vars.esc = ft_strdup(" ");
-	vars.len = ft_strlen(*token);
 	if (!g_pos)
 		return (ERROR);
+	vars.esc = ft_strdup(" ");
+	vars.len = ft_strlen(*token);
 	expand_pos_params(&vars, token);
 	substitute_pos_params(&vars, token);
 	ft_strdel(&vars.esc);
