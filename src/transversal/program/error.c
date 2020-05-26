@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:56:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/01/15 15:29:26 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/26 14:14:01 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ const struct s_error_desc	g_errordesc[] =
 	{ 1, "invalid variable name" },
 	{ 1, "invalid number" },
 	{ 1, "invalid arithmetic base" },
-	{ 1, "exponent less than zero" }
+	{ 1, "exponent less than zero" },
+	{ 1, "empty file" }
 };
 
 void	psherror(int e_error, char *str, int e_message_type)
