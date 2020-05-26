@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/23 17:14:44 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/05/27 16:11:32 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/27 16:31:41 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int				cmd_cd(int ac, char **av)
 	if ((ret = ft_parse_cd_opt(ac, av, &opt_p)))
 		return (ret);
 	if ((av[g_optind]) && (av[g_optind + 1]))
-		ret = ft_pcderror(TOO_MANY_ARG, av[g_optind]);
+		ret = ft_pcderror(TOO_MANY_ARG);
 	else if ((ret = ft_cd_exec(av[g_optind], opt_p)) == EXEC_SUCCESS)
 	{
 		if (!av[g_optind] || !ft_strcmp("-", av[g_optind]))

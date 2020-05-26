@@ -6,12 +6,13 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/23 13:16:37 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/27 16:18:40 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "keys.h"
 #include "libft.h"
+#include "quote.h"
 #include "input.h"
 #include "error.h"
 #include "prompt.h"
@@ -62,33 +63,26 @@ int						ft_strplen(char *str)
 	return (j);
 }
 
-static void				ft_agregate_line(t_cursor *cursor, char **buff)
+static int				ft_agregate_line(t_cursor *cursor, char **buff)
 {
 	char		*tmp;
 
-	g_input_mode = QUOTE_INPUT;
-	get_stdin(cursor, &tmp);
-	if (g_input_mode == STD_INPUT)
-	{
-		if (g_retval == 146)
-			psherror(e_eof_reached, "", e_invalid_type);
-		ft_strdel(buff);
-		ft_strdel(&tmp);
-		*buff = ft_strdup("");
-		return ;
-	}
-	if ((*buff)[ft_strlen(*buff) - 1] == '\\')
-		(*buff)[ft_strlen(*buff) - 1] = '\0';
-	else
-		*buff = ft_strjoinfree(*buff, ft_strdup("\n"));
+	if ((cursor))
+		get_stdin(cursor, &tmp);
+	else if (get_next_line(STDIN_FILENO, &tmp) < 1)
+		return (1);
 	*buff = ft_strjoinfree(*buff, ft_strdup("\n"));
 	*buff = ft_strjoinfree(*buff, tmp);
-	ft_strdel(&(cursor->prompt));
-	write(0, "\n", 1);
-	ft_init_cursor(cursor);
+	if ((cursor))
+	{
+		ft_strdel(&(cursor->prompt));
+		write(1, "\n", 1);
+		ft_init_cursor(cursor);
+	}
+	return (0);
 }
 
-int						read_command(char **buff)
+static int				read_command(char **buff)
 {
 	int			ret;
 	t_cursor	cursor;
@@ -114,5 +108,31 @@ int						read_command(char **buff)
 		*buff = ft_strdup("");
 	}
 	set_termcaps(TC_RESTORE);
-	return (0);
+	return (SUCCESS);
+}
+
+int						get_input(char **input, int argc)
+{
+	int			ret;
+	t_list		*unclosed_inhib;
+
+	if (argc == 1)
+		return (read_command(input));
+	unclosed_inhib = NULL;
+	if ((ret = get_next_line(STDIN_FILENO, input)) <= 0)
+		return (ret);
+	while ((ret = quote_prompt(&unclosed_inhib, *input)) == ESC_NL
+			|| (unclosed_inhib))
+		if (ft_agregate_line(NULL, input))
+		{
+			ret = ERR;
+			break ;
+		}
+	if (ret == ERR)
+	{
+		ft_lstdel(&unclosed_inhib, &ft_lst_strdel);
+//		psherror();
+		
+	}
+	return ((ret == ERR || ret == ESC_NL) ? SUCCESS : 1);
 }
