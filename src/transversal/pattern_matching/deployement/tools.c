@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 18:29:59 by baavril           #+#    #+#             */
-/*   Updated: 2020/02/02 18:31:35 by baavril          ###   ########.fr       */
+/*   Updated: 2020/05/25 15:34:13 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	get_btw_square(char **match)
 		tmp[i] = (*match)[i];
 		i++;
 	}
-	tmp[i + 1] = '\0';
+	tmp[i] = '\0';
 	free(*match);
 	*match = tmp;
 	return (SUCCESS);
