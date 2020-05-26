@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/27 16:35:02 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/27 16:36:27 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,15 @@ int						ft_strplen(char *str)
 
 static int				ft_agregate_line(t_cursor *cursor, char **buff)
 {
+	int			ret;
 	char		*tmp;
 
+	ret = 0;
 	if ((cursor))
 		get_stdin(cursor, &tmp);
-	else if (get_next_line(STDIN_FILENO, &tmp) < 0)
+	else if ((ret = get_next_line(STDIN_FILENO, &tmp)) < 0)
+		return (1);
+	if (!(*tmp) && !ret)
 		return (1);
 	*buff = ft_strjoinfree(*buff, ft_strdup("\n"));
 	*buff = ft_strjoinfree(*buff, tmp);
@@ -120,20 +124,24 @@ int						get_input(char **input, int argc)
 		if ((ret = read_command(input)) != 1)
 			return (ret);
 	unclosed_inhib = NULL;
-	if ((ret = get_next_line(STDIN_FILENO, input)) <= 0)
+	if ((ret = get_next_line(STDIN_FILENO, input)) < 0)
 		return (ret);
+	if (!(**input) && !ret)
+		return (1);
 	while ((ret = quote_prompt(&unclosed_inhib, *input)) == ESC_NL
 			|| (unclosed_inhib))
+	{
 		if (ft_agregate_line(NULL, input))
 		{
 			ret = ERR;
 			break ;
 		}
+		ft_lstdel(&unclosed_inhib, &ft_lst_strdel);
+	}
 	if (ret == ERR)
 	{
 		ft_lstdel(&unclosed_inhib, &ft_lst_strdel);
 //		psherror();
-			
 	}
 	return ((ret == ERR || ret == ESC_NL) ? 1 : SUCCESS);
 }
