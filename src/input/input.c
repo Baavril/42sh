@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/27 16:18:40 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/27 16:35:02 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int				ft_agregate_line(t_cursor *cursor, char **buff)
 
 	if ((cursor))
 		get_stdin(cursor, &tmp);
-	else if (get_next_line(STDIN_FILENO, &tmp) < 1)
+	else if (get_next_line(STDIN_FILENO, &tmp) < 0)
 		return (1);
 	*buff = ft_strjoinfree(*buff, ft_strdup("\n"));
 	*buff = ft_strjoinfree(*buff, tmp);
@@ -117,7 +117,8 @@ int						get_input(char **input, int argc)
 	t_list		*unclosed_inhib;
 
 	if (argc == 1)
-		return (read_command(input));
+		if ((ret = read_command(input)) != 1)
+			return (ret);
 	unclosed_inhib = NULL;
 	if ((ret = get_next_line(STDIN_FILENO, input)) <= 0)
 		return (ret);
@@ -132,7 +133,7 @@ int						get_input(char **input, int argc)
 	{
 		ft_lstdel(&unclosed_inhib, &ft_lst_strdel);
 //		psherror();
-		
+			
 	}
-	return ((ret == ERR || ret == ESC_NL) ? SUCCESS : 1);
+	return ((ret == ERR || ret == ESC_NL) ? 1 : SUCCESS);
 }
