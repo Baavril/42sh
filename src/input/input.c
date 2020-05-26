@@ -6,17 +6,18 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/17 16:32:45 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/26 22:18:14 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "input.h"
-#include "termcaps.h"
 #include "keys.h"
+#include "libft.h"
+#include "quote.h"
+#include "input.h"
 #include "prompt.h"
 #include "display.h"
 #include "history.h"
+#include "termcaps.h"
 #include "shell_variables.h"
 
 #include <unistd.h>
@@ -24,7 +25,7 @@
 
 extern struct s_svar	*g_svar;
 
-void				ft_init_cursor(t_cursor *cursor)
+void					ft_init_cursor(t_cursor *cursor)
 {
 	cursor->prompt = NULL;
 	cursor->match = NULL;
@@ -37,7 +38,7 @@ void				ft_init_cursor(t_cursor *cursor)
 	cursor->on = 0;
 }
 
-int					ft_strplen(char *str)
+int						ft_strplen(char *str)
 {
 	int	i;
 	int	j;
@@ -59,20 +60,26 @@ int					ft_strplen(char *str)
 	return (j);
 }
 
-static void				ft_agregate_line(t_cursor *cursor, char **buff)
+static int				ft_agregate_line(t_cursor *cursor, char **buff)
 {
 	char		*tmp;
 
-	get_stdin(cursor, &tmp);
+	if ((cursor))
+		get_stdin(cursor, &tmp);
+	else if (get_next_line(STDIN_FILENO, &tmp) < 1)
+		return (1);
 	*buff = ft_strjoinfree(*buff, ft_strdup("\n"));
 	*buff = ft_strjoinfree(*buff, tmp);
-	ft_strdel(&(cursor->prompt));
-	write(1, "\n", 1);
-	ft_init_cursor(cursor);
-	
+	if ((cursor))
+	{
+		ft_strdel(&(cursor->prompt));
+		write(1, "\n", 1);
+		ft_init_cursor(cursor);
+	}
+	return (0);
 }
 
-int					read_command(char **buff)
+static int				read_command(char **buff)
 {
 	int			ret;
 	t_cursor	cursor;
@@ -97,5 +104,31 @@ int					read_command(char **buff)
 		*buff = ft_strdup("");
 	}
 	set_termcaps(TC_RESTORE);
-	return (0);
+	return (SUCCESS);
+}
+
+int						get_input(char **input, int argc)
+{
+	int			ret;
+	t_list		*unclosed_inhib;
+
+	if (argc == 1)
+		return (read_command(input));
+	unclosed_inhib = NULL;
+	if ((ret = get_next_line(STDIN_FILENO, input)) <= 0)
+		return (ret);
+	while ((ret = quote_prompt(&unclosed_inhib, *input)) == ESC_NL
+			|| (unclosed_inhib))
+		if (ft_agregate_line(NULL, input))
+		{
+			ret = ERR;
+			break ;
+		}
+	if (ret == ERR)
+	{
+		ft_lstdel(&unclosed_inhib, &ft_lst_strdel);
+//		psherror();
+		
+	}
+	return ((ret == ERR || ret == ESC_NL) ? SUCCESS : 1);
 }

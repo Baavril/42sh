@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/19 16:21:48 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/26 22:17:41 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,7 @@ int			main(int argc, char **argv)
 	if (ft_shell_init() == e_cannot_allocate_memory)
 		return (alloc_error());
 	while ((argc > 0) && ((g_input != NULL && (argc = -1))
-						|| (argc == 1 && !read_command(&g_input))
-						|| get_next_line(0, &g_input)))
+							|| get_input(&g_input, argc) == SUCCESS))
 	{
 		g_alias_treated = 0;
 		if (!(status = history(ADD_CMD, &g_input, NULL)) || ft_trim_comment())
