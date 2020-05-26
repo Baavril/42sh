@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 15:06:39 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/15 16:48:54 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/26 17:19:17 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,7 @@ int		ft_parser(int argc, char **argv, char *optstring,
 						char **option);
 void	ft_arg_r(int i, int max);
 void	ft_number(int nbr, int nbr2, int max);
+void	ft_one_number_w(char *str_nbr, int max, int fd);
+void	ft_two_number_w(char **argv, int max, int fd);
 
 #endif

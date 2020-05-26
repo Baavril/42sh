@@ -6,11 +6,12 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/15 16:28:34 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/24 16:27:54 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/26 14:22:25 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin_fc.h"
+#include "error.h"
 
 int				ft_atoi_history(const char *str)
 {
@@ -45,7 +46,11 @@ static int		fc_exec_cmd(void)
 	char *cmd;
 	char *input;
 
-	history(BACKWARD, NULL, &input);
+	if (history(BACKWARD, NULL, &input) == 2)
+	{
+		psherror(e_empty_file, NULL, e_invalid_type);
+		return (1);
+	}
 	history(LAST, NULL, &cmd);
 	if (history(SWAP, NULL, &input) <= 0)
 		return (0);

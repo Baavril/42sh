@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:51:41 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/12 15:11:52 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/26 14:14:56 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ enum							e_minishell_error
 	e_invalid_name,
 	e_invalid_number,
 	e_invalid_base,
-	e_neg_exp
+	e_neg_exp,
+	e_empty_file
 };
 
 enum							e_error_message_types
