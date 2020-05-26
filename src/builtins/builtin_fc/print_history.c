@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 15:05:14 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/14 19:23:56 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/26 16:11:45 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,18 +100,13 @@ int				ft_print_history(char **argv)
 	while (history(FORWARD, NULL, &cmd) != 2 && cmd)
 		max++;
 	if (argv[0] && argv[1])
-	{
 		ft_two_number(argv, max);
-		ft_strdel(&argv[0]);
-		ft_strdel(&argv[1]);
-	}
 	else if (argv[0])
 	{
 		if (ft_strisnbr(argv[0]))
 			ft_one_number(argv[0], max);
 		else
 			ft_dprintf(2, "42sh: fc: %s: numeric argument required\n", argv[0]);
-		ft_strdel(&argv[0]);
 	}
 	else
 		ft_no_number(max);
