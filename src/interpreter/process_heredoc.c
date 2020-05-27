@@ -6,7 +6,7 @@
 /*   By: tgouedar <tgouedar@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 12:33:23 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/05/27 14:37:55 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/27 15:25:54 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,16 @@ int						process_heredoc(char **input)
 		return (ret);
 	if ((ret = get_next_line(STDIN_FILENO, &tmp)) < 0)
 		return (ret);
+	*input = ft_strdup("");
 	while (ft_strcmp(to_match, tmp))
 	{
-		*input = ft_strnjoinfree(3, *input, ft_strdup("\n"), tmp);
-		get_next_line(STDIN_FILENO, &tmp);
+		*input = ft_strnjoinfree(3, *input, tmp, ft_strdup("\n"));
+		ret = get_next_line(STDIN_FILENO, &tmp);
 	}
-	if (ret == EOF_ERR)
+	if (ft_strcmp(to_match, tmp))
 		psherror(e_unexpected_eof, NULL, e_invalid_type);
+	else
+		ft_strdel(&tmp);
 	ft_strdel(&to_match);
 	return ((ret == ERR || ret == EOF_ERR || ret == ESC_NL) ? 1 : 0);
 }
