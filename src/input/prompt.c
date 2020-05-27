@@ -6,37 +6,18 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 17:12:27 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/27 14:16:18 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/27 15:05:24 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "quote.h"
 #include "error.h"
+#include "prompt.h"
 #include "shell_variables.h"
 
 extern struct s_svar	*g_svar;
 extern int				g_retval;
-
-int		mkprompt_quote(char *input, char **prompt, size_t *len)
-{
-	t_list			*unclosed_inhib;
-	int				ret;
-
-	unclosed_inhib = NULL;
-	if ((ret = quote_check(&unclosed_inhib, input)) == ERR)
-	{
-		psherror(e_syntax_error, unclosed_inhib->content, e_parsing_type);
-		ft_lstdel(&unclosed_inhib, &ft_lst_strdel);
-		return (-1);
-	}
-	if (unclosed_inhib == NULL && ret != ESC_NL)
-		return (0);
-	*prompt = getshvar("PS2");
-	*len = ft_strlen(*prompt);
-	ft_lstdel(&unclosed_inhib, &ft_lst_strdel);
-	return (1);
-}
 
 char	*mkprompt_intro(size_t *len)
 {
@@ -111,4 +92,22 @@ size_t	mk_prompt(char **prompt, char *prompt_var)
 				tmp, mkprompt_outro(&len));
 	*prompt = tmp;
 	return (len);
+}
+
+int		ft_check_inhib(char *input)
+{
+	t_list			*unclosed_inhib;
+	int				ret;
+
+	unclosed_inhib = NULL;
+	if ((ret = quote_check(&unclosed_inhib, input)) == ERR)
+	{
+		psherror(e_syntax_error, unclosed_inhib->content, e_parsing_type);
+		ft_lstdel(&unclosed_inhib, &ft_lst_strdel);
+		return (-1);
+	}
+	if (unclosed_inhib == NULL && ret != ESC_NL)
+		return (0);
+	ft_lstdel(&unclosed_inhib, &ft_lst_strdel);
+	return (1);
 }

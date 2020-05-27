@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/27 14:19:53 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/27 15:04:40 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,7 @@ static int				read_command(char **buff)
 	write(1, "\n", 1);
 	ft_strdel(&(cursor.prompt));
 	while (**buff
-	&& (ret = mkprompt_quote(*buff, &(cursor.prompt),
-											&(cursor.prompt_len))) == 1)
+	&& (ret = ft_check_inhib(*buff)) == 1)
 		ft_agregate_line(&cursor, buff);
 	if (ret == -1)
 	{
