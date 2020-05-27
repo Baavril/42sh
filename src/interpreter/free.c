@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 08:40:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/27 12:45:59 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/27 15:30:55 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,41 +68,6 @@ int				astdel(t_node *node)
 	free(node);
 	return (0);
 }
-/*
-void				process_heredoc(char **area)
-{
-	extern char *g_input;
-	char *name;
-	char *line;
-	char *buff;
-	t_cursor	cursor;
-
-	name = ft_strjoinfree(*area, ft_strdup("\n"));
-	line = ft_strdup("");
-	*area = ft_strdup("");
-	set_termcaps(TC_INPUT);
-	while (ft_strcmp(line, name))
-	{
-		*area = ft_strjoinfree(*area, line);
-		line = ft_strdup("");
-		while(!*line || line[ft_strlen(line) - 1] != '\n')
-		{
-			ft_init_cursor(&cursor);
-			mkprompt_quote("\'", &(cursor.prompt), &(cursor.prompt_len));
-			get_stdin(&cursor, &buff);
-			buff = ft_strjoinfree(buff, ft_strdup("\n"));
-			expansions_treatment(&buff, 1);
-			line = ft_strjoinfree(line, buff);
-			write(1, "\n", 1);
-		}
-	}
-	ft_strdel(&line);
-	line = g_input;
-	g_input = ft_strnjoin(4, g_input, "\n", *area, name);
-	ft_strdel(&line);
-	ft_strdel(&name);
-	set_termcaps(TC_RESTORE);
-}*/	
 
 int				expand_tree(t_node *node, int fork_builtin)
 {
