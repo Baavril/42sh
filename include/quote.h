@@ -24,7 +24,7 @@
 # define ESC_NL			2
 
 void		ft_lst_strdel(void *content, size_t content_size);
-int			quote_prompt(t_list **unclosed_inhib, char *command);
+int			quote_check(t_list **unclosed_inhib, char *command);
 int			ft_treat_inhib(t_list **unclosed_inhib, char inhib);
 char		*mkprompt_expand(const char *ps1, size_t *len);
 

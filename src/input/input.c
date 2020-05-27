@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/27 11:23:33 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/27 14:19:53 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,26 @@
 
 extern struct s_svar	*g_svar;
 
-void					ft_init_cursor(t_cursor *cursor)
+void					ft_init_cursor(t_cursor *cursor, int prompt_mode)
 {
-	cursor->prompt = NULL;
 	cursor->match = NULL;
 	cursor->in = SIZE_MAX;
 	cursor->start = 0;
 	cursor->end = 0;
 	cursor->match_ret = 0;
-	cursor->prompt_len = 0;
+	if (prompt_mode == 1)
+		cursor->prompt_len = mk_prompt(&(cursor->prompt), PS1);
+	else if (prompt_mode == 2)
+		cursor->prompt_len = mk_prompt(&(cursor->prompt), PS2);
+	else if (prompt_mode == 3)
+		cursor->prompt_len = mk_prompt(&(cursor->prompt), PS3);
+	else if (prompt_mode == 4)
+		cursor->prompt_len = mk_prompt(&(cursor->prompt), PS4);
+	else
+	{
+		cursor->prompt_len = 0;
+		cursor->prompt = NULL;
+	}
 	cursor->ctrl_r = 0;
 	cursor->on = 0;
 }
@@ -68,7 +79,10 @@ static int				ft_agregate_line(t_cursor *cursor, char **buff)
 
 	ret = 0;
 	if ((cursor))
+	{
+		ft_init_cursor(cursor, 2);
 		get_stdin(cursor, &tmp);
+	}
 	else if ((ret = get_next_line(STDIN_FILENO, &tmp)) < 0)
 		return (ERR);
 	if (!(*tmp) && !ret)
@@ -82,7 +96,6 @@ static int				ft_agregate_line(t_cursor *cursor, char **buff)
 	{
 		ft_strdel(&(cursor->prompt));
 		write(1, "\n", 1);
-		ft_init_cursor(cursor);
 	}
 	return (NO_ERR);
 }
@@ -92,16 +105,14 @@ static int				read_command(char **buff)
 	int			ret;
 	t_cursor	cursor;
 
-	ft_init_cursor(&cursor);
 	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO))
 		return (1);
 	if (set_termcaps(TC_INPUT))
 		return (2);
-	cursor.prompt_len = mkprompt(&(cursor.prompt));
+	ft_init_cursor(&cursor, 1);
 	get_stdin(&cursor, buff);
 	write(1, "\n", 1);
 	ft_strdel(&(cursor.prompt));
-	ft_init_cursor(&cursor);
 	while (**buff
 	&& (ret = mkprompt_quote(*buff, &(cursor.prompt),
 											&(cursor.prompt_len))) == 1)
@@ -128,7 +139,7 @@ int						get_input(char **input, int argc)
 		return (ret);
 	if (!(**input) && !ret)
 		return (1);
-	while ((ret = quote_prompt(&unclosed_inhib, *input)) == ESC_NL
+	while ((ret = quote_check(&unclosed_inhib, *input)) == ESC_NL
 			|| (ret != ERR && unclosed_inhib))
 	{
 		if ((ret = ft_agregate_line(NULL, input)) != NO_ERR)

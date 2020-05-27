@@ -69,7 +69,7 @@ static void				ft_inhib_exception(t_list **unclosed_inhib,
 	}
 }
 
-int						quote_prompt(t_list **unclosed_inhib, char *command)
+int						quote_check(t_list **unclosed_inhib, char *command)
 {
 	char	open;
 

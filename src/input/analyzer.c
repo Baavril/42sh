@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 13:04:47 by baavril           #+#    #+#             */
-/*   Updated: 2020/03/01 17:19:46 by baavril          ###   ########.fr       */
+/*   Updated: 2020/05/27 14:18:32 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int			search_analyzer(union u_tc *term, char **buff, t_cursor *cursor)
 	{
 		ft_bzero(*buff, ft_strlen(*buff));
 		ft_strdel(&(cursor->prompt));
-		ft_init_cursor(cursor);
+		ft_init_cursor(cursor, 0);
 		cursor->ctrl_r = 1;
 	}
 	keyboard_normal_char(term, buff, cursor);

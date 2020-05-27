@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 09:48:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/17 18:43:23 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/27 14:34:29 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 # define PS1V			"\\w "
 # define PS2V			"> "
 # define PS3V			"#? "
-# define PS4V			"$> "
+# define PS4V			"heredoc> "
 # define OPTERRV		"1"
 # define OPTINDV		"1"
 # define HISTSIZEV		"500"

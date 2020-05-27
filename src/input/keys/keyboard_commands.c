@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 12:41:28 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/22 14:53:50 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/27 14:22:04 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int			keyboard_tabulation(union u_tc *term, char **buff, t_cursor *cursor)
 		{
 			tab_key(buff, cursor);
 			ft_strdel(&(cursor->prompt));
-			cursor->prompt_len = mkprompt(&(cursor->prompt));
+			cursor->prompt_len = mk_prompt(&(cursor->prompt), PS1);
 			history(RESET, buff, NULL);
 			return (0);
 		}

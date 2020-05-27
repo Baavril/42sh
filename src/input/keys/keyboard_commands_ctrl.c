@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:13:16 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/16 23:05:54 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/27 14:24:56 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "jcont.h"
 #include "error.h"
 #include "prompt.h"
+#include "shell_variables.h"
 
 #include <term.h>
 #include <curses.h>
@@ -28,7 +29,7 @@ int			keyboard_ctrl_l(union u_tc *term, char **buff, t_cursor *cursor)
 		{
 			update_buff(buff, cursor);
 			ft_strdel(&(cursor->prompt));
-			cursor->prompt_len = mkprompt(&(cursor->prompt));
+			cursor->prompt_len = mk_prompt(&(cursor->prompt), PS1);
 			cursor->start = ft_strlen(*buff);
 			ft_putstr(tgetstr("ho", NULL));
 			return (0);
@@ -49,7 +50,7 @@ static int	keyboard_ctrl_c_wiper(char **buff, t_cursor *cursor)
 	*buff = ft_strdup("");
 	tmp = cursor->prompt;
 	tmp_len = cursor->prompt_len;
-	ft_init_cursor(cursor);
+	ft_init_cursor(cursor, 0);
 	cursor->prompt = tmp;
 	cursor->prompt_len = tmp_len;
 	ft_putchar('\n');
@@ -66,7 +67,7 @@ int			keyboard_ctrl_c(union u_tc *term, char **buff, t_cursor *cursor)
 		{
 			update_buff(buff, cursor);
 			ft_strdel(&(cursor->prompt));
-			cursor->prompt_len = mkprompt(&(cursor->prompt));
+			cursor->prompt_len = mk_prompt(&(cursor->prompt), PS1);
 			cursor->start = ft_strlen(*buff);
 			keyboard_ctrl_c_wiper(buff, cursor);
 			return (0);
@@ -84,7 +85,7 @@ int			keyboard_ctrl_d(union u_tc *term, char **buff, t_cursor *cursor)
 		{
 			update_buff(buff, cursor);
 			delete_key(buff, cursor);
-			cursor->prompt_len = mkprompt(&(cursor->prompt));
+			cursor->prompt_len = mk_prompt(&(cursor->prompt), PS1);
 			return (0);
 		}
 		if (*buff && **buff)

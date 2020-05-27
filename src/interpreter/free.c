@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 08:40:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/22 13:35:31 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/27 12:45:59 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int				astdel(t_node *node)
 	free(node);
 	return (0);
 }
-
+/*
 void				process_heredoc(char **area)
 {
 	extern char *g_input;
@@ -102,7 +102,7 @@ void				process_heredoc(char **area)
 	ft_strdel(&line);
 	ft_strdel(&name);
 	set_termcaps(TC_RESTORE);
-}	
+}*/	
 
 int				expand_tree(t_node *node, int fork_builtin)
 {

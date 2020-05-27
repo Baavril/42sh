@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 12:42:22 by bprunev           #+#    #+#             */
-/*   Updated: 2020/05/22 14:52:36 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/27 14:26:25 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int		keyboard_dispatcher(union u_tc *term, char **buff, t_cursor *cursor)
 				{
 					update_buff(buff, cursor);
 					ft_strdel(&(cursor->prompt));
-					cursor->prompt_len = mkprompt(&(cursor->prompt));
+					cursor->prompt_len = mk_prompt(&(cursor->prompt), PS1);
 					history(RESET, buff, NULL);
 				}
 				if (((g_dispatch_keys[i].function_call)(buff, cursor)) == 0)
