@@ -34,17 +34,17 @@ int	i_less(t_elem left, t_elem right)
 
 	fd1 = left.c ? *left.c - '0' : 0;
 	if (!*right.c)
-		ft_dprintf(STDERR_FILENO, "42sh: %s: Redirection ambigue\n", right.c);
+		ft_dprintf(STDERR_FILENO, "21sh: %s: Redirection ambigue\n", right.c);
 	else if (!access(right.c, R_OK))
 	{
 		if (is_regfile(right.c))
 			return (open_on_fd(right.c, O_RDONLY, 0, fd1));
-		ft_dprintf(STDERR_FILENO, "42sh: %s: not a valid file\n", right.c);
+		ft_dprintf(STDERR_FILENO, "21sh: %s: not a valid file\n", right.c);
 	}
 	else if (!access(right.c, F_OK))
 		psherror(e_permission_denied, right.c, e_cmd_type);
 	else
-		ft_dprintf(STDERR_FILENO, "42sh: %s: No such file or directory\n",
+		ft_dprintf(STDERR_FILENO, "21sh: %s: No such file or directory\n",
 		right.c);
 	return (-1);
 }
@@ -56,12 +56,12 @@ int	i_great(t_elem left, t_elem right)
 
 	fd1 = left.c ? *left.c - '0' : 1;
 	if (!*right.c)
-		ft_dprintf(STDERR_FILENO, "42sh: %s: Redirection ambigue\n", right.c);
+		ft_dprintf(STDERR_FILENO, "21sh: %s: Redirection ambigue\n", right.c);
 	else if (!access(right.c, W_OK))
 	{
 		if (is_regfile(right.c))
 			return (open_on_fd(right.c, O_WRONLY | O_TRUNC, 0, fd1));
-		ft_dprintf(STDERR_FILENO, "42sh: %s: not a valid file\n", right.c);
+		ft_dprintf(STDERR_FILENO, "21sh: %s: not a valid file\n", right.c);
 	}
 	else if (!access(right.c, F_OK))
 		psherror(e_permission_denied, right.c, e_cmd_type);
@@ -79,15 +79,15 @@ int	i_dgreat(t_elem left, t_elem right)
 
 	fd1 = left.c ? *left.c - '0' : 1;
 	if (!*right.c)
-		ft_dprintf(STDERR_FILENO, "42sh: %s: Redirection ambigue\n", right.c);
+		ft_dprintf(STDERR_FILENO, "21sh: %s: Redirection ambigue\n", right.c);
 	else if (!access(right.c, W_OK))
 	{
 		if (is_regfile(right.c))
 			return (open_on_fd(right.c, O_WRONLY | O_APPEND, 0, fd1));
-		ft_dprintf(STDERR_FILENO, "42sh: %s: not a valid file\n", right.c);
+		ft_dprintf(STDERR_FILENO, "21sh: %s: not a valid file\n", right.c);
 	}
 	else if (!access(right.c, F_OK))
-		ft_dprintf(STDERR_FILENO, "42sh: %s: forbidden acess\n", right.c);
+		ft_dprintf(STDERR_FILENO, "21sh: %s: forbidden acess\n", right.c);
 	else
 	{
 		return (open_on_fd(right.c,

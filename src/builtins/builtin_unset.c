@@ -124,7 +124,7 @@ int
 		else if (unsetvarenv(argv[i]) == ERROR)
 		{
 			ft_dprintf(STDERR_FILENO,
-					"42sh: unset: `%s' is not a valid identifier.\n", argv[i]);
+					"21sh: unset: `%s' is not a valid identifier.\n", argv[i]);
 			ret++;
 		}
 		++i;

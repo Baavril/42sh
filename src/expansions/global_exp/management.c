@@ -80,7 +80,7 @@ char		*expansions_management(char **splitok, int expand, int flag)
 	{
 		if (expansions_launcher(&vars, expand, flag) == ERROR)
 		{
-			ft_dprintf(2, "42sh: %s: bad substitution", *vars.tokens);
+			ft_dprintf(2, "21sh: %s: bad substitution", *vars.tokens);
 			ft_tabdel(&splitok);
 			ft_strdel(&vars.btw);
 			ft_strdel(&vars.tmp);

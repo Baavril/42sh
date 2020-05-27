@@ -33,7 +33,7 @@ int						script_param(char **token)
 			len = ft_strpchr(*token, SLASH);
 		if (ft_isin('"', *token))
 			len = ft_strpchr(*token, '"');
-		tmp1 = ft_strdup("42sh");
+		tmp1 = ft_strdup("21sh");
 		tmp2 = ft_strndup(&(*token)[ft_strpchr(*token, '0') + 1], len - 2);
 		ft_strdel(token);
 		*token = ft_strjoin(tmp1, tmp2);

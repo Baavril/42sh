@@ -33,8 +33,8 @@ static int				check_why_var(char **token, char *word, char *var,
 		{
 			if (!(*token = ft_strdup(EMPTY_STR)))
 				return (ERROR);
-			(word) ? ft_printf("42sh : %s: %s\n", var, word)
-			: ft_printf("42sh : %s: parameter null\n", var);
+			(word) ? ft_printf("21sh : %s: %s\n", var, word)
+			: ft_printf("21sh : %s: parameter null\n", var);
 		}
 		ft_strdel(&var);
 		ft_strdel(&word);
@@ -63,8 +63,8 @@ int						why_exp(char **token)
 	ft_strdel(token);
 	if (!(*token = ft_strdup(EMPTY_STR)))
 		return (ERROR);
-	(word) ? ft_printf("42sh : %s: %s\n", var, word)
-	: ft_printf("42sh : %s: parameter not set\n", var);
+	(word) ? ft_printf("21sh : %s: %s\n", var, word)
+	: ft_printf("21sh : %s: parameter not set\n", var);
 	ft_strdel(&var);
 	ft_strdel(&word);
 	g_svar = tmp;

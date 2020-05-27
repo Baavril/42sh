@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 16:02:57 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/04 13:03:00 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/05/27 17:16:04 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct	s_node
 }				t_node;
 
 int				g_parsingerr;
-int			execute(char *input);
+int				execute(char *input);
 int				is_potenti(t_token tok, int i);
 t_node			*io_redirect(t_token tok);
 t_node			*comp_list(t_token tok);
@@ -76,6 +76,6 @@ int				val_command(char **arg);
 int				open_on_fd(const char *path, int o_flags, mode_t mode,
 																int final_fd);
 int				astdel(t_node *node);
-void			expand_tree(t_node *node, int fork_builtin);
+int				expand_tree(t_node *node, int fork_builtin);
 
 #endif

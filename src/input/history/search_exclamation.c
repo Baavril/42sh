@@ -61,7 +61,7 @@ static int	ft_simple_quote(char **line, int *i, int b, int flag)
 	}
 	else if (flag == 0)
 	{
-		ft_dprintf(2, "42sh: %s: event not found\n", &(*line)[(*i)]);
+		ft_dprintf(2, "21sh: %s: event not found\n", &(*line)[(*i)]);
 		return (1);
 	}
 	else

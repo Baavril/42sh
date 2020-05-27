@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 09:48:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/18 14:26:42 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/27 14:34:29 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,10 @@
 # define PWD			"PWD="
 # define HOME			"HOME="
 
+# define COLOR			"\033[96;m"
+# define ERR_COLOR		"\033[31;m"
+# define RESET_TC		"\033[0m"
+
 /*
 ** Values of internal variables
 */
@@ -45,12 +49,12 @@
 # define PS1V			"\\w "
 # define PS2V			"> "
 # define PS3V			"#? "
-# define PS4V			"$> "
+# define PS4V			"heredoc> "
 # define OPTERRV		"1"
 # define OPTINDV		"1"
 # define HISTSIZEV		"500"
 # define HISTFILESIZEV	"500"
-# define HISTFILEV		"/.21sh_history"
+# define HISTFILEV		"/.42sh_history"
 
 struct					s_svar
 {

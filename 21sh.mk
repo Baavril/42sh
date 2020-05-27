@@ -6,7 +6,7 @@
 #    By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/04 15:22:51 by bprunevi          #+#    #+#              #
-#    Updated: 2020/05/17 20:23:31 by user42           ###   ########.fr        #
+#    Updated: 2020/05/27 17:25:35 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,6 @@ SOURCES			:=		transversal/program/main.c \
 						transversal/shell_variables/main.c \
 						transversal/shell_variables/newnodshell.c \
 						transversal/shell_variables/tools.c \
-						transversal/shell_variables/update.c \
 						transversal/hash/bash_routines.c \
 						transversal/hash/corps_fini_tools.c \
 						transversal/hash/random_tools.c \
@@ -200,6 +199,7 @@ SOURCES			:=		transversal/program/main.c \
 						interpreter/i_redirect.c \
 						interpreter/i_redirect_and.c \
 						interpreter/i_heredoc.c \
+						interpreter/process_heredoc.c \
 						interpreter/i_open_on_fd.c \
 						interpreter/free.c \
 						interpreter/curjob.c

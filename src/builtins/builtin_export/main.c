@@ -40,7 +40,7 @@ int						export_opt(char *opt)
 		ft_prtsrtlst();
 		return (SUCCESS);
 	}
-	ft_printf("42sh: export: %s: invalid option\nexport: usage: export -p\n",
+	ft_printf("21sh: export: %s: invalid option\nexport: usage: export -p\n",
 	opt);
 	return (2);
 }

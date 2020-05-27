@@ -26,7 +26,7 @@ int	i_lessand(t_elem left, t_elem right)
 		else if (dup2(*right.c - '0', fd1) != -1)
 			return (fd1);
 	}
-	ft_dprintf(STDERR_FILENO, "42sh: %s: incorrect fd\n", right.c);
+	ft_dprintf(STDERR_FILENO, "21sh: %s: incorrect fd\n", right.c);
 	return (-1);
 }
 
@@ -42,7 +42,7 @@ int	i_greatand(t_elem left, t_elem right)
 		else if (dup2(*right.c - '0', fd1) != -1)
 			return (fd1);
 	}
-	ft_dprintf(STDERR_FILENO, "42sh: %s: incorrect fd\n", right.c);
+	ft_dprintf(STDERR_FILENO, "21sh: %s: incorrect fd\n", right.c);
 	return (-1);
 }
 
@@ -67,10 +67,10 @@ int	i_lessgreat(t_elem left, t_elem right)
 
 	fd1 = left.c ? *left.c - '0' : 0;
 	if (!*right.c)
-		ft_dprintf(STDERR_FILENO, "42sh: %s: Redirection ambigue\n", right.c);
+		ft_dprintf(STDERR_FILENO, "21sh: %s: Redirection ambigue\n", right.c);
 	else if (open_on_fd(right.c, O_RDWR | O_CREAT, S_IRUSR
 				| S_IWUSR | S_IRGRP | S_IROTH, fd1) != -1)
 		return (fd1);
-	ft_dprintf(STDERR_FILENO, "42sh: %s: Premission denied\n", right.c);
+	ft_dprintf(STDERR_FILENO, "21sh: %s: Premission denied\n", right.c);
 	return (-1);
 }

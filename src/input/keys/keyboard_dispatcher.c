@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard_dispatcher.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprunev <bprunev@student.42.fr>            +#+  +:+       +#+        */
+/*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 12:42:22 by bprunev           #+#    #+#             */
-/*   Updated: 2020/05/11 14:47:15 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/27 14:26:25 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,8 @@ int		init_key_tab(void)
 			g_dispatch_keys[i].key_path = NULL;
 		i++;
 	}
-	++i;
-	while (g_keylist[i])
-	{
+	while (g_keylist[++i])
 		g_dispatch_keys[i - 1].key_path = g_keylist[i];
-		i++;
-	}
 	return (0);
 }
 
@@ -95,7 +91,7 @@ int		keyboard_dispatcher(union u_tc *term, char **buff, t_cursor *cursor)
 				{
 					update_buff(buff, cursor);
 					ft_strdel(&(cursor->prompt));
-					cursor->prompt_len = mkprompt(&(cursor->prompt));
+					cursor->prompt_len = mk_prompt(&(cursor->prompt), PS1);
 					history(RESET, buff, NULL);
 				}
 				if (((g_dispatch_keys[i].function_call)(buff, cursor)) == 0)

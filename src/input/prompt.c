@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 17:12:27 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/27 16:40:57 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/27 15:45:59 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,35 +16,8 @@
 #include "prompt.h"
 #include "shell_variables.h"
 
-#define COLOR "\033[96;m"
-#define ERR_COLOR "\033[31;m"
-#define RESET "\033[0m"
-
 extern struct s_svar	*g_svar;
 extern int				g_retval;
-
-int		mkprompt_quote(char *input, char **prompt, size_t *len)
-{
-	t_list			*unclosed_inhib;
-	char			err[2];
-	int				ret;
-
-	unclosed_inhib = NULL;
-	if ((ret = quote_prompt(&unclosed_inhib, input)) == ERR)
-	{
-		err[0] = *((char*)(unclosed_inhib->content));
-		err[1] = '\0';
-		psherror(e_syntax_error, &(err[0]), e_parsing_type);
-		ft_lstdel(&unclosed_inhib, &ft_lst_strdel);
-		return (-1);
-	}
-	if (unclosed_inhib == NULL && ret != ESC_NL)
-		return (0);
-	*prompt = getshvar("PS2");
-	*len = ft_strlen(*prompt);
-	ft_lstdel(&unclosed_inhib, &ft_lst_strdel);
-	return (1);
-}
 
 char	*mkprompt_intro(size_t *len)
 {
@@ -62,41 +35,53 @@ char	*mkprompt_intro(size_t *len)
 
 char	*mkprompt_outro(size_t *len)
 {
+	*len += 3;
 	if (!g_retval)
-	{
-		*len += 3;
-		return (ft_strdup(" "COLOR"~"RESET" "));
-	}
-	else
-	{
-		*len += 3;
-		return (ft_strdup(" "ERR_COLOR"~"RESET" "));
-	}
+		return (ft_strdup(" "COLOR"~"RESET_TC" "));
+	return (ft_strdup(" "ERR_COLOR"~"RESET_TC" "));
 }
 
-size_t	mkprompt(char **prompt)
+size_t	mk_prompt(char **prompt, char *prompt_var)
 {
 	char			*tmp;
 	struct s_svar	*voyager;
 	size_t			len;
 
-	tmp = NULL;
+	len = 0;
+	tmp = "";
 	voyager = g_svar;
 	while (voyager)
 	{
-		if (!(ft_strcmp(voyager->key, PS1)))
+		if (!(ft_strcmp(voyager->key, prompt_var)))
 		{
 			tmp = voyager->value;
 			break ;
 		}
 		voyager = voyager->next;
 	}
-	if (!tmp)
-		tmp = "";
-	len = 0;
-	*prompt = ft_strnjoinfree(3,
-			mkprompt_intro(&len),
-			mkprompt_expand(tmp, &len),
-			mkprompt_outro(&len));
+	tmp = mkprompt_expand(tmp, &len);
+	if (prompt_var[2] == '1')
+		tmp = ft_strnjoinfree(3,
+				mkprompt_intro(&len),
+				tmp, mkprompt_outro(&len));
+	*prompt = tmp;
 	return (len);
+}
+
+int		ft_check_inhib(char *input)
+{
+	t_list			*unclosed_inhib;
+	int				ret;
+
+	unclosed_inhib = NULL;
+	if ((ret = quote_check(&unclosed_inhib, input)) == ERR)
+	{
+		psherror(e_syntax_error, unclosed_inhib->content, e_parsing_type);
+		ft_lstdel(&unclosed_inhib, &ft_lst_strdel);
+		return (-1);
+	}
+	if (unclosed_inhib == NULL && ret != ESC_NL)
+		return (0);
+	ft_lstdel(&unclosed_inhib, &ft_lst_strdel);
+	return (1);
 }

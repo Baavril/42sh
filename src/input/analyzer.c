@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyzer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bprunev <bprunev@student.42.fr>            +#+  +:+       +#+        */
+/*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/19 13:04:47 by bprunev           #+#    #+#             */
-/*   Updated: 2020/05/22 16:35:14 by tgouedar         ###   ########.fr       */
+/*   Created: 2019/11/19 13:04:47 by baavril           #+#    #+#             */
+/*   Updated: 2020/05/27 17:24:50 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,8 @@ int			set_reader(union u_tc *term, char **buff, t_cursor *cursor)
 
 int			standard_analyzer(union u_tc *term, char **buff, t_cursor *cursor)
 {
-	if (!keyboard_ctrl_c(term, buff, cursor)
-	|| !keyboard_ctrl_d(term, buff, cursor))
-		return (0);
+	keyboard_ctrl_c(term, buff, cursor);
+	keyboard_ctrl_d(term, buff, cursor);
 	keyboard_ctrl_l(term, buff, cursor);
 	keyboard_normal_char(term, buff, cursor);
 	keyboard_backspace(term, buff, cursor);
@@ -60,7 +59,7 @@ int			search_analyzer(union u_tc *term, char **buff, t_cursor *cursor)
 	{
 		ft_bzero(*buff, ft_strlen(*buff));
 		ft_strdel(&(cursor->prompt));
-		ft_init_cursor(cursor);
+		ft_init_cursor(cursor, 0);
 		cursor->ctrl_r = 1;
 	}
 	keyboard_normal_char(term, buff, cursor);
@@ -68,7 +67,7 @@ int			search_analyzer(union u_tc *term, char **buff, t_cursor *cursor)
 	if (!(keyboard_enter(term, buff, cursor)))
 		return (0);
 	else if (keyboard_ctrl_l(term, buff, cursor) == 0
-	|| keyboard_ctrl_search(term, buff, cursor) == 0
+	|| keyboard_ctrl_d(term, buff, cursor) == 0
 	|| keyboard_ctrl_c(term, buff, cursor) == 0
 	|| keyboard_dispatcher(term, buff, cursor) >= 0)
 	{

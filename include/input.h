@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 12:11:17 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/27 16:16:08 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/27 14:11:55 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,6 @@
 # define ESC		'\033'
 # define INPUT_SIZE	256
 
-# define STD_INPUT		1
-# define QUOTE_INPUT	2
-
 char				*g_copybuff;
 char				*g_inside_history;
 
@@ -76,6 +73,7 @@ typedef struct		s_dispatch_keys
 	int				(*function_call)(char**, t_cursor*);
 }					t_dispatch_keys;
 
+int					process_heredoc(char **input);
 int					get_input(char **input, int argc);
 int					toggle_termcaps(void);
 void				restore_term_mode();
@@ -86,15 +84,13 @@ int					standard_analyzer(union u_tc *term, char **buff,
 															t_cursor *cursor);
 int					analyzer(t_cursor *cursor, char **buff, union u_tc *term);
 void				ft_reader(union u_tc *term, t_cursor *cursor, char ***buff);
-void				ft_init_cursor(t_cursor *cursor);
+void				ft_init_cursor(t_cursor *cursor, int prompt_mode);
 
 int					keyboard_dispatcher(union u_tc *term, char **buff,
 															t_cursor *cursor);
 int					keyboard_ctrl_c(union u_tc *term, char **buff,
 															t_cursor *cursor);
 int					keyboard_ctrl_d(union u_tc *term, char **buff,
-															t_cursor *cursor);
-int					keyboard_ctrl_search(union u_tc *term, char **buff,
 															t_cursor *cursor);
 int					keyboard_ctrl_l(union u_tc *term, char **buff,
 															t_cursor *cursor);
