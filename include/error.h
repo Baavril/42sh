@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:51:41 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/26 14:14:56 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/27 10:42:29 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ enum							e_minishell_error
 	e_success,
 	e_invalid_input,
 	e_syntax_error,
+	e_unexpected_eof,
 	e_no_builtin,
 	e_bad_substitution,
 	e_cannot_assign_list_to_array_member,

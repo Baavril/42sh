@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 11:16:45 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/05/22 14:47:54 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/27 11:06:13 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int						quote_prompt(t_list **unclosed_inhib, char *command)
 			ft_inhib_exception(unclosed_inhib, &command, open);
 		else if (ft_isin(*command, INHIB))
 		{
-			if (ft_treat_inhib(unclosed_inhib, *command) == 1)
+			if (ft_treat_inhib(unclosed_inhib, *command))
 				return (ERR);
 		}
 		command++;

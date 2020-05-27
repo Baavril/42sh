@@ -6,13 +6,14 @@
 /*   By: tgouedar <tgouedar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/17 15:50:39 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/05/17 18:37:15 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/27 10:58:14 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "shell_variables.h"
 #include "libft.h"
+
 extern struct s_svar	*g_svar;
 
 char		*ft_getcwd(void)
@@ -36,7 +37,8 @@ char		*get_prompt_element(const char c)
 	return ("");
 }
 
-size_t		replace_element(char **prompt, char *element, size_t j, const char *ps1)
+size_t		replace_element(char **prompt, char *element, size_t j,
+														const char *ps1)
 {
 	char		*tmp;
 	size_t		el_len;

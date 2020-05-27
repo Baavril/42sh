@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 15:48:33 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/22 12:16:31 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/27 10:50:42 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define CLOSE			"]})"
 # define QUOTES			"\'\""
 # define INHIB_COM		"\'\"{("
+# define EOF_ERR		-1
 # define ERR			0
 # define NO_ERR			1
 # define ESC_NL			2
