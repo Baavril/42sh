@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 17:12:27 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/27 15:05:24 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/27 15:45:59 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,38 +35,12 @@ char	*mkprompt_intro(size_t *len)
 
 char	*mkprompt_outro(size_t *len)
 {
-
 	*len += 3;
 	if (!g_retval)
 		return (ft_strdup(" "COLOR"~"RESET_TC" "));
 	return (ft_strdup(" "ERR_COLOR"~"RESET_TC" "));
 }
-/*
-size_t	mk_prompt(char **prompt)
-{
-	char			*tmp;
-	struct s_svar	*voyager;
-	size_t			len;
 
-	tmp = "";
-	voyager = g_svar;
-	while (voyager)
-	{
-		if (!(ft_strcmp(voyager->key, PS1)))
-		{
-			tmp = voyager->value;
-			break ;
-		}
-		voyager = voyager->next;
-	}
-	len = 0;
-	*prompt = ft_strnjoinfree(3,
-			mkprompt_intro(&len),
-			mkprompt_expand(tmp, &len),
-			mkprompt_outro(&len));
-	return (len);
-}
-*/
 size_t	mk_prompt(char **prompt, char *prompt_var)
 {
 	char			*tmp;

@@ -6,10 +6,9 @@
 /*   By: tgouedar <tgouedar@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 12:33:23 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/05/27 15:25:54 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/27 15:40:27 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include <unistd.h>
 #include "termcaps.h"

@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/15 16:44:11 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/26 17:48:20 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/27 15:47:57 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static int		write_fc_file(char **option, int fd)
 		if (ft_strisnbr(option[0]))
 			ft_one_number_w(option[0], max, fd);
 		else
-			ft_dprintf(2, "42sh: fc: %s: numeric argument required\n", option[0]);
+			ft_dprintf(2, "42sh: fc: %s: numeric argument required\n",
+																option[0]);
 	}
 	else
 	{
@@ -41,7 +42,7 @@ static int		write_fc_file(char **option, int fd)
 	return (0);
 }
 
-int			ft_fc(char **option)
+int				ft_fc(char **option)
 {
 	int	fd;
 
