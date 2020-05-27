@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:56:23 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/22 16:27:47 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/27 16:41:55 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ const struct s_error_desc	g_errordesc[] =
 	{ 0, "no error" },
 	{ 1, "invalid input" },
 	{ 1, "syntax error near unexpected token" },
+	{ 2, "syntax error: unexpected end of file" },
 	{ 1, "no such builtin" },
 	{ 1, "bad substitution" },
 	{ 1, "cannot assign list to array member" },

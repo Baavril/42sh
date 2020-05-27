@@ -6,7 +6,7 @@
 /*   By: tgouedar <tgouedar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/17 15:50:39 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/05/22 15:08:27 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/27 16:41:19 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char		*get_prompt_element(const char c)
 }
 
 size_t		replace_element(char **prompt, char *element, size_t j,
-															const char *ps1)
+														const char *ps1)
 {
 	char		*tmp;
 	size_t		el_len;

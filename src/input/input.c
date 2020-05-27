@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/27 16:36:27 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/27 16:40:36 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,12 @@ static int				ft_agregate_line(t_cursor *cursor, char **buff)
 	if ((cursor))
 		get_stdin(cursor, &tmp);
 	else if ((ret = get_next_line(STDIN_FILENO, &tmp)) < 0)
-		return (1);
+		return (ERR);
 	if (!(*tmp) && !ret)
-		return (1);
+	{
+		ft_strdel(&tmp);
+		return (EOF_ERR);
+	}
 	*buff = ft_strjoinfree(*buff, ft_strdup("\n"));
 	*buff = ft_strjoinfree(*buff, tmp);
 	if ((cursor))
@@ -83,7 +86,7 @@ static int				ft_agregate_line(t_cursor *cursor, char **buff)
 		write(1, "\n", 1);
 		ft_init_cursor(cursor);
 	}
-	return (0);
+	return (NO_ERR);
 }
 
 static int				read_command(char **buff)
@@ -120,28 +123,24 @@ int						get_input(char **input, int argc)
 	int			ret;
 	t_list		*unclosed_inhib;
 
-	if (argc == 1)
-		if ((ret = read_command(input)) != 1)
-			return (ret);
+	if (argc == 1 && (ret = read_command(input)) != 1)
+		return (ret);
 	unclosed_inhib = NULL;
 	if ((ret = get_next_line(STDIN_FILENO, input)) < 0)
 		return (ret);
 	if (!(**input) && !ret)
 		return (1);
 	while ((ret = quote_prompt(&unclosed_inhib, *input)) == ESC_NL
-			|| (unclosed_inhib))
+			|| (ret != ERR && unclosed_inhib))
 	{
-		if (ft_agregate_line(NULL, input))
-		{
-			ret = ERR;
+		if ((ret = ft_agregate_line(NULL, input)) != NO_ERR)
 			break ;
-		}
 		ft_lstdel(&unclosed_inhib, &ft_lst_strdel);
 	}
-	if (ret == ERR)
-	{
-		ft_lstdel(&unclosed_inhib, &ft_lst_strdel);
-//		psherror();
-	}
-	return ((ret == ERR || ret == ESC_NL) ? 1 : SUCCESS);
+	if (ret == EOF_ERR)
+		psherror(e_unexpected_eof, NULL, e_invalid_type);
+	if (ret == ERR && unclosed_inhib)
+		psherror(e_syntax_error, unclosed_inhib->content, e_parsing_type);
+	ft_lstdel(&unclosed_inhib, &ft_lst_strdel);
+	return ((ret == ERR || ret == EOF_ERR || ret == ESC_NL) ? 1 : SUCCESS);
 }
