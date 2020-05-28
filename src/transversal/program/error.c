@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:56:23 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/27 16:41:55 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/28 09:49:47 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 #include "libft.h"
 #include "error.h"
 
-char	*g_progname;
+char						*g_progname;
+extern int					g_retval;
 
 const struct s_error_desc	g_errordesc[] =
 {
 	{ 0, "no error" },
 	{ 1, "invalid input" },
-	{ 1, "syntax error near unexpected token" },
+	{ 2, "syntax error near unexpected token" },
 	{ 2, "syntax error: unexpected end of file" },
 	{ 1, "no such builtin" },
 	{ 1, "bad substitution" },
@@ -78,4 +79,5 @@ void	psherror(int e_error, char *str, int e_message_type)
 	else if (e_message_type == e_maths_type)
 		ft_dprintf(STDERR_FILENO, "%s: %s: %s.\n", \
 				g_progname, str, g_errordesc[e_error].message);
+	g_retval = g_errordesc[e_error].code;
 }
