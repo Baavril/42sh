@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 09:48:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/27 14:34:29 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/29 12:26:53 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,6 @@ int						ft_strplen(char *str);
 
 void					setshvar(char *var_name, int64_t value);
 char					*getshvar(char *var_name);
+int						unsetvarset(char *argv);
 
 #endif

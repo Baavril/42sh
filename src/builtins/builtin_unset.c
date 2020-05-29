@@ -6,7 +6,7 @@
 /*   By: bprunev <bprunev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:21:48 by bprunev           #+#    #+#             */
-/*   Updated: 2020/03/01 15:37:33 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/05/29 12:30:26 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int
 	return (ERROR);
 }
 
-static int
+int
 	unsetvarset(char *argv)
 {
 	struct s_svar	*tmp;

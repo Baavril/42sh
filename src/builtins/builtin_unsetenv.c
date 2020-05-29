@@ -6,28 +6,37 @@
 /*   By: tgouedar <tgouedar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 11:25:19 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/05/16 20:21:19 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/29 12:37:15 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include "shell_variables.h"
 #include "libft.h"
 
 extern char	*g_progname;
 
 int			cmd_unsetenv(int ac, char **av)
 {
+	int		i;
+
+	i = 0;
 	if (ac >= 2)
 	{
-		if (ft_unsetenv(av[1]) == -1)
-			ft_dprintf(STDERR_FILENO,
+		while (++i < ac)
+		{
+			if (ft_unsetenv(av[i]) == -1)
+				ft_dprintf(STDERR_FILENO,
 					"%s: unsetenv: %s: No such variable in environnement.\n",
-												g_progname, av[1]);
+											g_progname, av[i]);
+			else
+				unsetvarset(av[i]);
+		}
 		return (0);
 	}
 	if (ac < 2)
 		ft_dprintf(STDERR_FILENO,
-					"%s: unsetenv: %s: Too few arguments.",
-												g_progname, av[1]);
+					"%s: unsetenv: Too few arguments.",
+												g_progname);
 	return (1);
 }
