@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vqr_checker.c                                      :+:      :+:    :+:   */
+/*   var_checker.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bprunev <bprunev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:21:48 by bprunev           #+#    #+#             */
-/*   Updated: 2020/03/08 13:41:16 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/05/29 13:20:33 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 #include "libft.h"
 
 extern struct s_svar	*g_svar;
-extern t_htable			*g_bintable;
 
 static int				testvarlst(char *tmp_n, char *argv, struct s_svar *tmp)
 {

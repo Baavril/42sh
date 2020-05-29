@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 12:09:54 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/05/29 13:42:21 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/29 13:45:59 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,17 @@
 #include "builtins.h"
 #include "libft.h"
 
-extern char	*g_progname;
+extern char			*g_progname;
+extern t_htable		*g_bintable;
 
-static void	ft_printenv(void)
+static void			ft_printenv(void)
 {
 	extern char		**environ;
 
 	ft_print_tables(environ);
 }
 
-int			cmd_setenv(int ac, char **av)
+int					cmd_setenv(int ac, char **av)
 {
 	char	*value;
 
@@ -38,6 +39,8 @@ int			cmd_setenv(int ac, char **av)
 		if (ac == 3)
 			value = av[2];
 		ft_setenv(av[1], value);
+		if (!(ft_strcmp("PATH", av[1])) && (g_bintable))
+			ft_empty_htable(g_bintable);
 		return (0);
 	}
 	else
