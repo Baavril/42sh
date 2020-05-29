@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 12:09:54 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/05/16 20:20:44 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/29 13:42:21 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int			cmd_setenv(int ac, char **av)
 	}
 	else
 		ft_dprintf(STDERR_FILENO,
-						"%s: unsetenv: %s: Too many arguments.",
-												g_progname, av[1]);
+						"%s: setenv: Too many arguments.", g_progname);
 	return (1);
 }
