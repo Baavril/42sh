@@ -6,7 +6,7 @@
 /*   By: tgouedar <tgouedar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 11:25:19 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/05/29 12:37:15 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/29 12:42:20 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ int			cmd_unsetenv(int ac, char **av)
 		}
 		return (0);
 	}
-	if (ac < 2)
+	else
 		ft_dprintf(STDERR_FILENO,
-					"%s: unsetenv: Too few arguments.",
+					"%s: unsetenv: Too few arguments.\n",
 												g_progname);
 	return (1);
 }
