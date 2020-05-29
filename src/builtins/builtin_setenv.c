@@ -6,11 +6,12 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 12:09:54 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/05/29 13:45:59 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/29 13:49:21 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include "hash_module.h"
 #include "builtins.h"
 #include "libft.h"
 

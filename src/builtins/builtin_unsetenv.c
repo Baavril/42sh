@@ -6,12 +6,13 @@
 /*   By: tgouedar <tgouedar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 11:25:19 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/05/29 12:42:20 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/29 13:49:23 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "shell_variables.h"
+#include "hash_module.h"
 #include "libft.h"
 
 extern char	*g_progname;
