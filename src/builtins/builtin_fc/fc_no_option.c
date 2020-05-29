@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/15 16:44:11 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/29 16:48:17 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/29 18:57:16 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,12 @@ static int		write_fc_file(char **option, int fd)
 	history(FIRST, NULL, &cmd);
 	while (history(FORWARD, NULL, &cmd) != 2 && cmd)
 		max++;
-	ft_printf("max[%d]\n", max);
 	if (option[0] && option[1])
 		ft_two_number_w(option, max, fd);
 	else if (option[0])
 	{
 		if (ft_strisnbr(option[0]))
-			ft_one_number_w(option[0], max, fd);
+			ft_one_number_w(option[0], fd);
 		else
 			ft_dprintf(2, "42sh: fc: %s: numeric argument required\n",
 																option[0]);
