@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 12:34:42 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/15 16:48:35 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/29 17:38:13 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ static int		ft_strdel_option(char ***option)
 	if (option && *option)
 	{
 		if ((*option)[0])
-			free(*option[0]);
+			free((*option)[0]);
 		if ((*option)[1])
-			free(*option[1]);
+			free((*option)[1]);
 		free(*option);
 		option = NULL;
 	}
@@ -69,7 +69,7 @@ static int		opt_arg(int opt)
 	return (1);
 }
 
-static int		ft_bazar(char ***option, int sh)
+static int		ft_bazar(char ***option, int sh, char **argv)
 {
 	int	ret;
 
@@ -91,7 +91,7 @@ static int		ft_bazar(char ***option, int sh)
 		else if (g_arg & ARG_L)
 			ret = ft_print_history(*option);
 		else
-			ret = ft_fc(*option);
+			ret = ft_fc(*option, argv);
 		ft_strdel_option(option);
 		return (ret);
 	}
@@ -104,7 +104,7 @@ int				cmd_fc(int argc, char **argv)
 	int		opt;
 
 	g_arg = 0;
-	if (!ft_bazar(&option, 1))
+	if (!ft_bazar(&option, 1, argv))
 		return (0);
 	while ((opt = ft_parser(argc, argv, "rnl::s:e::", option)) != -1)
 	{
@@ -120,6 +120,6 @@ int				cmd_fc(int argc, char **argv)
 		if (opt == 63 || opt == 0)
 			return (ft_strdel_option(&option));
 	}
-	ret = ft_bazar(&option, 2);
+	ret = ft_bazar(&option, 2, argv);
 	return (ret);
 }
