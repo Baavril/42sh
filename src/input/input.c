@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/27 15:04:40 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/30 18:16:08 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,26 +50,13 @@ void					ft_init_cursor(t_cursor *cursor, int prompt_mode)
 	cursor->on = 0;
 }
 
-int						ft_strplen(char *str)
+static void				ft_syntaxerr(t_list *unclosed_inhib)
 {
-	int	i;
-	int	j;
+	char	err_mess[2];
 
-	i = 0;
-	j = 0;
-	while (str[i])
-	{
-		if (str[i] == '\033')
-		{
-			while (str[i] != 'm')
-				++i;
-			++i;
-		}
-		if (ft_isprint(str[i]))
-			++j;
-		++i;
-	}
-	return (j);
+	err_mess[0] = *((char*)(unclosed_inhib->content));
+	err_mess[1] = '\0';
+	psherror(e_syntax_error, err_mess, e_parsing_type);
 }
 
 static int				ft_agregate_line(t_cursor *cursor, char **buff)
@@ -148,7 +135,7 @@ int						get_input(char **input, int argc)
 	if (ret == EOF_ERR)
 		psherror(e_unexpected_eof, NULL, e_invalid_type);
 	if (ret == ERR && unclosed_inhib)
-		psherror(e_syntax_error, unclosed_inhib->content, e_parsing_type);
+		ft_syntaxerr(unclosed_inhib);
 	ft_lstdel(&unclosed_inhib, &ft_lst_strdel);
 	return ((ret == ERR || ret == EOF_ERR || ret == ESC_NL) ? 1 : SUCCESS);
 }
