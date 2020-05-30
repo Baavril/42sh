@@ -72,11 +72,14 @@ int		ft_check_inhib(char *input)
 {
 	t_list			*unclosed_inhib;
 	int				ret;
+	char				str[2];
 
 	unclosed_inhib = NULL;
 	if ((ret = quote_check(&unclosed_inhib, input)) == ERR)
 	{
-		psherror(e_syntax_error, unclosed_inhib->content, e_parsing_type);
+		str[0] = *((char *)unclosed_inhib->content);
+		str[1] = '\0';
+		psherror(e_syntax_error, str, e_parsing_type);
 		ft_lstdel(&unclosed_inhib, &ft_lst_strdel);
 		return (-1);
 	}
