@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:51:41 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/27 16:38:36 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/31 13:25:06 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,22 @@ enum							e_minishell_error
 	e_invalid_name,
 	e_invalid_number,
 	e_invalid_base,
-	e_neg_exp
+	e_neg_exp,
+	e_not_a_valid_file,
+	e_redirection_ambigue,
+	e_forbidden_access,
+	e_incorrect_fd,
+	e_unknow_command,
+	e_home_not_set,
+	e_oldpwd_not_set,
+	e_Permission_denied,
+	e_not_a_directory,
+	e_No_such_file_or_directory,
+	e_too_many_levels_of_symbolic_links,
+	e_No_current_job,
+	e_job_is_currently_in_background,
+	e_job_has_terminated,
+	e_no_such_job
 };
 
 enum							e_error_message_types
@@ -51,7 +66,8 @@ enum							e_error_message_types
 	e_parsing_type,
 	e_cmd_type,
 	e_builtin_type,
-	e_maths_type
+	e_maths_type,
+	e_unknow_type
 };
 
 typedef enum e_minishell_error	t_error;

@@ -6,11 +6,12 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 13:16:47 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/04 13:36:32 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/05/31 13:26:08 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "error.h"
 #include "parser.h"
 #include <unistd.h>
 
@@ -26,7 +27,7 @@ int	i_lessand(t_elem left, t_elem right)
 		else if (dup2(*right.c - '0', fd1) != -1)
 			return (fd1);
 	}
-	ft_dprintf(STDERR_FILENO, "21sh: %s: incorrect fd\n", right.c);
+	psherror(e_incorrect_fd, right.c, e_cmd_type);
 	return (-1);
 }
 
@@ -42,7 +43,7 @@ int	i_greatand(t_elem left, t_elem right)
 		else if (dup2(*right.c - '0', fd1) != -1)
 			return (fd1);
 	}
-	ft_dprintf(STDERR_FILENO, "21sh: %s: incorrect fd\n", right.c);
+	psherror(e_incorrect_fd, right.c, e_cmd_type);
 	return (-1);
 }
 
@@ -67,10 +68,10 @@ int	i_lessgreat(t_elem left, t_elem right)
 
 	fd1 = left.c ? *left.c - '0' : 0;
 	if (!*right.c)
-		ft_dprintf(STDERR_FILENO, "21sh: %s: Redirection ambigue\n", right.c);
+		psherror(e_redirection_ambigue, right.c, e_cmd_type);
 	else if (open_on_fd(right.c, O_RDWR | O_CREAT, S_IRUSR
 				| S_IWUSR | S_IRGRP | S_IROTH, fd1) != -1)
 		return (fd1);
-	ft_dprintf(STDERR_FILENO, "21sh: %s: Premission denied\n", right.c);
+	psherror(e_Permission_denied, right.c, e_cmd_type);
 	return (-1);
 }

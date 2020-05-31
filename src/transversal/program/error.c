@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:56:23 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/28 09:49:47 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/31 13:23:11 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@ const struct s_error_desc	g_errordesc[] =
 	{ 1, "invalid number" },
 	{ 1, "invalid arithmetic base" },
 	{ 1, "exponent less than zero" },
+	/* interpreter */
+	{ 1, "not a valid file" },
+	{ 1, "Redirection ambigue" },
+	{ 1, "forbidden access" },
+	{ 1, "incorrect fd" },
+	{ 1, "unknow command" },
 	/* cd */
 	{ 1, "HOME not set" },
 	{ 1, "OLDPWD not set" },
@@ -79,5 +85,8 @@ void	psherror(int e_error, char *str, int e_message_type)
 	else if (e_message_type == e_maths_type)
 		ft_dprintf(STDERR_FILENO, "%s: %s: %s.\n", \
 				g_progname, str, g_errordesc[e_error].message);
+	else if (e_message_type == e_unknow_type)
+		ft_dprintf(STDERR_FILENO, "%s: %s: %s.\n", \
+				g_progname, g_errordesc[e_error].message, str);
 	g_retval = g_errordesc[e_error].code;
 }
