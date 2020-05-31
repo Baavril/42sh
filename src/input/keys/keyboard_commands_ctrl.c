@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:13:16 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/27 14:24:56 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/31 15:29:00 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <curses.h>
 
 extern int	g_retval;
+int			g_input_mode = 0;
 
 int			keyboard_ctrl_l(union u_tc *term, char **buff, t_cursor *cursor)
 {
@@ -53,7 +54,8 @@ static int	keyboard_ctrl_c_wiper(char **buff, t_cursor *cursor)
 	ft_init_cursor(cursor, 0);
 	cursor->prompt = tmp;
 	cursor->prompt_len = tmp_len;
-	ft_putchar('\n');
+	if (g_input_mode)
+		g_input_mode = 0;
 	ft_check_bgstatus();
 	g_retval = 130;
 	return (0);
@@ -72,7 +74,9 @@ int			keyboard_ctrl_c(union u_tc *term, char **buff, t_cursor *cursor)
 			keyboard_ctrl_c_wiper(buff, cursor);
 			return (0);
 		}
-		keyboard_ctrl_c_wiper(buff, cursor);
+		if (g_input_mode)
+			ft_putchar('\n');
+		return (keyboard_ctrl_c_wiper(buff, cursor));
 	}
 	return (1);
 }
@@ -90,8 +94,17 @@ int			keyboard_ctrl_d(union u_tc *term, char **buff, t_cursor *cursor)
 		}
 		if (*buff && **buff)
 			delete_key(buff, cursor);
-		else if (ft_clean_exit(NULL, g_retval))
-			g_retval = 146;
+		else if (g_input_mode == 0)
+		{
+			ft_putendl("exit");
+			if (ft_clean_exit(NULL, g_retval))
+				g_retval = 146;
+		}
+		else
+		{
+			psherror(e_eof_reached, NULL, e_invalid_type);
+			return (keyboard_ctrl_c_wiper(buff, cursor));
+		}
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/30 18:16:08 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/31 15:01:48 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 #include <stdint.h>
 
 extern struct s_svar	*g_svar;
+extern int				g_retval;
+extern int				g_input_mode;
 
 void					ft_init_cursor(t_cursor *cursor, int prompt_mode)
 {
@@ -64,11 +66,13 @@ static int				ft_agregate_line(t_cursor *cursor, char **buff)
 	int			ret;
 	char		*tmp;
 
-	ret = 0;
-	if ((cursor))
+	ret = 1;
+	if ((cursor) && (g_input_mode = 1))
 	{
 		ft_init_cursor(cursor, 2);
 		get_stdin(cursor, &tmp);
+		if (!g_input_mode)
+			return (ERR);
 	}
 	else if ((ret = get_next_line(STDIN_FILENO, &tmp)) < 0)
 		return (ERR);
@@ -77,7 +81,7 @@ static int				ft_agregate_line(t_cursor *cursor, char **buff)
 		ft_strdel(&tmp);
 		return (EOF_ERR);
 	}
-	*buff = ft_strjoinfree(*buff, ft_strdup("\n"));
+	*buff = ft_strjoin_free(*buff, "\n", 1);
 	*buff = ft_strjoinfree(*buff, tmp);
 	if ((cursor))
 	{
@@ -94,15 +98,15 @@ static int				read_command(char **buff)
 
 	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO))
 		return (1);
-	if (set_termcaps(TC_INPUT))
+	if (!(g_input_mode = 0) && set_termcaps(TC_INPUT))
 		return (2);
 	ft_init_cursor(&cursor, 1);
 	get_stdin(&cursor, buff);
 	write(1, "\n", 1);
 	ft_strdel(&(cursor.prompt));
-	while (**buff
-	&& (ret = ft_check_inhib(*buff)) == 1)
-		ft_agregate_line(&cursor, buff);
+	while (**buff && (ret = ft_check_inhib(*buff)) == 1)
+		if (ft_agregate_line(&cursor, buff) != NO_ERR && (ret = -1))
+			break ;
 	if (ret == -1)
 	{
 		history(ADD_CMD, buff, NULL);
@@ -113,10 +117,19 @@ static int				read_command(char **buff)
 	return (SUCCESS);
 }
 
+/*
+** The next function will check for STDIN :
+**		-if it is a tty, read_command is called and returned
+**		-else, using get next_line until needed, it returns an
+**			inhibitor correct command from input file
+*/
+
+
 int						get_input(char **input, int argc)
 {
 	int			ret;
 	t_list		*unclosed_inhib;
+		g_retval = 146;
 
 	if (argc == 1 && (ret = read_command(input)) != 1)
 		return (ret);
