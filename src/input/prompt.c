@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 17:12:27 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/27 15:45:59 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/31 10:44:04 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int		ft_check_inhib(char *input)
 {
 	t_list			*unclosed_inhib;
 	int				ret;
-	char				str[2];
+	char			str[2];
 
 	unclosed_inhib = NULL;
 	if ((ret = quote_check(&unclosed_inhib, input)) == ERR)
