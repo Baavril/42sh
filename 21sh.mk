@@ -6,7 +6,7 @@
 #    By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/04 15:22:51 by bprunevi          #+#    #+#              #
-#    Updated: 2020/05/30 19:58:36 by yberramd         ###   ########.fr        #
+#    Updated: 2020/05/31 16:44:51 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ SOURCES			:=		transversal/program/main.c \
 						input/quote.c \
 						input/display.c \
 						input/getstdin.c \
+						input/multiline.c \
 						input/analyzer.c \
 						input/update_buffer.c \
 						input/termcaps/termcaps.c \

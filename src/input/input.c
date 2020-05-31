@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/31 16:13:09 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/31 16:39:30 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,39 +61,6 @@ static void				ft_syntaxerr(t_list *unclosed_inhib)
 	psherror(e_syntax_error, err_mess, e_parsing_type);
 }
 
-static int				ft_agregate_line(t_cursor *cursor, char **buff)
-{
-	int			ret;
-	char		*tmp;
-
-	ret = 1;
-	if ((cursor) && (g_input_mode = 1))
-	{
-		ft_init_cursor(cursor, 2);
-		get_stdin(cursor, &tmp);
-		if (!g_input_mode)
-		{
-			ft_strdel(&tmp);
-			return (ERR);
-		}
-	}
-	else if ((ret = get_next_line(STDIN_FILENO, &tmp)) < 0)
-		return (ERR);
-	if (!(*tmp) && !ret)
-	{
-		ft_strdel(&tmp);
-		return (EOF_ERR);
-	}
-	*buff = ft_strjoin_free(*buff, "\n", 1);
-	*buff = ft_strjoinfree(*buff, tmp);
-	if ((cursor))
-	{
-		ft_strdel(&(cursor->prompt));
-		write(1, "\n", 1);
-	}
-	return (NO_ERR);
-}
-
 static int				read_command(char **buff)
 {
 	int			ret;
@@ -126,7 +93,6 @@ static int				read_command(char **buff)
 **		-else, using get next_line until needed, it returns an
 **			inhibitor correct command from input file
 */
-
 
 int						get_input(char **input, int argc)
 {
