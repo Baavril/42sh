@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 17:02:43 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/05/31 13:02:31 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/31 15:52:35 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include <unistd.h>
 
 extern int		g_ppid;
-extern int		g_input_mode;
 
 static size_t	ft_get_input_len(char *input)
 {
@@ -67,6 +66,7 @@ int				get_stdin(t_cursor *cursor, char **buff)
 	*buff = NULL;
 	ft_bzero(term.buff, COUNT_KEY + 1);
 	set_reader(&term, buff, cursor);
+	ft_strdel(buff);
 	*buff = ft_strdup("");
 	while ((ret = ft_get_next_input(term.buff)) > 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:13:16 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/31 15:29:00 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/31 16:11:53 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static int	keyboard_ctrl_c_wiper(char **buff, t_cursor *cursor)
 	if (g_input_mode)
 		g_input_mode = 0;
 	ft_check_bgstatus();
-	g_retval = 130;
 	return (0);
 }
 
@@ -76,6 +75,7 @@ int			keyboard_ctrl_c(union u_tc *term, char **buff, t_cursor *cursor)
 		}
 		if (g_input_mode)
 			ft_putchar('\n');
+		g_retval = 130;
 		return (keyboard_ctrl_c_wiper(buff, cursor));
 	}
 	return (1);
@@ -102,7 +102,7 @@ int			keyboard_ctrl_d(union u_tc *term, char **buff, t_cursor *cursor)
 		}
 		else
 		{
-			psherror(e_eof_reached, NULL, e_invalid_type);
+			psherror(e_unexpected_eof, NULL, e_invalid_type);
 			return (keyboard_ctrl_c_wiper(buff, cursor));
 		}
 	}
