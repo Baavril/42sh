@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:51:41 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/31 13:25:06 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/31 15:20:50 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ enum							e_minishell_error
 	e_not_a_directory,
 	e_No_such_file_or_directory,
 	e_too_many_levels_of_symbolic_links,
-	e_No_current_job,
-	e_job_is_currently_in_background,
-	e_job_has_terminated,
+	e_no_cur_job,
+	e_job_already_in_bg,
+	e_job_terminated,
 	e_no_such_job
 };
 

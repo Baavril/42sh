@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 11:17:51 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/18 12:12:45 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/05/31 14:43:00 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ static int			ft_fg_prio_job(void)
 	t_job	*job;
 
 	if (!(g_jcont.jobs))
-		psherror(31, "fg", e_builtin_type);
+		psherror(e_no_cur_job, "fg", e_builtin_type);
 	else if ((job = ft_get_job_nbr(g_jcont.active_jobs[0])))
 	{
 		if (((job->status & BACKGROUND) && (job->status & RUNNING))
 				|| WIFSTOPPED(job->status))
 			return (ft_resume_in_fg(job));
 		else if (WIFEXITED(job->status))
-			psherror(33, "fg", e_builtin_type);
+			psherror(e_job_terminated, "fg", e_builtin_type);
 	}
 	return (1);
 }
@@ -55,9 +55,9 @@ int					cmd_fg(int ac, char **av)
 		if (WIFSTOPPED(job->status) || (job->status & BACKGROUND))
 			ret = ft_resume_in_fg(job);
 		else if (WIFEXITED(job->status) && (++ret))
-			psherror(33, "fg", e_builtin_type);
+			psherror(e_job_terminated, "fg", e_builtin_type);
 	}
 	else if (++ret)
-		psherror(34, "fg", e_builtin_type);
+		psherror(e_no_such_job, "fg", e_builtin_type);
 	return (ret);
 }

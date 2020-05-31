@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_bg.c                                       :+:      :+:    :+:   */
+/*   cmd_bg.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 10:57:05 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/01/18 12:18:05 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/05/31 14:46:31 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ static int			ft_bg_prio_job(void)
 	t_job		*job;
 
 	if (!(g_jcont.jobs))
-		psherror(31, "bg", e_builtin_type);
+		psherror(e_no_cur_job, "bg", e_builtin_type);
 	else if ((job = ft_get_job_nbr(g_jcont.active_jobs[0])))
 	{
 		if ((job->status & BACKGROUND) && (job->status & RUNNING))
-			psherror(32, "bg", e_builtin_type);
+			psherror(e_job_already_in_bg, "bg", e_builtin_type);
 		else if (!WIFSTOPPED(job->status))
-			psherror(33, "bg", e_builtin_type);
+			psherror(e_job_terminated, "bg", e_builtin_type);
 		else
 			return (ft_resume_in_bg(job));
 	}
@@ -56,12 +56,12 @@ int					cmd_bg(int ac, char **av)
 			if (WIFSTOPPED(job->status))
 				ret += ft_resume_in_bg(job);
 			else if ((job->status & BACKGROUND) && (job->status & RUNNING))
-				psherror(32, "bg", e_builtin_type);
+				psherror(e_job_already_in_bg, "bg", e_builtin_type);
 			else if (++ret)
-				psherror(33, "bg", e_builtin_type);
+				psherror(e_job_terminated, "bg", e_builtin_type);
 		}
 		else if (++ret)
-			psherror(34, "bg", e_builtin_type);
+			psherror(e_no_such_job, "bg", e_builtin_type);
 	}
 	return (ret ? 1 : 0);
 }
