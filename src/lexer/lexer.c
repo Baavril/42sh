@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 17:59:39 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/29 17:40:34 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/05/30 21:00:31 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char				*ft_get_word(char **str)
 	ft_quote(str, &i, quote_type, open_quotes);
 	if (!(tmp = (char*)ft_memalloc(sizeof(char) * (i + 1))))
 		return (NULL);
-	tmp = (char*)ft_memcpy((void*)tmp, (void*)(*str), i);
+	tmp = (char*)cpy_without_bn((void*)tmp, (void*)(*str), i);
 	*str += i;
 	return (tmp);
 }
