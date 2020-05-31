@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/31 15:01:48 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/31 16:13:09 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,10 @@ static int				ft_agregate_line(t_cursor *cursor, char **buff)
 		ft_init_cursor(cursor, 2);
 		get_stdin(cursor, &tmp);
 		if (!g_input_mode)
+		{
+			ft_strdel(&tmp);
 			return (ERR);
+		}
 	}
 	else if ((ret = get_next_line(STDIN_FILENO, &tmp)) < 0)
 		return (ERR);
@@ -129,7 +132,6 @@ int						get_input(char **input, int argc)
 {
 	int			ret;
 	t_list		*unclosed_inhib;
-		g_retval = 146;
 
 	if (argc == 1 && (ret = read_command(input)) != 1)
 		return (ret);
