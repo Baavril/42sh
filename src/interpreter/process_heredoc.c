@@ -6,7 +6,7 @@
 /*   By: tgouedar <tgouedar@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 12:33:23 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/05/27 17:52:32 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/05/31 16:17:32 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 #include "libft.h"
 #include "quote.h"
 
+extern int				g_input_mode;
+
 static int				read_heredoc(char **input, char *to_match)
 {
 	char		*last_line;
@@ -25,17 +27,23 @@ static int				read_heredoc(char **input, char *to_match)
 
 	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO))
 		return (1);
-	if (set_termcaps(TC_INPUT))
+	if (!(g_input_mode = 0) && set_termcaps(TC_INPUT))
 		return (2);
+	g_input_mode = 1;
 	ft_init_cursor(&cursor, 4);
 	get_stdin(&cursor, input);
 	last_line = *input;
 	ft_strdel(&(cursor.prompt));
 	write(1, "\n", 1);
-	while (*last_line && ft_strcmp(last_line, to_match))
+	while (last_line && ft_strcmp(last_line, to_match))
 	{
 		ft_init_cursor(&cursor, 4);
 		get_stdin(&cursor, &last_line);
+		if (!g_input_mode)
+		{
+			ft_strdel(&last_line);
+			break ;
+}
 		*input = ft_strnjoinfree(3, *input, ft_strdup("\n"), last_line);
 		last_line = ft_strrchr(*input, '\n') + 1;
 		ft_strdel(&(cursor.prompt));

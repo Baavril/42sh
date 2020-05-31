@@ -6,7 +6,7 @@
 /*   By: tgouedar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 17:02:43 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/05/31 16:56:39 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/31 17:04:17 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int				get_stdin(t_cursor *cursor, char **buff)
 	*buff = NULL;
 	ft_bzero(term.buff, COUNT_KEY + 1);
 	set_reader(&term, buff, cursor);
+	ft_strdel(buff);
 	*buff = ft_strdup("");
 	while ((ret = ft_get_next_input(term.buff)) > 0)
 	{
