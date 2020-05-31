@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:13:16 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/31 15:29:00 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/31 16:58:54 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int			keyboard_ctrl_d(union u_tc *term, char **buff, t_cursor *cursor)
 		}
 		else
 		{
-			psherror(e_eof_reached, NULL, e_invalid_type);
+			psherror(e_unexpected_eof, NULL, e_invalid_type);
 			return (keyboard_ctrl_c_wiper(buff, cursor));
 		}
 	}
