@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    42sh.mk                                            :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
+#    By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/30 20:57:51 by yberramd         ###   ########.fr        #
+#    Created: 2020/03/04 15:22:51 by bprunevi          #+#    #+#              #
+#    Updated: 2020/05/31 17:06:41 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ SOURCES			:=		transversal/program/main.c \
 						input/quote.c \
 						input/display.c \
 						input/getstdin.c \
+						input/multiline.c \
 						input/analyzer.c \
 						input/update_buffer.c \
 						input/auto_completion/auto_completion.c \

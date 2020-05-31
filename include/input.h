@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 12:11:17 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/27 14:11:55 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/31 16:38:22 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int					get_input(char **input, int argc);
 int					toggle_termcaps(void);
 void				restore_term_mode();
 int					get_stdin(t_cursor *cursor, char **buff);
+int					ft_agregate_line(t_cursor *cursor, char **buff);
 int					search_analyzer(union u_tc *term, char **buff,
 															t_cursor *cursor);
 int					standard_analyzer(union u_tc *term, char **buff,
