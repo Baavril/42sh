@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_test_precedence_management1.c              :+:      :+:    :+:   */
+/*   test_precedence_mgt1.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/03/01 10:32:41 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/06/01 15:42:03 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,17 +97,11 @@ int			cmd_test(int argc, char **argv)
 	exps = 0;
 	opts = NULL;
 	if (argc == 1)
-	{
-		ft_printf("final_ret = %d\n", E_FAILURE);
 		return (E_FAILURE);
-	}
 	if (ft_strcmp("test", argv[0]) == E_SUCCESS)
 		argv++;
 	if (ft_manage_parenthesis(&argv[0]) == -1)
-	{
-		ft_printf("final_ret = %d\n", E_ERROR);
 		return (E_ERROR);
-	}
 	exps = ft_retnbr_opts(argv);
 	argc = find_next_opt(argv, 0, 1);
 	ret = test_first_args(argc, argv);
@@ -118,6 +112,5 @@ int			cmd_test(int argc, char **argv)
 		ret = test_precedences_management(argc, argv, ret, opts);
 	}
 	ft_strdel(&opts);
-	ft_printf("final_ret = %d\n", ret);
 	return (ret);
 }
