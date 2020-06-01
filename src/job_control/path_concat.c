@@ -6,14 +6,15 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 13:03:13 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/16 20:33:15 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/06/01 12:35:28 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
-#include "libft.h"
 #include "error.h"
+#include "libft.h"
+#include "parser.h"
 
 int		ft_try_dirs(char **dirs, char **bin)
 {
@@ -44,6 +45,10 @@ int		path_concat(char **bin)
 	char	*path;
 	char	**dirs;
 
+	if (!bin || !(*bin))
+		return (e_command_not_found);
+	if (**bin  == '/' && !access(*bin, X_OK) && is_regfile(*bin))
+		return (e_success);
 	if (!(path = ft_getenv("PATH")))
 	{
 		ft_memdel((void**)bin);
