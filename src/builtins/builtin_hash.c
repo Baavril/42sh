@@ -6,7 +6,7 @@
 /*   By: tgouedar <tgouedar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 17:13:25 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/05/16 20:35:04 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/06/01 12:38:03 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ static int		ft_find_and_hash(char *bin_name)
 		free(error_text);
 		return (1);
 	}
+	if (*bin_name == '/')
+		bin_name = ft_strrchr(bin_path, '/') + 1;
 	ft_insert_bintable(bin_name, bin_path, NO_HIT);
 	ft_strdel(&bin_path);
 	return (0);
