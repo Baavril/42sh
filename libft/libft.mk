@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/17 14:35:09 by tgouedar         ###   ########.fr        #
+#    Updated: 2020/06/01 15:30:22 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,6 +102,7 @@ SOURCES	:=	btree_apply_infix.c \
 		ft_putstr.c \
 		ft_putnstr.c \
 		ft_putstr_fd.c \
+		ft_putnstr_fd.c \
 		ft_putuint.c \
 		ft_putuint_octal.c \
 		ft_putwcbits.c \

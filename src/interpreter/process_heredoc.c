@@ -6,7 +6,7 @@
 /*   By: tgouedar <tgouedar@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 12:33:23 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/05/31 16:17:32 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/06/01 15:49:06 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,18 @@
 
 extern int				g_input_mode;
 
+static void				ft_catline_heredoc(char **input, char **last_line)
+{
+	if (!(*input))
+		*input = *last_line;
+	else
+	{
+		*input = ft_strnjoinfree(3, *input, ft_strdup("\n"), *last_line);
+		*last_line = ft_strrchr(*input, '\n') + 1;
+	}
+	write(STDERR_FILENO, "\n", 1);
+}
+
 static int				read_heredoc(char **input, char *to_match)
 {
 	char		*last_line;
@@ -27,27 +39,21 @@ static int				read_heredoc(char **input, char *to_match)
 
 	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO))
 		return (1);
-	if (!(g_input_mode = 0) && set_termcaps(TC_INPUT))
+	if (!(g_input_mode = 1) && set_termcaps(TC_INPUT))
 		return (2);
-	g_input_mode = 1;
-	ft_init_cursor(&cursor, 4);
-	get_stdin(&cursor, input);
-	last_line = *input;
-	ft_strdel(&(cursor.prompt));
-	write(1, "\n", 1);
-	while (last_line && ft_strcmp(last_line, to_match))
+	last_line = "";
+	*input = NULL;
+	while (ft_strcmp(last_line, to_match))
 	{
 		ft_init_cursor(&cursor, 4);
 		get_stdin(&cursor, &last_line);
+		ft_strdel(&(cursor.prompt));
 		if (!g_input_mode)
 		{
 			ft_strdel(&last_line);
 			break ;
-}
-		*input = ft_strnjoinfree(3, *input, ft_strdup("\n"), last_line);
-		last_line = ft_strrchr(*input, '\n') + 1;
-		ft_strdel(&(cursor.prompt));
-		write(1, "\n", 1);
+		}
+		ft_catline_heredoc(input, &last_line);
 	}
 	ft_strdel(&to_match);
 	set_termcaps(TC_RESTORE);
