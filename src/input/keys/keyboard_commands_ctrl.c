@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:13:16 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/31 17:08:18 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/06/01 15:38:55 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "shell_variables.h"
 
 #include <term.h>
+#include <unistd.h>
 #include <curses.h>
 
 extern int	g_retval;
@@ -32,10 +33,10 @@ int			keyboard_ctrl_l(union u_tc *term, char **buff, t_cursor *cursor)
 			ft_strdel(&(cursor->prompt));
 			cursor->prompt_len = mk_prompt(&(cursor->prompt), PS1);
 			cursor->start = ft_strlen(*buff);
-			ft_putstr(tgetstr("ho", NULL));
+			ft_putstr_fd(tgetstr("ho", NULL), STDERR_FILENO);
 			return (0);
 		}
-		ft_putstr(tgetstr("ho", NULL));
+		ft_putstr_fd(tgetstr("ho", NULL), STDERR_FILENO);
 	}
 	return (1);
 }
@@ -74,7 +75,7 @@ int			keyboard_ctrl_c(union u_tc *term, char **buff, t_cursor *cursor)
 			return (0);
 		}
 		if (g_input_mode)
-			ft_putchar('\n');
+			ft_putchar_fd('\n', STDERR_FILENO);
 		g_retval = 130;
 		return (keyboard_ctrl_c_wiper(buff, cursor));
 	}
@@ -96,7 +97,7 @@ int			keyboard_ctrl_d(union u_tc *term, char **buff, t_cursor *cursor)
 			delete_key(buff, cursor);
 		else if (g_input_mode == 0)
 		{
-			ft_putendl("exit");
+			ft_putendl_fd("exit", STDERR_FILENO);
 			if (ft_clean_exit(NULL, g_retval))
 				g_retval = 146;
 		}

@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/31 16:39:30 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/06/01 15:13:56 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ static int				read_command(char **buff)
 	int			ret;
 	t_cursor	cursor;
 
-	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO))
+	if (!isatty(STDIN_FILENO))
 		return (1);
 	if (!(g_input_mode = 0) && set_termcaps(TC_INPUT))
 		return (2);
 	ft_init_cursor(&cursor, 1);
 	get_stdin(&cursor, buff);
-	write(1, "\n", 1);
+	write(STDERR_FILENO, "\n", 1);
 	ft_strdel(&(cursor.prompt));
 	while (**buff && (ret = ft_check_inhib(*buff)) == 1)
 		if (ft_agregate_line(&cursor, buff) != NO_ERR && (ret = -1))

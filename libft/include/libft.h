@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/17 14:38:15 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/06/01 15:32:29 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,8 @@ void				ft_putaddr(void **ptr);
 void				ft_putchar_fd(char c, int fd);
 
 void				ft_putstr_fd(char const *s, int fd);
+
+void				ft_putnstr_fd(char const *s, size_t n, int fd);
 
 void				ft_putendl_fd(char const *s, int fd);
 

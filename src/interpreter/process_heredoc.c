@@ -6,7 +6,7 @@
 /*   By: tgouedar <tgouedar@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 12:33:23 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/06/01 14:39:40 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/06/01 15:49:06 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void				ft_catline_heredoc(char **input, char **last_line)
 		*input = ft_strnjoinfree(3, *input, ft_strdup("\n"), *last_line);
 		*last_line = ft_strrchr(*input, '\n') + 1;
 	}
-	write(1, "\n", 1);
+	write(STDERR_FILENO, "\n", 1);
 }
 
 static int				read_heredoc(char **input, char *to_match)

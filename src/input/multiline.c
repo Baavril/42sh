@@ -6,7 +6,7 @@
 /*   By: tgouedar <tgouedar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/31 16:24:27 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/05/31 16:43:53 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/06/01 15:48:21 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int		ft_agregate_tty(t_cursor *cursor, char **new_line)
 		return (ERR);
 	}
 	ft_strdel(&(cursor->prompt));
-	write(1, "\n", 1);
+	write(STDERR_FILENO, "\n", 1);
 	return (NO_ERR);
 }
 
