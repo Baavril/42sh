@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 13:03:13 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/06/01 12:35:28 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/06/01 13:17:37 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		path_concat(char **bin)
 
 	if (!bin || !(*bin))
 		return (e_command_not_found);
-	if (**bin  == '/' && !access(*bin, X_OK) && is_regfile(*bin))
+	if (**bin == '/' && !access(*bin, X_OK) && is_regfile(*bin))
 		return (e_success);
 	if (!(path = ft_getenv("PATH")))
 	{
