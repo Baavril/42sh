@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 12:34:42 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/29 17:38:13 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/06/01 17:12:49 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,11 @@ static int		ft_bazar(char ***option, int sh, char **argv)
 	else
 	{
 		if (g_arg & ARG_S)
-			ret = ft_execute(*option);
+			ret = ft_execute(*option);//attention si opt=string
 		else if (g_arg & ARG_L)
 			ret = ft_print_history(*option);
 		else
-			ret = ft_fc(*option, argv);
+			ret = ft_fc(*option, argv);//attention si opt=string
 		ft_strdel_option(option);
 		return (ret);
 	}
