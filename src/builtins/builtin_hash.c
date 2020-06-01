@@ -6,13 +6,14 @@
 /*   By: tgouedar <tgouedar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 17:13:25 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/06/01 12:38:03 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/06/01 16:09:17 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "job.h"
 #include "libft.h"
 #include "error.h"
+#include "builtins.h"
 #include "hash_module.h"
 #include "htable_type_dispatcher.h"
 
@@ -99,6 +100,8 @@ static int		ft_find_and_hash(char *bin_name)
 	char	*bin_path;
 	char	*error_text;
 
+	if (is_a_builtin(bin_name))
+		return (1);
 	bin_path = ft_strdup(bin_name);
 	if (path_concat(&bin_path) == e_command_not_found)
 	{
