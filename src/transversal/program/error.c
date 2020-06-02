@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:56:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/28 09:57:17 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/06/02 18:22:38 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ const struct s_error_desc	g_errordesc[] =
 	{ 1, "invalid number" },
 	{ 1, "invalid arithmetic base" },
 	{ 1, "exponent less than zero" },
-	{ 1, "empty file" }
+	{ 1, "empty file" },
+	{ 1, "history specification out of range" }
 };
 
 void	psherror(int e_error, char *str, int e_message_type)
