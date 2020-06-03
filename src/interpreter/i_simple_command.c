@@ -36,11 +36,10 @@ int		i_builtin(t_elem left, t_elem right)
 {
 	char **argv;
 
-	argv = malloc(sizeof(char *) * TAB_SIZE);
-	argv[0] = left.c;
-	argv[1] = NULL;
-	g_argv = argv;
-	if (!right.v || right.v->f(right.v->left, right.v->right) != -1)
+	g_argv = malloc(sizeof(char *) * TAB_SIZE);
+	g_argv[0] = left.c;
+	g_argv[1] = NULL;
+	if (((!right.v || right.v->f(right.v->left, right.v->right) != -1)) && (argv = g_argv))
 		if ((g_retval = builtins_dispatcher(g_argv)) == 127)
 			psherror(e_command_not_found, g_argv[0], e_cmd_type);
 	free(argv);
