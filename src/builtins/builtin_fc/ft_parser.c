@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 21:06:23 by yberramd          #+#    #+#             */
-/*   Updated: 2020/06/01 17:22:52 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/06/04 20:43:33 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	malloc_option(int ind[2], int opt[2], char **argv, char **option)
 {
 	opt[1]++;
-	if (argv[opt[1]] && argv[opt[1]][0] != '-')
+	if (argv[opt[1]] && (argv[opt[1]][0] != '-' || ft_strisnbr(argv[opt[1]])))
 	{
 		if (!(option[opt[0] - 1] = ft_strdup(argv[opt[1]])))
 			return (0);
