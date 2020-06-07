@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/01 15:47:48 by yberramd          #+#    #+#             */
-/*   Updated: 2020/06/04 20:24:34 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/06/07 20:37:28 by yberramd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,46 @@ static int	reset_arg(int *i, int *found, char **cmd)
 	*cmd = NULL;
 	return (1);
 }
+
 static int	f_arg_non_nbr(char **argv, int max, int reset)
 {
+	int	i;
+	int	found;
+	char	*cmd;
+
 	(void)argv, (void)max, (void)reset;
+	if (reset)
+		return (reset_arg(&i, &found, &cmd));
+	if (argv[1])
+	{
+	}
+	else
+	{
+	}
+	return (1);
+}
+
+static int	str_exist(char **argv)
+{
+	char	*cmd;
+
+	history(FIRST, NULL, &cmd);
+	if (ft_strisnbr(argv[0]))
+	{
+		if (ft_strfchr(argv[1], cmd))
+			return (0);
+		while (history(FORWARD, NULL, &cmd) != 2)
+			if (ft_strfchr(argv[1], cmd))
+				return (0);
+	}
+	else
+	{
+		if (ft_strfchr(argv[0], cmd))
+			return (0);
+		while (history(FORWARD, NULL, &cmd) != 2)
+			if (ft_strfchr(argv[0], cmd))
+				return (0);
+	}
 	return (1);
 }
 
@@ -37,21 +74,25 @@ static int	f_arg_nbr(char **argv, int max, int reset)
 
 	if (reset)
 		return (reset_arg(&i, &found, &cmd));
-	nbr = ft_atoi_history(argv[0]);
+	if (i == 0 && str_exist(argv))
+		return (-2);
+	if (ft_strisnbr(argv[0]))
+		nbr = ft_atoi_history(argv[0]);
+	else
+		nbr = ft_atoi_history(argv[1]);
 	if (nbr == 0)
 		nbr = INT_MAX;
 	if (nbr < 0)
 		if ((nbr = max + nbr) < 0)
 			nbr = 1;
-	if (nbr > 0)
+	if (nbr > 0 && ft_strisnbr(argv[0]))
 	{
 		if (i == 0)
 		{
 			history(LAST, NULL, &cmd);
-			while ((found = ft_strfchr(argv[1], cmd)) == 0 && (max - i) > nbr)//saute possiblement le derniere élément
+			while ((found = ft_strfchr(argv[1], cmd)) == 0 && (max - i) > nbr)
 			{
-				if (history(BACKWARD, NULL, &cmd) == 2)
-					return (-2);
+				history(BACKWARD, NULL, &cmd);
 				i++;
 			}
 			if (found == 1)
@@ -63,60 +104,52 @@ static int	f_arg_nbr(char **argv, int max, int reset)
 		}
 		else if (found > 0 && (max - i) < found)
 		{
-			if (history(FORWARD, NULL, &cmd) == 2)
-				return (1);
+			history(FORWARD, NULL, &cmd);
 			i--;
 		}
 		else if (found == 0)
 		{
 			if (ft_strfchr(argv[1], cmd) != 0)
 				return (max - i);
-			if (history(BACKWARD, NULL, &cmd) == 2)
-				return (-2);
+			history(BACKWARD, NULL, &cmd);
 			i++;
 		}
 		return (max - i);
 	}
-	/*else if (nbr < 0)
+	else if (nbr > 0 && ft_strisnbr(argv[1]))
 	{
 		if (i == 0)
 		{
 			history(LAST, NULL, &cmd);
-			while ((found = ft_strfchr(argv[1], cmd)) == 0 && (max - i) > nbr)//saute possiblement le derniere élément
+			while ((found = ft_strfchr(argv[0], cmd)) == 0 && (max - i) > nbr)
 			{
-				if (history(BACKWARD, NULL, &cmd) == 2)
-					return (-2);
+				history(BACKWARD, NULL, &cmd);
 				i++;
 			}
-			if (found == 1)
+			while (found == 0 && ft_strfchr(argv[0], cmd) == 0)
 			{
-				found = max - i;
-				while ((max - i) > nbr && history(BACKWARD, NULL, &cmd))
-					i++;
+				history(BACKWARD, NULL, &cmd);
+				i++;
 			}
 		}
-		else if (found > 0 && (max - i) < found)
+		else if (found > 0 && (max - i) > nbr)
 		{
-			if (history(FORWARD, NULL, &cmd) == 2)
-				return (1);
-			i--;
+			history(BACKWARD, NULL, &cmd);
+			i++;
 		}
-		else if (found == 0)
+		else if (found == 0 && (max - i) < nbr)
 		{
-			if (ft_strfchr(argv[1], cmd) != 0)
-				return (max - i);
-			if (history(BACKWARD, NULL, &cmd) == 2)
-				return (-2);
+			history(FORWARD, NULL, &cmd);
 			i++;
 		}
 		return (max - i);
-	}*/
+	}
 	return (-1);
 }
 
 static int	fc_move_hist(char **argv, int max, int reset)
 {
-	if (!ft_strisnbr(argv[0]))
+	if (!ft_strisnbr(argv[0]) && !(argv[1] && ft_strisnbr(argv[1])))
 		return (f_arg_non_nbr(argv, max, reset));
 	else
 		return (f_arg_nbr(argv, max, reset));
@@ -136,6 +169,7 @@ void		fc_search_string(char **argv, int max)
 		history(GET, NULL, &cmd);
 		ft_printf("%s\n", cmd);
 	}
+	ft_printf("ret =%d\n", ret);
 	if (ret == -2)
 		psherror(e_history_specification_out_of_range, NULL, e_invalid_type);
 	fc_move_hist(argv, max, 1);
