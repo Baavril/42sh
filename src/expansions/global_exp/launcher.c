@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:43:54 by baavril           #+#    #+#             */
-/*   Updated: 2020/03/07 16:43:56 by baavril          ###   ########.fr       */
+/*   Updated: 2020/07/06 17:35:32 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_symexp	g_symexp[] =
 	{0, NULL}
 };
 
-int	expansions_launcher(t_expand *vars, int expand, int flag)
+int			expansions_launcher(t_expand *vars, int expand, int flag)
 {
 	vars->j = 0;
 	if (!(expand) && ((vars->nb = back_slashed(vars->tokens)) >= 0))
@@ -50,7 +50,5 @@ int	expansions_launcher(t_expand *vars, int expand, int flag)
 		if (vars->nb > 0)
 			*(vars->tokens) = set_back_slash(*(vars->tokens), vars->nb);
 	}
-	else
-		*(vars->tokens) = set_slash(vars->tokens, flag);
 	return (SUCCESS);
 }

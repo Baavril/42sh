@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/07/06 16:02:22 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/06 17:35:33 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,23 @@
 #include "expansions.h"
 #include "libft.h"
 
-struct s_quoted	*g_quoted;
+struct s_quoted		*g_quoted;
 
-static int	token_concatenator(char *str, int *j)
+static int			ft_delimit_quoted_token(char *str, int *j)
 {
 	int					lim;
 	int					plus;
 	struct s_quoted		*q_lst;
 
 	plus = 0;
-	q_lst = NULL;
 	if (!(q_lst = (struct s_quoted*)malloc(sizeof(struct s_quoted))))
 		return (0);
+	q_lst->expand = (str[*j] == '\'');
+	q_lst->next = NULL;
 	lim = getquotelim(&str[*j]);
 	if ((str[*j]) && str[*j] != SQUOTES && str[*j] != DQUOTES
 	&& (str[lim + *j]))
 		plus = 1;
-	q_lst->expand = isexpandable(&str[*j], lim + plus);
 	if (str[*j] && (str[*j] == DQUOTES || str[*j] == SQUOTES))
 	{
 		++(*j);
@@ -39,7 +39,6 @@ static int	token_concatenator(char *str, int *j)
 	}
 	q_lst->token = dupbtwqlim(&str[*j], lim + plus);
 	*j += lim + 1;
-	q_lst->next = NULL;
 	setquotenod(q_lst);
 	return (0);
 }
@@ -53,7 +52,7 @@ static int	token_reconstitutor(char *str, int k)
 	j = 0;
 	while (i < k)
 	{
-		token_concatenator(str, &j);
+		ft_delimit_quoted_token(str, &j);
 		++i;
 	}
 	return (0);
