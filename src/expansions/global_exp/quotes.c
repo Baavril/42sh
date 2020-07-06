@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/07/06 15:43:32 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/06 17:06:35 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,33 +83,4 @@ void			setquotenod(struct s_quoted *new_back)
 			voyager = voyager->next;
 		voyager->next = new_back;
 	}
-}
-
-int				isexpandable(char *str, int lim)
-{
-	int		i;
-	int		exp;
-
-	i = 0;
-	exp = 0;
-	while (i < lim)
-	{
-		if (str[i] == DQUOTES)
-		{
-			++i;
-			while (str[i] && str[i] != DQUOTES)
-				++i;
-		}
-		if (str[i] == SQUOTES)
-		{
-			++i;
-			if ((str[i] != SQUOTES && str[i] != DQUOTES) || (str[i] == DQUOTES
-			&& (str[i + 1] != SQUOTES && str[i + 1] != DQUOTES)))
-				exp = 1;
-			while (str[i] != SQUOTES && str[i])
-				++i;
-		}
-		++i;
-	}
-	return (exp);
 }

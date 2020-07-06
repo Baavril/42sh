@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:40:47 by baavril           #+#    #+#             */
-/*   Updated: 2020/07/06 15:56:50 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/06 17:24:19 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,21 @@ static int	quoted_linker(char **tokens, char **splitok)
 
 static int	expansions_quoted_treatment(char **tokens, char **splitok)
 {
-	struct s_quoted		*tmp;
+	struct s_quoted		*voyager;
 
 	token_quotes_generator(*tokens);
-	tmp = g_quoted;
+	voyager = g_quoted;
 	ft_strdel(tokens);
-	while (g_quoted)
+	while (voyager)
 	{
-		if (!(splitok = ft_expsplit(g_quoted->token, DOLLAR)))
+		if (!(splitok = ft_expsplit(voyager->token, DOLLAR)))
 			return (ERROR);
 		if (*tokens == NULL)
-			*tokens = expansions_management(splitok, g_quoted->expand, 0);
+			*tokens = expansions_management(splitok, voyager->expand, 0);
 		else
 			quoted_linker(tokens, splitok);
-		g_quoted = g_quoted->next;
+		voyager = voyager->next;
 	}
-	g_quoted = tmp;
 	return (0);
 }
 
