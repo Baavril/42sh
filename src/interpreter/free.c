@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 08:40:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/27 15:30:55 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/06 12:25:05 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,29 @@ int				astdel(t_node *node)
 	return (0);
 }
 
+static void		expand_tree_left(t_node *node, int node_type, int fork_builtin)
+{
+	if ((node_type & 0b10) && !(curjob_cat(node->left.c)))
+		expansions_treatment(&(node->left.c), 0);
+	else
+		expand_tree(node->left.v, fork_builtin);
+}
+
+static void		expand_tree_right(t_node *node, int node_type, int fork_builtin)
+{
+	if ((node_type & 0b01) && !(curjob_cat(node->right.c)))
+	{
+		expansions_treatment(&(node->right.c), 0);
+		if (node->f == i_dless)
+			process_heredoc(&(node->right.c));
+	}
+	else
+		expand_tree(node->right.v, fork_builtin);
+}
+
 int				expand_tree(t_node *node, int fork_builtin)
 {
-	int node_type;
+	int		node_type;
 
 	if (!node)
 		return (1);
@@ -79,24 +99,10 @@ int				expand_tree(t_node *node, int fork_builtin)
 	if (node->f == i_pipe_sequence)
 		fork_builtin = 1;
 	if (node->left.c || node->left.v)
-	{
-		if ((node_type & 0b10) && !(curjob_cat(node->left.c)))
-			expansions_treatment(&(node->left.c), 0);
-		else
-			expand_tree(node->left.v, fork_builtin);
-	}
+		expand_tree_left(node, node_type, fork_builtin);
 	curjob_add(node);
 	if (node->right.c || node->right.v)
-	{
-		if ((node_type & 0b01) && !(curjob_cat(node->right.c)))
-		{
-			expansions_treatment(&(node->right.c), 0);
-			if (node->f == i_dless)
-				process_heredoc(&(node->right.c));
-		}
-		else
-			expand_tree(node->right.v, fork_builtin);
-	}
+		expand_tree_right(node, node_type, fork_builtin);
 	if (node->f == i_exec)
 	{
 		if (is_a_builtin(node->left.c))
