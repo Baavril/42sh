@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 16:16:48 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/29 19:57:16 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/07/06 11:57:50 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,13 +111,14 @@ void			ft_one_number_w(char *str_nbr, int fd)
 	char	*cmd;
 
 	i = 1;
+	cmd = NULL;
 	nbr = ft_atoi_history(str_nbr);
 	if (nbr == 0)
 		nbr = INT_MAX;
 	if (nbr > 0)
 	{
 		history(FIRST, NULL, &cmd);
-		while (i < nbr && history(FORWARD, NULL, &cmd) != 2)
+		while (i < nbr && history(FORWARD, NULL, &cmd) != 1)
 			i++;
 	}
 	else if (nbr < 0)
@@ -127,5 +128,6 @@ void			ft_one_number_w(char *str_nbr, int fd)
 		while (nbr + i < 0 && history(BACKWARD, NULL, &cmd) != 2)
 			i++;
 	}
-	ft_dprintf(fd, "%s\n", cmd);
+	if ((cmd))
+		ft_dprintf(fd, "%s\n", cmd);
 }
