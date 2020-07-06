@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:40:47 by baavril           #+#    #+#             */
-/*   Updated: 2020/03/07 16:42:03 by baavril          ###   ########.fr       */
+/*   Updated: 2020/07/06 15:56:50 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	quoted_linker(char **tokens, char **splitok)
 
 static int	expansions_quoted_treatment(char **tokens, char **splitok)
 {
-	struct s_quoted	*tmp;
+	struct s_quoted		*tmp;
 
 	token_quotes_generator(*tokens);
 	tmp = g_quoted;
@@ -70,7 +70,7 @@ static int	expansions_quoted_treatment(char **tokens, char **splitok)
 
 int			expansions_treatment(char **tokens, int flag)
 {
-	char **splitok;
+	char	**splitok;
 
 	splitok = NULL;
 	if (!flag && **tokens == TILDE)
