@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/06/01 15:42:03 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/06 13:09:05 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@ static int	ft_o_management(int *tmp_rets, int ret, int argc, char **args)
 	return (ret = (keep) ? 1 : 0);
 }
 
+/*
+** Manque gestion erreur <<<<< CECI EST UN MODULE TERMINE !
+** Bien joue les gars...
+*/
+
 static int	test_precedences_management(int argc, char **argv, int ret,
 																	char *opts)
 {
@@ -62,7 +67,6 @@ static int	test_precedences_management(int argc, char **argv, int ret,
 			return (E_FAILURE);
 		ret = (*opts - 'a' == 0) ? ft_a_management(ret, argc, args)
 						: ft_o_management(&tmp_rets[n++], ret, argc, args);
-		//gestion erreur
 		ft_free_tabs(args);
 		argv += set;
 		opts++;

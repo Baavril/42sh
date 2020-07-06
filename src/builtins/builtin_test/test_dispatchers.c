@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/05/18 17:34:41 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/07/06 13:05:06 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,10 @@ static int		ft_dispatch_s_option(char **argv, int nbr_opt)
 	return (E_ERROR);
 }
 
+/*
+** IMPORTANT: pourquoi le while si on return toujours au premier tour ???
+*/
+
 int				return_tests(int argc, char **argv)
 {
 	int		i;
@@ -151,18 +155,14 @@ int				return_tests(int argc, char **argv)
 		if (*argv[i] == '!')
 		{
 			argc--;
-			return ((argv[i + 1] && (ret = return_tests(argc, &argv[i + 1]))
+			return ((argv[i + 1] && (return_tests(argc, &argv[i + 1]))
 						== E_SUCCESS) ? E_FAILURE : E_SUCCESS);
 		}
 		if (*argv[i] == '-' && argc == 2)
-			return (((ret = ft_dispatch_s_option(&argv[i], SINGLE_OPT)) ==
-						E_SUCCESS) ? E_SUCCESS : ret);
+			return (ft_dispatch_s_option(&argv[i], SINGLE_OPT));
 		if (argc > 2 && *argv[i + 1] == '-')
-			return (((ret = ft_dispatch_d_option(&argv[i], DOUBLE_OPT, argc)) ==
-					E_SUCCESS) ? E_SUCCESS : ret);
-		return (((ret = ft_string_tests(argc, &argv[i])) ==
-					E_SUCCESS) ? E_SUCCESS : ret);
-		// IMPORTANT: pourquoi le while si on return toujours au premier tour ???
+			return (ft_dispatch_d_option(&argv[i], DOUBLE_OPT, argc));
+		return (ft_string_tests(argc, &argv[i]));
 		++i;
 	}
 	return (ret);

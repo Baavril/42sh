@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:43:35 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/16 21:20:13 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/06 12:01:14 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,14 @@ int		i_prefix(t_elem left, t_elem right)
 
 int		i_builtin(t_elem left, t_elem right)
 {
-	char **argv;
+	char	**argv;
 
+	argv = NULL;
 	g_argv = malloc(sizeof(char *) * TAB_SIZE);
 	g_argv[0] = left.c;
 	g_argv[1] = NULL;
-	if (((!right.v || right.v->f(right.v->left, right.v->right) != -1)) && (argv = g_argv))
+	if (((!right.v || right.v->f(right.v->left, right.v->right) != -1))
+	&& (argv = g_argv))
 		if ((g_retval = builtins_dispatcher(g_argv)) == 127)
 			psherror(e_command_not_found, g_argv[0], e_cmd_type);
 	free(argv);
