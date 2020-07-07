@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 17:59:39 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/30 20:02:03 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/07/07 14:02:18 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char				*advance(char *tmp, char **index)
 	i = 0;
 	if (tmp == NULL)
 		return (NULL);
+	if ((*index)[0] == '\\' && (*index)[1] == '\n')
+		*index += 2;
 	while (tmp[i] != '\0')
 	{
 		(*index)++;

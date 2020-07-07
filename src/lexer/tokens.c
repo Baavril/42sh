@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 19:34:42 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/30 20:43:42 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/07/07 14:02:50 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,12 @@ static int			get_token_type(char *str)
 
 int					ft_istoken(char *str)
 {
-	int	tok_type;
+	int		tok_type;
 
-	tok_type = get_token_type(str);
+	if (str[0] == '\\' && str[1] == '\n' && str[2])
+		tok_type = get_token_type(str + 2);
+	else
+		tok_type = get_token_type(str);
 	if (tok_type == -1)
 		return (NONE);
 	return (tok_type);
