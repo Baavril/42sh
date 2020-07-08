@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/05 08:40:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/07/06 12:25:05 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/08 16:50:40 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,17 +71,17 @@ int				astdel(t_node *node)
 
 static void		expand_tree_left(t_node *node, int node_type, int fork_builtin)
 {
-	if ((node_type & 0b10) && !(curjob_cat(node->left.c)))
-		expansions_treatment(&(node->left.c), 0);
+	if ((node_type & 0b10))
+		curjob_cat(node->left.c);
 	else
 		expand_tree(node->left.v, fork_builtin);
 }
 
 static void		expand_tree_right(t_node *node, int node_type, int fork_builtin)
 {
-	if ((node_type & 0b01) && !(curjob_cat(node->right.c)))
+	if ((node_type & 0b01))
 	{
-		expansions_treatment(&(node->right.c), 0);
+		curjob_cat(node->right.c);
 		if (node->f == i_dless)
 			process_heredoc(&(node->right.c));
 	}
@@ -112,6 +112,30 @@ int				expand_tree(t_node *node, int fork_builtin)
 		}
 		else if (eval_command(&node->left.c))
 			node->f = i_builtin;
+	}
+	return (0);
+}
+
+int				expand_args(t_node *node)
+{
+	int		node_type;
+
+	if (!node)
+		return (1);
+	node_type = shape(node);
+	if (node->left.c || node->left.v)
+	{
+		if ((node_type & 0b10))
+			expansions_treatment(&(node->left.c), 0);
+		else
+			expand_args(node->left.v);
+	}
+	if (node->right.c || node->right.v)
+	{
+		if ((node_type & 0b01))
+			expansions_treatment(&(node->right.c), 0);
+		else
+			expand_args(node->right.v);
 	}
 	return (0);
 }
