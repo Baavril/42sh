@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 19:34:42 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/30 20:43:42 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/07/07 15:56:38 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void				*cpy_without_bn(void *dst, const void *src, size_t n)
 	{
 		if (p_src[i] == '\'')
 			op_q ^= 1;
-		if (p_src[i] == '\\' && p_src[i + 1] == '\n' && !op_q)
+		while (p_src[i] == '\\' && p_src[i + 1] == '\n' && !op_q)
 			i += 2;
 		p_dst[y++] = p_src[i];
 		i++;
@@ -55,9 +55,13 @@ static int			get_token_type(char *str)
 
 int					ft_istoken(char *str)
 {
-	int	tok_type;
+	int		i;
+	int		tok_type;
 
-	tok_type = get_token_type(str);
+	i = 0;
+	while (str[i] == '\\' && str[i + 1] == '\n' && str[i + 2])
+		i += 2;
+	tok_type = get_token_type(str + i);
 	if (tok_type == -1)
 		return (NONE);
 	return (tok_type);

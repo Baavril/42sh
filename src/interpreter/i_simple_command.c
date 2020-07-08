@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:43:35 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/07/06 12:01:14 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/07 15:07:38 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int		i_suffix_word(t_elem left, t_elem right)
 	size_t i;
 
 	i = 0;
-	if (*left.c)
+	if (left.c)
 	{
 		while (g_argv[++i])
 			(void)i;
