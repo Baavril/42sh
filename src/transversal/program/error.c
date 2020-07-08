@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:56:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/07/08 18:45:19 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/09 01:05:44 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ const struct s_error_desc	g_errordesc[] =
 	{ 1, "not found" },
 	{ 1, "ambiguous redirect" },
 	{ 1, "permission denied" },
-	{ 1, "is a directory" },
 	{ 1, "no such file or directory" },
 	{ 1, "not a valid file" },
 	{ 1, "incorrect_fd" },
 	{ 2, "filename argument required\n.: usage: . filename [arguments]" },
 	{ 2, "cannot allocate memory" },
 	{ 2, "system call error" },
+	{ 126, "is a directory" },
 	{ 127, "command not found" },
 	{ 128, "resource temporarily unavailable" },
 	{ 1, "division by zero" },

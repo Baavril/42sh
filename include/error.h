@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:51:41 by abarthel          #+#    #+#             */
-/*   Updated: 2020/07/08 18:45:16 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/09 01:05:44 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ enum							e_minishell_error
 	e_not_found,
 	e_ambiguous_redirect,
 	e_permission_denied,
-	e_is_a_directory,
 	e_no_such_file_or_directory,
 	e_not_a_valid_file,
 	e_incorrect_fd,
 	e_filename_arg_required,
 	e_cannot_allocate_memory,
 	e_system_call_error,
+	e_is_a_directory,
 	e_command_not_found,
 	e_resource_tmp_unavailable,
 	e_division_zero,
