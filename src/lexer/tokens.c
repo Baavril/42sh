@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 19:34:42 by yberramd          #+#    #+#             */
-/*   Updated: 2020/07/07 15:56:38 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/09 00:58:48 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 void				*cpy_without_bn(void *dst, const void *src, size_t n)
 {
-	int				op_q;
 	size_t			i;
 	size_t			y;
 	unsigned char	*p_dst;
@@ -23,14 +22,11 @@ void				*cpy_without_bn(void *dst, const void *src, size_t n)
 
 	i = 0;
 	y = 0;
-	op_q = 0;
 	p_dst = (unsigned char*)dst;
 	p_src = (unsigned char*)src;
 	while (i < n)
 	{
-		if (p_src[i] == '\'')
-			op_q ^= 1;
-		while (p_src[i] == '\\' && p_src[i + 1] == '\n' && !op_q)
+		while (p_src[i] == '\\' && p_src[i + 1] == '\n')
 			i += 2;
 		p_dst[y++] = p_src[i];
 		i++;
