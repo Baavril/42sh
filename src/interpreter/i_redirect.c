@@ -6,11 +6,12 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 12:08:47 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/31 13:05:39 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/07/13 14:10:47 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "error.h"
 #include "libft.h"
 #include <unistd.h>
 #include "error.h"
@@ -34,7 +35,7 @@ int	i_less(t_elem left, t_elem right)
 
 	fd1 = left.c ? *left.c - '0' : 0;
 	if (!*right.c)
-		psherror(e_redirection_ambigue, right.c, e_cmd_type);
+		psherror(e_ambiguous_redirect, right.c, e_cmd_type);
 	else if (!access(right.c, R_OK))
 	{
 		if (is_regfile(right.c))
@@ -44,7 +45,7 @@ int	i_less(t_elem left, t_elem right)
 	else if (!access(right.c, F_OK))
 		psherror(e_permission_denied, right.c, e_cmd_type);
 	else
-		psherror(e_No_such_file_or_directory, right.c, e_cmd_type);
+		psherror(e_no_such_file_or_directory, right.c, e_cmd_type);
 	return (-1);
 }
 
@@ -55,7 +56,7 @@ int	i_great(t_elem left, t_elem right)
 
 	fd1 = left.c ? *left.c - '0' : 1;
 	if (!*right.c)
-		psherror(e_redirection_ambigue, right.c, e_cmd_type);
+		psherror(e_ambiguous_redirect, right.c, e_cmd_type);
 	else if (!access(right.c, W_OK))
 	{
 		if (is_regfile(right.c))
@@ -78,7 +79,7 @@ int	i_dgreat(t_elem left, t_elem right)
 
 	fd1 = left.c ? *left.c - '0' : 1;
 	if (!*right.c)
-		psherror(e_redirection_ambigue, right.c, e_cmd_type);
+		psherror(e_ambiguous_redirect, right.c, e_cmd_type);
 	else if (!access(right.c, W_OK))
 	{
 		if (is_regfile(right.c))
@@ -86,7 +87,7 @@ int	i_dgreat(t_elem left, t_elem right)
 		psherror(e_not_a_valid_file, right.c, e_cmd_type);
 	}
 	else if (!access(right.c, F_OK))
-		psherror(e_forbidden_access, right.c, e_cmd_type);
+		psherror(e_permission_denied, right.c, e_cmd_type);
 	else
 	{
 		return (open_on_fd(right.c,

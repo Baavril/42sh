@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:56:23 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/31 13:23:11 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/07/13 14:12:22 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,16 @@ const struct s_error_desc	g_errordesc[] =
 	{ 1, "bad substitution" },
 	{ 1, "cannot assign list to array member" },
 	{ 1, "not found" },
-	{ 1, "event not found" },
+	{ 1, "ambiguous redirect" },
+	{ 1, "permission denied" },
+	{ 1, "is a directory" },
+	{ 1, "no such file or directory" },
+	{ 1, "not a valid file" },
+	{ 1, "incorrect_fd" },
 	{ 2, "filename argument required\n.: usage: . filename [arguments]" },
 	{ 2, "cannot allocate memory" },
 	{ 2, "system call error" },
-	{ 2, "unexpected End Of File token reached" },
-	{ 126, "permission denied" },
-	{ 126, "is a directory" },
 	{ 127, "command not found" },
-	{ 127, "no such file or directory" },
 	{ 128, "resource temporarily unavailable" },
 	{ 1, "division by zero" },
 	{ 1, "attempted assignment to non-variable" },

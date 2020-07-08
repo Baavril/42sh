@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:51:41 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/31 15:20:50 by user42           ###   ########.fr       */
+/*   Updated: 2020/07/13 14:12:22 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,16 @@ enum							e_minishell_error
 	e_bad_substitution,
 	e_cannot_assign_list_to_array_member,
 	e_not_found,
-	e_event_not_found,
+	e_ambiguous_redirect,
+	e_permission_denied,
+	e_is_a_directory,
+	e_no_such_file_or_directory,
+	e_not_a_valid_file,
+	e_incorrect_fd,
 	e_filename_arg_required,
 	e_cannot_allocate_memory,
 	e_system_call_error,
-	e_eof_reached,
-	e_permission_denied,
-	e_is_a_directory,
 	e_command_not_found,
-	e_no_such_file_or_directory,
 	e_resource_tmp_unavailable,
 	e_division_zero,
 	e_assign_nonvar,
