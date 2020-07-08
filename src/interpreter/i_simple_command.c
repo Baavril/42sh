@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:43:35 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/07/07 15:03:27 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/13 14:20:03 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,13 @@ int		i_builtin(t_elem left, t_elem right)
 	g_argv[1] = NULL;
 	if (!right.v || right.v->f(right.v->left, right.v->right) != -1)
 		if ((g_retval = builtins_dispatcher(g_argv)) == 127)
-			psherror(e_unknow_command, g_argv[0], e_unknow_type);
-	free(g_argv);
+		{
+			if (is_dir(g_argv[0]))
+				psherror(e_is_a_directory, g_argv[0], e_cmd_type);
+			else
+				psherror(e_command_not_found, g_argv[0], e_cmd_type);
+		}
+	free(argv);
 	return (g_retval);
 }
 
