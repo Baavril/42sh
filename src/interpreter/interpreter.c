@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:13:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/07/08 17:20:40 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/09 01:35:48 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int				i_execnode(t_elem left, t_elem right)
 		ft_launch_job();
 	return (ft_clean_exit(NULL, g_retval));
 }
+
 static void		i_simple_command_builtin_prefix(t_elem left, t_elem right)
 {
 	extern char		**environ;
