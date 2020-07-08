@@ -6,11 +6,12 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:40:47 by baavril           #+#    #+#             */
-/*   Updated: 2020/07/08 18:00:18 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/08 20:51:22 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+#include "error.h"
 #include "shell_variables.h"
 #include "expansions.h"
 #include "libft.h"
@@ -80,7 +81,7 @@ char		*expansions_management(char **splitok, int expand, int flag)
 	{
 		if (expansions_launcher(&vars, expand, flag) == ERROR)
 		{
-			psherror(e_bad_substitution, *vars.tokens, e_cmd_type)
+			psherror(e_bad_substitution, *vars.tokens, e_cmd_type);
 			ft_tabdel(&splitok);
 			ft_strdel(&vars.btw);
 			ft_strdel(&vars.tmp);
