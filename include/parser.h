@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 16:02:57 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/07/08 16:04:01 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/09 01:24:13 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,12 @@ int				i_and_op(t_elem left, t_elem right);
 int				i_or_op(t_elem left, t_elem right);
 
 int				is_regfile(const char *arg);
+int				is_dir(const char *arg);
 int				eval_command(char **arg);
 int				val_command(char **arg);
 int				open_on_fd(const char *path, int o_flags, mode_t mode,
 																int final_fd);
+int				shape(t_node *node);
 int				astdel(t_node *node);
 int				expand_tree(t_node *node, int fork_builtin);
 int				expand_args(t_node *node);
