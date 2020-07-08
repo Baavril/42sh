@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 17:59:39 by abarthel          #+#    #+#             */
-/*   Updated: 2020/07/07 16:17:09 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/08 21:21:46 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ t_token				ft_delimit_token(char **index)
 	int				token;
 	char			*tmp;
 
-	while (ft_isspace(**index))
+	while (ft_isspace(**index) || (**index == '\\' && (*index)[1] == '\n'))
 		++(*index);
 	while (**index)
 	{
