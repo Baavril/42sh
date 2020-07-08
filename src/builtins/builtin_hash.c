@@ -6,7 +6,7 @@
 /*   By: tgouedar <tgouedar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/14 17:13:25 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/06/01 16:09:17 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/09 00:39:56 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int				cmd_hash(int ac, char **av)
 	}
 	if (ac == 1 && g_bintable->entry_nbr != 0)
 	{
-		ft_putendl("hits   command");
+		ft_putendl("hits	command");
 		ft_print_sortentries(g_bintable);
 	}
 	while (i < ac)
