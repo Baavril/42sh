@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 16:02:57 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/27 17:16:04 by user42           ###   ########.fr       */
+/*   Updated: 2020/07/13 14:06:21 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,6 @@ int				open_on_fd(const char *path, int o_flags, mode_t mode,
 																int final_fd);
 int				astdel(t_node *node);
 int				expand_tree(t_node *node, int fork_builtin);
+int				expand_args(t_node *node);
 
 #endif

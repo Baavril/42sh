@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 12:13:59 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/07 17:27:54 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/08 17:20:40 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,28 @@ int				i_execnode(t_elem left, t_elem right)
 		ft_launch_job();
 	return (ft_clean_exit(NULL, g_retval));
 }
-
-static int		i_simple_command_builtin(t_elem left, t_elem right)
+static void		i_simple_command_builtin_prefix(t_elem left, t_elem right)
 {
 	extern char		**environ;
 	char			**save_env;
+
+	save_env = environ;
+	environ = ft_tabcpy(environ);
+	if (!(g_retval = (left.v->f(left.v->left, left.v->right) == -1)))
+		right.v->f(right.v->left, right.v->right);
+	ft_tabdel(&environ);
+	environ = save_env;
+}
+
+static int		i_simple_command_builtin(t_elem left, t_elem right)
+{
 	int				save_stdfd[3];
 
-	save_env = NULL;
 	g_prefix = 1;
 	ft_save_term_fd(save_stdfd);
 	ft_stdredir(g_fd);
 	if (left.v)
-	{
-		save_env = environ;
-		environ = ft_tabcpy(environ);
-		if (!(g_retval = (left.v->f(left.v->left, left.v->right) == -1)))
-			right.v->f(right.v->left, right.v->right);
-		ft_tabdel(&environ);
-		environ = save_env;
-	}
+		i_simple_command_builtin_prefix(left, right);
 	else
 		g_retval = right.v->f(right.v->left, right.v->right);
 	ft_stdredir(save_stdfd);
@@ -58,6 +60,9 @@ static int		i_simple_command_builtin(t_elem left, t_elem right)
 
 int				i_simple_command(t_elem left, t_elem right)
 {
+	if (left.v)
+		expand_args(left.v);
+	expand_args(right.v);
 	if (right.v->f == i_builtin)
 		return (i_simple_command_builtin(left, right));
 	else
