@@ -6,7 +6,7 @@
 #    By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/04 15:22:51 by bprunevi          #+#    #+#              #
-#    Updated: 2020/05/31 16:44:51 by user42           ###   ########.fr        #
+#    Updated: 2020/07/13 14:16:18 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -202,6 +202,8 @@ SOURCES			:=		transversal/program/main.c \
 						interpreter/process_heredoc.c \
 						interpreter/i_open_on_fd.c \
 						interpreter/free.c \
+						interpreter/path_type.c \
+						interpreter/expand_tree.c \
 						interpreter/curjob.c
 
 #						job_control/job.c
