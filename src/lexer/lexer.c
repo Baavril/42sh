@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 17:59:39 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/07/07 16:25:38 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/13 14:13:42 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ t_token				ft_delimit_token(char **index)
 	int				token;
 	char			*tmp;
 
-	while (ft_isspace(**index))
+	while (ft_isspace(**index) || (**index == '\\' && (*index)[1] == '\n'))
 		++(*index);
 	while (**index)
 	{
