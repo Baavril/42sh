@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expansions_split.c                                 :+:      :+:    :+:   */
+/*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bprunev <bprunev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by bprunev           #+#    #+#             */
-/*   Updated: 2020/03/04 16:41:33 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/07/12 22:19:04 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,36 +37,35 @@ int		exp_limit(char *tokens)
 	return (i);
 }
 
-char	*malexps(char *str, int *len, char c)
+int		malexps(char **dest, char *src)
 {
 	int		r;
-	int		s;
-	char	*ret;
 
 	r = 0;
-	s = 0;
-	while ((str[*len + r] == c || str[*len + r] == BSLASH) && str[*len])
+	if (!(*src))
+	{
+		*dest = ft_strdup("");
+		return (0);
+	}
+	while (src[r] == DOLLAR || src[r] == BSLASH)
 		++r;
-	while (!(str[*len + r] == c || str[*len + r] == BSLASH)
-	&& str[*len + r] && str[*len])
+	while (src[r] && !(src[r] == DOLLAR || src[r] == BSLASH))
 		++r;
-	if (!(ret = (char*)ft_memalloc(sizeof(char) * (r + 1))))
-		return (NULL);
+	if (!(*dest = (char*)ft_memalloc(sizeof(char) * (r + 1))))
+		return (0);
 	r = 0;
-	while ((str[*len + r] == c || str[*len + r] == BSLASH) && str[*len])
-		ret[s++] = str[*len + r++];
-	while (!(str[*len + r] == c || str[*len + r] == BSLASH)
-	&& str[*len + r] && str[*len])
-		ret[s++] = str[*len + r++];
-	*len += r;
-	return (ret);
+	while (*src == DOLLAR || *src == BSLASH)
+		(*dest)[r++] = *(src++);
+	while (*src && !(*src == DOLLAR || *src == BSLASH))
+		(*dest)[r++] = *(src++);
+	return (r);
 }
 
 /*
 ** nb +- 1 si '\' ligne 78 : nb = exp_limit(str) + 1;
 */
 
-char	**ft_expsplit(char *str, char c)
+char	**ft_expsplit(char *str)
 {
 	int		i;
 	int		nb;
@@ -74,14 +73,14 @@ char	**ft_expsplit(char *str, char c)
 	char	**tab;
 
 	i = 0;
+	len = 0;
 	nb = exp_limit(str) + 1;
 	if (nb == 0)
 		return (NULL);
 	if (!(tab = (char**)malloc(sizeof(char*) * (nb + 1))))
 		return (NULL);
-	len = 0;
 	while (i < nb)
-		tab[i++] = malexps(str, &len, c);
-	tab[nb] = 0;
+		len += malexps(&(tab[i++]), str + len);
+	tab[nb] = NULL;
 	return (tab);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expansions_bslash.c                                :+:      :+:    :+:   */
+/*   backslash.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bprunev <bprunev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by bprunev           #+#    #+#             */
-/*   Updated: 2020/03/04 16:42:29 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/07/12 23:35:16 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,11 @@ static char	*dup_hdc_slash(char **tokens, int j, int i)
 	tmp = NULL;
 	if (i > 0)
 	{
-		if (i == 1 && (*tokens)[1] == '\n')
-		{
-			ft_strdel(tokens);
-			return (ft_strdup(EMPTY_STR));
-		}
 		tmp = ft_strdup((*tokens) + (i - j));
 		ft_strdel(tokens);
 		return (tmp);
 	}
-	tmp = ft_strdup(*tokens);
-	ft_strdel(tokens);
-	return (tmp);
+	return (*tokens);
 }
 
 char		*set_slash(char **tokens, int flag)
@@ -69,22 +62,13 @@ char		*set_slash(char **tokens, int flag)
 	int	i;
 	int	j;
 	int	ret;
-	int	exp;
 
 	i = 0;
-	j = 0;
-	ret = 0;
-	exp = ft_isin(DOLLAR, *tokens);
-	while (*((*tokens) + i) && *((*tokens) + i) == BSLASH)
+	while ((*tokens)[i] == BSLASH)
 		++i;
-	j = i;
-	if (j % 2)
-	{
-		j = (flag && !exp) ? j + 1 : j - 1;
-		ret = -1;
-	}
-	j /= 2;
-	if (flag && !exp && ret == -1)
+	ret = i % 2;
+	j = i / 2;
+	if (flag)
 		return (dup_hdc_slash(tokens, j, i));
 	return (dup_slash(tokens, j, i, ret));
 }
@@ -98,7 +82,7 @@ int			back_slashed(char **tokens)
 	i = 0;
 	j = 0;
 	ret = 0;
-	while (*((*tokens) + i) && *((*tokens) + i) == BSLASH)
+	while ((*tokens)[i] == BSLASH)
 		++i;
 	j = i;
 	if (j % 2)

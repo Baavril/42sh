@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:43:54 by baavril           #+#    #+#             */
-/*   Updated: 2020/07/06 19:23:34 by user42           ###   ########.fr       */
+/*   Updated: 2020/07/13 14:22:24 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int			expansions_launcher(t_expand *vars, int expand, int flag)
 	vars->j = 0;
 	if (expand)
 		return (SUCCESS);
-	if ((vars->nb = back_slashed(vars->tokens)) >= 0)
+	if (!flag && (vars->nb = back_slashed(vars->tokens)) >= 0)
 	{
-		*(vars->tokens) = set_slash(vars->tokens, flag);
+		*(vars->tokens) = set_slash(vars->tokens, 0);
 		vars->type = identifier(*(vars->tokens));
 		vars->btw = getbtw(*(vars->tokens), vars->type, 0);
 		while (g_symexp[vars->j].expand)
