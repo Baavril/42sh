@@ -6,11 +6,12 @@
 /*   By: tgouedar <tgouedar@student42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 12:33:23 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/06/01 15:49:06 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/12 23:42:13 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include "expansions.h"
 #include "termcaps.h"
 #include "prompt.h"
 #include "input.h"
@@ -66,6 +67,7 @@ int						process_heredoc(char **input)
 	char		*tmp;
 	int			ret;
 
+	expansions_treatment(input, 1);
 	to_match = *input;
 	if ((ret = read_heredoc(input, to_match)) != 1)
 		return (ret);
