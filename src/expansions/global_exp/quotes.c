@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expansions_bslash.c                                :+:      :+:    :+:   */
+/*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/07/06 17:06:35 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/12 23:49:12 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int		reachquotelim(char *str, char c)
 	while (str[i] && str[i] != c)
 	{
 		++i;
-		if (str[i] == c && str[i - 1] == BSLASH)
+		if (c != SQUOTES && str[i] == c && str[i - 1] == BSLASH)
 			++i;
 	}
 	return (i);
