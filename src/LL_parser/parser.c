@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 14:29:21 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/25 12:15:13 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/13 14:36:55 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 extern int	g_parsingerr;
 extern int	g_prefix;
 
-int	execute(char *input)
+int			execute(char *input)
 {
-	t_node	*ast;
-	t_token	tok;
-	int rtn;
+	t_node		*ast;
+	t_token		tok;
+	int			rtn;
 
 	g_parsingerr = 0;
 	g_prefix = 0;
@@ -32,7 +32,7 @@ int	execute(char *input)
 		ft_dprintf(2, "parsing error\n");
 	else if (!g_parsingerr && ast)
 		ast->f(ast->left, ast->right);
-	rtn = g_parsingerr + (tok.type != E_EOF); 
+	rtn = g_parsingerr + (tok.type != E_EOF);
 	g_parsingerr = 0;
 	while (tok.type != E_EOF)
 	{

@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:56:23 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/07/13 14:17:11 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/13 14:37:24 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,17 @@ const struct s_error_desc	g_errordesc[] =
 	{ 1, "invalid number" },
 	{ 1, "invalid arithmetic base" },
 	{ 1, "exponent less than zero" },
-	/* interpreter */
 	{ 1, "not a valid file" },
 	{ 1, "Redirection ambigue" },
 	{ 1, "forbidden access" },
 	{ 1, "incorrect fd" },
 	{ 1, "unknow command" },
-	/* cd */
 	{ 1, "HOME not set" },
 	{ 1, "OLDPWD not set" },
 	{ 1, "Permission denied" },
 	{ 1, "Not a directory" },
 	{ 1, "No such file or directory" },
 	{ 1, "Too many levels of symbolic links" },
-	/* bg, fg */
 	{ 1, "No current job" },
 	{ 1, "Job is currently in background" },
 	{ 1, "Job has terminated" },

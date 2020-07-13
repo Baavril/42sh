@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:33:42 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/04 13:28:26 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/07/13 14:35:54 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ t_node	*io_redirect(t_token tok)
 			node->right.c = filename(gnt(NULL, 0));
 		g_alias_treated = bckp;
 		if (!node->right.c && (g_parsingerr = 1))
-			//ft_printf("|%s|", g_flist_name[tok.type - LESS], e_parsing_type);
 			psherror(2, g_flist_name[tok.type - LESS], e_parsing_type);
 		return (node);
 	}
