@@ -6,7 +6,7 @@
 #    By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/04 15:22:51 by bprunevi          #+#    #+#              #
-#    Updated: 2020/07/13 14:16:18 by tgouedar         ###   ########.fr        #
+#    Updated: 2020/07/13 14:27:11 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,7 +81,9 @@ SOURCES			:=		transversal/program/main.c \
 						lexer/tokens.c \
 						lexer/lexer.c \
 						lexer/get_token.c \
-						lexer/quote.c \
+						lexer/ft_quote.c \
+						lexer/ft_quote_check.c \
+						lexer/tokens.c \
 						lexer/grammar_symbols.c \
 						lexer/separators/unglue_metachr.c \
 						lexer/separators/pipeline_separators.c \

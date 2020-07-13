@@ -26,6 +26,7 @@ char				*get_token_symbol(int token);
 t_token				ft_delimit_token(char **index);
 t_token				tokenization(char type, char *value);
 void				ft_quote(const char *s, int *i);
-int					ft_quote_tic(const char *s, int *i, char *quote_t, _Bool *open_q); //naming !!!
+int					ft_quote_check(const char *s, int *i, char *quote_t,
+															_Bool *open_q);
 
 #endif
