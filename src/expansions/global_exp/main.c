@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/07 16:40:47 by baavril           #+#    #+#             */
-/*   Updated: 2020/07/12 23:47:11 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/13 13:50:29 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 struct s_quoted	*g_quoted;
 
-static void	free_quoted_token_lst(void)
+static void		free_quoted_token_lst(void)
 {
 	struct s_quoted *tmp;
 
@@ -33,7 +33,8 @@ static void	free_quoted_token_lst(void)
 	}
 }
 
-static int	quoted_linker(struct s_quoted *voyager, char **tokens, char **splitok, int flag)
+static int		quoted_linker(struct s_quoted *voyager, char **tokens,
+													char **splitok, int flag)
 {
 	char			*tmp_to_free;
 	char			*tmp_to_free_2;
@@ -47,7 +48,8 @@ static int	quoted_linker(struct s_quoted *voyager, char **tokens, char **splitok
 	return (0);
 }
 
-static int	expansions_quoted_treatment(char **tokens, char **splitok, int flag)
+static int		expansions_quoted_treatment(char **tokens,
+													char **splitok, int flag)
 {
 	struct s_quoted		*voyager;
 
@@ -73,7 +75,7 @@ static int	expansions_quoted_treatment(char **tokens, char **splitok, int flag)
 ** but variables are not expanded
 */
 
-int			expansions_treatment(char **tokens, int flag)
+int				expansions_treatment(char **tokens, int flag)
 {
 	char	**splitok;
 
@@ -85,7 +87,7 @@ int			expansions_treatment(char **tokens, int flag)
 		expansions_quoted_treatment(tokens, splitok, flag);
 		free_quoted_token_lst();
 	}
-	else 
+	else
 	{
 		if (!(splitok = ft_expsplit(*tokens)))
 			return (ERROR);
