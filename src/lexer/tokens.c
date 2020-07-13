@@ -6,39 +6,41 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 19:34:42 by yberramd          #+#    #+#             */
-/*   Updated: 2020/07/07 15:56:38 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/13 13:38:24 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "lexer.h"
 
-void				*cpy_without_bn(void *dst, const void *src, size_t n)
+char				*cpy_without_bn(char *dst, const char *src, int n)
 {
-	int				op_q;
-	size_t			i;
-	size_t			y;
-	unsigned char	*p_dst;
-	unsigned char	*p_src;
+	char	quote_t;
+	_Bool	open_q;
+	int		i;
+	int		j;
+	int		y;
 
 	i = 0;
+	j = 0;
 	y = 0;
-	op_q = 0;
-	p_dst = (unsigned char*)dst;
-	p_src = (unsigned char*)src;
+	open_q = 0;
+	quote_t = -3;
 	while (i < n)
 	{
-		if (p_src[i] == '\'')
-			op_q ^= 1;
-		while (p_src[i] == '\\' && p_src[i + 1] == '\n' && !op_q)
-			i += 2;
-		p_dst[y++] = p_src[i];
-		i++;
+		ft_quote_check(src, &i, &quote_t, &open_q);
+		while (j < i)
+		{
+			while (!(open_q && quote_t == '\'')
+			&& src[j] == '\\' && src[j + 1] == '\n')
+				j += 2;
+			dst[y++] = src[j++];
+		}
 	}
 	return (dst);
 }
 
-static int			get_token_type(char *str)
+static int			get_token_type(const char *str)
 {
 	int	i;
 
@@ -53,7 +55,7 @@ static int			get_token_type(char *str)
 	return (-1);
 }
 
-int					ft_istoken(char *str)
+int					ft_istoken(const char *str)
 {
 	int		i;
 	int		tok_type;

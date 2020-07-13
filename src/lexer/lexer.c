@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/15 17:59:39 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/07/07 16:25:38 by tgouedar         ###   ########.fr       */
+/*   Created: 2019/07/15 17:59:39 by abarthel          #+#    #+#             */
+/*   Updated: 2020/07/13 14:24:56 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,10 @@ char				*advance(char *tmp, char **index)
 char				*ft_get_word(char **str)
 {
 	char	*tmp;
-	char	quote_type;
-	_Bool	open_quotes;
 	int		i;
 
 	i = 0;
-	open_quotes = 0;
-	quote_type = -3;
-	ft_quote(str, &i, quote_type, open_quotes);
+	ft_quote(*str, &i);
 	if (!(tmp = (char*)ft_memalloc(sizeof(char) * (i + 1))))
 		return (NULL);
 	tmp = (char*)cpy_without_bn((void*)tmp, (void*)(*str), i);
@@ -80,7 +76,7 @@ t_token				ft_delimit_token(char **index)
 	int				token;
 	char			*tmp;
 
-	while (ft_isspace(**index))
+	while (ft_isspace(**index) || (**index == '\\' && (*index)[1] == '\n'))
 		++(*index);
 	while (**index)
 	{

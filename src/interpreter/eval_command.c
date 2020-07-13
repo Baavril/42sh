@@ -6,15 +6,15 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 16:26:31 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/05/23 18:18:09 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/07/13 14:48:15 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "parser.h"
 #include "builtins.h"
 #include "hash_module.h"
 #include "shell_variables.h"
-#include "parser.h"
 #include <unistd.h>
 
 char			*path_join(char *str1, char *str2)

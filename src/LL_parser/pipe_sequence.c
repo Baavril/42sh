@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:48:12 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/03/03 19:26:02 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/07/13 15:11:13 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static t_node	*pipe_sequence(t_token tok)
 			gnt(NULL, 0);
 			if (!(tmp2 = pipe_sequence(gnt(NULL, 0)))
 				&& (g_parsingerr = 1))
-				psherror(2, "pipe", e_parsing_type);
+				psherror(e_syntax_error, "|", e_parsing_type);
 			node = malloc(sizeof(t_node));
 			node->left.v = tmp1;
 			node->right.v = tmp2;
@@ -63,9 +63,9 @@ t_node			*and_or(t_token tok)
 		|| (is_potenti(gnt(NULL, 1), N_OR_IF) && (f = i_or_op)))
 		{
 			gnt(NULL, 0);
-			if (!(tmp2 = and_or(gnt(NULL, 0)))
-				&& (g_parsingerr = 1))
-				psherror(2, f == i_and_op ? "&&" : "||", e_parsing_type);
+			if (!(tmp2 = and_or(gnt(NULL, 0))) && (g_parsingerr = 1))
+				psherror(e_syntax_error,
+								f == i_and_op ? "&&" : "||", e_parsing_type);
 			node = malloc(sizeof(t_node));
 			node->left.v = tmp1;
 			node->right.v = tmp2;
