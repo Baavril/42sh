@@ -6,7 +6,7 @@
 #    By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/04 15:22:51 by bprunevi          #+#    #+#              #
-#    Updated: 2020/07/09 01:22:27 by user42           ###   ########.fr        #
+#    Updated: 2020/07/13 13:43:56 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,7 +96,8 @@ SOURCES			:=		transversal/program/main.c \
 						lexer/ft_trim_comment.c \
 						lexer/lexer.c \
 						lexer/get_token.c \
-						lexer/quote.c \
+						lexer/ft_quote.c \
+						lexer/ft_quote_check.c \
 						lexer/tokens.c \
 						lexer/grammar_symbols.c \
 						lexer/separators/unglue_metachr.c \

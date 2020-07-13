@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 19:34:42 by yberramd          #+#    #+#             */
-/*   Updated: 2020/07/13 13:24:50 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/13 13:38:24 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ char				*cpy_without_bn(char *dst, const char *src, int n)
 {
 	char	quote_t;
 	_Bool	open_q;
-	int			i;
-	int			j;
-	int			y;
+	int		i;
+	int		j;
+	int		y;
 
 	i = 0;
 	j = 0;
@@ -28,7 +28,7 @@ char				*cpy_without_bn(char *dst, const char *src, int n)
 	quote_t = -3;
 	while (i < n)
 	{
-		ft_quote_tic(src, &i, &quote_t, &open_q);
+		ft_quote_check(src, &i, &quote_t, &open_q);
 		while (j < i)
 		{
 			while (!(open_q && quote_t == '\'')

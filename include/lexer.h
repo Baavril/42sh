@@ -6,7 +6,7 @@
 /*   By: tgouedar <tgouedar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/15 17:59:53 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/07/13 13:16:19 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/13 13:37:56 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ char				*get_token_symbol(int token);
 t_token				ft_delimit_token(char **index);
 t_token				tokenization(char type, char *value);
 void				ft_quote(const char *s, int *i);
-int					ft_quote_tic(const char *s, int *i, char *quote_t, _Bool *open_q); //naming !!!
+int					ft_quote_check(const char *s, int *i, char *quote_t,
+															_Bool *open_q);
 
 #endif

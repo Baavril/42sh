@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quote.c                                            :+:      :+:    :+:   */
+/*   ft_quote_check.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 19:28:12 by yberramd          #+#    #+#             */
-/*   Updated: 2020/07/13 13:33:36 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/13 13:42:38 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ static int			check_close_bracket(const char *str, char quote_type)
 	return (0);
 }
 
-int					ft_quote_tic(const char *s, int *i, char *quote_t, _Bool *open_q) //naming !!!
+int					ft_quote_check(const char *s, int *i, char *quote_t,
+															_Bool *open_q)
 {
 	if (!*open_q && (ft_is_quote(s[*i]) || ft_is_op_bracket(s[*i])))
 	{
@@ -80,18 +81,4 @@ int					ft_quote_tic(const char *s, int *i, char *quote_t, _Bool *open_q) //nami
 		++(*i);
 	++(*i);
 	return (0);
-}
-
-void				ft_quote(const char *s, int *i)
-{
-	char	quote_t;
-	_Bool	open_q;
-
-	open_q = 0;
-	quote_t = -3;
-	while (s[*i])
-	{
-		if (ft_quote_tic(s, i, &quote_t, &open_q))
-			return ;
-	}
 }
