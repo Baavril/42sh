@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/07/06 12:33:04 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/13 13:53:15 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int		test_s_option_n(char **argv)
 		return (E_SUCCESS);
 	return (E_FAILURE);
 }
+
 /*
 ** Trouver comment getenv optnames
 */
