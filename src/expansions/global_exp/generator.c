@@ -6,7 +6,7 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by baavril           #+#    #+#             */
-/*   Updated: 2020/07/06 17:35:33 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/13 13:51:50 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int			ft_delimit_quoted_token(char *str, int *j)
 	return (0);
 }
 
-static int	token_reconstitutor(char *str, int k)
+static int			token_reconstitutor(char *str, int k)
 {
 	int	i;
 	int	j;
@@ -58,7 +58,7 @@ static int	token_reconstitutor(char *str, int k)
 	return (0);
 }
 
-char		*token_quotes_generator(char *str)
+char				*token_quotes_generator(char *str)
 {
 	int		k;
 
