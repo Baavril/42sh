@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path_type.c                                        :+:      :+:    :+:   */
+/*   ft_quote.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgouedar <tgouedar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/09 01:19:32 by tgouedar          #+#    #+#             */
-/*   Updated: 2020/07/10 14:16:45 by user42           ###   ########.fr       */
+/*   Created: 2020/07/13 13:41:17 by tgouedar          #+#    #+#             */
+/*   Updated: 2020/07/13 13:42:24 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/stat.h>
+#include "lexer.h"
 
-int				is_regfile(const char *path)
+void				ft_quote(const char *s, int *i)
 {
-	struct stat	path_stat;
+	char	quote_t;
+	_Bool	open_q;
 
-	if (stat(path, &path_stat))
-		return (0);
-	return (S_ISREG(path_stat.st_mode) || S_ISCHR(path_stat.st_mode));
-}
-
-int				is_dir(const char *path)
-{
-	struct stat	path_stat;
-
-	if (stat(path, &path_stat))
-		return (0);
-	return (S_ISDIR(path_stat.st_mode));
+	open_q = 0;
+	quote_t = -3;
+	while (s[*i])
+	{
+		if (ft_quote_check(s, i, &quote_t, &open_q))
+			return ;
+	}
 }
