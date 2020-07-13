@@ -6,7 +6,7 @@
 #    By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/04 15:22:51 by bprunevi          #+#    #+#              #
-#    Updated: 2020/07/13 14:27:11 by tgouedar         ###   ########.fr        #
+#    Updated: 2020/07/13 14:49:48 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -197,7 +197,6 @@ SOURCES			:=		transversal/program/main.c \
 						interpreter/i_pipe.c \
 						interpreter/i_simple_command.c \
 						interpreter/eval_command.c \
-						interpreter/test_file.c \
 						interpreter/i_redirect.c \
 						interpreter/i_redirect_and.c \
 						interpreter/i_heredoc.c \

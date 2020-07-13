@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:51:41 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/07/13 14:17:11 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/13 14:43:43 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,7 @@ enum							e_minishell_error
 	e_invalid_number,
 	e_invalid_base,
 	e_neg_exp,
-	e_not_a_valid_file,
-	e_redirection_ambigue,
 	e_forbidden_access,
-	e_incorrect_fd,
 	e_unknow_command,
 	e_home_not_set,
 	e_oldpwd_not_set,
