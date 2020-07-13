@@ -6,13 +6,14 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 14:29:21 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/25 15:32:27 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/13 15:31:27 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "history.h"
 #include "tokens.h"
+#include "error.h"
 #include "jcont.h"
 
 extern int	g_parsingerr;
@@ -28,7 +29,7 @@ void	execute(char *input)
 	ast = comp_list(gnt(input, 0));
 	tok = gnt(NULL, 0);
 	if (tok.type != E_EOF)
-		ft_dprintf(2, "parsing error\n");
+		psherror(e_syntax_error, tok.symbol, e_parsing_type);
 	else if (!g_parsingerr && ast)
 		ast->f(ast->left, ast->right);
 	g_parsingerr = 0;
