@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/23 14:30:54 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/23 14:44:10 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/07/13 16:57:09 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ DIR				*ft_assign_char(char *input, char **words)
 	{
 		del_double_char(words);
 		ft_strdel(&point);
-		psherror(e_no_such_file_or_directory, NULL, e_invalid_type);
 		return (NULL);
 	}
 	ft_strdel(&point);
