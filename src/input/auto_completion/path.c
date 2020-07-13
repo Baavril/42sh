@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/08 18:39:26 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/23 15:08:40 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/07/13 16:20:14 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char			**ft_path(char *input)
 			return (NULL);
 		point = ft_last_back_slash(input);
 		while ((dirent = readdir(dir)) != NULL)
-			if (!add_file(dirent, words, &i, point))
+			if (!add_file(dirent, &words, &i, point))
 				return (NULL);
 	}
 	if (dir)

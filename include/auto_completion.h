@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 13:04:49 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/23 17:55:11 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/07/13 16:17:49 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int					search_tst(t_tst *tst, char *str);
 int					ft_init_words(int *i, char ***words, char *input);
 int					ft_auto_completion(t_tst *tst, char *input, char ***words,
 											int start);
-int					add_file(struct dirent *dirent, char **words, int *i,
+int					add_file(struct dirent *dirent, char ***words, int *i,
 										char *point);
 DIR					*ft_assign_char(char *input, char **words);
 char				**ft_path(char *input);
