@@ -6,14 +6,14 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 19:28:12 by yberramd          #+#    #+#             */
-/*   Updated: 2020/07/13 13:15:16 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/13 13:33:36 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "libft.h"
 
-int					ft_is_quote(char c)
+int					ft_is_quote(const char c)
 {
 	return (c == '\'' || c == '\"');
 }
