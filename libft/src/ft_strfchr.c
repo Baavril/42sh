@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 15:49:43 by yberramd          #+#    #+#             */
-/*   Updated: 2020/01/15 16:33:10 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/07/13 17:51:38 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_strfchr(char *str1, char *str2)
 			return (0);
 		i++;
 	}
-	if (str1[i] && str2)
+	if (str1[i] || str2[i])
 		return (0);
 	return (1);
 }

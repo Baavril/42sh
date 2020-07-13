@@ -6,7 +6,7 @@
 #    By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/04 15:22:51 by bprunevi          #+#    #+#              #
-#    Updated: 2020/07/13 13:43:56 by tgouedar         ###   ########.fr        #
+#    Updated: 2020/07/13 17:37:37 by tgouedar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -190,6 +190,7 @@ SOURCES			:=		transversal/program/main.c \
 						builtins/builtin_fc/builtin_fc.c \
 						builtins/builtin_fc/print_history.c \
 						builtins/builtin_fc/fc_search_string.c \
+						builtins/builtin_fc/fc_number_arg.c \
 						builtins/builtin_fc/fc_write_history.c \
 						builtins/builtin_fc/ft_number.c \
 						builtins/builtin_fc/ft_execute.c \

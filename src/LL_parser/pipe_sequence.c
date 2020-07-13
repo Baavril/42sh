@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:48:12 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/07/13 15:31:43 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/13 17:24:27 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ t_node			*and_or(t_token tok)
 		|| (is_potenti(gnt(NULL, 1), N_OR_IF) && (f = i_or_op)))
 		{
 			gnt(NULL, 0);
-			if (!(tmp2 = and_or(gnt(NULL, 0))) && (g_parsingerr = 1))
+			if (!(tmp2 = and_or(gnt(NULL, 0)))
+			&& (g_parsingerr = 1))
 				psherror(e_syntax_error,
 							f == i_and_op ? "&&" : "||", e_parsing_type);
 			node = malloc(sizeof(t_node));
