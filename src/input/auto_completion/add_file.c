@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/23 14:52:43 by yberramd          #+#    #+#             */
-/*   Updated: 2020/05/23 15:07:43 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/07/13 16:22:28 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,25 +115,25 @@ static int		ft_assign_words(struct dirent *dirent, char **words, int *i,
 	return (1);
 }
 
-int				add_file(struct dirent *dirent, char **words, int *i,
+int				add_file(struct dirent *dirent, char ***words, int *i,
 								char *point)
 {
 	if (ft_pointchr(point, dirent->d_name))
 	{
-		if ((*i) == g_realloc - 1 && !(words = ft_realloc(words)))
+		if ((*i) == g_realloc - 1 && !(*words = ft_realloc(*words)))
 		{
-			del_double_char(words);
+			del_double_char(*words);
 			return (0);
 		}
 		if (*point == '\0' || ft_isspace(*point))
 		{
-			if (!ft_assign_words(dirent, words, i, 1))
+			if (!ft_assign_words(dirent, *words, i, 1))
 				return (0);
 		}
 		else if (dirent->d_type == 4 || dirent->d_type == 8)
-			if (!ft_assign_words(dirent, words, i, 2))
+			if (!ft_assign_words(dirent, *words, i, 2))
 				return (0);
 	}
-	words[(*i)] = NULL;
+	(*words)[(*i)] = NULL;
 	return (1);
 }
