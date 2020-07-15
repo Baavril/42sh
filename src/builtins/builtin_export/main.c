@@ -6,7 +6,7 @@
 /*   By: bprunev <bprunev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:21:48 by bprunev           #+#    #+#             */
-/*   Updated: 2020/01/19 13:18:48 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/07/15 18:53:11 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,16 @@ int						export_opt(char *opt)
 	return (2);
 }
 
-static int				dispatcher_export(char *argv, int flag)
+static int				dispatcher_export(char *argv)
 {
 	extern char	**environ;
 
 	if (ft_strchr(argv, '='))
 	{
 		if (checkvarlst(argv) == ERROR)
-		{
-			setenvnod(newnodshell(argv, flag));
-			if (flag)
-			{
-				if (!(environ = realloc_environ(environ, argv)))
-					return (ERROR);
-			}
-		}
+			setenvnod(newnodshell(argv, 1));
+		if (!(environ = realloc_environ(environ, argv)))
+			return (ERROR);
 	}
 	else
 	{
@@ -72,21 +67,15 @@ static int				dispatcher_export(char *argv, int flag)
 int						cmd_export(int argc, char **argv)
 {
 	int	i;
-	int	flag;
 
-	i = 0;
-	flag = 0;
-	(void)argc;
-	if (ft_strcmp(argv[i], "export") == 0)
-	{
-		(argv[i + 1]) ? i++ : ft_prtsrtlst();
-		flag = 1;
-	}
+	i = 1;
+	if (argc == 1)
+		ft_prtsrtlst();
 	while (argv[i])
 	{
-		if (flag == 1 && argv[i][0] == '-' && ft_tablen(argv) == 2)
+		if (argv[i][0] == '-' && ft_tablen(argv) == 2)
 			return (export_opt(argv[i]));
-		dispatcher_export(argv[i], flag);
+		dispatcher_export(argv[i]);
 		++i;
 	}
 	return (SUCCESS);
