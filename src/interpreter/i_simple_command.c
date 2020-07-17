@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:43:35 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/07/09 01:36:45 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/17 15:12:43 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,21 @@
 #include "error.h"
 #include "jcont.h"
 #include <unistd.h>
-#define TAB_SIZE 16
 
 char		**g_argv;
 extern int	g_retval;
 
 int		i_prefix(t_elem left, t_elem right)
 {
-	if (checkvarlst(left.c))
-		setenvnod(newnodshell(left.c, 0));
+	char	*assig_word;
+
+	assig_word = ft_strdup(left.c);
+	expansions_treatment(&(assig_word), 0);
+	if (checkvarlst(assig_word))
+		setenvnod(newnodshell(assig_word, 0));
 	if (right.v)
 		right.v->f(right.v->left, right.v->right);
+	ft_strdel(&assig_word);
 	return (0);
 }
 
