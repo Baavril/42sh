@@ -6,7 +6,7 @@
 /*   By: bprunevi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 14:56:11 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/06/01 15:13:56 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/15 19:33:02 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static int				read_command(char **buff)
 	int			ret;
 	t_cursor	cursor;
 
+	ret = 0;
 	if (!isatty(STDIN_FILENO))
 		return (1);
 	if (!(g_input_mode = 0) && set_termcaps(TC_INPUT))
