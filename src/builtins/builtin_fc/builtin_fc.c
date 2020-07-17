@@ -6,7 +6,7 @@
 /*   By: yberramd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 12:34:42 by yberramd          #+#    #+#             */
-/*   Updated: 2020/06/01 17:12:49 by yberramd         ###   ########.fr       */
+/*   Updated: 2020/07/13 17:28:04 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,10 @@ static int		opt_arg(int opt)
 	return (1);
 }
 
+/*
+** commentaire C++ extrait des lignes 90 et 94 : attention si opt=string
+*/
+
 static int		ft_bazar(char ***option, int sh, char **argv)
 {
 	int	ret;
@@ -87,11 +91,11 @@ static int		ft_bazar(char ***option, int sh, char **argv)
 	else
 	{
 		if (g_arg & ARG_S)
-			ret = ft_execute(*option);//attention si opt=string
+			ret = ft_execute(*option);
 		else if (g_arg & ARG_L)
 			ret = ft_print_history(*option);
 		else
-			ret = ft_fc(*option, argv);//attention si opt=string
+			ret = ft_fc(*option, argv);
 		ft_strdel_option(option);
 		return (ret);
 	}

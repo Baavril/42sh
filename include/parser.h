@@ -6,7 +6,7 @@
 /*   By: bprunevi <bprunevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 16:02:57 by bprunevi          #+#    #+#             */
-/*   Updated: 2020/07/09 01:24:13 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/17 15:09:19 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "tokens.h"
 # include <fcntl.h>
+
+# define TAB_SIZE 16
 
 typedef union	u_elem
 {

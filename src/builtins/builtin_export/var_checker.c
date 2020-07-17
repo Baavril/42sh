@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vqr_checker.c                                      :+:      :+:    :+:   */
+/*   var_checker.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bprunev <bprunev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:21:48 by bprunev           #+#    #+#             */
-/*   Updated: 2020/03/08 13:41:16 by bprunevi         ###   ########.fr       */
+/*   Updated: 2020/07/15 18:27:37 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,21 @@ static int				testvarlst(char *tmp_n, char *argv, struct s_svar *tmp)
 {
 	char	*key_name;
 
-	if (!(key_name = get_key(g_svar->str)))
+	if (!(key_name = get_key(tmp->str)))
 		return (ERROR);
 	if (ft_strcmp(key_name, tmp_n) == 0)
 	{
-		ft_strdel(&(g_svar->str));
-		ft_strdel(&(g_svar->value));
-		if (!(g_svar->str = ft_strdup(argv)))
+		ft_strdel(&(tmp->str));
+		ft_strdel(&(tmp->value));
+		if (!(tmp->str = ft_strdup(argv)))
 			return (ERROR);
-		if (!(g_svar->value = ft_strdupfm(argv, '=')))
+		if (!(tmp->value = ft_strdupfm(argv, '=')))
 			return (ERROR);
 		ft_strdel(&key_name);
 		ft_strdel(&tmp_n);
-		g_svar = tmp;
 		return (SUCCESS);
 	}
-	else
-		ft_strdel(&key_name);
+	ft_strdel(&key_name);
 	return (ERROR);
 }
 
@@ -53,17 +51,16 @@ int						checkvarlst(char *argv)
 	tmp = g_svar;
 	if (!(tmp_name = get_key(argv)))
 		return (ERROR);
-	while (g_svar)
+	while (tmp)
 	{
 		if (testvarlst(tmp_name, argv, tmp) == SUCCESS)
 		{
 			checkvarenv(argv);
 			return (SUCCESS);
 		}
-		g_svar = g_svar->next;
+		tmp = tmp->next;
 	}
 	free(tmp_name);
-	g_svar = tmp;
 	return (ERROR);
 }
 

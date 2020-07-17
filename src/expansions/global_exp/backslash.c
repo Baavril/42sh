@@ -6,7 +6,7 @@
 /*   By: bprunev <bprunev@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by bprunev           #+#    #+#             */
-/*   Updated: 2020/07/12 23:35:16 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/17 15:16:34 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ static char	*dup_slash(char **tokens, int j, int i, int ret)
 			return (tmp);
 		}
 	}
-	tmp = ft_strdup(*tokens);
-	ft_strdel(tokens);
-	return (tmp);
+	return (*tokens);
 }
 
 static char	*dup_hdc_slash(char **tokens, int j, int i)
