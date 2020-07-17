@@ -6,12 +6,9 @@
 /*   By: baavril <baavril@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:21:48 by baavril           #+#    #+#             */
-/*   Updated: 2020/05/17 15:37:42 by tgouedar         ###   ########.fr       */
+/*   Updated: 2020/07/15 18:28:55 by tgouedar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <unistd.h>
-#include <stdio.h>
 
 #include "shell_variables.h"
 #include "libft.h"
@@ -30,7 +27,7 @@ void			setenvnod(struct s_svar *new_back)
 	struct s_svar	*voyager;
 
 	if (!g_svar)
-		return ;
+		g_svar = new_back;
 	else
 	{
 		voyager = g_svar;
@@ -92,20 +89,9 @@ int				init_extern_vars(char **env)
 	voyager = g_svar;
 	while (i < len)
 	{
-		if (!ft_strncmp(env[i], "PWD=", 4) || !ft_strncmp(env[i], "OLDPWD=", 7)
-		|| !ft_strncmp(env[i], "HOME=", 5) || !ft_strncmp(env[i], "LOGNAME=", 8)
-		|| !ft_strncmp(env[i], "USER=", 5) || !ft_strncmp(env[i], "TERM=", 5)
-		|| !ft_strncmp(env[i], "SHELL=", 6) || !ft_strncmp(env[i], "PATH=", 5)
-		|| !ft_strncmp(env[i], "COLORTERM=", 10) || !ft_strncmp(env[i], "_=", 2)
-		|| !ft_strncmp(env[i], "USERNAME=", 9)
-		|| !ft_strncmp(env[i], "SHLVL=", 6))
-		{
-			setenvnod(newnodshell(env[i], 1));
-			g_svar = g_svar->next;
-		}
-		++i;
+		setenvnod(newnodshell(env[i++], 1));
+		voyager = voyager->next;
 	}
-	g_svar = voyager;
 	return (0);
 }
 
